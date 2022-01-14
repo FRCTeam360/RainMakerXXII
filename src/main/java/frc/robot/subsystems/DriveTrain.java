@@ -8,17 +8,18 @@ import static frc.robot.Constants.DriveTrainConstants.*;
 //import frc.robot.Constants.AutoConstants;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
 //import static frc.robot.Constants.DriveTrainConstants.*;
 import frc.robot.Constants.AutoConstants;
 
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 //import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 
 import com.kauailabs.navx.frc.AHRS; //If error here check updates: install vendor online use: https://www.kauailabs.com/dist/frc/2021/navx_frc.json
 import edu.wpi.first.wpilibj.SPI; //Port NavX is on
@@ -27,16 +28,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motocontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode.*;
 
 public class DriveTrain extends SubsystemBase {
   
-  private static MyTalonFX motorLLead;
-  private static MyTalonFX motorLFollow1;
-  private static MyTalonFX motorLFollow2;
-  private static MyTalonFX motorRLead;
-  private static MyTalonFX motorRFollow1;
-  private static MyTalonFX motorRFollow2;
+  private static TalonFX motorLLead;
+  private static TalonFX motorLFollow1;
+  private static TalonFX motorLFollow2;
+  private static TalonFX motorRLead;
+  private static TalonFX motorRFollow1;
+  private static TalonFX motorRFollow2;
 
   private final DifferentialDrive m_differentialDrive;
 
@@ -47,17 +50,17 @@ public class DriveTrain extends SubsystemBase {
 
   private AHRS navX;
   private final DifferentialDriveOdometry m_odometry;
-  private final SpeedControllerGroup leftGroup;
-  private final SpeedControllerGroup rightGroup;
+  private final MotorControllerGroup leftGroup;
+  private final MotorControllerGroup rightGroup;
 
   /** Creates a new ExampleSubsystem. */
   public DriveTrain() {
-    motorLLead = new MyTalonFX(motorLLeadID);
-    motorLFollow1 = new MyTalonFX(motorLFollow1ID);
-    motorLFollow2 = new MyTalonFX(motorLFollow2ID);
-    motorRLead = new MyTalonFX(motorRLeadID);
-    motorRFollow1 = new MyTalonFX(motorRFollow1ID);
-    motorRFollow2 = new MyTalonFX(motorRFollow2ID);
+    motorLLead = new TalonFX(motorLLeadID);
+    motorLFollow1 = new TalonFX(motorLFollow1ID);
+    motorLFollow2 = new TalonFX(motorLFollow2ID);
+    motorRLead = new TalonFX(motorRLeadID);
+    motorRFollow1 = new TalonFX(motorRFollow1ID);
+    motorRFollow2 = new TalonFX(motorRFollow2ID);
 
     motorLLead.configFactoryDefault();
     motorLFollow1.configFactoryDefault();
@@ -85,8 +88,8 @@ public class DriveTrain extends SubsystemBase {
 
     resetEncPos(); //Reset Encoders r navX yaw before m_odometry is defined
 
-    leftGroup = new SpeedControllerGroup( motorLLead , motorLFollow1, motorLFollow2 );
-    rightGroup = new SpeedControllerGroup( motorRLead , motorRFollow1, motorRFollow2 );
+    leftGroup = new MotorControllerGroup( motorLLead , motorLFollow1, motorLFollow2 );
+    rightGroup = new MotorControllerGroup( motorRLead , motorRFollow1, motorRFollow2 );
 
     m_differentialDrive = new DifferentialDrive(leftGroup, rightGroup);
     m_differentialDrive.setSafetyEnabled(false); //So it won't stop the motors from moving
@@ -115,10 +118,10 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void driveR (double Rmotor) {
-    motorRLead.set( Rmotor );
+    motorRLead.set(TalonFXControlMode.PercentOutput, Rmotor );
   }
   public void driveL (double Lmotor) {
-    motorLLead.set( Lmotor );
+    motorLLead.set(TalonFXControlMode.PercentOutput, Lmotor );
   }
 
   // public Pose2d getPose() {
