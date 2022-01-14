@@ -4,14 +4,43 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxPIDController;
+
+import static frc.robot.Constants.ShooterConstants.*;
+
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
-  /** Creates a new Shooter. */
-  public Shooter() {}
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
-}
+    private CANSparkMax shooterLead;
+    private CANSparkMax shooterFollow;
+
+    public Shooter() {
+        shooterLead = new CANSparkMax(shooterLeadId, MotorType.kBrushless);
+        shooterFollow = new CANSparkMax(shooterFollowId, MotorType.kBrushless);
+    
+        shooterLead.restoreFactoryDefaults();
+        shooterFollow.restoreFactoryDefaults();
+    
+        shooterFollow.follow(shooterLead);
+    
+        //shooterLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative , kPIDLoopIdx , kTimeOutMs);
+    
+        shooterLead.setInverted(true);
+        shooterFollow.setInverted(false);
+    
+        //shooterLead.setSensorPhase(true); //the Follower isn't harvested for it's encoder therefor rotation doesn't need to be modified
+    
+        // set PID coefficients
+        shooterLead.setP(kP, 0);
+        shooterLead.setI(kI);
+        shooterLead.setD(kD);
+        shooterLead.setIZone(kIz);
+        shooterLead.setFF(kFF);
+        shooterLead.setOutputRange(kMinOutput, kMaxOutput);
+          }
