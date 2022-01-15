@@ -44,15 +44,14 @@ public class TankDrive extends CommandBase {
     //create deadzone and look into new documentation
     if(Math.abs(driverCont.getRightY()) >= xboxDeadzone ) {
       myDriveTrain.driveR((-1 * driverCont.getRightY())); 
+    }else {
+      myDriveTrain.driveR((0));
     }
+
     if(Math.abs(driverCont.getLeftY()) >= xboxDeadzone ) {
       myDriveTrain.driveL((-1 * driverCont.getLeftY()));
-    } 
-    if(Math.abs(driverCont.getRightY()) < xboxDeadzone ) {
-      myDriveTrain.driveR((0 * driverCont.getRightY()));
-    }
-    if(Math.abs(driverCont.getLeftY()) < xboxDeadzone ) {
-      myDriveTrain.driveL((0 * driverCont.getLeftY()));
+    }else {
+      myDriveTrain.driveL((0));
     }
   }
 
