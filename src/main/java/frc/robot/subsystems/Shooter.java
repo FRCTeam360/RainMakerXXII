@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -38,8 +39,8 @@ public class Shooter extends SubsystemBase {
     
         // set PID coefficients
         shooterLead.setP(kP, 0);
-        shooterLead.setI(kI);
-        shooterLead.setD(kD);
+        shooterLead.setI(kI, 0);
+        shooterLead.setD(kD, 0);
         shooterLead.setIZone(kIz);
         shooterLead.setFF(kFF);
         shooterLead.setOutputRange(kMinOutput, kMaxOutput);
