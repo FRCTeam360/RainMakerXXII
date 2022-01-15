@@ -28,18 +28,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode.*;
+// import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+// import com.ctre.phoenix.motorcontrol.TalonFXControlMode.*;
 
 public class DriveTrain extends SubsystemBase {
   
-  private static TalonFX motorLLead;
-  private static TalonFX motorLFollow1;
-  private static TalonFX motorLFollow2;
-  private static TalonFX motorRLead;
-  private static TalonFX motorRFollow1;
-  private static TalonFX motorRFollow2;
+  private static WPI_TalonFX motorLLead;
+  private static WPI_TalonFX motorLFollow1;
+  private static WPI_TalonFX motorLFollow2;
+  private static WPI_TalonFX motorRLead;
+  private static WPI_TalonFX motorRFollow1;
+  private static WPI_TalonFX motorRFollow2;
 
   private final DifferentialDrive m_differentialDrive;
 
@@ -55,12 +55,12 @@ public class DriveTrain extends SubsystemBase {
 
   /** Creates a new ExampleSubsystem. */
   public DriveTrain() {
-    motorLLead = new TalonFX(motorLLeadID);
-    motorLFollow1 = new TalonFX(motorLFollow1ID);
-    motorLFollow2 = new TalonFX(motorLFollow2ID);
-    motorRLead = new TalonFX(motorRLeadID);
-    motorRFollow1 = new TalonFX(motorRFollow1ID);
-    motorRFollow2 = new TalonFX(motorRFollow2ID);
+    motorLLead = new WPI_TalonFX(motorLLeadID);
+    motorLFollow1 = new WPI_TalonFX(motorLFollow1ID);
+    motorLFollow2 = new WPI_TalonFX(motorLFollow2ID);
+    motorRLead = new WPI_TalonFX(motorRLeadID);
+    motorRFollow1 = new WPI_TalonFX(motorRFollow1ID);
+    motorRFollow2 = new WPI_TalonFX(motorRFollow2ID);
 
     motorLLead.configFactoryDefault();
     motorLFollow1.configFactoryDefault();
@@ -91,7 +91,7 @@ public class DriveTrain extends SubsystemBase {
     leftGroup = new MotorControllerGroup( motorLLead , motorLFollow1, motorLFollow2 );
     rightGroup = new MotorControllerGroup( motorRLead , motorRFollow1, motorRFollow2 );
 
-    m_differentialDrive = new DifferentialDrive(leftGroup, rightGroup);
+    m_differentialDrive = new DifferentialDrive(motorLLead, motorRLead);
     m_differentialDrive.setSafetyEnabled(false); //So it won't stop the motors from moving
   }
 
