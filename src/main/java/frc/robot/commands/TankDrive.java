@@ -5,23 +5,34 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import static frc.robot.Constants.OIConstants.*;
 /** An example command that uses an example subsystem. */
 public class TankDrive extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final DriveTrain m_subsystem;
+
+  private final DriveTrain myDriveTrain;
+
+  private final XboxController driverCont;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public TankDrive(ExampleSubsystem subsystem) {
-    m_subsystem = subsystem;
+  public TankDrive(DriveTrain driveTrain) {
+    
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    
+
+    myDriveTrain = driveTrain;
+
+    //driver cont port issue below??
+    driverCont = new XboxController(driverContPort);
+
+    addRequirements(myDriveTrain);
   }
 
   // Called when the command is initially scheduled.
@@ -30,7 +41,21 @@ public class TankDrive extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    //create deadzone and look into new documentation
+    if(Math.abs(driverCont.getRightY()) >= xboxDeadzone ) {
+      myDriveTrain.driveR((-1 * driverCont.getRightY())); 
+    }
+    if(Math.abs(driverCont.getLeftY()) >= xboxDeadzone ) {
+      myDriveTrain.driveL((-1 * driverCont.getLeftY()));
+    } 
+    if(Math.abs(driverCont.getRightY()) < xboxDeadzone ) {
+      myDriveTrain.driveR((0 * driverCont.getRightY()));
+    }
+    if(Math.abs(driverCont.getLeftY()) < xboxDeadzone ) {
+      myDriveTrain.driveL((0 * driverCont.getLeftY()));
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
