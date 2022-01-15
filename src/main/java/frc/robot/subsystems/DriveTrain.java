@@ -88,6 +88,7 @@ public class DriveTrain extends SubsystemBase {
 
     resetEncPos(); //Reset Encoders r navX yaw before m_odometry is defined
 
+    //makes the 3 motor controllers function as 1 motor controller for autos
     leftGroup = new MotorControllerGroup( motorLLead , motorLFollow1, motorLFollow2 );
     rightGroup = new MotorControllerGroup( motorRLead , motorRFollow1, motorRFollow2 );
 
