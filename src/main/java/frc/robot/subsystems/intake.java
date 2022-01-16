@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.IntakeConstants.*;
 
 /** Add your docs here. */
-public class intake extends SubsystemBase{
+public class Intake extends SubsystemBase{
 
     private TalonSRX intake;
 
-    public intake() {
+    public Intake() {
         intake = new TalonSRX(intakeId);
     }
 
@@ -26,9 +26,7 @@ public class intake extends SubsystemBase{
     }
 
     @Override
-    public void periodic() {
-        
-    }
+    public void periodic() {}
 
     
 }
