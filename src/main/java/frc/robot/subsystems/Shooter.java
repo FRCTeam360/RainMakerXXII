@@ -50,10 +50,10 @@ public class Shooter extends SubsystemBase {
     }
 
 
-public double getVelocity(){
+/*public double getVelocity(){
   return shooterLead.getSelectedSensorVelocity(0);
 }
-
+*/
 @Override
 public void periodic() {
   
