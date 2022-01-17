@@ -16,6 +16,8 @@ import static frc.robot.Constants.ShooterConstants.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+
+
 public class Shooter extends SubsystemBase {
 
     private CANSparkMax shooterLead;
@@ -36,7 +38,8 @@ public class Shooter extends SubsystemBase {
         shooterFollow.setInverted(false);
     
         //shooterLead.setSensorPhase(true); //the Follower isn't harvested for it's encoder therefor rotation doesn't need to be modified
-    
+       
+
         // set PID coefficients
         shooterLead.setP(kP, 0);
         shooterLead.setI(kI, 0);
@@ -44,4 +47,15 @@ public class Shooter extends SubsystemBase {
         shooterLead.setIZone(kIz);
         shooterLead.setFF(kFF);
         shooterLead.setOutputRange(kMinOutput, kMaxOutput);
-          }
+    }
+
+
+public double getVelocity(){
+  return shooterLead.getSelectedSensorVelocity(0);
+}
+
+@Override
+public void periodic() {
+  
+}
+}
