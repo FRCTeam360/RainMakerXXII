@@ -17,7 +17,6 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-<<<<<<< HEAD
     public static final class ShooterConstants {
         public static final int shooterLeadId = 9; // Shoot1
         public static final int shooterFollowId = 10; // Shoot2
@@ -27,22 +26,10 @@ public final class Constants {
         public static final int kTimeOutMs = 30;
         public static final int kPIDLoopIdx = 0;
         public static final double kP = 1.0;// ((0.05 * 1023.0) / 1001.0) * 7.5 * 2.5; //(0.05 * 1023.0) / 453.0;
-=======
-
-    public static final class ShooterConstants {
-        public static final int shooterLeadId = 9;
-        public static final int shooterFollowId = 10;
-
-        public static final int kSlotIdx = 0;
-        public static final int kTimeOutMs = 30;
-        public static final int kPIDLoopIdx = 0;
-        public static final double kP = 1.0;
->>>>>>> 34c8c92e7205c1c2ec01bde1e4fbab49d2741c52
         public static final double kI = 0;
         public static final double kD = 1.5;
         public static final double kF = (0.6 * 1023.0) / 15900.0;
         public static final double kPeakOutput = 1;
-<<<<<<< HEAD
 
         public static final double backupTargetVelocity = 14500; // Constant
         public static double targetVelocity = backupTargetVelocity; // will get changed in the future by limelight
@@ -51,13 +38,5 @@ public final class Constants {
         public static final double aVal = 2.697; // Quad Ratic regression values
         public static final double bVal = -52.912;
         public static final double cVal = 14815.146;
-=======
-        public static final double backupTargetVelocity = 14500;
-        public static double targetVelocity = backupTargetVelocity;
-        public static final double aVal = 2.697;
-        public static final double bVal = -52.912;
-        public static final double cVal = 14815.146;
-
->>>>>>> 34c8c92e7205c1c2ec01bde1e4fbab49d2741c52
     }
 }

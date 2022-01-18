@@ -52,15 +52,18 @@ public class Shooter extends SubsystemBase {
         shooterPidController.setI(kI, 0);
         shooterPidController.setD(kD, 0);
         shooterPidController.setFF(kF);
-        shooterPidController.setOutputRange(kMinOutput, kMaxOutput);
+        shooterPidController.setOutputRange(-1, 1);
     }
 
 
-/*public double getVelocity(){
-  return shooterLead.getSelectedSensorVelocity(0);
+public double getVelocity(){
+  return shooterLead.getEncoder().getVelocity();
 }
-*/
-@Override
+
+public void run () {
+  shooterPidController.setReference(targetVelocity, CANSparkMax.ControlType.kVelocity);
+}
+  @Override
 public void periodic() {
   
 }
