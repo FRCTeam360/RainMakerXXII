@@ -27,6 +27,8 @@ public class Shooter extends SubsystemBase {
   private CANSparkMax shooterFollow;
   private SparkMaxPIDController shooterPidController;
 
+  public boolean shooterReady;
+
 
     public Shooter() {
         shooterLead = new CANSparkMax(shooterLeadId, MotorType.kBrushless);
@@ -65,6 +67,8 @@ public void run () {
 }
   @Override
 public void periodic() {
-  
+  shooterReady = this.getVelocity() >= targetVelocity && this.getVelocity() <= targetVelocity;
+  SmartDashboard.putBoolean("Shooter Ready", shooterReady);
+  SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
 }
 }
