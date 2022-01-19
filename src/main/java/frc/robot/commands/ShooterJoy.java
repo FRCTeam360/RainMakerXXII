@@ -4,5 +4,46 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
+import static frc.robot.Constants.ShooterConstants.*;
+import edu.wpi.first.wpilibj.XboxController;
+
+import frc.robot.subsystems.Shooter;
+
 /** Add your docs here. */
-public class ShooterJoy {}
+public class ShooterJoy extends CommandBase {
+
+    private final Shooter shooter;
+    private final XboxController cont;
+
+public ShooterJoy(Shooter shooter) {
+    this.shooter = shooter;
+    cont = new XboxController(1);
+    addRequirements(shooter);
+}
+
+@Override   // Called when the command is initially scheduled.
+public void initialize() {
+}
+
+@Override   // Called every time the scheduler runs while the command is scheduled.
+public void execute()
+ { System.out.print("hello world");
+    if (cont.getXButton()){
+        shooter.setSpeed(cont.getLeftY()); 
+    } else{
+        shooter.setVelocity(cont.getLeftY() * 5500);
+    }
+}
+
+@Override   // Called once the command ends or is interrupted.
+public void end(boolean interrupted) {
+}
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
+}

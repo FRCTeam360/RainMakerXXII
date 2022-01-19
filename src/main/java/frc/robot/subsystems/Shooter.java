@@ -75,6 +75,9 @@ public void setVelocity (double output) {
   shooterPidController.setReference(output, CANSparkMax.ControlType.kVelocity);
 }
 
+public void setSpeed(double output){
+  shooterLead.set(output);
+}
 
 
 }
