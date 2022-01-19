@@ -71,4 +71,10 @@ public void periodic() {
   SmartDashboard.putBoolean("Shooter Ready", shooterReady);
   SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
 }
+public void setVelocity (double output) {
+  shooterPidController.setReference(output, CANSparkMax.ControlType.kVelocity);
+}
+
+
+
 }
