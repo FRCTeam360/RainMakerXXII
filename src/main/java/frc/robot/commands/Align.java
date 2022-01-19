@@ -54,6 +54,7 @@ public class Align extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(myLimelight.getX()) < 0.4;
+    return false;
+    //return Math.abs(myLimelight.getX()) < 0.4;
   }
 }
