@@ -18,7 +18,7 @@ package frc.robot;
  */
 public final class Constants {
     public static final class ShooterConstants {
-        public static final int shooterLeadId = 7; // Shoot1
+        public static final int shooterLeadId = 9; // Shoot1
         public static final int shooterFollowId = 10; // Shoot2
 
         // Old data, need to tune
