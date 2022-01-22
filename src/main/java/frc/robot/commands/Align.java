@@ -26,7 +26,7 @@ public class Align extends CommandBase {
     aimAdjust = 0;
     aimError = 0;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(myLimelight);
+    addRequirements(myLimelight, turret);
   }
 
   // Called when the command is initially scheduled.
@@ -43,7 +43,7 @@ public class Align extends CommandBase {
     } else if (myLimelight.getX() < -.2) {
       aimAdjust -= AimMinCmd;
     }
-    myTurret.turnTurret(aimAdjust);
+    myTurret.turnTurret(-aimAdjust);
 
   }
 
