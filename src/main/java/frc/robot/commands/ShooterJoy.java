@@ -30,11 +30,11 @@ public void initialize() {
 @Override   // Called every time the scheduler runs while the command is scheduled.
 public void execute()
  { System.out.print("hello world");
-    if (cont.getXButton()){
-        shooter.setSpeed(cont.getLeftY()); 
-    } else{
-        shooter.setVelocity(cont.getLeftY() * 5500);
-    }
+    // if (cont.getXButton()){
+        shooter.setSpeed(cont.getLeftY() * 1.0 ); 
+    // } else{
+    //     shooter.setVelocity(cont.getLeftY() * 5500);
+    // }
 }
 
 @Override   // Called once the command ends or is interrupted.
