@@ -45,6 +45,8 @@ public class Shooter extends SubsystemBase {
         shooterFollow.restoreFactoryDefaults();
     
         shooterFollow.follow(shooterLead);
+
+        shooterLead.setSmartCurrentLimit(40);
     
         //shooterLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative , kPIDLoopIdx , kTimeOutMs);
     
@@ -57,11 +59,6 @@ public class Shooter extends SubsystemBase {
         SmartDashboard.putNumber("kI", 0.0);
         SmartDashboard.putNumber("kD", 0.0);
         SmartDashboard.putNumber("kF", 0.0);
-
-        // kP = SmartDashboard.getNumber("kP", 0.0);
-        // kI = SmartDashboard.getNumber("kI", 0.0);
-        // kD = SmartDashboard.getNumber("kD", 0.0);
-        // kF = SmartDashboard.getNumber("kF", 0.0);
 
         // set PID coefficients
         shooterPidController.setP(kP, 0);
