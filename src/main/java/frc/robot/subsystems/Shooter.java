@@ -29,6 +29,11 @@ public class Shooter extends SubsystemBase {
 
   public boolean shooterReady;
 
+  private double kP = 0;
+  private double kI = 0;
+  private double kD = 0;
+  private double kF = 0;
+
 
     public Shooter() {
         shooterLead = new CANSparkMax(shooterLeadId, MotorType.kBrushless);
@@ -48,6 +53,15 @@ public class Shooter extends SubsystemBase {
     
         //shooterLead.setSensorPhase(true); //the Follower isn't harvested for it's encoder therefor rotation doesn't need to be modified
        
+        SmartDashboard.putNumber("kP", 0.0);
+        SmartDashboard.putNumber("kI", 0.0);
+        SmartDashboard.putNumber("kD", 0.0);
+        SmartDashboard.putNumber("kF", 0.0);
+
+        // kP = SmartDashboard.getNumber("kP", 0.0);
+        // kI = SmartDashboard.getNumber("kI", 0.0);
+        // kD = SmartDashboard.getNumber("kD", 0.0);
+        // kF = SmartDashboard.getNumber("kF", 0.0);
 
         // set PID coefficients
         shooterPidController.setP(kP, 0);
@@ -70,6 +84,12 @@ public void periodic() {
   shooterReady = this.getVelocity() >= targetVelocity && this.getVelocity() <= targetVelocity;
   SmartDashboard.putBoolean("Shooter Ready", shooterReady);
   SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
+  kP = SmartDashboard.getNumber("kP", 0.0);
+  kI = SmartDashboard.getNumber("kI", 0.0);
+  kD = SmartDashboard.getNumber("kD", 0.0);
+  kF = SmartDashboard.getNumber("kF", 0.0);
+
+  updatePID();
 }
 public void setVelocity (double output) {
   shooterPidController.setReference(output, CANSparkMax.ControlType.kVelocity);
@@ -77,6 +97,13 @@ public void setVelocity (double output) {
 
 public void setSpeed(double output){
   shooterLead.set(output);
+}
+
+public void updatePID(){
+  // kP = SmartDashboard.getNumber("kP", 0.0);
+  // kI = SmartDashboard.getNumber("kI", 0.0);
+  // kD = SmartDashboard.getNumber("kD", 0.0);
+  // kF = SmartDashboard.getNumber("kF", 0.0);
 }
 
 

@@ -25,10 +25,10 @@ public final class Constants {
         public static final int kSlotIdx = 0;
         public static final int kTimeOutMs = 30;
         public static final int kPIDLoopIdx = 0;
-        public static final double kP = 0.1;// ((0.05 * 1023.0) / 1001.0) * 7.5 * 2.5; //(0.05 * 1023.0) / 453.0;
-        public static final double kI = 0;
-        public static final double kD = 0.0;
-        public static final double kF = 0.0; //(0.6 * 1023.0) / 15900.0;
+        // public static final double kP = 0.1;// ((0.05 * 1023.0) / 1001.0) * 7.5 * 2.5; //(0.05 * 1023.0) / 453.0;
+        // public static final double kI = 0;
+        // public static final double kD = 0.0;
+        // public static final double kF = 0.0; //(0.6 * 1023.0) / 15900.0;
         public static final double kPeakOutput = 1;
 
         public static final double backupTargetVelocity = 14500; // Constant
