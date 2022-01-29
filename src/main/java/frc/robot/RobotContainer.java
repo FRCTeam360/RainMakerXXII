@@ -31,6 +31,12 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    configureDefaultCommands();
+  }
+
+  private void configureDefaultCommands() {
+    feeder.setDefaultCommand(runFeeder);
+    intake.setDefaultCommand(runIntake);
   }
 
   /**
@@ -46,8 +52,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  //public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return Command;
-  }
+    //return Command;
+  //}
 }
