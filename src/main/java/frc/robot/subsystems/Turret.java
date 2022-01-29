@@ -12,8 +12,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.TurretConstants.*;
 
 public class Turret extends SubsystemBase {
+  private static Turret instance;
+
+  public static Turret getInstance() {
+    if (instance == null) {
+      instance = new Turret();
+    }
+    return instance;
+  }
 
   private static CANSparkMax turretMotor;
+
   /** Creates a new Turret. */
   public Turret() {
     turretMotor = new CANSparkMax(turretMotorID, MotorType.kBrushless);
@@ -21,7 +30,7 @@ public class Turret extends SubsystemBase {
     turretMotor.restoreFactoryDefaults();
   }
 
-  public void turnTurret (double speed) {
+  public void turnTurret(double speed) {
     turretMotor.set(speed);
   }
 
