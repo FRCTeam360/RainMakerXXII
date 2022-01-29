@@ -13,10 +13,22 @@ import static frc.robot.Constants.CANIds.*;
 
 /** Add your docs here. */
 public class Intake extends SubsystemBase{
+   
+    private static Intake instance;
+    /**
+     * gets instance for the singleton
+     * @return instance
+     */
+    public static Intake getInstance(){
+        if(instance == null){
+            instance = new Intake();
+        }
+        return instance;
+    }
 
     private TalonSRX intake;
 
-    public Intake() {
+    private Intake() {
         intake = new TalonSRX(intakeId);
     }
 
