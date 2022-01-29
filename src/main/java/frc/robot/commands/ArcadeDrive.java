@@ -40,14 +40,20 @@ public class ArcadeDrive extends CommandBase {
     double driveRight = 0;
     double driveLeft = 0;
 
-    if(Math.abs(driverCont.getRightY()) >= xboxDeadzone) {
-      rightLeftSquared = driverCont.getRightY() * driverCont.getRightY();
-      if(driverCont.getLeftX() < 0){
+    if(Math.abs(driverCont.getLeftY()) >= xboxDeadzone) {
+      upDownSquared = driverCont.getLeftY() * driverCont.getLeftY();
+      if(driverCont.getLeftY() < 0){
         upDownSquared = upDownSquared * -1;
       }
     }
+    if(Math.abs(driverCont.getLeftX()) >= xboxDeadzone) {
+      rightLeftSquared = driverCont.getLeftX() * driverCont.getLeftX();
+      if(driverCont.getLeftX() < 0){
+        rightLeftSquared = rightLeftSquared * -1;
+      } 
+    }
 
-
+    
     driveLeft = upDownSquared + rightLeftSquared;
     driveRight = upDownSquared - rightLeftSquared;
 
