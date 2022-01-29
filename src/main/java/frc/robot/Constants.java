@@ -15,10 +15,10 @@ package frc.robot;
 public final class Constants {
     public static final class LimelightConstants {
         public static final double AimMinCmd = 0.01;
-        public static final double kP = 0.75;
+        public static final double kP = 0.6;
     }
     
     public static final class TurretConstants {
-        public static final int turretMotorID = 1;
+        public static final int turretMotorID = 2;
     }
 }
