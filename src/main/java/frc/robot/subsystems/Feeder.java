@@ -15,15 +15,19 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class Feeder extends SubsystemBase {
 
   private CANSparkMax feeder;
+  private CANSparkMax tower;
 
   private static Feeder instance;
 
   private Feeder() {
     feeder = new CANSparkMax(feederId, MotorType.kBrushless);
+    tower = new CANSparkMax(towerId, MotorType.kBrushless);
 
     feeder.setIdleMode(IdleMode.kCoast);
+    tower.setIdleMode(IdleMode.kCoast);
 
     feeder.setSmartCurrentLimit(20);
+    tower.setSmartCurrentLimit(20);
   }
 
   /**
@@ -39,6 +43,15 @@ public class Feeder extends SubsystemBase {
 
   public void runFeeder (double speed) {
     feeder.set(speed);
+  }
+
+  public void runTower (double speed) {
+    tower.set(speed);
+  }
+
+  public void runBoth (double speed) {
+    runFeeder(speed);
+    runTower(speed);
   }
 
   @Override

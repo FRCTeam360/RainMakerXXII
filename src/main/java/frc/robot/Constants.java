@@ -16,6 +16,7 @@ public final class Constants {
     public static final class CANIds{
         public static final int intakeId = 11;
         public static final int feederId = 10;
+        public static final int towerId = 12;
     }
 
     public static final class OIConstants {
@@ -26,6 +27,6 @@ public final class Constants {
     public static final class PneumaticConstants {
         public static final int intakeForwardChannel = 0;
         public static final int intakeReverseChannel = 1;
-        
+
     }
 }
