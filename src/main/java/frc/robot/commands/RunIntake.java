@@ -33,7 +33,7 @@ public class RunIntake extends CommandBase {
   @Override
   public void execute() {
     if ( cont.getAButton() ) {
-      if (cont.getYButton() ) {
+      if (cont.getLeftStickButton() ) {
         myIntake.run(1.0);
       } else {
         myIntake.run(-1.0); 
