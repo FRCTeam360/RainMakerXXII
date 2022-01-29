@@ -20,7 +20,7 @@ public class RunIntake extends CommandBase {
 
   public RunIntake() {
     cont = new XboxController(driverContPort);
-    myIntake = new Intake();
+    myIntake = Intake.getInstance(); 
     addRequirements(myIntake);
   }
 
