@@ -9,7 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import static frc.robot.Constants.IntakeConstants.*;
+import static frc.robot.Constants.CANIds.*;
 
 /** Add your docs here. */
 public class Intake extends SubsystemBase{

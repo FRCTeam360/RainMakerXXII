@@ -13,7 +13,12 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final class IntakeConstants{
+    public static final class CANIds{
         public static final int intakeId = 11;
+        public static final int feederId = 10;
+    }
+    
+    public static final class OIConstants{
+        public static final int driverContPort = 0;
     }
 }
