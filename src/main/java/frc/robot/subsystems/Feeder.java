@@ -8,17 +8,22 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.CANIds.*;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Feeder extends SubsystemBase {
 
-  private TalonSRX feeder;
+  private CANSparkMax feeder;
 
   private static Feeder instance;
 
   private Feeder() {
-    feeder = new TalonSRX(feederId);
+    feeder = new CANSparkMax(feederId, MotorType.kBrushless);
+
+    feeder.setIdleMode(IdleMode.kCoast);
+
+    feeder.setSmartCurrentLimit(20);
   }
 
   /**
@@ -33,7 +38,7 @@ public class Feeder extends SubsystemBase {
   }
 
   public void runFeeder (double speed) {
-    feeder.set(ControlMode.PercentOutput, speed);
+    feeder.set(speed);
   }
 
   @Override
