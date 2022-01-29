@@ -22,4 +22,10 @@ public final class Constants {
         public static final int driverContPort = 0;
         public static final int operatorContPort = 1;
     }
+
+    public static final class PneumaticConstants {
+        public static final int intakeForwardChannel = 0;
+        public static final int intakeReverseChannel = 1;
+        
+    }
 }

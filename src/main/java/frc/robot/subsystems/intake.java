@@ -7,9 +7,13 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+
 
 import static frc.robot.Constants.CANIds.*;
+import static frc.robot.Constants.PneumaticConstants.*;
 
 /** Add your docs here. */
 public class Intake extends SubsystemBase{
@@ -27,14 +31,23 @@ public class Intake extends SubsystemBase{
     }
 
     private TalonSRX intake;
+    private DoubleSolenoid intakeMover;
 
     private Intake() {
-        intake = new TalonSRX(intakeId);
+        this.intake = new TalonSRX(intakeId);
+        this.intakeMover = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, intakeForwardChannel, intakeReverseChannel);
     }
 
     //motor speed
     public void run (double speed){
         intake.set(ControlMode.PercentOutput, -speed);
+    }
+
+    public void intakeUp() {
+        intakeMover.set(DoubleSolenoid.Value.kForward);
+    }
+    public void intakeDown() {
+        intakeMover.set(DoubleSolenoid.Value.kReverse);
     }
 
     @Override
