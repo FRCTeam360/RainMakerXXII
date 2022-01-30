@@ -4,14 +4,19 @@
 
 package frc.robot;
 
+import java.sql.Driver;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.OIConstants.*;
+import frc.robot.Constants.CANIds.*;
 
 import frc.robot.commands.*;
+import frc.robot.operatorInterface.DriverControl;
+import frc.robot.operatorInterface.OperatorControl;
 import frc.robot.subsystems.*;
 
 
@@ -24,7 +29,8 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  private final XboxController driverCont = new XboxController(1);
+  private final DriverControl driverCont = DriverControl.getInstance();
+  private final OperatorControl operatorCont = OperatorControl.getInstance();
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Shooter shooter = new Shooter();
@@ -58,7 +64,7 @@ public class RobotContainer {
    */
 
   private void configureButtonBindings() {
-    new JoystickButton(driverCont, 2).whenHeld(shooterJoy);
+    new JoystickButton(operatorCont, 7).whenHeld(shooterJoy);
   }
 
   /**

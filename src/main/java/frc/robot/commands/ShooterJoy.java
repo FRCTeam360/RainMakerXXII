@@ -8,18 +8,21 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import static frc.robot.Constants.ShooterConstants.*;
 import edu.wpi.first.wpilibj.XboxController;
-
+import frc.robot.operatorInterface.DriverControl;
+import frc.robot.operatorInterface.OperatorControl;
 import frc.robot.subsystems.Shooter;
 
 /** Add your docs here. */
 public class ShooterJoy extends CommandBase {
 
     private final Shooter shooter;
-    private final XboxController cont;
+    private final DriverControl driverCont;
+    private final OperatorControl operatorCont;
 
 public ShooterJoy(Shooter shooter) {
     this.shooter = shooter;
-    cont = new XboxController(1);
+    driverCont = DriverControl.getInstance();
+    operatorCont = OperatorControl.getInstance();
     addRequirements(shooter);
 }
 
@@ -30,7 +33,7 @@ public void initialize() {
 @Override   // Called every time the scheduler runs while the command is scheduled.
 public void execute() {
     // if (cont.getXButton()){
-        shooter.setSpeed(cont.getLeftY() * 1.0 ); 
+        shooter.setSpeed(operatorCont.getLeftY() * 1.0 ); 
     // } else{
     //     shooter.setVelocity(cont.getLeftY() * 5500);
     // }
