@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.CANIds.*;
-
+import static frc.robot.Constants.DigitalInputPorts.*;
 public class Turret extends SubsystemBase {
   private static Turret instance;
-
+  
   public static Turret getInstance() {
     if (instance == null) {
       instance = new Turret();
@@ -28,7 +28,8 @@ public class Turret extends SubsystemBase {
 
     turretMotor.restoreFactoryDefaults();
 
-    DigitalInput toplimitSwitch = new DigitalInput(0);
+    DigitalInput toplimitSwitch = new DigitalInput(toplimitSwitchPort);
+    DigitalInput bottomlimitSwitch = new DigitalInput(bottomlimitSwitchPort);
   }
 
   public void turnTurret(double speed) {
