@@ -3,13 +3,12 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import static frc.robot.Constants.TurretConstants.*;
+import static frc.robot.Constants.CANIds.*;
 
 public class Turret extends SubsystemBase {
   private static Turret instance;
@@ -22,6 +21,7 @@ public class Turret extends SubsystemBase {
   }
 
   private static CANSparkMax turretMotor;
+
 
   /** Creates a new Turret. */
   public Turret() {
