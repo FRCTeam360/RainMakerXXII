@@ -28,8 +28,7 @@ public void initialize() {
 }
 
 @Override   // Called every time the scheduler runs while the command is scheduled.
-public void execute()
- { System.out.print("hello world");
+public void execute() {
     // if (cont.getXButton()){
         shooter.setSpeed(cont.getLeftY() * 1.0 ); 
     // } else{
