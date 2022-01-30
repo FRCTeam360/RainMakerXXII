@@ -11,17 +11,19 @@ import static frc.robot.Constants.OIConstants.*;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
-import frc.robot.operatorInterface.XboxCont;
+import frc.robot.operatorInterface.*;
 
 public class RunIntake extends CommandBase {
   
   private final Intake myIntake;
-  private final XboxCont driverCont;
-  private final XboxCont operatorCont;
+  private final driverControl driverCont;
+  private final operatorControl operatorCont;
+
+  public boolean intakeOut;
 
   public RunIntake() {
-    driverCont = new XboxCont(driverContPort);
-    operatorCont = new XboxCont(operatorContPort);
+    driverCont = driverControl.getInstance();
+    operatorCont = operatorControl.getInstance();
     myIntake = Intake.getInstance(); 
     addRequirements(myIntake);
   }
@@ -42,6 +44,16 @@ public class RunIntake extends CommandBase {
       }
     } else {
       myIntake.run(0.0); 
+    }
+
+    if(driverCont.getAButtonPressed() || operatorCont.getYButtonPressed()) {
+      if(intakeOut){
+        myIntake.intakeUp();
+        intakeOut = false;
+      } else {
+        myIntake.intakeDown();
+        intakeOut = true;
+      }
     }
   }
 

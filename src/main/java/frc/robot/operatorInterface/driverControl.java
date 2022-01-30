@@ -13,7 +13,7 @@ import static frc.robot.Constants.OIConstants.*;
 /**
  * Add your docs here.
  */
-public class driverControl extends XboxController{
+public class driverControl extends XboxCont{
     
     private static driverControl instance;
 

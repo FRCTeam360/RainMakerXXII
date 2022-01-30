@@ -13,7 +13,7 @@ import static frc.robot.Constants.OIConstants.*;
 /**
  * Add your docs here.
  */
-public class operatorControl extends XboxController{
+public class operatorControl extends XboxCont{
 
     private static operatorControl instance;
 
