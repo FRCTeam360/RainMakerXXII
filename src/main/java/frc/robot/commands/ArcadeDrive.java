@@ -53,7 +53,7 @@ public class ArcadeDrive extends CommandBase {
       } 
     }
 
-    
+  
     driveLeft = upDownSquared + rightLeftSquared;
     driveRight = upDownSquared - rightLeftSquared;
 
@@ -62,8 +62,8 @@ public class ArcadeDrive extends CommandBase {
     driveLeft = Math.max(driveLeft, -1);
     driveRight = Math.max(driveRight, -1);
 
-    myDriveTrain.driveL(driveLeft * 1.0);
-    myDriveTrain.driveR(driveRight * 1.0);
+    myDriveTrain.driveL(driveLeft);
+    myDriveTrain.driveR(driveRight);
   }
 
   // Called once the command ends or is interrupted.
