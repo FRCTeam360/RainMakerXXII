@@ -17,6 +17,7 @@ public class AlignTurret extends CommandBase {
   private double aimAdjust;
   private double aimError;
 
+
   public AlignTurret(Limelight limelight, Turret turret) {
     myLimelight = limelight;
     myTurret = turret;
@@ -35,6 +36,16 @@ public class AlignTurret extends CommandBase {
   @Override
   public void execute() {
     aimError = myLimelight.getX() / 29.8;
+  }
+
+  public void align(double aimError) {
+    double aimAdjust = Turret.kP * aimError;
+    if (aimError > 0.2) {
+      aimAdjust += Turret.AimMinCmd;
+    } else if (aimError < -0.2) {
+      aimAdjust -= Turret.AimMinCmd;
+    }
+    myTurret.turn(-aimAdjust);
   }
 
   // Called once the command ends or is interrupted.

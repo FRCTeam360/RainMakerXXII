@@ -34,7 +34,7 @@ public class Turret extends SubsystemBase {
     return instance;
   }
 
-  private static CANSparkMax turretMotor;
+  private CANSparkMax turretMotor;
 
   /** Creates a new Turret. */
   public Turret() {
@@ -46,22 +46,8 @@ public class Turret extends SubsystemBase {
     rightLimitSwitch = new DigitalInput(rightLimitSwitchPort);
   }
 
-  public void turnTurret(double aimError) {
-    if (leftLimitSwitch.get() || rightLimitSwitch.get()) {
-      turretMotor.set(0);
-    } else {
-      turretMotor.set(aimError);
-    }
-  }
-
-  public void align(double aimError) {
-    double aimAdjust = kP * aimError;
-    if (aimError > 0.2) {
-      aimAdjust += AimMinCmd;
-    } else if (aimError < -0.2) {
-      aimAdjust -= AimMinCmd;
-    }
-    this.turnTurret(-aimAdjust);
+  public void turn(double speed){
+    turretMotor.set(speed);
   }
 
   @Override
