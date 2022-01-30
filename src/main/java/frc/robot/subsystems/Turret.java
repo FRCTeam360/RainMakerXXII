@@ -5,7 +5,7 @@
 package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.CANIds.*;
@@ -21,13 +21,14 @@ public class Turret extends SubsystemBase {
   }
 
   private static CANSparkMax turretMotor;
-
-
+ 
   /** Creates a new Turret. */
   public Turret() {
     turretMotor = new CANSparkMax(turretMotorID, MotorType.kBrushless);
 
     turretMotor.restoreFactoryDefaults();
+
+    DigitalInput toplimitSwitch = new DigitalInput(0);
   }
 
   public void turnTurret(double speed) {

@@ -36,8 +36,8 @@ public final class Constants {
     }
 
     public static final class DigitalInputPorts {
-        public static final int toplimitSwitch = 0;
-        public static final int bottomlimitSwitch = 1;
+        public static final int toplimitSwitchPort = 0;
+        public static final int bottomlimitSwitchPort = 1;
     }
 }
 
