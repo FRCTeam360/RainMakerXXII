@@ -12,7 +12,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
 
-import static frc.robot.Constants.ShooterConstants.*;
+//import static frc.robot.Constants.ShooterConstants.*;
 import static frc.robot.Constants.CANIds.*;
 
 
@@ -48,6 +48,11 @@ public class Shooter extends SubsystemBase {
         shooterFollow.follow(shooterLead);
 
         shooterLead.setSmartCurrentLimit(40);
+        shooterFollow.setSmartCurrentLimit(40);
+
+        shooterLead.setIdleMode(IdleMode.kCoast);
+        shooterFollow.setIdleMode(IdleMode.kCoast);
+
     
         //shooterLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative , kPIDLoopIdx , kTimeOutMs);
     
@@ -74,14 +79,14 @@ public double getVelocity(){
   return shooterLead.getEncoder().getVelocity();
 }
 
-public void run () {
-  shooterPidController.setReference(targetVelocity, CANSparkMax.ControlType.kVelocity);
-}
+// public void run () {
+//   shooterPidController.setReference(targetVelocity, CANSparkMax.ControlType.kVelocity);
+// }
   @Override
 public void periodic() {
-  shooterReady = this.getVelocity() >= targetVelocity && this.getVelocity() <= targetVelocity;
-  SmartDashboard.putBoolean("Shooter Ready", shooterReady);
-  SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
+  // shooterReady = this.getVelocity() >= targetVelocity && this.getVelocity() <= targetVelocity;
+  // SmartDashboard.putBoolean("Shooter Ready", shooterReady);
+  // SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
   kP = SmartDashboard.getNumber("kP", 0.0);
   kI = SmartDashboard.getNumber("kI", 0.0);
   kD = SmartDashboard.getNumber("kD", 0.0);
@@ -91,6 +96,10 @@ public void periodic() {
 }
 public void setVelocity (double output) {
   shooterPidController.setReference(output, CANSparkMax.ControlType.kVelocity);
+
+  shooterReady = this.getVelocity() >= output && this.getVelocity() <= output;
+  SmartDashboard.putBoolean("Shooter Ready", shooterReady);
+  SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
 }
 
 public void setSpeed(double output){

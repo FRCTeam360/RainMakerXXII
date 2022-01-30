@@ -6,9 +6,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import static frc.robot.Constants.ShooterConstants.*;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.operatorInterface.DriverControl;
 import frc.robot.operatorInterface.OperatorControl;
 import frc.robot.subsystems.Shooter;
 
@@ -16,12 +13,10 @@ import frc.robot.subsystems.Shooter;
 public class ShooterJoy extends CommandBase {
 
     private final Shooter shooter;
-    private final DriverControl driverCont;
     private final OperatorControl operatorCont;
 
 public ShooterJoy(Shooter shooter) {
     this.shooter = shooter;
-    driverCont = DriverControl.getInstance();
     operatorCont = OperatorControl.getInstance();
     addRequirements(shooter);
 }
