@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
 import static frc.robot.Constants.ShooterConstants.*;
+import static frc.robot.Constants.CANIds.*;
 
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
