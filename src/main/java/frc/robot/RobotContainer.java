@@ -12,6 +12,8 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
+import edu.wpi.first.wpilibj2.command.Command;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -21,22 +23,27 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final DriveTrain driveTrain = new DriveTrain();
   public final Feeder feeder = Feeder.getInstance();
   public final Intake intake = Intake.getInstance();
 
   public final RunFeeder runFeeder = new RunFeeder();
   public final RunIntake runIntake = new RunIntake();
+  private final TankDrive tankDrive = new TankDrive(driveTrain);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
-    configureButtonBindings();
     configureDefaultCommands();
+    configureButtonBindings();
   }
 
+  //scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
     feeder.setDefaultCommand(runFeeder);
     intake.setDefaultCommand(runIntake);
+    driveTrain.setDefaultCommand(tankDrive);
   }
 
   /**
@@ -45,15 +52,18 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+
+  }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
-  //public Command getAutonomousCommand() {
+  public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    //return Command;
-  //}
+    return null;
+  }
 }

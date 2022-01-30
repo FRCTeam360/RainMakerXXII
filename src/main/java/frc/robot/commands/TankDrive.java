@@ -4,23 +4,33 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.operatorInterface.DriverControl;
+import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+import static frc.robot.Constants.OIConstants.*;
 /** An example command that uses an example subsystem. */
-public class ExampleCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ExampleSubsystem m_subsystem;
+public class TankDrive extends CommandBase {
+
+  private final DriveTrain myDriveTrain;
+
+  private final DriverControl driverCont;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ExampleCommand(ExampleSubsystem subsystem) {
-    m_subsystem = subsystem;
+  public TankDrive(DriveTrain driveTrain) {
+    
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    
+
+    myDriveTrain = driveTrain;
+
+    driverCont = DriverControl.getInstance();
+
+    addRequirements(myDriveTrain);
   }
 
   // Called when the command is initially scheduled.
@@ -29,7 +39,20 @@ public class ExampleCommand extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    //create deadzone and look into new documentation
+    if(Math.abs(driverCont.getRightY()) >= xboxDeadzone ) {
+      myDriveTrain.driveR((-1 * driverCont.getRightY())); 
+    }else {
+      myDriveTrain.driveR((0));
+    }
+
+    if(Math.abs(driverCont.getLeftY()) >= xboxDeadzone ) {
+      myDriveTrain.driveL((-1 * driverCont.getLeftY()));
+    }else {
+      myDriveTrain.driveL((0));
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
