@@ -13,21 +13,6 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    
-    public static final class DriveTrainConstants {
-        public static final int motorLLeadID = 1;
-        public static final int motorLFollow1ID = 2;
-        public static final int motorLFollow2ID = 3;
-        public static final int motorRLeadID = 4;
-        public static final int motorRFollow1ID = 5;
-        public static final int motorRFollow2ID = 6;
-    }
-
-    public static final class OIConstants {
-        public static final int contPort = 0; // port of xbox controller connected
-        public static final int driverContPort = 1; 
-        public static final double xboxDeadzone = .125;
-    }
 
     public static final class AutoConstants {
         //Conversions for the Falcons
@@ -36,5 +21,28 @@ public final class Constants {
         public static final double ticksToMeters = ( ((15.0/85.0)*(30.0/40.0)) / 1.0 ) * ( (pi * .1524) / 1.0 );
         public static final boolean kGyroReversed = true; //Characterization says this isn't necessary but it seems to perform better....
     }
-}
 
+    public static final class CANIds{
+        public static final int motorLLeadID = 1;
+        public static final int motorLFollow1ID = 2;
+        public static final int motorLFollow2ID = 3;
+        public static final int motorRLeadID = 4;
+        public static final int motorRFollow1ID = 5;
+        public static final int motorRFollow2ID = 6;
+        public static final int intakeId = 11;
+        public static final int feederId = 10;
+        public static final int towerId = 12;
+    }
+
+    public static final class OIConstants {
+        public static final int driverContPort = 0;
+        public static final int operatorContPort = 1;
+        public static final double xboxDeadzone = .125;
+    }
+
+    public static final class PneumaticConstants {
+        public static final int intakeForwardChannel = 0;
+        public static final int intakeReverseChannel = 1;
+
+    }
+}

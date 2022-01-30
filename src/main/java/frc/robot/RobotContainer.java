@@ -6,10 +6,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.TankDrive;
-import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.ExampleSubsystem;
+
+import frc.robot.Constants.OIConstants;
+
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
+
 import edu.wpi.first.wpilibj2.command.Command;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -21,14 +25,25 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain driveTrain = new DriveTrain();
+  public final Feeder feeder = Feeder.getInstance();
+  public final Intake intake = Intake.getInstance();
 
+  public final RunFeeder runFeeder = new RunFeeder();
+  public final RunIntake runIntake = new RunIntake();
   private final TankDrive tankDrive = new TankDrive(driveTrain);
-
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureDefaultCommands();
     configureButtonBindings();
+  }
+
+  //scheduler will run these commands when nothing else scheduled
+  private void configureDefaultCommands() {
+    feeder.setDefaultCommand(runFeeder);
+    intake.setDefaultCommand(runIntake);
+    driveTrain.setDefaultCommand(tankDrive);
   }
 
   /**
@@ -41,10 +56,6 @@ public class RobotContainer {
 
   }
 
-  //scheduler will run these commands when nothing else scheduled
-  private void configureDefaultCommands() {
-    driveTrain.setDefaultCommand(tankDrive);
-  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
