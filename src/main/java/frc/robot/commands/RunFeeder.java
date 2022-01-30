@@ -12,13 +12,11 @@ import frc.robot.operatorInterface.*;
 public class RunFeeder extends CommandBase {
 
   private final Feeder myFeeder;
-  private final Feeder myTower;
   private final OperatorControl operatorCont;
   
   public RunFeeder() {
     operatorCont = OperatorControl.getInstance();
     myFeeder = Feeder.getInstance();
-    myTower = Feeder.getInstance();
 
     addRequirements(myFeeder);
 
@@ -46,12 +44,12 @@ public class RunFeeder extends CommandBase {
     //runs tower
     if(operatorCont.getRightTrigger()){
       if(operatorCont.getXButton()){
-        myTower.runTower(-1.0);
+        myFeeder.runTower(-1.0);
       } else {
-        myTower.runTower(1.0);
+        myFeeder.runTower(1.0);
       }
     } else {
-      myTower.runTower(0.0);
+      myFeeder.runTower(0.0);
     }
   }
 
