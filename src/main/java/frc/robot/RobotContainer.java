@@ -7,7 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.Align;
+import frc.robot.commands.AlignTurret;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
@@ -33,7 +33,7 @@ public class RobotContainer {
   private final Limelight limelight = new Limelight();
   private final Turret turret = new Turret();
 
-  private final Align align = new Align(limelight, turret);
+  private final AlignTurret align = new AlignTurret(limelight, turret);
   public final Feeder feeder = Feeder.getInstance();
   public final Intake intake = Intake.getInstance();
 

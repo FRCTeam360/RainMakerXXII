@@ -9,9 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
 
-import static frc.robot.Constants.LimelightConstants.*;
-
-public class Align extends CommandBase {
+public class AlignTurret extends CommandBase {
 
   private Limelight myLimelight;
   private Turret myTurret;
@@ -19,7 +17,7 @@ public class Align extends CommandBase {
   private double aimAdjust;
   private double aimError;
 
-  public Align(Limelight limelight, Turret turret) {
+  public AlignTurret(Limelight limelight, Turret turret) {
     myLimelight = limelight;
     myTurret = turret;
 
@@ -37,14 +35,6 @@ public class Align extends CommandBase {
   @Override
   public void execute() {
     aimError = myLimelight.getX() / 29.8;
-    aimAdjust = kP * aimError;
-    if (myLimelight.getX() > .2) {
-      aimAdjust += AimMinCmd;
-    } else if (myLimelight.getX() < -.2) {
-      aimAdjust -= AimMinCmd;
-    }
-    myTurret.turnTurret(-aimAdjust);
-
   }
 
   // Called once the command ends or is interrupted.

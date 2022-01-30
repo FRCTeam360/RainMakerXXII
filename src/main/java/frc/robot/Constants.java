@@ -13,10 +13,6 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final class LimelightConstants {
-        public static final double AimMinCmd = 0.01;
-        public static final double kP = 0.6;
-    }
 
     public static final class CANIds{
         public static final int turretMotorID = 2;
@@ -36,8 +32,9 @@ public final class Constants {
     }
 
     public static final class DigitalInputPorts {
-        public static final int toplimitSwitchPort = 0;
-        public static final int bottomlimitSwitchPort = 1;
+        public static final int leftLimitSwitchPort = 0;
+        public static final int middleLimitSwitchPort = 1;
+        public static final int rightLimitSwitchPort = 2;
     }
 }
 
