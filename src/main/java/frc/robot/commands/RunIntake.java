@@ -19,7 +19,7 @@ public class RunIntake extends CommandBase {
   private final driverControl driverCont;
   private final operatorControl operatorCont;
 
-  public boolean intakeOut;
+  public boolean isIntakeOut;
 
   public RunIntake() {
     driverCont = driverControl.getInstance();
@@ -47,12 +47,12 @@ public class RunIntake extends CommandBase {
     }
 
     if(driverCont.getAButtonPressed() || operatorCont.getYButtonPressed()) {
-      if(intakeOut){
-        myIntake.intakeUp();
-        intakeOut = false;
+      if(isIntakeOut){
+        myIntake.intakeIn();
+        isIntakeOut = false;
       } else {
-        myIntake.intakeDown();
-        intakeOut = true;
+        myIntake.intakeOut();
+        isIntakeOut = true;
       }
     }
   }

@@ -37,7 +37,7 @@ public class RunFeeder extends CommandBase {
       } else {
         myFeeder.runFeeder(-1.0);
       }
-    }else{
+    } else {
       myFeeder.runFeeder(0.0);
     }
   }

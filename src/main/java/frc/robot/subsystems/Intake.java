@@ -48,10 +48,10 @@ public class Intake extends SubsystemBase{
         intake.set(speed);
     }
 
-    public void intakeUp() {
+    public void intakeIn() {
         intakeMover.set(DoubleSolenoid.Value.kForward);
     }
-    public void intakeDown() {
+    public void intakeOut() {
         intakeMover.set(DoubleSolenoid.Value.kReverse);
     }
 
