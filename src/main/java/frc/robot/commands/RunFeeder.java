@@ -4,19 +4,18 @@
 
 package frc.robot.commands;
 
-import static frc.robot.Constants.OIConstants.*;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
-import edu.wpi.first.wpilibj.XboxController;
+
+import frc.robot.operatorInterface.*;
 
 public class RunFeeder extends CommandBase {
 
-  private final XboxController cont;
   private final Feeder myFeeder;
+  private final OperatorControl operatorCont;
   
   public RunFeeder() {
-    cont = new XboxController(driverContPort);
+    operatorCont = OperatorControl.getInstance();
     myFeeder = Feeder.getInstance();
 
     addRequirements(myFeeder);
@@ -31,13 +30,13 @@ public class RunFeeder extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(cont.getBButton()){
-      if(!cont.getLeftStickButton()){
-        myFeeder.runFeeder(1.0);
-      } else {
+    if(operatorCont.getLeftTrigger()){
+      if(operatorCont.getAButton()){
         myFeeder.runFeeder(-1.0);
+      } else {
+        myFeeder.runFeeder(1.0);
       }
-    }else{
+    } else {
       myFeeder.runFeeder(0.0);
     }
   }

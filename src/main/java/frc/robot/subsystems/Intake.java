@@ -4,10 +4,7 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -48,10 +45,10 @@ public class Intake extends SubsystemBase{
         intake.set(speed);
     }
 
-    public void intakeUp() {
+    public void intakeIn() {
         intakeMover.set(DoubleSolenoid.Value.kForward);
     }
-    public void intakeDown() {
+    public void intakeOut() {
         intakeMover.set(DoubleSolenoid.Value.kReverse);
     }
 
