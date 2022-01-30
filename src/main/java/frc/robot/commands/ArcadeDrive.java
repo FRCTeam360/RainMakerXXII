@@ -5,7 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.operatorInterface.DriverControl;
 import frc.robot.subsystems.DriveTrain;
 
 
@@ -15,11 +15,11 @@ public class ArcadeDrive extends CommandBase {
 
   private final DriveTrain myDriveTrain;
 
-  private final XboxController driverCont;
+  private final DriverControl driverCont;
 
   /** Creates a new ArcadeDrive. */
   public ArcadeDrive(DriveTrain driveTrain) {
-    driverCont = new XboxController(driverContPort);
+    driverCont = DriverControl.getInstance();
 
     myDriveTrain = driveTrain;
 

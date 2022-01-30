@@ -4,9 +4,9 @@
 
 package frc.robot.commands;
 
+import frc.robot.operatorInterface.DriverControl;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.XboxController;
 
 import static frc.robot.Constants.OIConstants.*;
 /** An example command that uses an example subsystem. */
@@ -14,7 +14,7 @@ public class TankDrive extends CommandBase {
 
   private final DriveTrain myDriveTrain;
 
-  private final XboxController driverCont;
+  private final DriverControl driverCont;
 
   /**
    * Creates a new ExampleCommand.
@@ -28,8 +28,7 @@ public class TankDrive extends CommandBase {
 
     myDriveTrain = driveTrain;
 
-    //driver cont port issue below??
-    driverCont = new XboxController(driverContPort);
+    driverCont = DriverControl.getInstance();
 
     addRequirements(myDriveTrain);
   }

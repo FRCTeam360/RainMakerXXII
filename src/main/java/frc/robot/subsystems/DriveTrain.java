@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.DriveTrainConstants.*;
+import static frc.robot.Constants.CANIds.*;
 //import frc.robot.Constants.AutoConstants;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;

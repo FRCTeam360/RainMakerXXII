@@ -7,8 +7,6 @@
 
 package frc.robot.commands;
 
-import static frc.robot.Constants.OIConstants.*;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 import frc.robot.operatorInterface.*;
