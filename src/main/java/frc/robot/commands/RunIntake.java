@@ -9,17 +9,19 @@ package frc.robot.commands;
 
 import static frc.robot.Constants.OIConstants.*;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
+import frc.robot.operatorInterface.XboxCont;
 
 public class RunIntake extends CommandBase {
   
   private final Intake myIntake;
-  private final XboxController cont;
+  private final XboxCont driverCont;
+  private final XboxCont operatorCont;
 
   public RunIntake() {
-    cont = new XboxController(operatorContPort);
+    driverCont = new XboxCont(driverContPort);
+    operatorCont = new XboxCont(operatorContPort);
     myIntake = Intake.getInstance(); 
     addRequirements(myIntake);
   }
@@ -32,11 +34,11 @@ public class RunIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if ( cont.getAButton() ) {
-      if (cont.getYButton() ) {
-        myIntake.run(1.0);
+    if (driverCont.getLeftTrigger() || operatorCont.getLeftBumper()){
+      if (operatorCont.getXButton() || driverCont.getBButton() ) {
+        myIntake.run(-1.0);
       } else {
-        myIntake.run(-1.0); 
+        myIntake.run(1.0); 
       }
     } else {
       myIntake.run(0.0); 
