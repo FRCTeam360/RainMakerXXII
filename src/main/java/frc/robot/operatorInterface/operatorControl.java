@@ -31,4 +31,3 @@ public class OperatorControl extends XboxCont{
         return instance;
     }
 }
-
