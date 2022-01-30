@@ -19,6 +19,10 @@ public class Turret extends SubsystemBase {
   private DigitalInput rightLimitSwitch;
 
   public static final double kP = 0.6;
+  public static final double kI = 0;
+  public static final double kD = 0;
+  public static final double kF = 0;
+
   public static final double AimMinCmd = 0.01;
 
   private static Turret instance;
@@ -52,9 +56,9 @@ public class Turret extends SubsystemBase {
 
   public void align(double aimError) {
     double aimAdjust = kP * aimError;
-    if (aimError > .2) {
+    if (aimError > 0.2) {
       aimAdjust += AimMinCmd;
-    } else if (aimError < -.2) {
+    } else if (aimError < -0.2) {
       aimAdjust -= AimMinCmd;
     }
     this.turnTurret(-aimAdjust);
