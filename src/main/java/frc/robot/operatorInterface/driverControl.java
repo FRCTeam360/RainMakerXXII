@@ -12,11 +12,11 @@ import static frc.robot.Constants.OIConstants.*;
 /**
  * Add your docs here.
  */
-public class driverControl extends XboxCont{
+public class DriverControl extends XboxCont{
     
-    private static driverControl instance;
+    private static DriverControl instance;
 
-    private driverControl(){
+    private DriverControl(){
       super(driverContPort);
     }
 
@@ -24,9 +24,9 @@ public class driverControl extends XboxCont{
      * gets instance for the singleton
      * @return instance
      */
-    public static driverControl getInstance(){
+    public static DriverControl getInstance(){
         if(instance == null){
-            instance = new driverControl();
+            instance = new DriverControl();
         }
         return instance;
     }

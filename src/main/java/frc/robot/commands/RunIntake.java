@@ -16,14 +16,14 @@ import frc.robot.operatorInterface.*;
 public class RunIntake extends CommandBase {
   
   private final Intake myIntake;
-  private final driverControl driverCont;
-  private final operatorControl operatorCont;
+  private final DriverControl driverCont;
+  private final OperatorControl operatorCont;
 
   public boolean isIntakeOut;
 
   public RunIntake() {
-    driverCont = driverControl.getInstance();
-    operatorCont = operatorControl.getInstance();
+    driverCont = DriverControl.getInstance();
+    operatorCont = OperatorControl.getInstance();
     myIntake = Intake.getInstance(); 
     addRequirements(myIntake);
   }

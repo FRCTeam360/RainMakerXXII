@@ -12,10 +12,10 @@ import frc.robot.operatorInterface.*;
 public class RunFeeder extends CommandBase {
 
   private final Feeder myFeeder;
-  private final operatorControl operatorCont;
+  private final OperatorControl operatorCont;
   
   public RunFeeder() {
-    operatorCont = operatorControl.getInstance();
+    operatorCont = OperatorControl.getInstance();
     myFeeder = Feeder.getInstance();
 
     addRequirements(myFeeder);
