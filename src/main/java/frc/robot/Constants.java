@@ -17,8 +17,22 @@ public final class Constants {
         public static final double AimMinCmd = 0.01;
         public static final double kP = 0.6;
     }
-    
-    public static final class TurretConstants {
+
+    public static final class CANIds{
         public static final int turretMotorID = 2;
+        public static final int intakeId = 11;
+        public static final int feederId = 10;
+        public static final int towerId = 12;
+    }
+
+    public static final class OIConstants {
+        public static final int driverContPort = 0;
+        public static final int operatorContPort = 1;
+    }
+
+    public static final class PneumaticConstants {
+        public static final int intakeForwardChannel = 0;
+        public static final int intakeReverseChannel = 1;
+
     }
 }
