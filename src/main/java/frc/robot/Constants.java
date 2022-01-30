@@ -18,8 +18,6 @@ package frc.robot;
  */
 public final class Constants {
     public static final class ShooterConstants {
-        public static final int shooterLeadId = 9; // Shoot1
-        public static final int shooterFollowId = 10; // Shoot2
 
         // Old data, need to tune
         public static final int kSlotIdx = 0;
@@ -38,5 +36,24 @@ public final class Constants {
         public static final double aVal = 2.697; // Quad Ratic regression values
         public static final double bVal = -52.912;
         public static final double cVal = 14815.146;
+    }
+    
+    public static final class CANIds{
+        public static final int shooterLeadId = 8;
+        public static final int shooterFollowId = 9;
+        public static final int intakeId = 10;
+        public static final int feederId = 11;
+        public static final int towerId = 12;
+    }
+
+    public static final class OIConstants {
+        public static final int driverContPort = 0;
+        public static final int operatorContPort = 1;
+    }
+
+    public static final class PneumaticConstants {
+        public static final int intakeForwardChannel = 0;
+        public static final int intakeReverseChannel = 1;
+
     }
 }

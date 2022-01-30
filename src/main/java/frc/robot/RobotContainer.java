@@ -6,13 +6,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.subsystems.Shooter;
-import frc.robot.commands.ShooterJoy;
-import frc.robot.commands.SetShoot;
+
+import frc.robot.Constants.OIConstants;
+
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,16 +28,26 @@ public class RobotContainer {
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Shooter shooter = new Shooter();
+  public final Feeder feeder = Feeder.getInstance();
+  public final Intake intake = Intake.getInstance();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final ShooterJoy shooterJoy = new ShooterJoy(shooter);
   private final SetShoot setShoot = new SetShoot(shooter);
-
+  public final RunFeeder runFeeder = new RunFeeder();
+  public final RunIntake runIntake = new RunIntake();
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureDefaultCommands();
     configureButtonBindings();
+  }
+
+  private void configureDefaultCommands() {
+    feeder.setDefaultCommand(runFeeder);
+    intake.setDefaultCommand(runIntake);
+    shooter.setDefaultCommand(setShoot);
   }
 
   /**
@@ -45,10 +56,6 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-
-  private void configureDefaultCommands() {
-    shooter.setDefaultCommand(setShoot);
-  }
 
   private void configureButtonBindings() {
     new JoystickButton(driverCont, 2).whenHeld(shooterJoy);
@@ -59,8 +66,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  //public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
-  }
+    //return Command;
+  //}
 }
