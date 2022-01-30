@@ -30,6 +30,7 @@ public class RunFeeder extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //runs feeder
     if(operatorCont.getLeftTrigger()){
       if(operatorCont.getAButton()){
         myFeeder.runFeeder(-1.0);
@@ -38,6 +39,17 @@ public class RunFeeder extends CommandBase {
       }
     } else {
       myFeeder.runFeeder(0.0);
+    }
+
+    //runs tower
+    if(operatorCont.getRightTrigger()){
+      if(operatorCont.getXButton()){
+        myFeeder.runTower(-1.0);
+      } else {
+        myFeeder.runTower(1.0);
+      }
+    } else {
+      myFeeder.runTower(0.0);
     }
   }
 
