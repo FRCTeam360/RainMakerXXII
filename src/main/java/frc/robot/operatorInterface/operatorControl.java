@@ -7,7 +7,6 @@
 
 package frc.robot.operatorInterface;
 
-import edu.wpi.first.wpilibj.XboxController;
 import static frc.robot.Constants.OIConstants.*;
 
 /**
