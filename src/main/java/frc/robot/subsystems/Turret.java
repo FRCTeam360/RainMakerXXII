@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,6 +26,10 @@ public class Turret extends SubsystemBase {
 
   public static final double AimMinCmd = 0.01;
 
+  public static final double gearBoxRatio = 1/20;
+  public static final double pulleyRatio = 1.5/17.5;
+  public static final double degreesPerRotation = 360/1;
+
   private static Turret instance;
 
   public static Turret getInstance() {
@@ -44,6 +49,19 @@ public class Turret extends SubsystemBase {
 
     leftLimitSwitch = new DigitalInput(leftLimitSwitchPort);
     rightLimitSwitch = new DigitalInput(rightLimitSwitchPort);
+  }
+
+  public double getAngle(){
+    double encoderPosition = turretMotor.getEncoder().getPosition();
+    return encoderPosition * gearBoxRatio * pulleyRatio * degreesPerRotation;
+  }
+
+  public void zero(){
+    if(middleLimitSwitch.get()){
+      turretMotor.set(0);
+    } else {
+
+    }
   }
 
   public void turn(double speed){
