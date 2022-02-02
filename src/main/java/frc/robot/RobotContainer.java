@@ -6,17 +6,16 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.AlignTurret;
-import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Turret;
+
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.Constants.OIConstants;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+
+import edu.wpi.first.wpilibj2.command.Command;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -32,17 +31,16 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Limelight limelight = new Limelight();
   private final Turret turret = new Turret();
-
-  private final AlignTurret align = new AlignTurret(limelight, turret);
+  private final DriveTrain driveTrain = new DriveTrain();
   public final Feeder feeder = Feeder.getInstance();
   public final Intake intake = Intake.getInstance();
 
+  private final AlignTurret align = new AlignTurret(limelight, turret);
   public final RunFeeder runFeeder = new RunFeeder();
   public final RunIntake runIntake = new RunIntake();
-
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
+  private final TankDrive tankDrive = new TankDrive(driveTrain);
+  
+  /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     configureDefaultCommands();
     // Configure the button bindings
@@ -50,10 +48,12 @@ public class RobotContainer {
 
   }
 
+  //scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
     turret.setDefaultCommand(align);
     feeder.setDefaultCommand(runFeeder);
     intake.setDefaultCommand(runIntake);
+    driveTrain.setDefaultCommand(tankDrive);
   }
 
   /**
@@ -72,8 +72,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  // public Command getAutonomousCommand() {
-  // // An ExampleCommand will run in autonomous
-  // return m_autoCommand;
-  // }
+  public Command getAutonomousCommand() {
+    // An ExampleCommand will run in autonomous
+    return null;
+  }
 }
