@@ -33,6 +33,16 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 // import com.ctre.phoenix.motorcontrol.TalonFXControlMode.*;
 
 public class DriveTrain extends SubsystemBase {
+  private static DriveTrain instance;
+/**
+ * gets instance for the singleton
+ * @return instance
+ */
+public static DriveTrain getInstance(){
+    if(instance == null){
+        instance = new DriveTrain();
+    }
+    return instance;}
   
   private static WPI_TalonFX motorLLead;
   private static WPI_TalonFX motorLFollow1;
@@ -189,5 +199,10 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+
+    
+
+
+
   }
 }
