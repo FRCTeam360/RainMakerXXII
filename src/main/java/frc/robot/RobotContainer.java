@@ -8,11 +8,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 
 import edu.wpi.first.wpilibj2.command.Command;
-
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.operatorInterface.OperatorControl;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -28,6 +29,8 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  private final OperatorControl operatorCont = OperatorControl.getInstance();
+
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Limelight limelight = new Limelight();
   private final Turret turret = new Turret();
@@ -39,7 +42,7 @@ public class RobotContainer {
   public final RunFeeder runFeeder = new RunFeeder();
   public final RunIntake runIntake = new RunIntake();
   private final TankDrive tankDrive = new TankDrive(driveTrain);
-  
+  private final TurretManual turretManual = new TurretManual(turret);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     configureDefaultCommands();
@@ -65,6 +68,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    new JoystickButton(operatorCont, 8).whenHeld(turretManual);
   }
 
   /**
