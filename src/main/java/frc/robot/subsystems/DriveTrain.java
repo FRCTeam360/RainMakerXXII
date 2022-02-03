@@ -64,7 +64,7 @@ public static DriveTrain getInstance(){
   private final MotorControllerGroup rightGroup;
 
   /** Creates a new ExampleSubsystem. */
-  public DriveTrain() {
+  private DriveTrain() {
     motorLLead = new WPI_TalonFX(motorLLeadID);
     motorLFollow1 = new WPI_TalonFX(motorLFollow1ID);
     motorLFollow2 = new WPI_TalonFX(motorLFollow2ID);

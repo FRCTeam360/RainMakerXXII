@@ -24,13 +24,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final DriveTrain driveTrain = new DriveTrain();
+  private final DriveTrain driveTrain =  DriveTrain.getInstance();
   public final Feeder feeder = Feeder.getInstance();
   public final Intake intake = Intake.getInstance();
 
   public final RunFeeder runFeeder = new RunFeeder();
   public final RunIntake runIntake = new RunIntake();
-  private final TankDrive tankDrive = new TankDrive(driveTrain);
+  private final TankDrive tankDrive = new TankDrive();
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
