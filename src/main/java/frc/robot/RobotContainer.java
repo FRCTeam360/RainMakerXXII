@@ -37,8 +37,8 @@ public class RobotContainer {
   public final Feeder feeder = Feeder.getInstance();
   public final Intake intake = Intake.getInstance();
 
-  public final RunFeeder runFeeder = new RunFeeder();
-  public final RunIntake runIntake = new RunIntake();
+  public final RunFeeder runFeeder = new RunFeeder(feeder);
+  public final RunIntake runIntake = new RunIntake(intake);
   private final TankDrive tankDrive = new TankDrive(driveTrain);
   private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
   private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);

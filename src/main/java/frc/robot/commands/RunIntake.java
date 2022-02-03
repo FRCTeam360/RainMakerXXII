@@ -19,7 +19,7 @@ public class RunIntake extends CommandBase {
 
   public boolean isIntakeOut;
 
-  public RunIntake() {
+  public RunIntake(Intake intake) {
     driverCont = DriverControl.getInstance();
     operatorCont = OperatorControl.getInstance();
     myIntake = Intake.getInstance(); 
@@ -58,6 +58,7 @@ public class RunIntake extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    myIntake.run(0);
   }
 
   // Returns true when the command should end.

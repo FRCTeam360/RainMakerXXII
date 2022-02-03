@@ -14,7 +14,7 @@ public class RunFeeder extends CommandBase {
   private final Feeder myFeeder;
   private final OperatorControl operatorCont;
   
-  public RunFeeder() {
+  public RunFeeder(Feeder feeder) {
     operatorCont = OperatorControl.getInstance();
     myFeeder = Feeder.getInstance();
 
@@ -55,7 +55,9 @@ public class RunFeeder extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    myFeeder.runBoth(0);
+  }
 
   // Returns true when the command should end.
   @Override
