@@ -19,7 +19,7 @@ public class RunIntake extends CommandBase {
 
   public boolean isIntakeOut;
 
-  public RunIntake(Intake intake) {
+  public RunIntake() {
     driverCont = DriverControl.getInstance();
     operatorCont = OperatorControl.getInstance();
     myIntake = Intake.getInstance(); 

@@ -14,7 +14,7 @@ public class RunFeeder extends CommandBase {
   private final Feeder myFeeder;
   private final OperatorControl operatorCont;
   
-  public RunFeeder(Feeder feeder) {
+  public RunFeeder() {
     operatorCont = OperatorControl.getInstance();
     myFeeder = Feeder.getInstance();
 
