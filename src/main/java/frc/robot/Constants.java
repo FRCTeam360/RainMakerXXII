@@ -22,6 +22,12 @@ public final class Constants {
         public static final boolean kGyroReversed = true; //Characterization says this isn't necessary but it seems to perform better....
     }
 
+    public static final class ClimberConstants {
+            public static final int erectorMotorId = 12;
+            public static final int motorLeftId = 6;
+            public static final int motorRightId = 5;
+    }
+
     public static final class CANIds{
         public static final int motorLLeadID = 1;
         public static final int motorLFollow1ID = 2;
