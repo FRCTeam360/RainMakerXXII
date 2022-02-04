@@ -45,7 +45,7 @@ public class Shooter extends SubsystemBase {
         shooterLead.restoreFactoryDefaults();
         shooterFollow.restoreFactoryDefaults();
     
-        shooterFollow.follow(shooterLead);
+        shooterFollow.follow(shooterLead, true);
 
         shooterLead.setSmartCurrentLimit(40);
         shooterFollow.setSmartCurrentLimit(40);

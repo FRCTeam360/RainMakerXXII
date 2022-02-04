@@ -39,7 +39,7 @@ public final class Constants {
     }
     
     public static final class CANIds{
-        public static final int shooterLeadId = 8;
+        public static final int shooterLeadId = 7;
         public static final int shooterFollowId = 9;
         public static final int intakeId = 10;
         public static final int feederId = 11;
