@@ -48,6 +48,14 @@ public class AlignTurret extends CommandBase {
     myTurret.turn(-aimAdjust);
   }
 
+  public void turnRight(){
+    myTurret.turn(1);
+  }
+
+  public void turnLeft(){
+    myTurret.turn(-1);
+  }
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}

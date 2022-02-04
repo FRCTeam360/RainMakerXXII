@@ -59,9 +59,13 @@ public class Turret extends SubsystemBase {
   public void zero(){
     if(middleLimitSwitch.get()){
       turretMotor.set(0);
+      turretMotor.getEncoder().setPosition(0);
+    } else {
+      if(this.getAngle() > 135){
+
     } else {
 
-    }
+    }}
   }
 
   public void turn(double speed){
