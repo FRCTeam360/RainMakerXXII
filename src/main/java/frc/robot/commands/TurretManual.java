@@ -15,7 +15,7 @@ public class TurretManual extends CommandBase {
   private OperatorControl operatorCont;
   private Turret myTurret;
   /** Creates a new TurretManual. */
-  public TurretManual(Turret turret) {
+  public TurretManual() {
 
     myTurret = Turret.getInstance();
     operatorCont = OperatorControl.getInstance();
