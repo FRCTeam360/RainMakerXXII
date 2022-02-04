@@ -11,23 +11,42 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import static frc.robot.Constants.ClimberConstants.*;
 
 /** Add your docs here. */
 public class Climber extends SubsystemBase {
 
-    private static TalonSRX erector;
-
     private static CANSparkMax motorLeft;
     private static CANSparkMax motorRight;
     
     public Climber() {
-        erector = new TalonSRX(erectorMotorId);
         motorLeft = new CANSparkMax(motorLeftId, MotorType.kBrushless);
         motorRight = new CANSparkMax(motorRightId, MotorType.kBrushless);
-        //I don't know what motors are being used for any of the three preceding types, but I will update once I find out.
+        
+        motorLeft.setInverted(true);
+        motorRight.setInverted(true);
+
+        motorLeft.setIdleMode(IdleMode.kBrake);
+        motorRight.setIdleMode(IdleMode.kBrake);
+
+        //Motors will either be falcon or neo, not sure yet but i can change the code if need be
+    }
+    public void runLeftClimber (double pPow) { motorLeft.set( Math.abs(pPow));}
+    public void runRightClimber (double pPow) { motorRight.set( Math.abs(pPow));}
+
+
+    public void resetClimberEncoders() { motorLeft.getEncoder().setPosition(0); motorRight.getEncoder().setPosition(0); }
+   
+    public double getLeftPos () { return motorLeft.getEncoder().getPosition();}
+    public double getRightPos() { return motorRight.getEncoder().getPosition();}
+
+    public void printouts() {
+        SmartDashboard.putNumber("LC Temp", motorLeft.getMotorTemperature());
+        SmartDashboard.putNumber("RC Temp", motorRight.getMotorTemperature());
+        SmartDashboard.putNumber("LC Temp", motorLeft.getOutputCurrent());
+        SmartDashboard.putNumber("RC Temp", motorRight.getOutputCurrent());
+        //not sure if these will be needed, but these are SmartDashboard values in the RainMakerXXI code
     }
 
 }
+
