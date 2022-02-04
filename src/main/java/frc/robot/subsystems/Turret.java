@@ -32,6 +32,9 @@ public class Turret extends SubsystemBase {
 
   private static Turret instance;
 
+  private double previousAngle;
+  private double integral;
+
   public static Turret getInstance() {
     if (instance == null) {
       instance = new Turret();
@@ -70,6 +73,19 @@ public class Turret extends SubsystemBase {
 
   public void turn(double speed){
     turretMotor.set(speed);
+  }
+
+  public void angleTurn(double inputAngle){
+    double angle = this.getAngle();
+    double error = inputAngle - angle;
+
+    double deriv = angle - previousAngle;
+    previousAngle = angle;
+    integral = integral + error;
+
+    double turretInput = (error * Turret.kP) + (integral * Turret.kI) - (deriv * Turret.kD);
+
+    this.turn(turretInput);
   }
 
   @Override

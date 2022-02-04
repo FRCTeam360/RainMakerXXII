@@ -17,12 +17,9 @@ public class AlignTurret extends CommandBase {
   private double aimAdjust;
   private double aimError;
 
-
   public AlignTurret(Limelight limelight, Turret turret) {
     myLimelight = limelight;
     myTurret = turret;
-
-    aimAdjust = 0;
     aimError = 0;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(myLimelight, turret);
@@ -38,9 +35,9 @@ public class AlignTurret extends CommandBase {
     aimError = myLimelight.getX() / 29.8;
   }
 
-  public void align(double aimError) {
-    double aimAdjust = Turret.kP * aimError;
-    if (aimError > 0.2) {
+  public void align() {
+    double aimAdjust = Turret.kP * this.aimError;
+    if (this.aimError > 0.2) {
       aimAdjust += Turret.AimMinCmd;
     } else if (aimError < -0.2) {
       aimAdjust -= Turret.AimMinCmd;
@@ -48,13 +45,7 @@ public class AlignTurret extends CommandBase {
     myTurret.turn(-aimAdjust);
   }
 
-  public void turnRight(){
-    myTurret.turn(1);
-  }
-
-  public void turnLeft(){
-    myTurret.turn(-1);
-  }
+  
 
   // Called once the command ends or is interrupted.
   @Override
