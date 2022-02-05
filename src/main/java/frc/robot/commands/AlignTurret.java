@@ -17,6 +17,9 @@ public class AlignTurret extends CommandBase {
   private double aimAdjust;
   private double aimError;
 
+  public enum Direction{LEFT, MIDDLE, RIGHT};
+  public enum Mode{SEEK_RIGHT, SEEK_LEFT, TARGET_IN_VIEW, LOCKED_ON_TARGET, WAIT_TO_SEEK};
+
   public AlignTurret(Limelight limelight, Turret turret) {
     myLimelight = limelight;
     myTurret = turret;
@@ -45,9 +48,17 @@ public class AlignTurret extends CommandBase {
     myTurret.turn(-aimAdjust);
   }
 
-  
+  public void seek(Direction direction){
+    switch(direction){
+      case LEFT:
+        myTurret.turn(-1);
+        case RIGHT:
+        default: 
+        myTurret.turn(1);
+    }
+  }
 
-  // Called once the command ends or is interrupted.
+  // Called once the commandd ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
