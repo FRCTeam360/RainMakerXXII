@@ -79,6 +79,11 @@ public class AlignTurret extends CommandBase {
   }
 
   public void seek(Direction direction) {
+    if (myLimelight.validTarget()) {
+      this.mode = Mode.TARGET_IN_VIEW;
+      return;
+    }
+
     switch (direction) {
     case LEFT:
       myTurret.turn(-1);
