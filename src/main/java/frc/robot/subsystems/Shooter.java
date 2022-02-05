@@ -35,6 +35,9 @@ public class Shooter extends SubsystemBase {
   private double kD = 0;
   private double kF = 0;
 
+  private double previousVelocity;
+  private double integral;
+
 
     public Shooter() {
         shooterLead = new CANSparkMax(shooterLeadId, MotorType.kBrushless);
@@ -94,13 +97,13 @@ public void periodic() {
 
   updatePID();
 }
-public void setVelocity (double output) {
-  shooterPidController.setReference(output, CANSparkMax.ControlType.kVelocity);
+// public void setVelocity (double output) {
+//   shooterPidController.setReference(output, CANSparkMax.ControlType.kVelocity);
 
-  shooterReady = this.getVelocity() >= output && this.getVelocity() <= output;
-  SmartDashboard.putBoolean("Shooter Ready", shooterReady);
-  SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
-}
+//   shooterReady = this.getVelocity() >= output && this.getVelocity() <= output;
+//   SmartDashboard.putBoolean("Shooter Ready", shooterReady);
+//   SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
+// }
 
 public void setSpeed(double output){
   shooterLead.set(output);
@@ -111,6 +114,16 @@ public void updatePID(){
   // kI = SmartDashboard.getNumber("kI", 0.0);
   // kD = SmartDashboard.getNumber("kD", 0.0);
   // kF = SmartDashboard.getNumber("kF", 0.0);
+}
+
+public void setVelocity(double velocityTarget){
+  double error = velocityTarget - this.getVelocity();
+  
+  double deriv = velocityTarget - previousVelocity;
+  previousVelocity = this.getVelocity();
+  integral = integral + error;
+
+  this.setSpeed( (error * kP) + (integral * kI) * (deriv * kD));
 }
 
 
