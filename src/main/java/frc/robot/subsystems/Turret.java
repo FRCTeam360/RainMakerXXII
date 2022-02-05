@@ -35,6 +35,7 @@ public class Turret extends SubsystemBase {
   private double previousAngle;
   private double integral;
 
+
   public static Turret getInstance() {
     if (instance == null) {
       instance = new Turret();
@@ -65,9 +66,7 @@ public class Turret extends SubsystemBase {
       turretMotor.getEncoder().setPosition(0);
     } else {
       if(this.getAngle() > 135){
-
     } else {
-
     }}
   }
 
@@ -86,6 +85,14 @@ public class Turret extends SubsystemBase {
     double turretInput = (error * Turret.kP) + (integral * Turret.kI) - (deriv * Turret.kD);
 
     this.turn(turretInput);
+  }
+
+  public void resetEncoderTicks(){
+    turretMotor.getEncoder().setPosition(0);
+  }
+
+  public boolean checkMiddleLimitSwitch(){
+    return middleLimitSwitch.get();
   }
 
   @Override

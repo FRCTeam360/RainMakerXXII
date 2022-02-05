@@ -17,8 +17,10 @@ public class AlignTurret extends CommandBase {
   private double aimAdjust;
   private double aimError;
 
-  public enum Direction{LEFT, MIDDLE, RIGHT};
-  public enum Mode{SEEK_RIGHT, SEEK_LEFT, TARGET_IN_VIEW, LOCKED_ON_TARGET, WAIT_TO_SEEK};
+  public enum Direction{LEFT, RIGHT};
+  public enum Mode{SEEK_RIGHT, SEEK_LEFT, TARGET_IN_VIEW, LOCKED_ON_TARGET, WAIT_TO_SEEK_RIGHT, WAIT_TO_SEEK_LEFT, CALLIBRATE};
+
+  private Mode mode;
 
   public AlignTurret(Limelight limelight, Turret turret) {
     myLimelight = limelight;
@@ -36,6 +38,28 @@ public class AlignTurret extends CommandBase {
   @Override
   public void execute() {
     aimError = myLimelight.getX() / 29.8;
+
+    switch(this.mode){
+      case SEEK_RIGHT:
+        this.seek(Direction.RIGHT);
+        break;
+      case SEEK_LEFT:
+        this.seek(Direction.LEFT);
+        break;
+      case TARGET_IN_VIEW:
+        case LOCKED_ON_TARGET:
+          this.align();
+          break;
+      case WAIT_TO_SEEK_RIGHT:
+        this.waitToSeek(Direction.RIGHT);
+        break;
+      case WAIT_TO_SEEK_LEFT:
+        this.waitToSeek(Direction.LEFT);
+      case CALLIBRATE:
+        this.callibrate();
+        break;
+      default:
+    }
   }
 
   public void align() {
@@ -52,9 +76,41 @@ public class AlignTurret extends CommandBase {
     switch(direction){
       case LEFT:
         myTurret.turn(-1);
-        case RIGHT:
+      case RIGHT:
         default: 
-        myTurret.turn(1);
+          myTurret.turn(1);
+    }
+  }
+
+  public void setTurretMode(Mode mode){
+    this.mode = mode;
+  }
+
+  public void callibrate(){
+    if(myTurret.checkMiddleLimitSwitch()){
+      myTurret.resetEncoderTicks();
+      myTurret.turn(0);
+    } else {
+      myTurret.turn(0.3);
+    }
+  }
+
+  public void waitToSeek(Direction direction){
+    myTurret.turn(0);
+    double currentTX = myLimelight.getX();
+
+    if(direction == Direction.LEFT){
+      if(currentTX > 10){
+        this.mode = Mode.SEEK_RIGHT;
+      } else {
+        this.mode = Mode.TARGET_IN_VIEW;
+      }
+    } else {
+      if(currentTX < 10){
+        this.mode = Mode.SEEK_LEFT;
+      } else {
+        this.mode = Mode.TARGET_IN_VIEW;
+      }
     }
   }
 
