@@ -29,8 +29,8 @@ public void initialize() {
 @Override   // Called every time the scheduler runs while the command is scheduled.
 public void execute() {
     // if (cont.getXButton()){
-        shooter.setSpeed(operatorCont.getLeftY() * 0.60 ); 
-        SmartDashboard.putNumber("Shoot percent", operatorCont.getLeftY() * 0.60);
+        shooter.setSpeed(operatorCont.getLeftY() * 0.50); 
+        SmartDashboard.putNumber("Shoot percent", operatorCont.getLeftY() * 0.50);
         SmartDashboard.putNumber("Actual velocity", shooter.getVelocity());
     // } else{
     //     shooter.setVelocity(cont.getLeftY() * 5500);

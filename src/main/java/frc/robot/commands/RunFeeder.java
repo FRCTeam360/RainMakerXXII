@@ -33,9 +33,9 @@ public class RunFeeder extends CommandBase {
     //runs feeder
     if(operatorCont.getLeftTrigger()){
       if(operatorCont.getAButton()){
-        myFeeder.runFeeder(-1.0);
+        myFeeder.runFeeder(-0.5);
       } else {
-        myFeeder.runFeeder(1.0);
+        myFeeder.runFeeder(0.5);
       }
     } else {
       myFeeder.runFeeder(0.0);

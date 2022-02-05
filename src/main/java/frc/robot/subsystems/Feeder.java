@@ -20,9 +20,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Feeder extends SubsystemBase {
 
-  DigitalInput topSensor = new DigitalInput(0);
-  DigitalInput bottomSensor = new DigitalInput(1);
-  DigitalInput middleSensor = new DigitalInput(2);
+  // DigitalInput topSensor = new DigitalInput(0);
+  // DigitalInput bottomSensor = new DigitalInput(1);
+  // DigitalInput middleSensor = new DigitalInput(2);
   // We have to create a third input for the middle sensor
 
 

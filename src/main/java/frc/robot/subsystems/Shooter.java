@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkMaxRelativeEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -12,7 +13,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
 
-//import static frc.robot.Constants.ShooterConstants.*;
+import static frc.robot.Constants.ShooterConstants.*;
 import static frc.robot.Constants.CANIds.*;
 
 
@@ -27,13 +28,14 @@ public class Shooter extends SubsystemBase {
   private CANSparkMax shooterLead;
   private CANSparkMax shooterFollow;
   private SparkMaxPIDController shooterPidController;
+  private RelativeEncoder shooterEncoder;
 
   public boolean shooterReady;
 
-  private double kP = 0;
-  private double kI = 0;
-  private double kD = 0;
-  private double kF = 0;
+  public double kP = 0;
+  public double kI = 0;
+  public double kD = 0;
+  public double kF = 0;
 
 
     public Shooter() {
@@ -41,6 +43,8 @@ public class Shooter extends SubsystemBase {
         shooterFollow = new CANSparkMax(shooterFollowId, MotorType.kBrushless);
 
         shooterPidController = shooterLead.getPIDController();
+
+        shooterEncoder = shooterLead.getEncoder();
 
         shooterLead.restoreFactoryDefaults();
         shooterFollow.restoreFactoryDefaults();
@@ -67,11 +71,7 @@ public class Shooter extends SubsystemBase {
         SmartDashboard.putNumber("kF", 0.0);
 
         // set PID coefficients
-        shooterPidController.setP(kP, 0);
-        shooterPidController.setI(kI, 0);
-        shooterPidController.setD(kD, 0);
-        shooterPidController.setFF(kF);
-        shooterPidController.setOutputRange(-1, 1);
+
     }
 
 
@@ -92,10 +92,18 @@ public void periodic() {
   kD = SmartDashboard.getNumber("kD", 0.0);
   kF = SmartDashboard.getNumber("kF", 0.0);
 
+  shooterPidController.setP(kP, 0);
+  shooterPidController.setI(kI, 0);
+  shooterPidController.setD(kD, 0);
+  shooterPidController.setFF(kF);
+  shooterPidController.setOutputRange(-1, 1);
+
   updatePID();
 }
 public void setVelocity (double output) {
-  shooterPidController.setReference(output, CANSparkMax.ControlType.kVelocity);
+  shooterPidController.setReference(output * -1, CANSparkMax.ControlType.kVelocity);
+
+  System.out.println("output  " + output);
 
   shooterReady = this.getVelocity() >= output && this.getVelocity() <= output;
   SmartDashboard.putBoolean("Shooter Ready", shooterReady);
