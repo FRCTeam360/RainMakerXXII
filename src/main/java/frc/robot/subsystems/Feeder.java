@@ -5,8 +5,14 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.operatorInterface.XboxCont;
+import edu.wpi.first.wpilibj.CAN;
+import edu.wpi.first.wpilibj.DigitalInput;
+
 
 import static frc.robot.Constants.CANIds.*;
+
+import java.io.DataInput;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -14,12 +20,26 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Feeder extends SubsystemBase {
 
+  DigitalInput topSensor = new DigitalInput(0);
+  DigitalInput bottomSensor = new DigitalInput(1);
+  DigitalInput middleSensor = new DigitalInput(2);
+  // We have to create a third input for the middle sensor
+
+
+
   private CANSparkMax feeder;
   private CANSparkMax tower;
 
   private static Feeder instance;
 
   private Feeder() {
+
+    DigitalInput topSensor = new DigitalInput(0);
+    DigitalInput bottomSensor = new DigitalInput(1);
+    DigitalInput middleSensor = new DigitalInput(2);
+
+
+
     feeder = new CANSparkMax(feederId, MotorType.kBrushless);
     tower = new CANSparkMax(towerId, MotorType.kBrushless);
 
@@ -46,6 +66,8 @@ public class Feeder extends SubsystemBase {
   public void runFeeder (double speed) {
     feeder.set(speed);
   }
+
+
 
   public void runTower (double speed) {
     tower.set(speed);
