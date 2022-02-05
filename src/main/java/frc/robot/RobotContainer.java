@@ -53,7 +53,7 @@ public class RobotContainer {
   private void configureDefaultCommands() {
     feeder.setDefaultCommand(runFeeder);
     intake.setDefaultCommand(runIntake);
-    shooter.setDefaultCommand(shooterJoy);
+    shooter.setDefaultCommand(setShoot);
   }
 
   /**
@@ -64,7 +64,7 @@ public class RobotContainer {
    */
 
   private void configureButtonBindings() {
-    //new JoystickButton(operatorCont, 7).whenHeld(shooterJoy);
+    new JoystickButton(operatorCont, 7).whenHeld(shooterJoy);
   }
 
   /**

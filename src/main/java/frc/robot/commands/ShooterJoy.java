@@ -28,7 +28,7 @@ public void initialize() {
 @Override   // Called every time the scheduler runs while the command is scheduled.
 public void execute() {
     // if (cont.getXButton()){
-        shooter.setSpeed(operatorCont.getLeftY() * 1.0 ); 
+        shooter.setSpeed(operatorCont.getLeftY() * 0.45 ); 
     // } else{
     //     shooter.setVelocity(cont.getLeftY() * 5500);
     // }

@@ -56,7 +56,7 @@ public class Shooter extends SubsystemBase {
     
         //shooterLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative , kPIDLoopIdx , kTimeOutMs);
     
-        shooterLead.setInverted(true);
+        shooterLead.setInverted(false);
         shooterFollow.setInverted(false);
     
         //shooterLead.setSensorPhase(true); //the Follower isn't harvested for it's encoder therefor rotation doesn't need to be modified
