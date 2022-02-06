@@ -69,6 +69,11 @@ public class Turret extends SubsystemBase {
     
   }
 
+  public double getEncoderTick(){
+    return turretMotor.getEncoder().getPosition();
+    
+
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
