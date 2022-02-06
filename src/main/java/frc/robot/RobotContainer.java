@@ -37,19 +37,17 @@ public class RobotContainer {
   private final OperatorControl operatorCont = OperatorControl.getInstance();
   // The robot's subsystems and commands are defined here...
 
-  // private final DriverControl driverCont = DriverControl.getInstance();
-  // private final OperatorControl operatorCont = OperatorControl.getInstance();
-
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final Shooter shooter = new Shooter();
+  private final Shooter shooter = Shooter.getInstance();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   // private final DriveTrain driveTrain = new DriveTrain();
   public final Feeder feeder = Feeder.getInstance();
   // public final Intake intake = Intake.getInstance();
+  public final Limelight limelight = new Limelight();
 
   // private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final ShooterJoy shooterJoy = new ShooterJoy(shooter);
-  private final SetShoot setShoot = new SetShoot(shooter);
+  private final SetShoot setShoot = new SetShoot(limelight);
   public final RunFeeder runFeeder = new RunFeeder();
   // public final RunIntake runIntake = new RunIntake();
   // private final TankDrive tankDrive = new TankDrive(driveTrain);
@@ -67,7 +65,7 @@ public class RobotContainer {
   private void configureDefaultCommands() {
     feeder.setDefaultCommand(runFeeder);
     // intake.setDefaultCommand(runIntake);
-    shooter.setDefaultCommand(setShoot);
+    // shooter.setDefaultCommand(setShoot);
     // driveTrain.setDefaultCommand(tankDrive);
   }
 

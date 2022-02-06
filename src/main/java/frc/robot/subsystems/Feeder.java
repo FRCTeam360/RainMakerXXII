@@ -47,6 +47,7 @@ public class Feeder extends SubsystemBase {
     tower.setIdleMode(IdleMode.kCoast);
 
     tower.setInverted(true);
+    feeder.setInverted(true);
 
     feeder.setSmartCurrentLimit(20);
     tower.setSmartCurrentLimit(20);

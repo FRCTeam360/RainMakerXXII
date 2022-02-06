@@ -6,16 +6,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
-
+import frc.robot.subsystems.Shooter;
 import frc.robot.operatorInterface.*;
 
 public class RunFeeder extends CommandBase {
 
   private final Feeder myFeeder;
+  private final Shooter myShooter;
   private final OperatorControl operatorCont;
   
   public RunFeeder() {
     operatorCont = OperatorControl.getInstance();
+    myShooter = Shooter.getInstance();
     myFeeder = Feeder.getInstance();
 
     addRequirements(myFeeder);
@@ -32,7 +34,7 @@ public class RunFeeder extends CommandBase {
   public void execute() {
     //runs feeder
     if(operatorCont.getLeftTrigger()){
-      if(operatorCont.getAButton()){
+      if(operatorCont.getXButton()){
         myFeeder.runFeeder(-0.5);
       } else {
         myFeeder.runFeeder(0.5);
@@ -51,6 +53,11 @@ public class RunFeeder extends CommandBase {
     } else {
       myFeeder.runTower(0.0);
     }
+
+    
+    // if(myShooter.isAtSpeed()){
+    //   myFeeder.runTower(0.5);
+    // }
   }
 
   // Called once the command ends or is interrupted.

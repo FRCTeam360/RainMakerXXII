@@ -31,7 +31,7 @@ public void execute() {
     // if (cont.getXButton()){
         shooter.setSpeed(operatorCont.getLeftY() * 0.50); 
         SmartDashboard.putNumber("Shoot percent", operatorCont.getLeftY() * 0.50);
-        SmartDashboard.putNumber("Actual velocity", shooter.getVelocity());
+
     // } else{
     //     shooter.setVelocity(cont.getLeftY() * 5500);
     // }
