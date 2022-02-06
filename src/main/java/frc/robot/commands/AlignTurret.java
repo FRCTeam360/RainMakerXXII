@@ -69,12 +69,20 @@ public class AlignTurret extends CommandBase {
   }
 
   public void align() {
+    if(!myLimelight.validTarget()){
+      this.mode = Mode.SEEK_LEFT;
+    }
     double aimAdjust = Turret.kP * this.aimError;
     if (this.aimError > 0.2) {
       aimAdjust += Turret.AimMinCmd;
+      this.mode = Mode.TARGET_IN_VIEW;
     } else if (aimError < -0.2) {
       aimAdjust -= Turret.AimMinCmd;
+      this.mode = Mode.TARGET_IN_VIEW;
+    } else {
+      this.mode = Mode.LOCKED_ON_TARGET;
     }
+
     myTurret.turn(-aimAdjust);
   }
 
