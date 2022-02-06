@@ -117,15 +117,16 @@ public class AlignTurret extends CommandBase {
   public void waitToSeek(Direction direction) {
     myTurret.turn(0);
     double currentTX = myLimelight.getX();
+    boolean validTarget = myLimelight.validTarget();
 
     if (direction == Direction.LEFT) {
-      if (currentTX < -10) {
+      if (!validTarget || currentTX < -10) {
         this.mode = Mode.SEEK_RIGHT;
       } else if (currentTX > 0) {
         this.mode = Mode.TARGET_IN_VIEW;
       }
     } else {
-      if (currentTX > 10) {
+      if (!validTarget || currentTX > 10) {
         this.mode = Mode.SEEK_LEFT;
       } else if (currentTX < 0) {
         this.mode = Mode.TARGET_IN_VIEW;
