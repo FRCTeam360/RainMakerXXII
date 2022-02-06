@@ -15,6 +15,10 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 public class TurretManual extends CommandBase {
   private OperatorControl operatorCont;
   private Turret myTurret;
+  public enum ControlTypes {
+    AUTO_CONTROL, POWER_CONTROL, POSITION_CONTROL
+  };
+  private ControlTypes controlTypes;
 
   /** Creates a new TurretManual. */
   public TurretManual() {
@@ -24,7 +28,6 @@ public class TurretManual extends CommandBase {
     addRequirements(myTurret);
     // Use addRequirements() here to declare subsystem dependencies.
   }
-
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -33,15 +36,54 @@ public class TurretManual extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    this.changeMode();
+    
+    switch (this.controlTypes) {
+    case AUTO_CONTROL:
+
+    case POSITION_CONTROL:
+
+    case POWER_CONTROL:
+      this.powerControl();
+      break;
+    default:
+
+    }
+    double encoderTick = myTurret.getEncoderTick();
+    SmartDashboard.putNumber("gettick", encoderTick);
+  }
+
+  private void changeMode(){
+    if(operatorCont.getAButton()){
+      this.controlTypes = ControlTypes.POSITION_CONTROL;
+    }
+    else if(operatorCont.getBButton()){
+      this.controlTypes = ControlTypes.POWER_CONTROL;
+    }
+  }
+  private void powerControl(){
     if (Math.abs(operatorCont.getRightX()) > .125) {
       myTurret.turn(operatorCont.getRightX());
     } else {
       myTurret.turn(0);
-  
     }
-
-    double encoderTick = myTurret.getEncoderTick();
-    SmartDashboard.putNumber("gettick", encoderTick);
+  }
+  private void positionControl(){
+    double x = operatorCont.getRightX();
+    double y = operatorCont.getRightY();
+    double angle = Math.abs(Math.atan(x/y));
+    if(y<0 && x>0) {
+      angle = 180 - angle;
+    }
+    else if(y<0 && x<0) {
+      angle = -180 + angle;
+    }
+    else if(y>0 && x<0) {
+      angle = -1 * angle;
+    }
+    // else if(y>0 && x>0) {
+      
+    // }
   }
 
   // Called once the command ends or is interrupted.
