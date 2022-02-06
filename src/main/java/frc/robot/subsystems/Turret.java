@@ -72,6 +72,7 @@ public class Turret extends SubsystemBase {
 
   public void turn(double speed){
     turretMotor.set(speed);
+    
   }
 
   public void angleTurn(double inputAngle){
