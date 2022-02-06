@@ -29,10 +29,10 @@ public final class Constants {
         public static final int motorRLeadID = 4;
         public static final int motorRFollow1ID = 5;
         public static final int motorRFollow2ID = 6;
-        public static final int intakeId = 11;
-        public static final int feederId = 10;
-        public static final int towerId = 12;
-        public static final int turretMotorID = 7;
+        public static final int intakeId = 10;
+        public static final int feederId = 12;
+        public static final int towerId = 8;
+        public static final int turretMotorID = 11;
     }
 
     public static final class OIConstants {
