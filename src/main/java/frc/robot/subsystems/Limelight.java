@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Limelight extends SubsystemBase {
 
-  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-  NetworkTableEntry tv = table.getEntry("tv");
-  NetworkTableEntry tx = table.getEntry("tx");
-  NetworkTableEntry ty = table.getEntry("ty");
-  NetworkTableEntry ta = table.getEntry("ta");
+  private NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  private NetworkTableEntry tv = table.getEntry("tv");
+  private NetworkTableEntry tx = table.getEntry("tx");
+  private NetworkTableEntry ty = table.getEntry("ty");
+  private NetworkTableEntry ta = table.getEntry("ta");
 
-  NetworkTableEntry camMode = table.getEntry("camMode");
+  private NetworkTableEntry camMode = table.getEntry("camMode");
 
   public Limelight() {}
 
