@@ -46,7 +46,7 @@ public class RobotContainer {
   public final Limelight limelight = new Limelight();
 
   // private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final ShooterJoy shooterJoy = new ShooterJoy(shooter);
+  private final ShooterJoy shooterJoy = new ShooterJoy();
   private final SetShoot setShoot = new SetShoot(limelight);
   public final RunFeeder runFeeder = new RunFeeder();
   // public final RunIntake runIntake = new RunIntake();

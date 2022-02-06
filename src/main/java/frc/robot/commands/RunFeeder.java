@@ -32,32 +32,35 @@ public class RunFeeder extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //runs feeder
-    if(operatorCont.getLeftTrigger()){
-      if(operatorCont.getXButton()){
-        myFeeder.runFeeder(-0.5);
-      } else {
-        myFeeder.runFeeder(0.5);
-      }
-    } else {
-      myFeeder.runFeeder(0.0);
-    }
+    //if shooter at speed, run all
+    if(myShooter.isAtSpeed()){
+      System.out.println("tower time");
+      myFeeder.runBoth(1);
+    }else{
 
-    //runs tower
-    if(operatorCont.getRightTrigger()){
-      if(operatorCont.getXButton()){
-        myFeeder.runTower(-1.0);
-      } else {
-        myFeeder.runTower(1.0);
-      }
-    } else {
-      myFeeder.runTower(0.0);
-    }
 
-    
-    // if(myShooter.isAtSpeed()){
-    //   myFeeder.runTower(0.5);
-    // }
+      //manually run feeder
+      if(operatorCont.getLeftTrigger()){
+        if(operatorCont.getXButton()){
+          myFeeder.runFeeder(-0.5);
+        } else {
+          myFeeder.runFeeder(0.5);
+        }
+      } else {
+        myFeeder.runFeeder(0.0);
+      }
+
+      //manually run tower
+      if(operatorCont.getRightTrigger()){
+        if(operatorCont.getXButton()){
+          myFeeder.runTower(-1.0);
+        } else {
+          myFeeder.runTower(1.0);
+        }
+      } else {
+        myFeeder.runTower(0.0);
+      }
+    }
   }
 
   // Called once the command ends or is interrupted.

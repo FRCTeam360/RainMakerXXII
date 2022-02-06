@@ -42,6 +42,7 @@ public class Shooter extends SubsystemBase {
   private double previousVelocity;
   private double integral;
 
+  public double velocityTarget;
   public boolean isAtSpeed;
 
 
@@ -63,12 +64,9 @@ public class Shooter extends SubsystemBase {
 
         shooterLead.setIdleMode(IdleMode.kCoast);
         shooterFollow.setIdleMode(IdleMode.kCoast);
-
     
-        //shooterLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative , kPIDLoopIdx , kTimeOutMs);
-    
-        shooterLead.setInverted(false);
-        shooterFollow.setInverted(false);
+        shooterLead.setInverted(true);
+        // shooterFollow.setInverted(true);
     
         //shooterLead.setSensorPhase(true); //the Follower isn't harvested for it's encoder therefor rotation doesn't need to be modified
        
@@ -96,14 +94,8 @@ public double getVelocity(){
   return shooterLead.getEncoder().getVelocity();
 }
 
-// public void run () {
-//   shooterPidController.setReference(targetVelocity, CANSparkMax.ControlType.kVelocity);
-// }
   @Override
 public void periodic() {
-  // shooterReady = this.getVelocity() >= targetVelocity && this.getVelocity() <= targetVelocity;
-  // SmartDashboard.putBoolean("Shooter Ready", shooterReady);
-  // SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
   // kP = SmartDashboard.getNumber("kP", 0.0);
   // kI = SmartDashboard.getNumber("kI", 0.0);
   // kD = SmartDashboard.getNumber("kD", 0.0);
@@ -111,21 +103,22 @@ public void periodic() {
 
   SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
 }
-// public void setVelocity (double output) {
-//   shooterPidController.setReference(output, CANSparkMax.ControlType.kVelocity);
 
-//   shooterReady = this.getVelocity() >= output && this.getVelocity() <= output;
-//   SmartDashboard.putBoolean("Shooter Ready", shooterReady);
-//   SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
-// }
-
+/**
+ * Sets shooter to percentage output
+ * @param output motor output from -1 to 1
+ */
 public void setSpeed(double output){
   shooterLead.set(output);
 }
 
-public void setVelocity(double velocityTarget){
+/**
+ * Sets shooter to velocity using PID and FeedForward
+ * @param target target velocity in shooter RPMs
+ */
+public void setVelocity(double target){
 
-  velocityTarget = velocityTarget * -1;
+  velocityTarget = target;
 
   double error = velocityTarget - this.getVelocity();
   
@@ -135,20 +128,18 @@ public void setVelocity(double velocityTarget){
 
   double speed = (velocityTarget / kF) + (error * kP) + (integral * kI) - (deriv * kD);
 
+  //temporary limiting of max output - will probably change
   speed = Math.min(speed, 0.7);
   speed = Math.max(speed, -0.7);
   
   this.setSpeed(speed);
   SmartDashboard.putNumber("speed set", speed);
-
-  isAtSpeed = ((this.getVelocity()<=( velocityTarget + 100)));
-  System.out.println("Is at speed  " + isAtSpeed);
-  System.out.println("Velocity target  " + velocityTarget);
   }
 
   
   public boolean isAtSpeed(){
-    return isAtSpeed;
+    double error = velocityTarget - this.getVelocity();
+    return Math.abs(error) <= 100;
   }
 }
 

@@ -16,7 +16,7 @@ import frc.robot.subsystems.Shooter;
 public class SetShoot extends CommandBase {
 
   private final Shooter shooter;
-  private final Feeder feeder;
+  // private final Feeder feeder;
   private final Limelight myLimelight;
   private final DriverControl driverCont;
   private final OperatorControl operatorCont;
@@ -26,10 +26,10 @@ public class SetShoot extends CommandBase {
   public SetShoot(Limelight limelight) {
     myLimelight = limelight;
     shooter = Shooter.getInstance();
-    feeder = Feeder.getInstance();
+    // feeder = Feeder.getInstance();
     driverCont = DriverControl.getInstance();
     operatorCont = OperatorControl.getInstance();
-    addRequirements(shooter, feeder);
+    addRequirements(shooter); //, feeder
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -57,12 +57,12 @@ public class SetShoot extends CommandBase {
 
     double shootError = Math.abs(shooter.getVelocity() * -1 - shootGoal);
 
-    if(shootError <= 100){
-      System.out.println("tower time");
-      feeder.runBoth(1);
-    }else{
-      feeder.runBoth(0);
-    }
+    // if(shooter.isAtSpeed()){
+    //   System.out.println("tower time");
+    //   feeder.runBoth(1);
+    // }else{
+    //   feeder.runBoth(0);
+    // }
   }
 
 
@@ -70,7 +70,7 @@ public class SetShoot extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     shooter.setSpeed(0);
-    feeder.runBoth(0);
+    // feeder.runBoth(0);
   }
 
   // Returns true when the command should end.
