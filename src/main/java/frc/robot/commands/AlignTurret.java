@@ -31,6 +31,8 @@ public class AlignTurret extends CommandBase {
     myLimelight = limelight;
     myTurret = turret;
     aimError = 0;
+
+    this.mode = Mode.TARGET_IN_VIEW;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(myLimelight, turret);
   }

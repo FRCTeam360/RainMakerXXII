@@ -32,13 +32,13 @@ public class RobotContainer {
   private final OperatorControl operatorCont = OperatorControl.getInstance();
 
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  // private final Limelight limelight = new Limelight();
+  private final Limelight limelight = new Limelight();
   private final Turret turret = Turret.getInstance();
   // private final DriveTrain driveTrain = new DriveTrain();
   // public final Feeder feeder = Feeder.getInstance();
   // public final Intake intake = Intake.getInstance();
 
-  // private final AlignTurret align = new AlignTurret(limelight, turret);
+  private final AlignTurret align = new AlignTurret(limelight, turret);
   // public final RunFeeder runFeeder = new RunFeeder();
   // public final RunIntake runIntake = new RunIntake();
   // private final TankDrive tankDrive = new TankDrive(driveTrain);
@@ -53,7 +53,7 @@ public class RobotContainer {
 
   //scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
-     turret.setDefaultCommand(turretManual);
+     turret.setDefaultCommand(align);
     // feeder.setDefaultCommand(runFeeder);
     // intake.setDefaultCommand(runIntake);
     // driveTrain.setDefaultCommand(tankDrive);
