@@ -17,11 +17,11 @@ public class RunFeeder extends CommandBase {
   private final Tower myTower;
   private final Feeder myFeeder;
   private final OperatorControl operatorCont;
-  
+
   public RunFeeder() {
     operatorCont = OperatorControl.getInstance();
     myTower = Tower.getInstance();
-    myFeeder = Feeder.getInstance(); 
+    myFeeder = Feeder.getInstance();
 
     addRequirements(myTower);
 
@@ -30,14 +30,15 @@ public class RunFeeder extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //runs feeder
-    if(operatorCont.getLeftTrigger()){
-      if(operatorCont.getAButton()){
+    // runs feeder
+    if (operatorCont.getLeftTrigger()) {
+      if (operatorCont.getAButton()) {
         myFeeder.runFeeder(-1.0);
       } else {
         myFeeder.runFeeder(1.0);
@@ -46,9 +47,9 @@ public class RunFeeder extends CommandBase {
       myFeeder.runFeeder(0.0);
     }
 
-    //runs tower
-    if(operatorCont.getRightTrigger()){
-      if(operatorCont.getXButton()){
+    // runs tower
+    if (operatorCont.getRightTrigger()) {
+      if (operatorCont.getXButton()) {
         myTower.runTower(-1.0);
       } else {
         myTower.runTower(1.0);
@@ -58,9 +59,14 @@ public class RunFeeder extends CommandBase {
     }
   }
 
-
   // Returns true when the command should end.
+
   @Override
+  public void end(boolean interrupted) {
+    myTower.runTower(0.0);
+    myFeeder.runFeeder(0.0);
+  }
+
   public boolean isFinished() {
     return false;
   }
