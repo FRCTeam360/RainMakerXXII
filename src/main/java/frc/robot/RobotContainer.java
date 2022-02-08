@@ -35,11 +35,11 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain driveTrain = new DriveTrain();
   public final Feeder feeder = Feeder.getInstance();
-  public final Intake intake = Intake.getInstance();
+  // public final Intake intake = Intake.getInstance();
   public final Tower tower = Tower.getInstance(); 
 
   public final RunFeeder runFeeder = new RunFeeder();
-  public final RunIntake runIntake = new RunIntake();
+  // public final RunIntake runIntake = new RunIntake();
   private final TankDrive tankDrive = new TankDrive(driveTrain);
   private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
   private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
@@ -54,7 +54,7 @@ public class RobotContainer {
   //scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
     tower.setDefaultCommand(runFeeder);
-    intake.setDefaultCommand(runIntake);
+    // intake.setDefaultCommand(runIntake);
     driveTrain.setDefaultCommand(tankDrive);
 
   }

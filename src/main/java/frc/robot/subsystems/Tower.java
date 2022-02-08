@@ -19,9 +19,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Tower extends SubsystemBase {
 
-  DigitalInput topSensor = new DigitalInput(0);
-  DigitalInput middleSensor = new DigitalInput(1);
-  DigitalInput bottomSensor = new DigitalInput(2);
+  //DigitalInput topSensor = new DigitalInput(0);
+  //DigitalInput middleSensor = new DigitalInput(1);
+  //DigitalInput bottomSensor = new DigitalInput(2);
   static Tower instance;
   // need to createbthird input for middle sensor
 
