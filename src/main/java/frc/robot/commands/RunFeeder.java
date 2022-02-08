@@ -8,17 +8,20 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Tower;
+import frc.robot.subsystems.Feeder;
 
 import frc.robot.operatorInterface.*;
 
-public class RunTower extends CommandBase {
+public class RunFeeder extends CommandBase {
 
   private final Tower myTower;
+  private final Feeder myFeeder;
   private final OperatorControl operatorCont;
   
-  public RunTower() {
+  public RunFeeder() {
     operatorCont = OperatorControl.getInstance();
     myTower = Tower.getInstance();
+    myFeeder = Feeder.getInstance(); 
 
     addRequirements(myTower);
 
@@ -35,12 +38,12 @@ public class RunTower extends CommandBase {
     //runs feeder
     if(operatorCont.getLeftTrigger()){
       if(operatorCont.getAButton()){
-        myTower.runTower(-1.0);
+        myFeeder.runFeeder(-1.0);
       } else {
-        myTower.runTower(1.0);
+        myFeeder.runFeeder(1.0);
       }
     } else {
-      myTower.runTower(0.0);
+      myFeeder.runFeeder(0.0);
     }
 
     //runs tower
