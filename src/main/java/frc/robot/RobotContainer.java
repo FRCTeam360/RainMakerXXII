@@ -36,6 +36,7 @@ public class RobotContainer {
   private final DriveTrain driveTrain = new DriveTrain();
   public final Feeder feeder = Feeder.getInstance();
   public final Intake intake = Intake.getInstance();
+  public final Tower tower = Tower.getInstance(); 
 
   public final RunFeeder runFeeder = new RunFeeder();
   public final RunIntake runIntake = new RunIntake();
@@ -52,9 +53,10 @@ public class RobotContainer {
 
   //scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
-    feeder.setDefaultCommand(runFeeder);
+    tower.setDefaultCommand(runFeeder);
     intake.setDefaultCommand(runIntake);
     driveTrain.setDefaultCommand(tankDrive);
+
   }
 
   /**
