@@ -28,7 +28,6 @@ public class Feeder extends SubsystemBase {
 
 
   private CANSparkMax feeder;
-  private CANSparkMax tower;
 
   private static Feeder instance;
 
@@ -41,44 +40,33 @@ public class Feeder extends SubsystemBase {
 
 
     feeder = new CANSparkMax(feederId, MotorType.kBrushless);
-    tower = new CANSparkMax(towerId, MotorType.kBrushless);
 
-    feeder.setIdleMode(IdleMode.kCoast);
-    tower.setIdleMode(IdleMode.kCoast);
+    feeder.setIdleMode(IdleMode.kBrake);
 
     tower.setInverted(true);
     feeder.setInverted(true);
 
     feeder.setSmartCurrentLimit(20);
-    tower.setSmartCurrentLimit(20);
+
   }
 
   /**
    * Gets the Singleton Feeder instance
+   * 
    * @return the Singleton Feeder instance
    */
-  public static Feeder getInstance(){
-    if(instance == null){
+  public static Feeder getInstance() {
+    if (instance == null) {
       instance = new Feeder();
     }
     return instance;
   }
 
-  public void runFeeder (double speed) {
+  public void runFeeder(double speed) {
     feeder.set(speed);
   }
 
-
-
-  public void runTower (double speed) {
-    tower.set(speed);
-  }
-
-  public void runBoth (double speed) {
-    runFeeder(speed);
-    runTower(speed);
-  }
-
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

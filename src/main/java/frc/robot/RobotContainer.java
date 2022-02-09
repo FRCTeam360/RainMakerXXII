@@ -44,12 +44,13 @@ public class RobotContainer {
   public final Feeder feeder = Feeder.getInstance();
   public final Intake intake = Intake.getInstance();
   public final Limelight limelight = new Limelight();
+  public final Tower tower = Tower.getInstance(); 
 
   // private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final ShooterJoy shooterJoy = new ShooterJoy();
   private final SetShoot setShoot = new SetShoot(limelight);
   public final RunFeeder runFeeder = new RunFeeder();
-  public final RunIntake runIntake = new RunIntake();
+  // public final RunIntake runIntake = new RunIntake();
   private final TankDrive tankDrive = new TankDrive(driveTrain);
   // private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
   // private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
@@ -63,10 +64,12 @@ public class RobotContainer {
 
   //scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
+    tower.setDefaultCommand(runFeeder);
     feeder.setDefaultCommand(runFeeder);
     intake.setDefaultCommand(runIntake);
     shooter.setDefaultCommand(setShoot);
     driveTrain.setDefaultCommand(tankDrive);
+
   }
 
   /**
