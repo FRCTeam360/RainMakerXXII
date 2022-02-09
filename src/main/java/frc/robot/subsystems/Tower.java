@@ -19,7 +19,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Tower extends SubsystemBase {
 
-  //DigitalInput topSensor = new DigitalInput(0);
+  DigitalInput topSensor;
   //DigitalInput middleSensor = new DigitalInput(1);
   //DigitalInput bottomSensor = new DigitalInput(2);
   static Tower instance;
@@ -29,7 +29,7 @@ public class Tower extends SubsystemBase {
 
   private Tower() {
 
-    DigitalInput topSensor = new DigitalInput(2);
+    topSensor = new DigitalInput(2);
 
     tower = new CANSparkMax(towerId, MotorType.kBrushless);
 
@@ -46,8 +46,22 @@ public class Tower extends SubsystemBase {
   }
 
   public void runTower(double speed) {
-    tower.set(speed);
+    if (speed > 0) {
+      if (topSensor.get()) {
+        tower.set(0);
+      }
+    } else {
+      if (topSensor.get()) {
+        tower.set(speed);
+      }
+    }
   }
+
+  public boolean topSensorStatus() {
+    return topSensor.get();
+  }
+  
+
 
   @Override
   public void periodic() {
