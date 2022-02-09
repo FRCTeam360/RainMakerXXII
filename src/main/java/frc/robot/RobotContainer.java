@@ -54,6 +54,7 @@ public class RobotContainer {
   //scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
     tower.setDefaultCommand(runFeeder);
+    feeder.setDefaultCommand(runFeeder);
     // intake.setDefaultCommand(runIntake);
     driveTrain.setDefaultCommand(tankDrive);
 
