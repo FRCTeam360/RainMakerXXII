@@ -43,7 +43,7 @@ public class RunFeeder extends CommandBase {
     //if shooter at speed, run all
     if(myShooter.isAtSpeed()){
       System.out.println("tower time");
-      myFeeder.runTower(1);
+      myTower.runTower(1);
       myFeeder.runFeeder(1);
     }else{
 
@@ -57,7 +57,7 @@ public class RunFeeder extends CommandBase {
         }
       }else{
         myFeeder.runFeeder(0.0);
-
+      }
       
       //manually run tower
       if(operatorCont.getRightTrigger()){

@@ -43,7 +43,6 @@ public class Feeder extends SubsystemBase {
 
     feeder.setIdleMode(IdleMode.kBrake);
 
-    tower.setInverted(true);
     feeder.setInverted(true);
 
     feeder.setSmartCurrentLimit(20);
