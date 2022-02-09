@@ -29,7 +29,7 @@ public class Tower extends SubsystemBase {
 
   private Tower() {
 
-    DigitalInput bottomSensor = new DigitalInput(2);
+    DigitalInput topSensor = new DigitalInput(2);
 
     tower = new CANSparkMax(towerId, MotorType.kBrushless);
 
