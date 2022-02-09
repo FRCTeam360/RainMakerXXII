@@ -37,12 +37,6 @@ public final class Constants {
         public static final double bVal = -52.912;
         public static final double cVal = 14815.146;
     }
-    
-    // public static final class CANIds{
-    //     public static final int shooterLeadId = 7;
-    //     public static final int shooterFollowId = 9;
-    //     public static final int intakeId = 10;
-    //     public static final int feederId = 11;
 
     public static final class AutoConstants {
         //Conversions for the Falcons
