@@ -31,11 +31,11 @@ public class Intake extends SubsystemBase{
     }
 
     private CANSparkMax intake;
-    private DoubleSolenoid intakeMover;
+    // private DoubleSolenoid intakeMover;
 
     private Intake() {
         this.intake = new CANSparkMax(intakeId, MotorType.kBrushless);
-        this.intakeMover = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, intakeForwardChannel, intakeReverseChannel);
+        // this.intakeMover = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, intakeForwardChannel, intakeReverseChannel);
 
         intake.setSmartCurrentLimit(20);
     }
@@ -46,10 +46,10 @@ public class Intake extends SubsystemBase{
     }
 
     public void intakeIn() {
-        intakeMover.set(DoubleSolenoid.Value.kForward);
+        // intakeMover.set(DoubleSolenoid.Value.kForward);
     }
     public void intakeOut() {
-        intakeMover.set(DoubleSolenoid.Value.kReverse);
+        // intakeMover.set(DoubleSolenoid.Value.kReverse);
     }
 
     @Override
