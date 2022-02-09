@@ -38,6 +38,8 @@ public class Intake extends SubsystemBase{
         // this.intakeMover = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, intakeForwardChannel, intakeReverseChannel);
 
         intake.setSmartCurrentLimit(20);
+
+        intake.setInverted(true);
     }
 
     //motor speed

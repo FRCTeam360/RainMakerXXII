@@ -42,7 +42,7 @@ public class Shooter extends SubsystemBase {
   private double previousVelocity;
   private double integral;
 
-  public double velocityTarget;
+  public double velocityTarget = 2000;
   public boolean isAtSpeed;
 
 
