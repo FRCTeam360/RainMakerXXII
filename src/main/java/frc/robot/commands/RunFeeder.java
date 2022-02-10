@@ -9,17 +9,20 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Tower;
 import frc.robot.subsystems.Feeder;
-
+import frc.robot.subsystems.Shooter;
 import frc.robot.operatorInterface.*;
 
 public class RunFeeder extends CommandBase {
 
   private final Tower myTower;
   private final Feeder myFeeder;
+  private final Shooter myShooter;
   private final OperatorControl operatorCont;
 
   public RunFeeder() {
     operatorCont = OperatorControl.getInstance();
+
+    myShooter = Shooter.getInstance();
     myTower = Tower.getInstance();
     myFeeder = Feeder.getInstance();
 
@@ -36,26 +39,35 @@ public class RunFeeder extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // runs feeder
-    if (operatorCont.getLeftTrigger()) {
-      if (operatorCont.getAButton()) {
-        myFeeder.runFeeder(-1.0);
-      } else {
-        myFeeder.runFeeder(1.0);
-      }
-    } else {
-      myFeeder.runFeeder(0.0);
-    }
 
-    // runs tower
-    if (operatorCont.getRightTrigger()) {
-      if (operatorCont.getXButton()) {
-        myTower.runTower(-1.0);
-      } else {
-        myTower.runTower(1.0);
+    //if shooter at speed, run all
+    if(myShooter.isAtSpeed()){
+      myTower.runTower(1);
+      myFeeder.runFeeder(1);
+    }else{
+
+
+      //manually run feeder
+      if(operatorCont.getLeftTrigger()){
+        if(operatorCont.getXButton()){
+          myFeeder.runFeeder(-0.5);
+        } else {
+          myFeeder.runFeeder(0.5);
+        }
+      }else{
+        myFeeder.runFeeder(0.0);
       }
-    } else {
-      myTower.runTower(0.0);
+      
+      //manually run tower
+      if(operatorCont.getRightTrigger()){
+        if(operatorCont.getXButton()){
+          myTower.runTower(-1.0);
+        } else {
+          myTower.runTower(1.0);
+        }
+      } else {
+        myTower.runTower(0.0);
+      }
     }
   }
 
