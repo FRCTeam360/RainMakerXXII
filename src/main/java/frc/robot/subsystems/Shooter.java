@@ -72,8 +72,6 @@ public class Shooter extends SubsystemBase {
     shooterFollow.setIdleMode(IdleMode.kCoast);
 
     shooterLead.setInverted(true);
-    // shooterFollow.setInverted(true);
-
     // shooterLead.setSensorPhase(true); //the Follower isn't harvested for it's
     // encoder therefor rotation doesn't need to be modified
 
@@ -81,9 +79,6 @@ public class Shooter extends SubsystemBase {
     // SmartDashboard.putNumber("kI", 0.0);
     // SmartDashboard.putNumber("kD", 0.0);
     // SmartDashboard.putNumber("kF", 0.0);
-
-    // set PID coefficients
-
   }
 
   /**

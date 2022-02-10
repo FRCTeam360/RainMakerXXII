@@ -17,11 +17,6 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final class ShooterConstants {
-
-
-    }
-
     public static final class AutoConstants {
         //Conversions for the Falcons
         private static final double pi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
