@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+
 import static frc.robot.Constants.CANIds.*;
 
 import com.revrobotics.CANSparkMax;
@@ -19,9 +20,12 @@ public class Feeder extends SubsystemBase {
   private static Feeder instance;
 
   private Feeder() {
+
     feeder = new CANSparkMax(feederId, MotorType.kBrushless);
 
     feeder.setIdleMode(IdleMode.kBrake);
+
+    feeder.setInverted(true);
 
     feeder.setSmartCurrentLimit(20);
 
@@ -43,6 +47,7 @@ public class Feeder extends SubsystemBase {
     feeder.set(speed);
   }
 
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
