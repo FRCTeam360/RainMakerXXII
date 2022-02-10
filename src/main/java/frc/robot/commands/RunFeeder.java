@@ -44,8 +44,10 @@ public class RunFeeder extends CommandBase {
 
     if (myTower.topSensorStatus()) {
       myTower.runTower(1);
+      myFeeder.runFeeder(1);
     } else {
       myTower.runTower(0);
+      myFeeder.runFeeder(0);
 
     }
 
