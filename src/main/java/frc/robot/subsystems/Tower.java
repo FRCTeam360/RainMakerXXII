@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 import static frc.robot.Constants.CANIds.*;
+import static frc.robot.Constants.DigitalInputPorts.*;
 
 import java.io.DataInput;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 public class Tower extends SubsystemBase {
 
   DigitalInput topSensor;
@@ -29,7 +29,7 @@ public class Tower extends SubsystemBase {
 
   private Tower() {
 
-    topSensor = new DigitalInput(0);
+    topSensor = new DigitalInput(topTowerSensor);
 
     tower = new CANSparkMax(towerId, MotorType.kBrushless);
 
