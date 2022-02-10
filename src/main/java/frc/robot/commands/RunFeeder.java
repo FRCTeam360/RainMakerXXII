@@ -6,6 +6,8 @@
 
 package frc.robot.commands;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder.Value;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Tower;
 import frc.robot.subsystems.Feeder;
@@ -24,6 +26,7 @@ public class RunFeeder extends CommandBase {
     myFeeder = Feeder.getInstance();
 
     addRequirements(myTower);
+    addRequirements(myFeeder);
 
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -38,7 +41,7 @@ public class RunFeeder extends CommandBase {
   public void execute() {
     // runs feeder
     if (operatorCont.getLeftTrigger()) {
-      if (operatorCont.getAButton()) {
+      if (operatorCont.getXButton()) {  Value
         myFeeder.runFeeder(-1.0);
       } else {
         myFeeder.runFeeder(1.0);
@@ -58,7 +61,7 @@ public class RunFeeder extends CommandBase {
       myTower.runTower(0.0);
     }
   }
-
+ 
   // Returns true when the command should end.
 
   @Override
