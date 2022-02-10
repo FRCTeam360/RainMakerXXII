@@ -13,33 +13,33 @@ import frc.robot.subsystems.Shooter;
 /** Add your docs here. */
 public class ShooterJoy extends CommandBase {
 
-    private final Shooter shooter;
-    private final OperatorControl operatorCont;
+  private final Shooter shooter;
+  private final OperatorControl operatorCont;
 
-public ShooterJoy() {
+  public ShooterJoy() {
     shooter = Shooter.getInstance();
     operatorCont = OperatorControl.getInstance();
     addRequirements(shooter);
-}
+  }
 
-@Override   // Called when the command is initially scheduled.
-public void initialize() {
-}
+  @Override // Called when the command is initially scheduled.
+  public void initialize() {
+  }
 
-@Override   // Called every time the scheduler runs while the command is scheduled.
-public void execute() {
+  @Override // Called every time the scheduler runs while the command is scheduled.
+  public void execute() {
     // if (cont.getXButton()){
-        shooter.setSpeed(operatorCont.getLeftY() * -0.50); 
-        SmartDashboard.putNumber("Shoot percent", operatorCont.getLeftY() * -0.50);
+    shooter.setSpeed(operatorCont.getLeftY() * -0.50);
+    SmartDashboard.putNumber("Shoot percent", operatorCont.getLeftY() * -0.50);
 
     // } else{
-    //     shooter.setVelocity(cont.getLeftY() * 5500);
+    // shooter.setVelocity(cont.getLeftY() * 5500);
     // }
-}
+  }
 
-@Override   // Called once the command ends or is interrupted.
-public void end(boolean interrupted) {
-}
+  @Override // Called once the command ends or is interrupted.
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
