@@ -11,7 +11,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import static frc.robot.Constants.ShooterConstants.*;
 import static frc.robot.Constants.CANIds.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,16 +28,29 @@ public class Shooter extends SubsystemBase {
 
   public boolean shooterReady;
 
-  // public double kP = 0;
-  // public double kI = 0;
-  // public double kD = 0;
-  // public double kF = 0;
-
   private double previousVelocity;
   private double integral;
 
   public double velocityTarget = 2000;
   public boolean isAtSpeed;
+
+  // Old data, need to tune
+  public static final int kSlotIdx = 0;
+  public static final int kTimeOutMs = 30;
+  public static final int kPIDLoopIdx = 0;
+  public static final double kP = 0.0009;
+  public static final double kI = 0;
+  public static final double kD = 0.0005;
+  public static final double kF = 5000;
+  public static final double kPeakOutput = 1;
+
+  public static final double backupTargetVelocity = 14500; // Constant
+  public static double targetVelocity = backupTargetVelocity; // will get changed in the future by limelight
+                                                              // subsystem or a command...
+
+  public static final double aVal = 2.697; // Quad Ratic regression values
+  public static final double bVal = -52.912;
+  public static final double cVal = 14815.146;
 
   private Shooter() {
     shooterLead = new CANSparkMax(shooterLeadId, MotorType.kBrushless);

@@ -19,23 +19,7 @@ package frc.robot;
 public final class Constants {
     public static final class ShooterConstants {
 
-        // Old data, need to tune
-        public static final int kSlotIdx = 0;
-        public static final int kTimeOutMs = 30;
-        public static final int kPIDLoopIdx = 0;
-        public static final double kP = 0.0009;
-        public static final double kI = 0;
-        public static final double kD = 0.0005;
-        public static final double kF = 5000;
-        public static final double kPeakOutput = 1;
 
-        public static final double backupTargetVelocity = 14500; // Constant
-        public static double targetVelocity = backupTargetVelocity; // will get changed in the future by limelight
-                                                                    // subsystem or a command...
-
-        public static final double aVal = 2.697; // Quad Ratic regression values
-        public static final double bVal = -52.912;
-        public static final double cVal = 14815.146;
     }
 
     public static final class AutoConstants {
