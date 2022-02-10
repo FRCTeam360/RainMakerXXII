@@ -27,6 +27,8 @@ public class RunFeeder extends CommandBase {
     myFeeder = Feeder.getInstance();
 
     addRequirements(myTower);
+    addRequirements(myFeeder); 
+  
 
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -40,35 +42,41 @@ public class RunFeeder extends CommandBase {
   @Override
   public void execute() {
 
-    //if shooter at speed, run all
-    if(myShooter.isAtSpeed()){
+    if (myTower.topSensorStatus()) {
       myTower.runTower(1);
-      myFeeder.runFeeder(1);
-    }else{
+    } else {
+      myTower.runTower(0);
 
-
-      //manually run feeder
-      if(operatorCont.getLeftTrigger()){
-        if(operatorCont.getXButton()){
-          myFeeder.runFeeder(-0.5);
-        } else {
-          myFeeder.runFeeder(0.5);
-        }
-      }else{
-        myFeeder.runFeeder(0.0);
-      }
-      
-      //manually run tower
-      if(operatorCont.getRightTrigger()){
-        if(operatorCont.getXButton()){
-          myTower.runTower(-1.0);
-        } else {
-          myTower.runTower(1.0);
-        }
-      } else {
-        myTower.runTower(0.0);
-      }
     }
+
+    // //if shooter at speed, run all
+    // if(myShooter.isAtSpeed()){
+    // myTower.runTower(1);
+    // myFeeder.runFeeder(1);
+    // }else{
+
+    // //manually run feeder
+    // if(operatorCont.getLeftTrigger()){
+    // if(operatorCont.getXButton()){
+    // myFeeder.runFeeder(-0.5);
+    // } else {
+    // myFeeder.runFeeder(0.5);
+    // }
+    // }else{
+    // myFeeder.runFeeder(0.0);
+    // }
+
+    // //manually run tower;
+    // if(operatorCont.getRightTrigger()){
+    // if(operatorCont.getXButton()){
+    // myTower.runTower(-1.0);
+    // } else {
+    // myTower.runTower(1.0);
+    // }
+    // } else {
+    // myTower.runTower(0.0);
+    // }
+    // }
   }
 
   // Returns true when the command should end.
