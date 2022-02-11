@@ -27,17 +27,17 @@ public class Turret extends SubsystemBase {
 
   public static final double AimMinCmd = 0.01;
 
-  public static final double gearBoxRatio = 1/20;
-  public static final double pulleyRatio = 1.5/17.5;
-  public static final double degreesPerRotation = 360/1;
+  public static final double gearBoxRatio = 1 / 20;
+  public static final double pulleyRatio = 1.5 / 17.5;
+  public static final double degreesPerRotation = 360 / 1;
 
   private static Turret instance;
 
   private double previousAngle;
   private double integral;
 
-  public  static final double leftLimit = -60;
-  public static final double rightLimit = 60;
+  public static final double leftSoftLimit = -60;
+  public static final double rightSoftLimit = 60;
 
   public static Turret getInstance() {
     if (instance == null) {
@@ -60,27 +60,21 @@ public class Turret extends SubsystemBase {
     rightLimitSwitch = new DigitalInput(rightLimitSwitchPort);
   }
 
-  public double getAngle(){
+  public double getAngle() {
     double encoderPosition = turretMotor.getEncoder().getPosition();
     return encoderPosition * gearBoxRatio * pulleyRatio * degreesPerRotation;
   }
 
-  public void zero(){
-    if(middleLimitSwitch.get()){
-      turretMotor.set(0);
-      turretMotor.getEncoder().setPosition(0);
-    } else {
-      if(this.getAngle() > 135){
-    } else {
-    }}
+  public void zero() {
+    this.angleTurn(0);
   }
 
-  public void turn(double speed){
+  public void turn(double speed) {
     turretMotor.set(speed);
-    
+
   }
 
-  public void angleTurn(double inputAngle){
+  public void angleTurn(double inputAngle) {
     double angle = this.getAngle();
     double error = inputAngle - angle;
 
@@ -93,19 +87,19 @@ public class Turret extends SubsystemBase {
     this.turn(turretInput);
   }
 
-  public void resetEncoderTicks(){
+  public void resetEncoderTicks() {
     turretMotor.getEncoder().setPosition(0);
   }
 
-  public boolean checkMiddleLimitSwitch(){
+  public boolean checkMiddleLimitSwitch() {
     return middleLimitSwitch.get();
   }
 
-  public double getEncoderTick(){
+  public double getEncoderTick() {
     return turretMotor.getEncoder().getPosition();
-    
 
   }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
