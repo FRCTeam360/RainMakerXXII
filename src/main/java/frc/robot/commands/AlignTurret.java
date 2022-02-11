@@ -44,34 +44,38 @@ public class AlignTurret extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
+  public void execute() { 
+    this.softLimit();
+    
     aimError = myLimelight.getX() / 29.8;
 
     switch (this.mode) {
-    case SEEK_RIGHT:
-      this.seek(Direction.RIGHT);
-      break;
-    case SEEK_LEFT:
-      this.seek(Direction.LEFT);
-      break;
-    case TARGET_IN_VIEW:
-    case LOCKED_ON_TARGET:
-      this.align();
-      break;
-    case WAIT_TO_SEEK_RIGHT:
-      this.waitToSeek(Direction.RIGHT);
-      break;
-    case WAIT_TO_SEEK_LEFT:
-      this.waitToSeek(Direction.LEFT);
-    case CALLIBRATE:
-      this.callibrate();
-      break;
-    default:
+      case SEEK_RIGHT:
+        this.seek(Direction.RIGHT);
+        break;
+      case SEEK_LEFT:
+        this.seek(Direction.LEFT);
+        break;
+      case TARGET_IN_VIEW:
+      case LOCKED_ON_TARGET:
+        this.align();
+        break;
+      case WAIT_TO_SEEK_RIGHT:
+        this.waitToSeek(Direction.RIGHT);
+        break;
+      case WAIT_TO_SEEK_LEFT:
+        this.waitToSeek(Direction.LEFT);
+      case CALLIBRATE:
+        this.callibrate();
+        break;
+      default:
     }
+
+    
   }
 
   public void align() {
-    if(!myLimelight.validTarget()){
+    if (!myLimelight.validTarget()) {
       this.mode = Mode.SEEK_LEFT;
     }
     double aimAdjust = Turret.kP * this.aimError;
@@ -95,11 +99,11 @@ public class AlignTurret extends CommandBase {
     }
 
     switch (direction) {
-    case LEFT:
-      myTurret.turn(-1);
-    case RIGHT:
-    default:
-      myTurret.turn(1);
+      case LEFT:
+        myTurret.turn(-1);
+      case RIGHT:
+      default:
+        myTurret.turn(1);
     }
   }
 
@@ -134,6 +138,15 @@ public class AlignTurret extends CommandBase {
         this.mode = Mode.TARGET_IN_VIEW;
       }
     }
+  }
+
+  public void softLimit() {
+    if (myTurret.getAngle() <= myTurret.leftLimit) {
+      this.mode = Mode.WAIT_TO_SEEK_RIGHT;
+    } else if (myTurret.getAngle() >= myTurret.rightLimit) {
+      this.mode = Mode.WAIT_TO_SEEK_LEFT;
+    }
+
   }
 
   // Called once the commandd ends or is interrupted.
