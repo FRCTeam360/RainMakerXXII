@@ -27,6 +27,8 @@ public class AlignTurret extends CommandBase {
 
   private Mode mode;
 
+  public double lastTargetPosition = 0;
+
   public AlignTurret(Limelight limelight, Turret turret) {
     myLimelight = limelight;
     myTurret = turret;
@@ -145,7 +147,10 @@ public class AlignTurret extends CommandBase {
     } else if (myTurret.getAngle() >= myTurret.rightSoftLimit) {
       this.mode = Mode.WAIT_TO_SEEK_LEFT;
     }
-
+  }
+  
+  public void updateLastKnownTargetAngle(){
+    lastTargetPosition = myTurret.getAngle() + myLimelight.getX();
   }
 
   // Called once the commandd ends or is interrupted.
