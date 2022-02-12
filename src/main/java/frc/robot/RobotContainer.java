@@ -55,6 +55,7 @@ public class RobotContainer {
   public final RunFeeder runFeeder = new RunFeeder();
   public final RunIntake runIntake = new RunIntake();
   private final TankDrive tankDrive = new TankDrive(driveTrain);
+  private final Pressurize pressurize = new Pressurize(pneumatics);
   // private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
   // private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
   
@@ -72,6 +73,7 @@ public class RobotContainer {
     intake.setDefaultCommand(runIntake);
     shooter.setDefaultCommand(setShoot);
     driveTrain.setDefaultCommand(tankDrive);
+    pneumatics.setDefaultCommand(pressurize);
 
   }
 
