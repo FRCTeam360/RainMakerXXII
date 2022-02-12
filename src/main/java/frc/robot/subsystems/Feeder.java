@@ -4,8 +4,10 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.Constants.DigitalInputPorts;
+import static frc.robot.Constants.DigitalInputPorts.*;
 
 import static frc.robot.Constants.CANIds.*;
 
@@ -19,6 +21,8 @@ public class Feeder extends SubsystemBase {
 
   private static Feeder instance;
 
+  private DigitalInput sensor; 
+
   private Feeder() {
 
     feeder = new CANSparkMax(feederId, MotorType.kBrushless);
@@ -29,15 +33,19 @@ public class Feeder extends SubsystemBase {
 
     feeder.setSmartCurrentLimit(20);
 
-  }
+    sensor = new DigitalInput(feederSensor); 
 
+  }
+  public boolean topSensorStatus() {
+    return sensor.get();
+  }
   /**
    * Gets the Singleton Feeder instance
    * 
    * @return the Singleton Feeder instance
    */
   public static Feeder getInstance() {
-    if (instance == null) {
+    if (instance == null) { 
       instance = new Feeder();
     }
     return instance;

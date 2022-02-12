@@ -33,6 +33,7 @@ public class RunFeeder extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
+  }
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -51,7 +52,7 @@ public class RunFeeder extends CommandBase {
     } else if (driverCont.getLeftTrigger()) {
       if (myTower.topSensorStatus()) {
         myTower.runTower(1);
-        myFeeder.runFeeder(1);
+        myFeeder.runFeeder(0);
       } else {
         myTower.runTower(0);
         myFeeder.runFeeder(0);
@@ -78,6 +79,7 @@ public class RunFeeder extends CommandBase {
         }
       } else {
         myTower.runTower(0.0);
+        
       }
     }
   }
