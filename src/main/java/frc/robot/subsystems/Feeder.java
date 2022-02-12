@@ -35,8 +35,8 @@ public class Feeder extends SubsystemBase {
 
     sensor = new DigitalInput(feederSensor); 
 
-  }
-  public boolean topSensorStatus() {
+  } 
+  public boolean frontFeederStatus() {
     return sensor.get();
   }
   /**
