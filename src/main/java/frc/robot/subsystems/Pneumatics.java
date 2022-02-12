@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 /** Add your docs here. */
 public class Pneumatics extends SubsystemBase{
 
-    private static Compressor comp;
+    public Compressor comp;
 
     public Pneumatics() {
         //remains unresolved
-        comp = new Compressor(0, PneumaticsModuleType.CTREPCM);
+        comp = new Compressor(20, PneumaticsModuleType.REVPH);
     }
 
     public void pressurize(){

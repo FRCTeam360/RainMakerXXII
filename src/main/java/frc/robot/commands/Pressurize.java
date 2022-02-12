@@ -38,9 +38,9 @@ public class Pressurize extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(shouldRun == true && (RobotController.getInputVoltage() > 10)) {
+    if(shouldRun == true && pneumatics.comp.getPressureSwitchValue()) {
       pneumatics.pressurize();
-    } else if (shouldRun == true && ! (RobotController.getInputVoltage() > 10)) {
+    } else if (shouldRun == true && ! pneumatics.comp.getPressureSwitchValue()) {
       shouldRun = false;
       pneumatics.stop();
       timer.reset();
