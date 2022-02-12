@@ -53,7 +53,7 @@ public class TurretManual extends CommandBase {
 
       case POWER_CONTROL:
       default:
-        this.powerControl();
+        this.fieldOrientedControl();
         break;
 
     }
