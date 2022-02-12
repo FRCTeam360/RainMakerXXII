@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public class AlignTurret extends CommandBase {
 
   private Limelight myLimelight;
@@ -22,12 +24,17 @@ public class AlignTurret extends CommandBase {
   };
 
   public enum Mode {
-    SEEK_RIGHT, SEEK_LEFT, TARGET_IN_VIEW, LOCKED_ON_TARGET, WAIT_TO_SEEK_RIGHT, WAIT_TO_SEEK_LEFT, CALLIBRATE
+    SEEK_RIGHT, SEEK_LEFT, TARGET_IN_VIEW, LOCKED_ON_TARGET, WAIT_TO_SEEK_RIGHT, WAIT_TO_SEEK_LEFT, CALLIBRATE,
+    TARGET_BLOCKED
   };
 
   private Mode mode;
 
   public double lastTargetPosition = 0;
+
+  public Timer myTimer;
+
+  private Direction pastSeekDirection;
 
   public AlignTurret(Limelight limelight, Turret turret) {
     myLimelight = limelight;
@@ -69,9 +76,10 @@ public class AlignTurret extends CommandBase {
       case WAIT_TO_SEEK_LEFT:
         this.waitToSeek(Direction.LEFT);
       /*case CALLIBRATE:
-        this.callibrate();
+        this.callibrate();*/
         break;
-      */
+      case TARGET_BLOCKED:
+        this.targetBlocked();
       default:
     }
 
@@ -100,13 +108,13 @@ public class AlignTurret extends CommandBase {
       this.mode = Mode.TARGET_IN_VIEW;
       return;
     }
-
+    pastSeekDirection = direction;
     switch (direction) {
       case LEFT:
-        myTurret.turn(-.5);
+        myTurret.turn(-0.1);
       case RIGHT:
       default:
-        myTurret.turn(.5);
+        myTurret.turn(0.1);
     }
   }
 
@@ -119,6 +127,7 @@ public class AlignTurret extends CommandBase {
       myTurret.resetEncoderTicks();
       myTurret.turn(0);
     } else {
+      // start turret on the left
       myTurret.turn(0.3);
     }
   }
@@ -153,6 +162,18 @@ public class AlignTurret extends CommandBase {
 
   public void updateLastKnownTargetAngle() {
     lastTargetPosition = myTurret.getAngle() + myLimelight.getX();
+  }
+
+  public void targetBlocked() {
+    myTurret.angleTurn(lastTargetPosition);
+
+    if (myLimelight.validTarget()) {
+      this.mode = Mode.TARGET_IN_VIEW;
+    } else if (myTimer.get() >= 50 && pastSeekDirection == Direction.LEFT) {
+      this.mode = Mode.SEEK_LEFT;
+    } else if (myTimer.get() >= 50 && pastSeekDirection == Direction.RIGHT) {
+      this.mode = Mode.SEEK_RIGHT;
+    }
   }
 
   // Called once the command ends or is interrupted.
