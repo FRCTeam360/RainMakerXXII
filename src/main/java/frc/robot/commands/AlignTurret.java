@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public class AlignTurret extends CommandBase {
 
   private Limelight myLimelight;
@@ -22,19 +24,24 @@ public class AlignTurret extends CommandBase {
   };
 
   public enum Mode {
-    SEEK_RIGHT, SEEK_LEFT, TARGET_IN_VIEW, LOCKED_ON_TARGET, WAIT_TO_SEEK_RIGHT, WAIT_TO_SEEK_LEFT, CALLIBRATE
+    SEEK_RIGHT, SEEK_LEFT, TARGET_IN_VIEW, LOCKED_ON_TARGET, WAIT_TO_SEEK_RIGHT, WAIT_TO_SEEK_LEFT, CALLIBRATE,
+    TARGET_BLOCKED
   };
 
   private Mode mode;
 
   public double lastTargetPosition = 0;
 
+  public Timer myTimer;
+
+  private Direction pastSeekDirection;
+
   public AlignTurret(Limelight limelight, Turret turret) {
     myLimelight = limelight;
     myTurret = turret;
     aimError = 0;
 
-    this.mode = Mode.TARGET_IN_VIEW;
+    this.mode = Mode.SEEK_RIGHT;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(myLimelight, turret);
   }
@@ -48,29 +55,32 @@ public class AlignTurret extends CommandBase {
   @Override
   public void execute() {
     this.softLimit();
+    this.updateLastKnownTargetAngle();
 
     aimError = myLimelight.getX() / 29.8;
 
     switch (this.mode) {
-    case SEEK_RIGHT:
-      this.seek(Direction.RIGHT);
-      break;
-    case SEEK_LEFT:
-      this.seek(Direction.LEFT);
-      break;
-    case TARGET_IN_VIEW:
-    case LOCKED_ON_TARGET:
-      this.align();
-      break;
-    case WAIT_TO_SEEK_RIGHT:
-      this.waitToSeek(Direction.RIGHT);
-      break;
-    case WAIT_TO_SEEK_LEFT:
-      this.waitToSeek(Direction.LEFT);
-    case CALLIBRATE:
-      this.callibrate();
-      break;
-    default:
+      case SEEK_RIGHT:
+        this.seek(Direction.RIGHT);
+        break;
+      case SEEK_LEFT:
+        this.seek(Direction.LEFT);
+        break;
+      case TARGET_IN_VIEW:
+      case LOCKED_ON_TARGET:
+        this.align();
+        break;
+      case WAIT_TO_SEEK_RIGHT:
+        this.waitToSeek(Direction.RIGHT);
+        break;
+      case WAIT_TO_SEEK_LEFT:
+        this.waitToSeek(Direction.LEFT);
+      /*case CALLIBRATE:
+        this.callibrate();*/
+        break;
+      case TARGET_BLOCKED:
+        this.targetBlocked();
+      default:
     }
 
   }
@@ -98,13 +108,13 @@ public class AlignTurret extends CommandBase {
       this.mode = Mode.TARGET_IN_VIEW;
       return;
     }
-
+    pastSeekDirection = direction;
     switch (direction) {
-    case LEFT:
-      myTurret.turn(-1);
-    case RIGHT:
-    default:
-      myTurret.turn(1);
+      case LEFT:
+        myTurret.turn(-0.1);
+      case RIGHT:
+      default:
+        myTurret.turn(0.1);
     }
   }
 
@@ -112,15 +122,16 @@ public class AlignTurret extends CommandBase {
     this.mode = mode;
   }
 
-  public void callibrate() {
+  /*public void callibrate() {
     if (myTurret.checkMiddleLimitSwitch()) {
       myTurret.resetEncoderTicks();
       myTurret.turn(0);
     } else {
+      // start turret on the left
       myTurret.turn(0.3);
     }
   }
-
+  */
   public void waitToSeek(Direction direction) {
     myTurret.turn(0);
     double currentTX = myLimelight.getX();
@@ -142,18 +153,30 @@ public class AlignTurret extends CommandBase {
   }
 
   public void softLimit() {
-    if (myTurret.getAngle() <= myTurret.leftSoftLimit) {
+    if (myTurret.getAngle() <= Turret.leftSoftLimit) {
       this.mode = Mode.WAIT_TO_SEEK_RIGHT;
-    } else if (myTurret.getAngle() >= myTurret.rightSoftLimit) {
+    } else if (myTurret.getAngle() >= Turret.rightSoftLimit) {
       this.mode = Mode.WAIT_TO_SEEK_LEFT;
     }
   }
-  
-  public void updateLastKnownTargetAngle(){
+
+  public void updateLastKnownTargetAngle() {
     lastTargetPosition = myTurret.getAngle() + myLimelight.getX();
   }
 
-  // Called once the commandd ends or is interrupted.
+  public void targetBlocked() {
+    myTurret.angleTurn(lastTargetPosition);
+
+    if (myLimelight.validTarget()) {
+      this.mode = Mode.TARGET_IN_VIEW;
+    } else if (myTimer.get() >= 50 && pastSeekDirection == Direction.LEFT) {
+      this.mode = Mode.SEEK_LEFT;
+    } else if (myTimer.get() >= 50 && pastSeekDirection == Direction.RIGHT) {
+      this.mode = Mode.SEEK_RIGHT;
+    }
+  }
+
+  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
   }

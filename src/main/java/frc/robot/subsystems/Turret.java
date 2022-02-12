@@ -56,8 +56,8 @@ public class Turret extends SubsystemBase {
 
     turretMotor.setIdleMode(IdleMode.kBrake);
 
-    leftLimitSwitch = new DigitalInput(leftLimitSwitchPort);
-    rightLimitSwitch = new DigitalInput(rightLimitSwitchPort);
+    // leftLimitSwitch = new DigitalInput(Port);
+    // rightLimitSwitch = new DigitalInput(rightLimitSwitchPort);
   }
 
   public double getAngle() {
