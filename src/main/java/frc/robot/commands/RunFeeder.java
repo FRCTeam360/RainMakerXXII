@@ -26,7 +26,7 @@ public class RunFeeder extends CommandBase {
     myTower = Tower.getInstance();
     myFeeder = Feeder.getInstance();
 
-    addRequirements(myTower);
+    addRequirements(myTower, myFeeder);
 
     // Use addRequirements() here to declare subsystem dependencies.
   }
