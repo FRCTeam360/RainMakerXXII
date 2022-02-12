@@ -102,10 +102,10 @@ public class AlignTurret extends CommandBase {
 
     switch (direction) {
       case LEFT:
-        myTurret.turn(-1);
+        myTurret.turn(-.5);
       case RIGHT:
       default:
-        myTurret.turn(1);
+        myTurret.turn(.5);
     }
   }
 
