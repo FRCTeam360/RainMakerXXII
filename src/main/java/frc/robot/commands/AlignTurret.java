@@ -68,9 +68,10 @@ public class AlignTurret extends CommandBase {
         break;
       case WAIT_TO_SEEK_LEFT:
         this.waitToSeek(Direction.LEFT);
-      case CALLIBRATE:
+      /*case CALLIBRATE:
         this.callibrate();
         break;
+      */
       default:
     }
 
@@ -113,7 +114,7 @@ public class AlignTurret extends CommandBase {
     this.mode = mode;
   }
 
-  public void callibrate() {
+  /*public void callibrate() {
     if (myTurret.checkMiddleLimitSwitch()) {
       myTurret.resetEncoderTicks();
       myTurret.turn(0);
@@ -121,7 +122,7 @@ public class AlignTurret extends CommandBase {
       myTurret.turn(0.3);
     }
   }
-
+  */
   public void waitToSeek(Direction direction) {
     myTurret.turn(0);
     double currentTX = myLimelight.getX();
