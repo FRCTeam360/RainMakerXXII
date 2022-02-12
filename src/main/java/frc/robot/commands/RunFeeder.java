@@ -18,17 +18,18 @@ public class RunFeeder extends CommandBase {
   private final Feeder myFeeder;
   private final Shooter myShooter;
   private final OperatorControl operatorCont;
+  private final DriverControl driverCont;
 
   public RunFeeder() {
     operatorCont = OperatorControl.getInstance();
+    driverCont = DriverControl.getInstance();
 
     myShooter = Shooter.getInstance();
     myTower = Tower.getInstance();
     myFeeder = Feeder.getInstance();
 
     addRequirements(myTower);
-    addRequirements(myFeeder); 
-  
+    addRequirements(myFeeder);
 
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -42,43 +43,44 @@ public class RunFeeder extends CommandBase {
   @Override
   public void execute() {
 
-    if (myTower.topSensorStatus()) {
+    //if shooter at speed, run all
+    if (myShooter.isAtSpeed()) {
       myTower.runTower(1);
       myFeeder.runFeeder(1);
+
+    //if intake running, run shooter if no ball at top of tower
+    } else if (driverCont.getLeftTrigger()) {
+      if (myTower.topSensorStatus()) {
+        myTower.runTower(1);
+        myFeeder.runFeeder(1);
+      } else {
+        myTower.runTower(0);
+        myFeeder.runFeeder(0);
+      }
     } else {
-      myTower.runTower(0);
-      myFeeder.runFeeder(0);
 
+      // manually run feeder
+      if (operatorCont.getLeftTrigger()) {
+        if (operatorCont.getXButton()) {
+          myFeeder.runFeeder(-0.5);
+        } else {
+          myFeeder.runFeeder(0.5);
+        }
+      } else {
+        myFeeder.runFeeder(0.0);
+      }
+
+      // manually run tower;
+      if (operatorCont.getRightTrigger()) {
+        if (operatorCont.getXButton()) {
+          myTower.runTower(-1.0);
+        } else {
+          myTower.runTower(1.0);
+        }
+      } else {
+        myTower.runTower(0.0);
+      }
     }
-
-    // //if shooter at speed, run all
-    // if(myShooter.isAtSpeed()){
-    // myTower.runTower(1);
-    // myFeeder.runFeeder(1);
-    // }else{
-
-    // //manually run feeder
-    // if(operatorCont.getLeftTrigger()){
-    // if(operatorCont.getXButton()){
-    // myFeeder.runFeeder(-0.5);
-    // } else {
-    // myFeeder.runFeeder(0.5);
-    // }
-    // }else{
-    // myFeeder.runFeeder(0.0);
-    // }
-
-    // //manually run tower;
-    // if(operatorCont.getRightTrigger()){
-    // if(operatorCont.getXButton()){
-    // myTower.runTower(-1.0);
-    // } else {
-    // myTower.runTower(1.0);
-    // }
-    // } else {
-    // myTower.runTower(0.0);
-    // }
-    // }
   }
 
   // Returns true when the command should end.
