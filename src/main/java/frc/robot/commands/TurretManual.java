@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.Constants.OIConstants.*;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.operatorInterface.OperatorControl;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 public class TurretManual extends CommandBase {
   private OperatorControl operatorCont;
   private Turret myTurret;
+  private DriveTrain myDriveTrain;
 
   public enum ControlTypes {
     AUTO_CONTROL, POWER_CONTROL, POSITION_CONTROL
@@ -23,8 +25,9 @@ public class TurretManual extends CommandBase {
   private ControlTypes controlTypes;
 
   /** Creates a new TurretManual. */
-  public TurretManual() {
+  public TurretManual(DriveTrain driveTrain) {
 
+    myDriveTrain = driveTrain;
     myTurret = Turret.getInstance();
     operatorCont = OperatorControl.getInstance();
     addRequirements(myTurret);
@@ -88,6 +91,28 @@ public class TurretManual extends CommandBase {
     // else if(y>0 && x>0) {
 
     // }
+  }
+
+  private void fieldOrientedControl() {
+
+    double gyroAngle = myDriveTrain.getYaw();
+
+    double x = operatorCont.getRightX();
+    double y = operatorCont.getRightY();
+    double angle = Math.abs(Math.atan(x / y));
+    if (y < 0 && x > 0) {
+      angle = 180 - angle;
+    } else if (y < 0 && x < 0) {
+      angle = -180 + angle;
+    } else if (y > 0 && x < 0) {
+      angle = -1 * angle;
+    }
+    // else if(y>0 && x>0) {
+
+    // }
+    double turretAngle = angle - gyroAngle;
+    myTurret.angleTurn(turretAngle);
+
   }
 
   // Called once the command ends or is interrupted.
