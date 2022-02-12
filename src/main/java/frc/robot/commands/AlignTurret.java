@@ -48,29 +48,30 @@ public class AlignTurret extends CommandBase {
   @Override
   public void execute() {
     this.softLimit();
+    this.updateLastKnownTargetAngle();
 
     aimError = myLimelight.getX() / 29.8;
 
     switch (this.mode) {
-    case SEEK_RIGHT:
-      this.seek(Direction.RIGHT);
-      break;
-    case SEEK_LEFT:
-      this.seek(Direction.LEFT);
-      break;
-    case TARGET_IN_VIEW:
-    case LOCKED_ON_TARGET:
-      this.align();
-      break;
-    case WAIT_TO_SEEK_RIGHT:
-      this.waitToSeek(Direction.RIGHT);
-      break;
-    case WAIT_TO_SEEK_LEFT:
-      this.waitToSeek(Direction.LEFT);
-    case CALLIBRATE:
-      this.callibrate();
-      break;
-    default:
+      case SEEK_RIGHT:
+        this.seek(Direction.RIGHT);
+        break;
+      case SEEK_LEFT:
+        this.seek(Direction.LEFT);
+        break;
+      case TARGET_IN_VIEW:
+      case LOCKED_ON_TARGET:
+        this.align();
+        break;
+      case WAIT_TO_SEEK_RIGHT:
+        this.waitToSeek(Direction.RIGHT);
+        break;
+      case WAIT_TO_SEEK_LEFT:
+        this.waitToSeek(Direction.LEFT);
+      case CALLIBRATE:
+        this.callibrate();
+        break;
+      default:
     }
 
   }
@@ -100,11 +101,11 @@ public class AlignTurret extends CommandBase {
     }
 
     switch (direction) {
-    case LEFT:
-      myTurret.turn(-1);
-    case RIGHT:
-    default:
-      myTurret.turn(1);
+      case LEFT:
+        myTurret.turn(-1);
+      case RIGHT:
+      default:
+        myTurret.turn(1);
     }
   }
 
@@ -142,18 +143,18 @@ public class AlignTurret extends CommandBase {
   }
 
   public void softLimit() {
-    if (myTurret.getAngle() <= myTurret.leftSoftLimit) {
+    if (myTurret.getAngle() <= Turret.leftSoftLimit) {
       this.mode = Mode.WAIT_TO_SEEK_RIGHT;
-    } else if (myTurret.getAngle() >= myTurret.rightSoftLimit) {
+    } else if (myTurret.getAngle() >= Turret.rightSoftLimit) {
       this.mode = Mode.WAIT_TO_SEEK_LEFT;
     }
   }
-  
-  public void updateLastKnownTargetAngle(){
+
+  public void updateLastKnownTargetAngle() {
     lastTargetPosition = myTurret.getAngle() + myLimelight.getX();
   }
 
-  // Called once the commandd ends or is interrupted.
+  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
   }
