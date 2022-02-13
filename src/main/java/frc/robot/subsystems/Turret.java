@@ -20,14 +20,14 @@ public class Turret extends SubsystemBase {
   private DigitalInput middleLimitSwitch;
   private DigitalInput rightLimitSwitch;
 
-  public static final double kP = 0.6;
+  public static final double kP = 0.05;
   public static final double kI = 0;
-  public static final double kD = 0;
+  public static final double kD = 0.01;
   public static final double kF = 0;
 
   public static final double AimMinCmd = 0.01;
 
-  public static final double gearBoxRatio = 1 / 20;
+  public static final double gearBoxRatio = 1.0 / 20.0;
   public static final double pulleyRatio = 1.5 / 17.5;
   public static final double degreesPerRotation = 360 / 1;
 
@@ -62,6 +62,7 @@ public class Turret extends SubsystemBase {
 
   public double getAngle() {
     double encoderPosition = turretMotor.getEncoder().getPosition();
+    // System.out.println("turret ratio: " + gearBoxRatio * pulleyRatio * degreesPerRotation);
     return encoderPosition * gearBoxRatio * pulleyRatio * degreesPerRotation;
   }
 
@@ -77,6 +78,7 @@ public class Turret extends SubsystemBase {
   public void angleTurn(double inputAngle) {
     double angle = this.getAngle();
     double error = inputAngle - angle;
+    // System.out.println("error" + error);
 
     double deriv = angle - previousAngle;
     previousAngle = angle;
@@ -102,6 +104,9 @@ public class Turret extends SubsystemBase {
 
   @Override
   public void periodic() {
+    // System.out.println("turret encoder" + getEncoderTick());
+    System.out.println("turret encoder angle: " + this.getAngle());
+    // System.out.println("")
     // This method will be called once per scheduler run
   }
 }

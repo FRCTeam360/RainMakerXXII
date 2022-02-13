@@ -33,7 +33,7 @@ public class TurretManual extends CommandBase {
     addRequirements(myTurret);
     // Use addRequirements() here to declare subsystem dependencies.
 
-    this.controlTypes = ControlTypes.POSITION_CONTROL;
+    this.controlTypes = ControlTypes.POWER_CONTROL;
   }
 
   // Called when the command is initially scheduled.
@@ -44,6 +44,11 @@ public class TurretManual extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    if(operatorCont.getDPadRight()){
+      myTurret.resetEncoderTicks();
+    }
+
     this.changeMode();
 
     switch (this.controlTypes) {
@@ -66,9 +71,9 @@ public class TurretManual extends CommandBase {
   }
 
   private void changeMode() {
-    if (operatorCont.getAButton()) {
+    if (operatorCont.getDPadLeft()) {
       this.controlTypes = ControlTypes.POSITION_CONTROL;
-    } else if (operatorCont.getBButton()) {
+    } else if (operatorCont.getDPadDown()) {
       this.controlTypes = ControlTypes.POWER_CONTROL;
     }
   }
@@ -85,21 +90,23 @@ public class TurretManual extends CommandBase {
     double x = 0;
     double y = 0;
     if (Math.abs(operatorCont.getRightX()) > .125 || Math.abs(operatorCont.getRightY()) > .125) {
-      x = operatorCont.getRightX();
-      y = operatorCont.getRightY();
+      x = -operatorCont.getRightX();
+      y = -operatorCont.getRightY();
+      double angle = Math.atan(x / y); // Math.abs()
+      angle = Math.toDegrees(angle);
+      // System.out.println("controller angle: " + angle);
+
+      if (y < 0 && x > 0) {
+        angle = 180 + angle; // -
+      } else if (y < 0 && x < 0) {
+        angle = -180 + angle;
+      }
+
+      myTurret.angleTurn(angle);
     } else {
-      x = 0;
-      y = 0;
-    }
-    double angle = Math.atan(x / y); // Math.abs()
-    angle = Math.toDegrees(angle);
-    if (y < 0 && x > 0) {
-      angle = 180 + angle; // -
-    } else if (y < 0 && x < 0) {
-      angle = -180 + angle;
+      myTurret.turn(0);
     }
 
-    myTurret.angleTurn(angle);
     // else if (y > 0 && x < 0) {
     // angle = -1 * angle;
     // }

@@ -24,4 +24,20 @@ public class XboxCont extends XboxController {
   public boolean getRightTrigger() {
     return getRightTriggerAxis() > 0.1;
   }
+
+  public boolean getDPadUp(){
+    return this.getPOV() == 0;
+  }
+
+  public boolean getDPadLeft(){
+    return this.getPOV() == 270;
+  }
+
+  public boolean getDPadDown(){
+    return this.getPOV() == 180;
+  }
+
+  public boolean getDPadRight(){
+    return this.getPOV() == 90;
+  }
 }
