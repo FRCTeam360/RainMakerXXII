@@ -18,8 +18,8 @@ public class TurretManual extends CommandBase {
   private Turret myTurret;
   private DriveTrain myDriveTrain;
 
-  public enum ControlTypes {
-    AUTO_CONTROL, POWER_CONTROL, POSITION_CONTROL
+  private enum ControlTypes {
+    POWER_CONTROL, POSITION_CONTROL, FIELD_ORIENTED_CONTROL
   };
 
   private ControlTypes controlTypes;
@@ -33,7 +33,7 @@ public class TurretManual extends CommandBase {
     addRequirements(myTurret);
     // Use addRequirements() here to declare subsystem dependencies.
 
-    this.controlTypes = ControlTypes.POWER_CONTROL;
+    this.controlTypes = ControlTypes.POSITION_CONTROL;
   }
 
   // Called when the command is initially scheduled.
@@ -47,13 +47,17 @@ public class TurretManual extends CommandBase {
     this.changeMode();
 
     switch (this.controlTypes) {
-      case AUTO_CONTROL:
-
       case POSITION_CONTROL:
+        this.positionControl();
+        break;
+
+      case FIELD_ORIENTED_CONTROL:
+        this.fieldOrientedControl();
+        break;
 
       case POWER_CONTROL:
       default:
-        this.fieldOrientedControl();
+        this.powerControl();
         break;
 
     }
@@ -78,16 +82,27 @@ public class TurretManual extends CommandBase {
   }
 
   private void positionControl() {
-    double x = operatorCont.getRightX();
-    double y = operatorCont.getRightY();
-    double angle = Math.abs(Math.atan(x / y));
+    double x = 0;
+    double y = 0;
+    if (Math.abs(operatorCont.getRightX()) > .125 || Math.abs(operatorCont.getRightY()) > .125) {
+      x = operatorCont.getRightX();
+      y = operatorCont.getRightY();
+    } else {
+      x = 0;
+      y = 0;
+    }
+    double angle = Math.atan(x / y); // Math.abs()
+    angle = Math.toDegrees(angle);
     if (y < 0 && x > 0) {
-      angle = 180 - angle;
+      angle = 180 + angle; // -
     } else if (y < 0 && x < 0) {
       angle = -180 + angle;
-    } else if (y > 0 && x < 0) {
-      angle = -1 * angle;
     }
+
+    myTurret.angleTurn(angle);
+    // else if (y > 0 && x < 0) {
+    // angle = -1 * angle;
+    // }
     // else if(y>0 && x>0) {
 
     // }

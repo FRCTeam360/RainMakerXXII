@@ -34,7 +34,7 @@ public class RobotContainer {
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Limelight limelight = new Limelight();
   private final Turret turret = Turret.getInstance();
-  // private final DriveTrain driveTrain = new DriveTrain();
+  private final DriveTrain driveTrain = new DriveTrain();
   // public final Feeder feeder = Feeder.getInstance();
   // public final Intake intake = Intake.getInstance();
 
@@ -42,7 +42,7 @@ public class RobotContainer {
   // public final RunFeeder runFeeder = new RunFeeder();
   // public final RunIntake runIntake = new RunIntake();
   // private final TankDrive tankDrive = new TankDrive(driveTrain);
-  private final TurretManual turretManual = new TurretManual();
+  private final TurretManual turretManual = new TurretManual(driveTrain);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     configureDefaultCommands();
@@ -53,7 +53,7 @@ public class RobotContainer {
 
   //scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
-     turret.setDefaultCommand(align);
+     turret.setDefaultCommand(turretManual);
     // feeder.setDefaultCommand(runFeeder);
     // intake.setDefaultCommand(runIntake);
     // driveTrain.setDefaultCommand(tankDrive);
