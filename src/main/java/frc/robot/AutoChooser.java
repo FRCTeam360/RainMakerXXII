@@ -28,5 +28,30 @@ public class AutoChooser {
         autoChooser = new SendableChooser<>();
 
         test = new Test(container.driveTrain);
+
+        locationChooser.addOption("Test", "Test");
+
+        SmartDashboard.putData("Start Location", locationChooser);
+        SmartDashboard.putData("Auto Choice", autoChooser);
+    }
+
+    public void periodic() {
+        if ( !selectedLocation.equals( locationChooser.getSelected() ) ) { //If it changes or is being initialized
+
+            selectedLocation = locationChooser.getSelected(); //Reset the SelectedLocation to what it actually is 
+            autoChooser = new SendableChooser<>(); //Clear the auto chooser
+
+            if (selectedLocation.equals("Test")) {
+                autoChooser.addOption("Test", test);
+            }
+
+            SmartDashboard.putData("Auto Choice", autoChooser); //Update the Auto Choice with the new options and new chooser
+
+        }
+        //Else do nothing cuz the location chooser hasn't changed states
+    }
+
+    public Command getCommand() {
+        return autoChooser.getSelected();
     }
 }

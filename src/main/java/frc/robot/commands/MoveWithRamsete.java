@@ -12,6 +12,8 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.controller.PIDController;
 
+//WHEN CALLING THIS METHOD: MoveWithRamsete(trajectory, drivetrain).andThen(() -> drivetrain.tankDriveVolts(0,0));
+
 /** Add your docs here. */
 public class MoveWithRamsete extends RamseteCommand {
 
@@ -23,6 +25,7 @@ public class MoveWithRamsete extends RamseteCommand {
             new SimpleMotorFeedforward(AutoConstants.ksVolts, AutoConstants.kvVoltSecondsPerMeter, AutoConstants.kaVoltSecondsSquaredPerMeter),
             AutoConstants.kDriveKinematics,
             drivetrain::getWheelSpeeds,
+            new PIDController(AutoConstants.kPDriveVel, 0, 0),
             new PIDController(AutoConstants.kPDriveVel, 0, 0),
             drivetrain::tankDriveVolts,
             drivetrain

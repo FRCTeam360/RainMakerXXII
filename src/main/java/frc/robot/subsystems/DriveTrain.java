@@ -15,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import frc.robot.Constants.AutoConstants;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 //import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -125,9 +126,16 @@ public class DriveTrain extends SubsystemBase {
     motorLLead.set(TalonFXControlMode.PercentOutput, Lmotor );
   }
 
-  // public Pose2d getPose() {
-  //   return m_odometry.getPoseMeters();
-  // }
+  public Pose2d getPose() {
+    return m_odometry.getPoseMeters();
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() { //Must be in meters/second
+    return new DifferentialDriveWheelSpeeds(
+      motorLLead.getSelectedSensorVelocity() * AutoConstants.ticksToMeters,
+      motorRLead.getSelectedSensorVelocity() * AutoConstants.ticksToMeters
+    ); //In example: m_leftEncoder.getRate() , m_rightEncoder.getRate() however, they set their rate to inclue their conversions
+  }
 
   public void brakeMode() {
     motorLLead.setNeutralMode(NeutralMode.Brake);
