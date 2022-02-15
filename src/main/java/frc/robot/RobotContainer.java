@@ -14,6 +14,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.operatorInterface.OperatorControl;
+import frc.robot.commands.AlignTurret;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -68,7 +69,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(operatorCont, 8).whenHeld(turretManual);
+    new JoystickButton(operatorCont, 8).whenHeld(align);
   }
 
   /**
