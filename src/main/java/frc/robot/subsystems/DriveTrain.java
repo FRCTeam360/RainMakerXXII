@@ -26,7 +26,6 @@ import edu.wpi.first.wpilibj.SPI; //Port NavX is on
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 // import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -52,6 +51,8 @@ public class DriveTrain extends SubsystemBase {
   private final DifferentialDriveOdometry m_odometry;
   private final MotorControllerGroup leftGroup;
   private final MotorControllerGroup rightGroup;
+
+  public static final double gearBoxRatio = (85/15) * (46/24);
 
   /** Creates a new ExampleSubsystem. */
   public DriveTrain() {
