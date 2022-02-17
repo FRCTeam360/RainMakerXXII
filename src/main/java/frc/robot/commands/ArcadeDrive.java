@@ -53,6 +53,9 @@ public class ArcadeDrive extends CommandBase {
       } 
     }
 
+    upDownSquared = upDownSquared * -1;
+    rightLeftSquared = rightLeftSquared * -1;
+
   
     driveLeft = upDownSquared + rightLeftSquared;
     driveRight = upDownSquared - rightLeftSquared;
