@@ -28,7 +28,7 @@ public class AlignTurret extends CommandBase {
     TARGET_BLOCKED
   };
 
-  private Mode mode;
+   private Mode mode;
 
   public double lastTargetPosition = 0;
 
@@ -102,7 +102,7 @@ public class AlignTurret extends CommandBase {
       this.mode = Mode.LOCKED_ON_TARGET;
     }
 
-    myTurret.turn(-aimAdjust);
+  
   }
 
   public void seek(Direction direction) {
