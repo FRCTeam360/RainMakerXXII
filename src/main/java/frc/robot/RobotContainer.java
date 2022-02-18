@@ -38,19 +38,19 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final Shooter shooter = Shooter.getInstance();
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  // private final Shooter shooter = Shooter.getInstance();
+  // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   public final DriveTrain driveTrain = new DriveTrain();
-  public final Feeder feeder = Feeder.getInstance();
-  public final Intake intake = Intake.getInstance();
-  public final Limelight limelight = new Limelight();
-  public final Tower tower = Tower.getInstance(); 
+  // public final Feeder feeder = Feeder.getInstance();
+  // public final Intake intake = Intake.getInstance();
+  // public final Limelight limelight = new Limelight();
+  // public final Tower tower = Tower.getInstance(); 
 
   // private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final ShooterJoy shooterJoy = new ShooterJoy();
-  private final SetShoot setShoot = new SetShoot(limelight);
-  public final RunFeeder runFeeder = new RunFeeder();
-  public final RunIntake runIntake = new RunIntake();
+  // private final ShooterJoy shooterJoy = new ShooterJoy();
+  // private final SetShoot setShoot = new SetShoot(limelight);
+  // public final RunFeeder runFeeder = new RunFeeder();
+  // public final RunIntake runIntake = new RunIntake();
   private final TankDrive tankDrive = new TankDrive(driveTrain);
   // private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
   // private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
@@ -64,10 +64,10 @@ public class RobotContainer {
 
   //scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
-    tower.setDefaultCommand(runFeeder);
-    feeder.setDefaultCommand(runFeeder);
-    intake.setDefaultCommand(runIntake);
-    shooter.setDefaultCommand(setShoot);
+    // tower.setDefaultCommand(runFeeder);
+    // feeder.setDefaultCommand(runFeeder);
+    // intake.setDefaultCommand(runIntake);
+    // shooter.setDefaultCommand(setShoot);
     driveTrain.setDefaultCommand(tankDrive);
 
   }
@@ -84,7 +84,7 @@ public class RobotContainer {
     // new JoystickButton(driverCont, 7).whenPressed(fieldOrientedDrive);
     // new JoystickButton(driverCont, 4).whenPressed(tankDrive);
     // new JoystickButton(driverCont, 3).whenPressed(arcadeDrive);
-    new JoystickButton(operatorCont, 7).whenHeld(shooterJoy);
+    // new JoystickButton(operatorCont, 7).whenHeld(shooterJoy);
   }
 
 

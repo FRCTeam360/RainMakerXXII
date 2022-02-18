@@ -33,6 +33,7 @@ public class AutoChooser {
 
         SmartDashboard.putData("Start Location", locationChooser);
         SmartDashboard.putData("Auto Choice", autoChooser);
+        System.out.println("working");
     }
 
     public void periodic() {

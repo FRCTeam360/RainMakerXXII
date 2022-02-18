@@ -158,7 +158,7 @@ public class DriveTrain extends SubsystemBase {
     //SmartDashboard.putNumber("N ang", Math.IEEEremainder(navX.getAngle(), 360) );
     SmartDashboard.putNumber("NAV ang", navX.getAngle() );
     SmartDashboard.putString("Pos2D",  m_odometry.getPoseMeters().toString() );
-    System.out.print("NavX angle: " + navX.getAngle());
+    // System.out.print("NavX angle: " + navX.getAngle());
     //SmartDashboard.putNumber("N pre", navX.getBarometricPressure()); //why this no work cri, just tryna get the pressure
     SmartDashboard.putNumber("N yaw", navX.getYaw());
 
