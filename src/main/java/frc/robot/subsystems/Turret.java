@@ -36,8 +36,8 @@ public class Turret extends SubsystemBase {
   private double previousAngle;
   private double integral;
 
-  public static final double leftSoftLimit = -60;
-  public static final double rightSoftLimit = 60;
+  public static final double leftSoftLimit = 60;
+  public static final double rightSoftLimit = -60;
 
   public static Turret getInstance() {
     if (instance == null) {
@@ -62,7 +62,6 @@ public class Turret extends SubsystemBase {
 
   public double getAngle() {
     double encoderPosition = turretMotor.getEncoder().getPosition();
-    // System.out.println("turret ratio: " + gearBoxRatio * pulleyRatio * degreesPerRotation);
     return encoderPosition * gearBoxRatio * pulleyRatio * degreesPerRotation;
   }
 
@@ -97,6 +96,16 @@ public class Turret extends SubsystemBase {
     return middleLimitSwitch.get();
   }
 
+  public Boolean isAtLeftLimit() {
+    return this.getAngle() >= leftSoftLimit &&
+        turretMotor.getEncoder().getVelocity() > 0;
+  }
+
+  public Boolean isAtRightLimit() {
+    return this.getAngle() <= rightSoftLimit &&
+        turretMotor.getEncoder().getVelocity() < 0;
+  }
+
   public double getEncoderTick() {
     return turretMotor.getEncoder().getPosition();
 
@@ -104,9 +113,5 @@ public class Turret extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // System.out.println("turret encoder" + getEncoderTick());
-    System.out.println("turret encoder angle: " + this.getAngle());
-    // System.out.println("")
-    // This method will be called once per scheduler run
   }
 }

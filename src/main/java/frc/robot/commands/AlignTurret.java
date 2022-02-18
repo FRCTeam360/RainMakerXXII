@@ -24,7 +24,7 @@ public class AlignTurret extends CommandBase {
   };
 
   public enum Mode {
-    SEEK_RIGHT, SEEK_LEFT, TARGET_IN_VIEW, LOCKED_ON_TARGET, WAIT_TO_SEEK_RIGHT, WAIT_TO_SEEK_LEFT, CALLIBRATE,
+    SEEK_RIGHT, SEEK_LEFT, TARGET_IN_VIEW, LOCKED_ON_TARGET, AT_RIGHT_LIMIT, AT_LEFT_LIMIT, CALLIBRATE,
     TARGET_BLOCKED
   };
 
@@ -70,13 +70,15 @@ public class AlignTurret extends CommandBase {
       case LOCKED_ON_TARGET:
         this.align();
         break;
-      case WAIT_TO_SEEK_RIGHT:
+      case AT_RIGHT_LIMIT:
         this.waitToSeek(Direction.RIGHT);
         break;
-      case WAIT_TO_SEEK_LEFT:
+      case AT_LEFT_LIMIT:
         this.waitToSeek(Direction.LEFT);
-      /*case CALLIBRATE:
-        this.callibrate();*/
+        /*
+         * case CALLIBRATE:
+         * this.callibrate();
+         */
         break;
       case TARGET_BLOCKED:
         this.targetBlocked();
@@ -111,10 +113,11 @@ public class AlignTurret extends CommandBase {
     pastSeekDirection = direction;
     switch (direction) {
       case LEFT:
-        myTurret.turn(-0.1);
+        myTurret.turn(0.2);
+        break;
       case RIGHT:
       default:
-        myTurret.turn(0.1);
+        myTurret.turn(-0.2);
     }
   }
 
@@ -153,10 +156,10 @@ public class AlignTurret extends CommandBase {
   }
 
   public void softLimit() {
-    if (myTurret.getAngle() <= Turret.leftSoftLimit) {
-      this.mode = Mode.WAIT_TO_SEEK_RIGHT;
-    } else if (myTurret.getAngle() >= Turret.rightSoftLimit) {
-      this.mode = Mode.WAIT_TO_SEEK_LEFT;
+    if (myTurret.isAtLeftLimit()) {
+      this.mode = Mode.AT_LEFT_LIMIT;
+    } else if (myTurret.isAtRightLimit()) {
+      this.mode = Mode.AT_RIGHT_LIMIT;
     }
   }
 
