@@ -28,7 +28,7 @@ public class AlignTurret extends CommandBase {
     TARGET_BLOCKED
   };
 
-   private Mode mode;
+  private Mode mode;
 
   public double lastTargetPosition = 0;
 
@@ -90,19 +90,22 @@ public class AlignTurret extends CommandBase {
   public void align() {
     if (!myLimelight.validTarget()) {
       this.mode = Mode.SEEK_LEFT;
-    }
-    double aimAdjust = Turret.kP * this.aimError;
-    if (this.aimError > 0.2) {
-      aimAdjust += Turret.AimMinCmd;
-      this.mode = Mode.TARGET_IN_VIEW;
-    } else if (aimError < -0.2) {
-      aimAdjust -= Turret.AimMinCmd;
-      this.mode = Mode.TARGET_IN_VIEW;
-    } else {
-      this.mode = Mode.LOCKED_ON_TARGET;
+
     }
 
-  
+    myTurret.angleTurn(myTurret.getAngle() - myLimelight.getX());  // method temporarily replacing following commented out method
+
+    // double aimAdjust = Turret.kP * this.aimError;
+    // if (this.aimError > 0.2) {
+    // aimAdjust += Turret.AimMinCmd;
+    // this.mode = Mode.TARGET_IN_VIEW;
+    // } else if (aimError < -0.2) {
+    // aimAdjust -= Turret.AimMinCmd;
+    // this.mode = Mode.TARGET_IN_VIEW;
+    // } else {
+    // this.mode = Mode.LOCKED_ON_TARGET;
+    // }
+
   }
 
   public void seek(Direction direction) {
@@ -125,16 +128,17 @@ public class AlignTurret extends CommandBase {
     this.mode = mode;
   }
 
-  /*public void callibrate() {
-    if (myTurret.checkMiddleLimitSwitch()) {
-      myTurret.resetEncoderTicks();
-      myTurret.turn(0);
-    } else {
-      // start turret on the left
-      myTurret.turn(0.3);
-    }
-  }
-  */
+  /*
+   * public void callibrate() {
+   * if (myTurret.checkMiddleLimitSwitch()) {
+   * myTurret.resetEncoderTicks();
+   * myTurret.turn(0);
+   * } else {
+   * // start turret on the left
+   * myTurret.turn(0.3);
+   * }
+   * }
+   */
   public void waitToSeek(Direction direction) {
     myTurret.turn(0);
     double currentTX = myLimelight.getX();
