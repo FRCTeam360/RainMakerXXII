@@ -36,6 +36,7 @@ public class AlignTurret extends CommandBase {
 
   private Direction pastSeekDirection;
 
+
   public AlignTurret(Limelight limelight, Turret turret) {
     myLimelight = limelight;
     myTurret = turret;
@@ -44,6 +45,7 @@ public class AlignTurret extends CommandBase {
     this.mode = Mode.SEEK_RIGHT;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(myLimelight, turret);
+    
   }
 
   // Called when the command is initially scheduled.
