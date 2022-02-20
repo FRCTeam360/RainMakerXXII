@@ -36,7 +36,6 @@ public class AlignTurret extends CommandBase {
 
   private Direction pastSeekDirection;
 
-
   public AlignTurret(Limelight limelight, Turret turret) {
     myLimelight = limelight;
     myTurret = turret;
@@ -45,7 +44,7 @@ public class AlignTurret extends CommandBase {
     this.mode = Mode.SEEK_RIGHT;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(myLimelight, turret);
-    
+
   }
 
   // Called when the command is initially scheduled.
@@ -61,6 +60,7 @@ public class AlignTurret extends CommandBase {
 
     aimError = myLimelight.getX() / 29.8;
 
+    System.out.println("Mode: " + mode);
     switch (this.mode) {
       case SEEK_RIGHT:
         this.seek(Direction.RIGHT);
@@ -95,18 +95,17 @@ public class AlignTurret extends CommandBase {
 
     }
 
-    myTurret.angleTurn(myTurret.getAngle() - myLimelight.getX());  // method temporarily replacing following commented out method
-
-    // double aimAdjust = Turret.kP * this.aimError;
-    // if (this.aimError > 0.2) {
-    // aimAdjust += Turret.AimMinCmd;
-    // this.mode = Mode.TARGET_IN_VIEW;
-    // } else if (aimError < -0.2) {
-    // aimAdjust -= Turret.AimMinCmd;
-    // this.mode = Mode.TARGET_IN_VIEW;
-    // } else {
-    // this.mode = Mode.LOCKED_ON_TARGET;
-    // }
+    double aimAdjust = Turret.kP * this.aimError;
+    if (this.aimError > 0.2) {
+      aimAdjust += Turret.AimMinCmd;
+      this.mode = Mode.TARGET_IN_VIEW;
+    } else if (aimError < -0.2) {
+      aimAdjust -= Turret.AimMinCmd;
+      this.mode = Mode.TARGET_IN_VIEW;
+    } else {
+      this.mode = Mode.LOCKED_ON_TARGET;
+    }
+    myTurret.turn(-aimAdjust);
 
   }
 

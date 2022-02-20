@@ -115,5 +115,6 @@ public class Turret extends SubsystemBase {
 
   @Override
   public void periodic() {
+    System.out.println("Angle: " + this.getAngle());
   }
 }
