@@ -23,7 +23,7 @@ public final class Constants {
         //Conversions for the Falcons
         private static final double pi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
         //public static final double ticksToMeters = ( ((15.0/85.0)*(30.0/40.0)) / 1.0 ) * ( (pi * .1524) / 1.0 ); 
-        public static final double ticksToMeters = ( ((15.0/85.0)*(30.0/40.0)) / 1.0 ) * ( (pi * .1524) / 1.0 ); //needs to be updated!!!
+        public static final double ticksToMeters = ( (pi * 0.1524) * ((15/85) * (24/46) /2048));
 
         //values for Ramsete controller
         public static final double ksVolts = 0;

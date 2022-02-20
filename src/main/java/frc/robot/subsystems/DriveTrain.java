@@ -42,14 +42,14 @@ public class DriveTrain extends SubsystemBase {
   private static WPI_TalonFX motorRFollow1;
   private static WPI_TalonFX motorRFollow2;
 
-  private final DifferentialDrive m_differentialDrive;
+  public final DifferentialDrive m_differentialDrive;
 
   //private double leftVel;   // initializes velocities for left and right sides
   //private double rightVel;
   //private double leftNewPos;   // initializes new positions for left and right sides
   //private double rightNewPos;
 
-  private AHRS navX;
+  public AHRS navX;
   private final DifferentialDriveOdometry m_odometry;
   private final MotorControllerGroup leftGroup;
   private final MotorControllerGroup rightGroup;
@@ -128,6 +128,22 @@ public class DriveTrain extends SubsystemBase {
 
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
+  }
+
+  public double getLeftEncoderMeters(){
+    return motorLLead.getSelectedSensorPosition() / AutoConstants.ticksToMeters;
+  }
+
+  public double getRightEncoderMeters(){
+    return motorRLead.getSelectedSensorPosition() / AutoConstants.ticksToMeters;
+  }
+
+  public double getLeftEncoderMetersPerSec() {
+    return motorLLead.getSelectedSensorVelocity() / AutoConstants.ticksToMeters;
+  }
+
+  public double getRightEncoderMetersPerSec() {
+    return motorRLead.getSelectedSensorVelocity() / AutoConstants.ticksToMeters;
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() { //Must be in meters/second
