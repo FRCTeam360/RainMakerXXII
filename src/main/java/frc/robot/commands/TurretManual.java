@@ -80,7 +80,7 @@ public class TurretManual extends CommandBase {
 
   private void powerControl() {
     if (Math.abs(operatorCont.getRightX()) > .125) {
-      myTurret.turn(operatorCont.getRightX());
+      myTurret.turn(-operatorCont.getRightX());
     } else {
       myTurret.turn(0);
     }
@@ -90,7 +90,7 @@ public class TurretManual extends CommandBase {
     double x = 0;
     double y = 0;
     if (Math.abs(operatorCont.getRightX()) > .125 || Math.abs(operatorCont.getRightY()) > .125) {
-      x = operatorCont.getRightX();
+      x = -operatorCont.getRightX();
       y = -operatorCont.getRightY();
       double angle = Math.atan(x / y); // Math.abs()
       angle = Math.toDegrees(angle);

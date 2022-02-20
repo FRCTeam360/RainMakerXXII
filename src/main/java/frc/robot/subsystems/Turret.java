@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -57,7 +56,7 @@ public class Turret extends SubsystemBase {
 
     turretMotor.setIdleMode(IdleMode.kBrake);
 
-    turretMotor.setInverted(true);
+    turretMotor.setInverted(false);
 
     // leftLimitSwitch = new DigitalInput(Port);
     // rightLimitSwitch = new DigitalInput(rightLimitSwitchPort);
