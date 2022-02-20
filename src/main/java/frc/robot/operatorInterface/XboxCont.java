@@ -26,18 +26,18 @@ public class XboxCont extends XboxController {
   }
 
   public boolean getDPadUp(){
-    return this.getPOV() == 0;
-  }
-
-  public boolean getDPadLeft(){
-    return this.getPOV() == 270;
-  }
-
-  public boolean getDPadDown(){
-    return this.getPOV() == 180;
+    return getPOV() == 0;
   }
 
   public boolean getDPadRight(){
-    return this.getPOV() == 90;
+    return getPOV() == 90;
+  }
+
+  public boolean getDPadDown(){
+    return getPOV() == 180;
+  }
+
+  public boolean getDPadLeft(){
+    return getPOV() == 270;
   }
 }
