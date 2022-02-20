@@ -21,7 +21,7 @@ import frc.robot.operatorInterface.DriverControl;
 import frc.robot.operatorInterface.OperatorControl;
 import frc.robot.subsystems.*;
 import frc.robot.operatorInterface.OperatorControl;
-import frc.robot.commands.AlignTurret;
+import frc.robot.commands.TurretAuto;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -68,7 +68,7 @@ public class RobotContainer {
   private final TankDrive tankDrive = new TankDrive(driveTrain);
   private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
   private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
-  private final AlignTurret align = new AlignTurret(limelight, turret);
+  private final TurretAuto align = new TurretAuto(limelight, turret);
 
   private final TurretManual turretManual = new TurretManual(driveTrain);
   

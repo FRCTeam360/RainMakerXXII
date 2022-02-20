@@ -11,7 +11,7 @@ import frc.robot.subsystems.Turret;
 
 import edu.wpi.first.wpilibj.Timer;
 
-public class AlignTurret extends CommandBase {
+public class TurretAuto extends CommandBase {
 
   private Limelight myLimelight;
   private Turret myTurret;
@@ -33,7 +33,7 @@ public class AlignTurret extends CommandBase {
 
   private Direction pastSeekDirection;
 
-  public AlignTurret(Limelight limelight, Turret turret) {
+  public TurretAuto(Limelight limelight, Turret turret) {
     myLimelight = limelight;
     myTurret = turret;
 
