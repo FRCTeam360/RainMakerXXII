@@ -78,7 +78,6 @@ public class TurretAuto extends CommandBase {
         this.targetBlocked();*/
       default:
     }
-
   }
   /**
    * Essentially checks for valid target and if there is none checks Turret angle and seeks in opposite direction
@@ -105,7 +104,6 @@ public class TurretAuto extends CommandBase {
       this.mode = Mode.LOCKED_ON_TARGET;
     }
     myTurret.turn(-aimAdjust);
-
   }
   /**
    * If there is a valid target mode changes to target inj view and also sets left and right (i think)
