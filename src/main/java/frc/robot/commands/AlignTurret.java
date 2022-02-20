@@ -91,8 +91,12 @@ public class AlignTurret extends CommandBase {
 
   public void align() {
     if (!myLimelight.validTarget()) {
-      this.mode = Mode.SEEK_LEFT;
-
+      if (myTurret.getAngle() <= 0) {
+        this.mode = Mode.SEEK_LEFT;
+      } else {
+        this.mode = Mode.SEEK_RIGHT;
+      }
+      return;
     }
 
     double aimAdjust = Turret.kP * this.aimError;
