@@ -59,17 +59,17 @@ public class TurretManual extends CommandBase {
       case FIELD_ORIENTED_CONTROL:
         this.fieldOrientedControl();
         break;
-
       case POWER_CONTROL:
       default:
         this.powerControl();
         break;
-
     }
     double encoderTick = myTurret.getEncoderTick();
     SmartDashboard.putNumber("gettick", encoderTick);
   }
-
+  /**
+   * changeMode switches to POSITION_CONTROL and POWER_CONTROL by pressing on certain DPad buttons
+   */
   private void changeMode() {
     if (operatorCont.getDPadLeft()) {
       this.controlTypes = ControlTypes.POSITION_CONTROL;
@@ -77,15 +77,19 @@ public class TurretManual extends CommandBase {
       this.controlTypes = ControlTypes.POWER_CONTROL;
     }
   }
-
+  /**
+   * powerControl turns the turret based on operator controller
+   */
   private void powerControl() {
     if (Math.abs(operatorCont.getRightX()) > .125) {
-      myTurret.turn(-operatorCont.getRightX());
+      myTurret.turn(operatorCont.getRightX());
     } else {
       myTurret.turn(0);
     }
   }
-
+  /**
+   * positionControl causes the turret to turn based on right joystick x and y values in terms of degrees
+   */
   private void positionControl() {
     double x = 0;
     double y = 0;
@@ -94,8 +98,6 @@ public class TurretManual extends CommandBase {
       y = -operatorCont.getRightY();
       double angle = Math.atan(x / y); // Math.abs()
       angle = Math.toDegrees(angle);
-      // System.out.println("controller angle: " + angle);
-
       if (y < 0 && x > 0) {
         angle = 180 + angle; // -
       } else if (y < 0 && x < 0) {
@@ -106,15 +108,10 @@ public class TurretManual extends CommandBase {
     } else {
       myTurret.turn(0);
     }
-
-    // else if (y > 0 && x < 0) {
-    // angle = -1 * angle;
-    // }
-    // else if(y>0 && x>0) {
-
-    // }
   }
-
+  /**
+   * fieldOrientedControl attempts to control the turret relative to the field as opposed to relative to the robot by getting yaw
+   */
   private void fieldOrientedControl() {
 
     double gyroAngle = myDriveTrain.getYaw();

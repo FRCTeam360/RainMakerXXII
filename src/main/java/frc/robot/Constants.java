@@ -58,5 +58,3 @@ public final class Constants {
         public static final int topTowerSensor = 0;
     }
 }
-
-

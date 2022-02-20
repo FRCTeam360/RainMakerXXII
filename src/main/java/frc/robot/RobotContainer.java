@@ -43,15 +43,8 @@ public class RobotContainer {
   private final OperatorControl operatorCont = OperatorControl.getInstance();
   // The robot's subsystems and commands are defined here...
 
-
-  // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
   private final Turret turret = Turret.getInstance();
 
-
-
-
-  // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Shooter shooter = Shooter.getInstance();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain driveTrain = new DriveTrain();
@@ -60,7 +53,6 @@ public class RobotContainer {
   public final Limelight limelight = new Limelight();
   public final Tower tower = Tower.getInstance(); 
 
-  // private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final ShooterJoy shooterJoy = new ShooterJoy();
   private final SetShoot setShoot = new SetShoot(limelight);
   public final RunFeeder runFeeder = new RunFeeder();
@@ -74,12 +66,10 @@ public class RobotContainer {
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    //Configure the button bindings
     configureDefaultCommands();
-    // Configure the button bindings
     configureButtonBindings();
-
   }
-
   //scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
     tower.setDefaultCommand(runFeeder);
@@ -99,7 +89,6 @@ public class RobotContainer {
    * it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-
 
   private void configureButtonBindings() {
     new JoystickButton(driverCont, 7).whenPressed(fieldOrientedDrive);
