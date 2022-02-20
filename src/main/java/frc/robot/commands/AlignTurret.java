@@ -16,9 +16,6 @@ public class AlignTurret extends CommandBase {
   private Limelight myLimelight;
   private Turret myTurret;
 
-  private double aimAdjust;
-  private double aimError;
-
   public enum Direction {
     LEFT, RIGHT
   };
@@ -39,7 +36,6 @@ public class AlignTurret extends CommandBase {
   public AlignTurret(Limelight limelight, Turret turret) {
     myLimelight = limelight;
     myTurret = turret;
-    aimError = 0;
 
     this.mode = Mode.SEEK_RIGHT;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -57,8 +53,6 @@ public class AlignTurret extends CommandBase {
   public void execute() {
     this.softLimit();
     this.updateLastKnownTargetAngle();
-
-    aimError = myLimelight.getX() / 29.8;
 
     System.out.println("Mode: " + mode);
     switch (this.mode) {
@@ -90,6 +84,7 @@ public class AlignTurret extends CommandBase {
   }
 
   public void align() {
+  
     if (!myLimelight.validTarget()) {
       if (myTurret.getAngle() <= 0) {
         this.mode = Mode.SEEK_LEFT;
@@ -98,9 +93,10 @@ public class AlignTurret extends CommandBase {
       }
       return;
     }
+    double aimError = myLimelight.getX();
 
-    double aimAdjust = Turret.kP * this.aimError;
-    if (this.aimError > 0.2) {
+    double aimAdjust = Turret.kP * aimError;
+    if (aimError > 0.2) {
       aimAdjust += Turret.AimMinCmd;
       this.mode = Mode.TARGET_IN_VIEW;
     } else if (aimError < -0.2) {
