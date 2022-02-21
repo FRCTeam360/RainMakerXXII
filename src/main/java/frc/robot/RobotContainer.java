@@ -54,6 +54,7 @@ public class RobotContainer {
   private final TankDrive tankDrive = new TankDrive(driveTrain);
   // private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
   // private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
+  private final Characterize characterize = new Characterize(driveTrain);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -95,6 +96,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return characterize;
   }
 }
