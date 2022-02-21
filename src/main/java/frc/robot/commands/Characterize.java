@@ -20,6 +20,9 @@ public class Characterize extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+
+        System.out.println("characterizing");
+
         // reset gyro and encoders
         // set timeperiod to .005
         m_drivebase.m_differentialDrive.setDeadband(0.0);
@@ -37,6 +40,7 @@ public class Characterize extends CommandBase {
     public void execute() {
         double leftPosition = m_drivebase.getLeftEncoderMeters();
         double leftRate = m_drivebase.getLeftEncoderMetersPerSec();
+        System.out.println("left velocity: " + m_drivebase.getLeftEncoderMetersPerSec());
         double rightPosition = m_drivebase.getRightEncoderMeters();
         double rightRate = m_drivebase.getRightEncoderMetersPerSec();
         double angularPosition = -Math.toRadians(m_drivebase.navX.getAngle());

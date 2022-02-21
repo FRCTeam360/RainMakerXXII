@@ -119,7 +119,7 @@ public class DriveTrain extends SubsystemBase {
     return navX.getYaw();
   }
 
-  public void driveR (double Rmotor) {
+  public void   driveR (double Rmotor) {
     motorRLead.set(TalonFXControlMode.PercentOutput, Rmotor );
   }
   public void driveL (double Lmotor) {

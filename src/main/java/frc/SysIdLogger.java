@@ -35,6 +35,7 @@ public class SysIdLogger {
           SmartDashboard.putBoolean("SysIdWrongMech", true);
         }
       
+        // SmartDashboard.putString("SysIdTestType", "Quasistatic");
         m_testType = SmartDashboard.getString("SysIdTestType", "");
         m_rotate = SmartDashboard.getBoolean("SysIdRotate", false);
         m_voltageCommand = SmartDashboard.getNumber("SysIdVoltageCommand", 0.0);
@@ -49,7 +50,8 @@ public class SysIdLogger {
         String ss = m_data.toString();
       
         SmartDashboard.putString("SysIdTelemetry", ss.substring(1, ss.length()-1));
-      
+        // System.out.println("SysIdTelemetry: " + ss.substring(1, ss.length()-1));
+
         reset();
       }
       
@@ -74,11 +76,14 @@ public class SysIdLogger {
         // Don't let robot move if it's characterizing the wrong mechanism
         if (!isWrongMechanism()) {
           if (m_testType.equals("Quasistatic")) {
+            System.out.println("Quasistatic test type");
             m_motorVoltage = m_voltageCommand * (m_timestamp - m_startTime);
           } else if (m_testType.equals("Dynamic")) {
+            System.out.println("Dynamic test type");
             m_motorVoltage = m_voltageCommand;
           } else {
             m_motorVoltage = 0.0;
+            System.out.println("null test type");
           }
         } else {
           m_motorVoltage = 0.0;
