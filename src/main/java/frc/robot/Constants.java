@@ -26,11 +26,11 @@ public final class Constants {
         public static final double ticksToMeters = ( (pi * 0.1524) * ((15.0/85.0) * (24.0/46.0) /2048.0));
 
         //values for Ramsete controller
-        public static final double ksVolts = 0;
-        public static final double kvVoltSecondsPerMeter = 0;
-        public static final double kaVoltSecondsSquaredPerMeter = 0;
+        public static final double ksVolts = 0.58336;
+        public static final double kvVoltSecondsPerMeter = 5.9133E-10 / ticksToMeters;
+        public static final double kaVoltSecondsSquaredPerMeter = 6.5773E-11 / ticksToMeters;
         public static final double kPDriveVel = 0;
-        public static final double kTrackwidthMeters = 0;
+        public static final double kTrackwidthMeters = 0.641;
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
 
         public static final double kMaxSpeedMetersPerSecond = 1.0;
