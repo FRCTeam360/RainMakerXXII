@@ -144,7 +144,7 @@ public class TurretAuto extends CommandBase {
    */
 
   /**
-   * If the target outside of the deadzone and is at the opposite side of the limit the turert 
+   * If the target outside of the deadzone and is at the opposite side of the limit the turret 
    * will go into seek mode to find it. If the target is outside of the deadzone and is at the same side of the limit the turret will
    * stay in target in view. When the target is in the deadzone the turret stays in place.
    * @param limitSide which limit the turret is at
