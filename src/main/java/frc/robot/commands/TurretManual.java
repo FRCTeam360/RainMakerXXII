@@ -67,6 +67,7 @@ public class TurretManual extends CommandBase {
     double encoderTick = myTurret.getEncoderTick();
     SmartDashboard.putNumber("gettick", encoderTick);
   }
+
   /**
    * changeMode switches to POSITION_CONTROL and POWER_CONTROL by pressing on certain DPad buttons
    */
@@ -77,8 +78,9 @@ public class TurretManual extends CommandBase {
       this.controlTypes = ControlTypes.POWER_CONTROL;
     }
   }
+
   /**
-   * powerControl turns the turret based on operator controller
+   * powerControl turns the turret based on operator controller right joystick x value and only moves if outside deadzone
    */
   private void powerControl() {
     if (Math.abs(operatorCont.getRightX()) > .125) {
@@ -87,8 +89,10 @@ public class TurretManual extends CommandBase {
       myTurret.turn(0);
     }
   }
+
   /**
    * positionControl causes the turret to turn based on right joystick x and y values in terms of degrees
+   * causing turret to, relative to front of robot, match the joystick angle relative to positive y axis
    */
   private void positionControl() {
     double x = 0;
@@ -109,8 +113,11 @@ public class TurretManual extends CommandBase {
       myTurret.turn(0);
     }
   }
+
   /**
-   * fieldOrientedControl attempts to control the turret relative to the field as opposed to relative to the robot by getting yaw
+   * fieldOrientedControl controls the turret relative to the field
+   * as opposed to relative to the robot by getting navx yaw
+   * and the angle from operator controller's right joystick relative to positive y axis
    */
   private void fieldOrientedControl() {
 

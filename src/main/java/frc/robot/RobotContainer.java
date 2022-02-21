@@ -44,7 +44,6 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final Turret turret = Turret.getInstance();
-
   private final Shooter shooter = Shooter.getInstance();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain driveTrain = new DriveTrain();
@@ -61,7 +60,6 @@ public class RobotContainer {
   private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
   private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
   private final TurretAuto align = new TurretAuto(limelight, turret);
-
   private final TurretManual turretManual = new TurretManual(driveTrain);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */

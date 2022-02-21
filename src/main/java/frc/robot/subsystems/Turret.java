@@ -62,6 +62,10 @@ public class Turret extends SubsystemBase {
     // rightLimitSwitch = new DigitalInput(rightLimitSwitchPort);
   }
 
+  /** 
+   * retrieves the encoder position and returns it multiplied by pulleyratio, gearboxratio,
+   * and degreesperrotation to get the turret's angle relative to front of robot
+   */
   public double getAngle() {
     double encoderPosition = turretMotor.getEncoder().getPosition();
     return encoderPosition * gearBoxRatio * pulleyRatio * degreesPerRotation;
@@ -76,10 +80,13 @@ public class Turret extends SubsystemBase {
 
   }
 
+  /**
+   * Turns turret to match angle provided to turret
+   * @param inputAngle inputAngle is the value for the turret to turn towards
+   */
   public void angleTurn(double inputAngle) {
     double angle = this.getAngle();
     double error = inputAngle - angle;
-    // System.out.println("error" + error);
 
     double deriv = angle - previousAngle;
     previousAngle = angle;

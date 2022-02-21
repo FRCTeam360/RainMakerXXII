@@ -27,9 +27,9 @@ public class TurretAuto extends CommandBase {
 
   private Mode mode;
 
-  public double lastTargetPosition = 0;
+  private double lastTargetPosition = 0;
 
-  public Timer myTimer;
+  private Timer myTimer;
 
   private Direction pastSeekDirection;
 
@@ -42,12 +42,10 @@ public class TurretAuto extends CommandBase {
     addRequirements(myLimelight, turret);
 
   }
-
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
   }
-
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
@@ -79,8 +77,10 @@ public class TurretAuto extends CommandBase {
       default:
     }
   }
+
   /**
-   * Essentially checks for valid target and if there is none checks Turret angle and seeks in opposite direction
+   * 94-106 finds error from limelight to adjust alignment to target and turns turret to fulfill alignment
+   * Checks for a valid target and if there is none checks Turret angle and seeks in opposite direction
    */
   private void align() {
     if (!myLimelight.validTarget()) { 
@@ -105,8 +105,11 @@ public class TurretAuto extends CommandBase {
     }
     myTurret.turn(-aimAdjust);
   }
+
   /**
-   * If there is a valid target mode changes to target inj view and also sets left and right (i think)
+   * Turns turret in direction provided
+   * If there is a valid target mode changes to target in view
+   * @param direction direction to turn turret towards 
    */
   private void seek(Direction direction) { 
     if (myLimelight.validTarget()) {
@@ -139,15 +142,17 @@ public class TurretAuto extends CommandBase {
    * }
    * }
    */
+
   /**
    * Should just stop the turret for a second and then decide which direction to seek
+   * @param limitSide which limit the turret is at
    */
-  private void waitToSeek(Direction direction) { 
+  private void waitToSeek(Direction limitSide) { 
     myTurret.turn(0);
     double currentTX = myLimelight.getX();
     boolean validTarget = myLimelight.validTarget();
 
-    if (direction == Direction.LEFT) {
+    if (limitSide == Direction.LEFT) {
       if (!validTarget || currentTX < -10) {
         this.mode = Mode.SEEK_RIGHT;
       } else if (currentTX > 0) {
@@ -161,6 +166,7 @@ public class TurretAuto extends CommandBase {
       }
     }
   }
+
   /**
    * Checks to see if the turret is at either limit, right now for soft limits
    */
@@ -178,6 +184,7 @@ public class TurretAuto extends CommandBase {
   private void updateLastKnownTargetAngle() { /** Finds the last position of target detected */
     lastTargetPosition = myTurret.getAngle() + myLimelight.getX();
   }
+
   /**
    * Seeks if target obstructed (I think)
    */
