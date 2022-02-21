@@ -131,19 +131,19 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getLeftEncoderMeters(){
-    return motorLLead.getSelectedSensorPosition() / AutoConstants.ticksToMeters;
+    return motorLLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters;
   }
 
   public double getRightEncoderMeters(){
-    return motorRLead.getSelectedSensorPosition() / AutoConstants.ticksToMeters;
+    return motorRLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters;
   }
 
   public double getLeftEncoderMetersPerSec() {
-    return motorLLead.getSelectedSensorVelocity() / AutoConstants.ticksToMeters;
+    return motorLLead.getSelectedSensorVelocity() * AutoConstants.ticksToMeters;
   }
 
   public double getRightEncoderMetersPerSec() {
-    return motorRLead.getSelectedSensorVelocity() / AutoConstants.ticksToMeters;
+    return motorRLead.getSelectedSensorVelocity() * AutoConstants.ticksToMeters;
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() { //Must be in meters/second
