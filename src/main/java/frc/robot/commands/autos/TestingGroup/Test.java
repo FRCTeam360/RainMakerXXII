@@ -6,12 +6,17 @@ package frc.robot.commands.autos.TestingGroup;
 
 import java.util.List;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.AutoConfig;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.commands.MoveWithRamsete;
 import frc.robot.subsystems.DriveTrain;
 
@@ -29,11 +34,30 @@ public class Test extends SequentialCommandGroup {
 
   /** Creates a new Test. */
   public Test(DriveTrain driveTrain) {
+
+    // RamseteCommand testCommand =
+    // new RamseteCommand(
+    //     test,
+    //     driveTrain::getPose,
+    //     new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
+    //     new SimpleMotorFeedforward(
+    //         AutoConstants.ksVolts,
+    //         AutoConstants.kvVoltSecondsPerMeter,
+    //         AutoConstants.kaVoltSecondsSquaredPerMeter),
+    //     driveTrain.kDriveKinematics,
+    //     driveTrain::getWheelSpeeds,
+    //     new PIDController(AutoConstants.kPDriveVel, 0, 0),
+    //     new PIDController(AutoConstants.kPDriveVel, 0, 0),
+    //     // RamseteCommand passes volts to the callback
+    //     driveTrain::tankDriveVolts,
+    //     driveTrain);
+
     super(
       new MoveWithRamsete(
         test, 
         driveTrain
       )
+      .andThen(() -> driveTrain.tankDriveVolts(0,0))
     );
     
     System.out.println("tessst");

@@ -99,7 +99,7 @@ public class DriveTrain extends SubsystemBase {
     leftGroup = new MotorControllerGroup( motorLLead , motorLFollow1, motorLFollow2 );
     rightGroup = new MotorControllerGroup( motorRLead , motorRFollow1, motorRFollow2 );
 
-    m_differentialDrive = new DifferentialDrive(motorLLead, motorRLead);
+    m_differentialDrive = new DifferentialDrive(leftGroup, rightGroup);
     m_differentialDrive.setSafetyEnabled(false); //So it won't stop the motors from moving
   }
 
