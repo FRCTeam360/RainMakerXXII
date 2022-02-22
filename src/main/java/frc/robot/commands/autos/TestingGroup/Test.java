@@ -35,6 +35,8 @@ public class Test extends SequentialCommandGroup {
         driveTrain
       )
     );
+    
+    System.out.println("tessst");
     // addCommands();
   }
 }

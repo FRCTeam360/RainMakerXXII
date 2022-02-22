@@ -53,6 +53,6 @@ public class AutoChooser {
     }
 
     public Command getCommand() {
-        return autoChooser.getSelected();
+        return test;
     }
 }

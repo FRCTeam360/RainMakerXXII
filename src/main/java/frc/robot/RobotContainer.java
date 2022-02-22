@@ -16,6 +16,7 @@ import frc.robot.Constants.OIConstants.*;
 import frc.robot.Constants.CANIds.*;
 
 import frc.robot.commands.*;
+import frc.robot.commands.autos.TestingGroup.Test;
 import frc.robot.operatorInterface.DriverControl;
 import frc.robot.operatorInterface.OperatorControl;
 import frc.robot.subsystems.*;
@@ -55,6 +56,8 @@ public class RobotContainer {
   // private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
   // private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
   private final Characterize characterize = new Characterize(driveTrain);
+
+  public final Test test = new Test(driveTrain);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -96,6 +99,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return characterize;
+    return test;
   }
 }
