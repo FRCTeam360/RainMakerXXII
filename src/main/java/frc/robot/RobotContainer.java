@@ -55,7 +55,7 @@ public class RobotContainer {
   private final TankDrive tankDrive = new TankDrive(driveTrain);
   // private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
   // private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
-  private final Characterize characterize = new Characterize(driveTrain);
+  // private final Characterize characterize = new Characterize(driveTrain);
 
   public final Test test = new Test(driveTrain);
   
@@ -72,7 +72,7 @@ public class RobotContainer {
     // feeder.setDefaultCommand(runFeeder);
     // intake.setDefaultCommand(runIntake);
     // shooter.setDefaultCommand(setShoot);
-    driveTrain.setDefaultCommand(tankDrive);
+    driveTrain.setDefaultCommand(test);
 
   }
 

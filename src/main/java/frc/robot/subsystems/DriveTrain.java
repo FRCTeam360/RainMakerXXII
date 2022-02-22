@@ -13,12 +13,14 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
 //import static frc.robot.Constants.DriveTrainConstants.*;
 import frc.robot.Constants.AutoConstants;
-
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 //import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 
@@ -49,8 +51,15 @@ public class DriveTrain extends SubsystemBase {
   //private double leftNewPos;   // initializes new positions for left and right sides
   //private double rightNewPos;
 
-  public AHRS navX;
-  private final DifferentialDriveOdometry m_odometry;
+  public AHRS navX = new AHRS(SPI.Port.kMXP); //For frc-characterization tool: "SPI.Port.kMXP" of type "NavX"
+  public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(AutoConstants.kTrackwidthMeters);
+  public final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(getHeading());
+  public final static SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(AutoConstants.ksVolts, AutoConstants.kvVoltSecondsPerMeter, AutoConstants.kaVoltSecondsSquaredPerMeter);
+  public Pose2d pose;
+
+  public PIDController leftPidController = new PIDController(AutoConstants.kPDriveVel, 0, 0);
+  public PIDController rightPidController = new PIDController(AutoConstants.kPDriveVel, 0, 0);
+
   private final MotorControllerGroup leftGroup;
   private final MotorControllerGroup rightGroup;
 
@@ -84,9 +93,6 @@ public class DriveTrain extends SubsystemBase {
     motorRFollow1.setInverted(TalonFXInvertType.FollowMaster);
     motorRFollow2.setInverted(TalonFXInvertType.FollowMaster);
 
-    navX = new AHRS(SPI.Port.kMXP); //For frc-characterization tool: "SPI.Port.kMXP" of type "NavX"
-    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-
     resetEncPos(); //Reset Encoders r navX yaw before m_odometry is defined
 
     //makes the 3 motor controllers function as 1 motor controller for autos
@@ -101,18 +107,25 @@ public class DriveTrain extends SubsystemBase {
     leftGroup.setVoltage(leftVolts); //Answer is no   //Set to motor groups
     rightGroup.setVoltage(rightVolts); //it's big brain time
     m_differentialDrive.feed(); //Feed the motorsafety class so it doesnt disable the motors
+    System.out.println("left voltage output: " + leftVolts);
+    System.out.println("right voltage output: " + rightVolts);
+    
   }
-
+  
   public void resetEncPos () { //For initialization resets encoder positions, for ramsete
     motorLLead.setSelectedSensorPosition(0);
     motorRLead.setSelectedSensorPosition(0);
      navX.zeroYaw();
      navX.setAngleAdjustment( -navX.getAngle() ); //Set angle offset
-     m_odometry.resetPosition(new Pose2d(), Rotation2d.fromDegrees(getHeading())); //Set odomentry to zero
+     m_odometry.resetPosition(new Pose2d(), getHeading()); //Set odomentry to zero
   }
 
-  public double getHeading() {
-    return Math.IEEEremainder(navX.getAngle(), 360) * (AutoConstants.kGyroReversed ? -1.0 : 1.0);
+  public Rotation2d getHeading(){
+    return Rotation2d.fromDegrees(-navX.getAngle());
+  }
+
+  public double getHeadingAngle() {
+    return Math.IEEEremainder(-navX.getAngle(), 360);
   }
 
   public double getYaw() {
@@ -126,8 +139,24 @@ public class DriveTrain extends SubsystemBase {
     motorLLead.set(TalonFXControlMode.PercentOutput, Lmotor );
   }
 
+  public static DifferentialDriveKinematics getKinematics(){
+    return kDriveKinematics;
+  }
+
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
+  }
+
+  public SimpleMotorFeedforward getFeedForward(){
+    return feedForward;
+  }
+
+  public PIDController getLeftController(){
+    return leftPidController;
+  }
+
+  public PIDController getRightController(){
+    return rightPidController;
   }
 
   public double getLeftEncoderMeters(){
@@ -193,8 +222,8 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    m_odometry.update( //Must be in meters according to internets
-      Rotation2d.fromDegrees(getHeading()),
+    pose = m_odometry.update( //Must be in meters according to internets
+      getHeading(),
       motorLLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters,
       motorRLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters
     );

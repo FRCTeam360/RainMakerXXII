@@ -8,16 +8,13 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.subsystems.DriveTrain;
 
 /** Add your docs here. */
 public class AutoConfig {
     private static final DifferentialDriveVoltageConstraint autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
-        new SimpleMotorFeedforward(
-            AutoConstants.ksVolts, 
-            AutoConstants.kvVoltSecondsPerMeter, 
-            AutoConstants.kaVoltSecondsSquaredPerMeter
-        ), 
-        AutoConstants.kDriveKinematics, 
+        DriveTrain.feedForward,
+        DriveTrain.kDriveKinematics, 
         10
     );
     public static final TrajectoryConfig configFwd = 
@@ -25,7 +22,7 @@ public class AutoConfig {
             AutoConstants.kMaxSpeedMetersPerSecond, 
             AutoConstants.kMaxAccelerationMetersPerSecondSquared
         )
-        .setKinematics(AutoConstants.kDriveKinematics) // Add kinematics to ensure max speed is actually obeyed
+        .setKinematics(DriveTrain.getKinematics()) // Add kinematics to ensure max speed is actually obeyed
         .addConstraint(autoVoltageConstraint) // Apply the voltage constraint
         .setReversed(false); //forward
 
@@ -34,7 +31,7 @@ public class AutoConfig {
          AutoConstants.kMaxSpeedMetersPerSecond,
          AutoConstants.kMaxAccelerationMetersPerSecondSquared
         )
-        .setKinematics(AutoConstants.kDriveKinematics) // Add kinematics to ensure max speed is actually obeyed
+        .setKinematics(DriveTrain.getKinematics()) // Add kinematics to ensure max speed is actually obeyed
         .addConstraint(autoVoltageConstraint) // Apply the voltage constraint
         .setReversed(true); //reversed
 }
