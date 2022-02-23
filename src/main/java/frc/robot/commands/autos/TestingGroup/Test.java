@@ -28,8 +28,15 @@ public class Test extends SequentialCommandGroup {
   public static final Trajectory test = TrajectoryGenerator.generateTrajectory(
     new Pose2d(0, 0, new Rotation2d(0)), 
     List.of(), 
-    new Pose2d(1, 0, new Rotation2d(0)), 
+    new Pose2d(2, 0, new Rotation2d(0)), 
     AutoConfig.configFwd
+    );
+
+  public static final Trajectory test2 = TrajectoryGenerator.generateTrajectory(
+    new Pose2d(2, 0, new Rotation2d(0)), 
+    List.of(), 
+    new Pose2d(0, 0, new Rotation2d(0)), 
+    AutoConfig.configRev
     );
 
   /** Creates a new Test. */
@@ -52,12 +59,17 @@ public class Test extends SequentialCommandGroup {
     //     driveTrain::tankDriveVolts,
     //     driveTrain);
 
-    super(
+    addCommands(
       new MoveWithRamsete(
         test, 
         driveTrain
       )
-      .andThen(() -> driveTrain.tankDriveVolts(0,0))
+      .andThen(() -> driveTrain.tankDriveVolts(0,0)),
+      new MoveWithRamsete(
+        test2, 
+        driveTrain
+      )
+      .andThen(() -> driveTrain.tankDriveVolts(0, 0))
     );
     
     System.out.println("tessst");

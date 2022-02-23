@@ -16,6 +16,7 @@ import frc.robot.Constants.AutoConstants;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.util.Units;
 //import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -228,6 +229,10 @@ public class DriveTrain extends SubsystemBase {
       motorRLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters
     );
     navxTestingDashboardReadouts();
+    System.out.println("distance x: " + Units.metersToFeet(m_odometry.getPoseMeters().getX()));
+    System.out.println("distance y: " + Units.metersToFeet(m_odometry.getPoseMeters().getY()));
+    System.out.println("Right encoder: " + Units.metersToFeet(motorLLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters));
+    System.out.println("Left encoder" + Units.metersToFeet(motorRLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters));
   }
 
 
@@ -237,6 +242,7 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("Left Raw Pos", leftRawPos);
     double rightRawPos = motorRLead.getSelectedSensorPosition();
     SmartDashboard.putNumber("Right Raw Pos", rightRawPos);
+
   }
 
   @Override
