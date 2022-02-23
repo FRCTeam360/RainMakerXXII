@@ -63,10 +63,10 @@ public class TurretAuto extends CommandBase {
         this.align();
         break;
       case AT_RIGHT_LIMIT:
-        this.waitToSeek(Direction.RIGHT);
+        this.waitAtLimit(Direction.RIGHT);
         break;
       case AT_LEFT_LIMIT:
-        this.waitToSeek(Direction.LEFT);
+        this.waitAtLimit(Direction.LEFT);
         /*
          * case CALLIBRATE:
          * this.callibrate();
@@ -149,21 +149,21 @@ public class TurretAuto extends CommandBase {
    * stay in TARGET_IN_VIEW mode. When the target is in the deadzone the turret stays in place.
    * @param limitSide which limit the turret is at
    */
-  private void waitToSeek(Direction limitSide) { 
+  private void waitAtLimit(Direction limitSide) { 
     myTurret.turn(0);
     double currentTX = myLimelight.getX();
     boolean validTarget = myLimelight.validTarget();
 
     if (limitSide == Direction.LEFT) {
-      if (!validTarget || currentTX < -10) {
+      if (!validTarget || currentTX < -Turret.getDeadzoneAngleSize()) {
         this.mode = Mode.SEEK_RIGHT;
       } else if (currentTX > 0) {
         this.mode = Mode.TARGET_IN_VIEW;
       }
     } else {
-      if (!validTarget || currentTX > 10) {
+      if (!validTarget || currentTX > Turret.getDeadzoneAngleSize()) {
         this.mode = Mode.SEEK_LEFT;
-      } else if (currentTX < 0) {
+      } else if (currentTX < 0) ;lo9    5{
         this.mode = Mode.TARGET_IN_VIEW;
       }
     }
