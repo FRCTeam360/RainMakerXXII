@@ -34,10 +34,13 @@ public class Turret extends SubsystemBase {
   private static Turret instance;
 
   private double previousAngle;
-  private double integral;
+  private double angleTurnIntegral;
 
   public static final double leftSoftLimit = 60;
   public static final double rightSoftLimit = -60;
+
+  private double alignIntegral;
+  private double pastTX;
 
   public static Turret getInstance() {
     if (instance == null) {
@@ -62,9 +65,10 @@ public class Turret extends SubsystemBase {
     // rightLimitSwitch = new DigitalInput(rightLimitSwitchPort);
   }
 
-  /** 
-   * retrieves the encoder position and returns it multiplied by pulleyratio, gearboxratio,
-   * and degreesperrotation to get the turret's angle relative to front of robot
+  /**
+   * retrieves the encoder position and returns it multiplied by pulleyratio,
+   * gearboxratio, and degreesperrotation to get the turret's angle relative to
+   * front of robot
    */
   public double getAngle() {
     double encoderPosition = turretMotor.getEncoder().getPosition();
@@ -82,6 +86,7 @@ public class Turret extends SubsystemBase {
 
   /**
    * Turns turret to match angle provided to turret
+   * 
    * @param inputAngle inputAngle is the value for the turret to turn towards
    */
   public void angleTurn(double inputAngle) {
@@ -90,11 +95,24 @@ public class Turret extends SubsystemBase {
 
     double deriv = angle - previousAngle;
     previousAngle = angle;
-    integral = integral + error;
+    angleTurnIntegral = angleTurnIntegral + error;
 
-    double turretInput = (error * Turret.kP) + (integral * Turret.kI) - (deriv * Turret.kD);
+    double turretInput = (error * Turret.kP) + (angleTurnIntegral * Turret.kI) - (deriv * Turret.kD);
 
     this.turn(turretInput);
+  }
+
+  public void align(double currentTX) {
+
+    double aimError = -currentTX;
+    double deriv = aimError - pastTX;
+
+    alignIntegral = alignIntegral + aimError;
+    pastTX = aimError;
+
+    double aimAdjust = (aimError * Turret.kP) + (alignIntegral * Turret.kI) - (deriv * Turret.kD);
+
+    this.turn(aimAdjust);
   }
 
   public void resetEncoderTicks() {
@@ -106,13 +124,11 @@ public class Turret extends SubsystemBase {
   }
 
   public Boolean isAtLeftLimit() {
-    return this.getAngle() >= leftSoftLimit &&
-        turretMotor.getEncoder().getVelocity() > 0;
+    return this.getAngle() >= leftSoftLimit && turretMotor.getEncoder().getVelocity() > 0;
   }
 
   public Boolean isAtRightLimit() {
-    return this.getAngle() <= rightSoftLimit &&
-        turretMotor.getEncoder().getVelocity() < 0;
+    return this.getAngle() <= rightSoftLimit && turretMotor.getEncoder().getVelocity() < 0;
   }
 
   public double getEncoderTick() {
