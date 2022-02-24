@@ -97,25 +97,15 @@ public class TurretAuto extends CommandBase {
       return;
     }
 
-    double currentTX = -myLimelight.getX();
+    double alignTX = myLimelight.getX();
 
-    double aimError = currentTX;
-    double deriv = currentTX - pastTX;
+    myTurret.alignLimelight(alignTX);
 
-    integral = integral + aimError;
-    pastTX = currentTX;
-
-    double aimAdjust = (aimError * Turret.kP) + (integral * Turret.kI) - (deriv * Turret.kD);
-    if (aimError > 0.2) {
-      aimAdjust += Turret.AimMinCmd;
-      this.mode = Mode.TARGET_IN_VIEW;
-    } else if (aimError < -0.2) {
-      aimAdjust -= Turret.AimMinCmd;
-      this.mode = Mode.TARGET_IN_VIEW;
-    } else {
+    if ((-1 <= alignTX && alignTX <= 1)) {
       this.mode = Mode.LOCKED_ON_TARGET;
+    } else {
+      this.mode = Mode.TARGET_IN_VIEW;
     }
-    myTurret.turn(-aimAdjust);
   }
 
   /**

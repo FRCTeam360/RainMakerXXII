@@ -102,7 +102,7 @@ public class Turret extends SubsystemBase {
     this.turn(turretInput);
   }
 
-  public void align(double currentTX) {
+  public void alignLimelight(double currentTX) {
 
     double aimError = -currentTX;
     double deriv = aimError - pastTX;
