@@ -21,8 +21,7 @@ public class TurretAuto extends CommandBase {
   };
 
   public enum Mode {
-    SEEK_RIGHT, SEEK_LEFT, TARGET_IN_VIEW, LOCKED_ON_TARGET, AT_RIGHT_LIMIT, AT_LEFT_LIMIT, CALLIBRATE,
-    TARGET_BLOCKED
+    SEEK_RIGHT, SEEK_LEFT, TARGET_IN_VIEW, LOCKED_ON_TARGET, AT_RIGHT_LIMIT, AT_LEFT_LIMIT, CALLIBRATE, TARGET_BLOCKED
   };
 
   private Mode mode;
@@ -42,48 +41,51 @@ public class TurretAuto extends CommandBase {
     addRequirements(myLimelight, turret);
 
   }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
   }
+
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     this.checkLimits();
     this.updateLastKnownTargetAngle();
     switch (this.mode) {
-      case SEEK_RIGHT:
-        this.seek(Direction.RIGHT);
-        break;
-      case SEEK_LEFT:
-        this.seek(Direction.LEFT);
-        break;
-      case TARGET_IN_VIEW:
-      case LOCKED_ON_TARGET:
-        this.align();
-        break;
-      case AT_RIGHT_LIMIT:
-        this.waitToSeek(Direction.RIGHT);
-        break;
-      case AT_LEFT_LIMIT:
-        this.waitToSeek(Direction.LEFT);
-        /*
-         * case CALLIBRATE:
-         * this.callibrate();
-         */
-        break;
-      /**case TARGET_BLOCKED:
-        this.targetBlocked();*/
-      default:
+    case SEEK_RIGHT:
+      this.seek(Direction.RIGHT);
+      break;
+    case SEEK_LEFT:
+      this.seek(Direction.LEFT);
+      break;
+    case TARGET_IN_VIEW:
+    case LOCKED_ON_TARGET:
+      this.align();
+      break;
+    case AT_RIGHT_LIMIT:
+      this.waitAtLimit(Direction.RIGHT);
+      break;
+    case AT_LEFT_LIMIT:
+      this.waitAtLimit(Direction.LEFT);
+      /*
+       * case CALLIBRATE: this.callibrate();
+       */
+      break;
+    /**
+     * case TARGET_BLOCKED: this.targetBlocked();
+     */
+    default:
     }
   }
 
   /**
-   * 94-106 finds error from limelight to adjust alignment to target and turns turret to fulfill alignment
-   * Checks for a valid target and if there is none checks Turret angle and seeks in opposite direction
+   * 94-106 finds error from limelight to adjust alignment to target and turns
+   * turret to fulfill alignment Checks for a valid target and if there is none
+   * checks Turret angle and seeks in opposite direction
    */
   private void align() {
-    if (!myLimelight.validTarget()) { 
+    if (!myLimelight.validTarget()) {
       if (myTurret.getAngle() <= 0) {
         this.mode = Mode.SEEK_LEFT;
       } else {
@@ -107,63 +109,61 @@ public class TurretAuto extends CommandBase {
   }
 
   /**
-   * Turns turret in direction provided
-   * If there is a valid target mode changes to target in view
-   * @param direction direction to turn turret towards 
+   * Turns turret in direction provided If there is a valid target mode changes to
+   * target in view
+   * 
+   * @param direction direction to turn turret towards
    */
-  private void seek(Direction direction) { 
+  private void seek(Direction direction) {
     if (myLimelight.validTarget()) {
       this.mode = Mode.TARGET_IN_VIEW;
       return;
     }
     pastSeekDirection = direction;
     switch (direction) {
-      case LEFT:
-        myTurret.turn(0.2);
-        break;
-      case RIGHT:
-      default:
-        myTurret.turn(-0.2);
+    case LEFT:
+      myTurret.turn(0.2);
+      break;
+    case RIGHT:
+    default:
+      myTurret.turn(-0.2);
     }
   }
 
-  //public void setTurretMode(Mode mode) {
-    //this.mode = mode;
-  //}
+  // public void setTurretMode(Mode mode) {
+  // this.mode = mode;
+  // }
 
   /*
-   * public void callibrate() {
-   * if (myTurret.checkMiddleLimitSwitch()) {
-   * myTurret.resetEncoderTicks();
-   * myTurret.turn(0);
-   * } else {
-   * // start turret on the left
-   * myTurret.turn(0.3);
-   * }
-   * }
+   * public void callibrate() { if (myTurret.checkMiddleLimitSwitch()) {
+   * myTurret.resetEncoderTicks(); myTurret.turn(0); } else { // start turret on
+   * the left myTurret.turn(0.3); } }
    */
 
   /**
-   * If the target outside of the deadzone and is at the opposite side of the limit the turret 
-   * will go into seek mode to find it. If the target is outside of the deadzone and is at the same side of the limit the turret will
-   * stay in TARGET_IN_VIEW mode. When the target is in the deadzone the turret stays in place.
+   * If the target outside of the deadzone and is at the opposite side of the
+   * limit the turret will go into seek mode to find it. If the target is outside
+   * of the deadzone and is at the same side of the limit the turret will stay in
+   * TARGET_IN_VIEW mode. When the target is in the deadzone the turret stays in
+   * place.
+   * 
    * @param limitSide which limit the turret is at
    */
-  private void waitToSeek(Direction limitSide) { 
+  private void waitAtLimit(Direction limitSide) {
     myTurret.turn(0);
     double currentTX = myLimelight.getX();
     boolean validTarget = myLimelight.validTarget();
 
     if (limitSide == Direction.LEFT) {
-      if (!validTarget || currentTX < -10) {
+      if (!validTarget || currentTX < -Turret.getDeadzoneAngleSize()) {
         this.mode = Mode.SEEK_RIGHT;
       } else if (currentTX > 0) {
         this.mode = Mode.TARGET_IN_VIEW;
       }
     } else {
-      if (!validTarget || currentTX > 10) {
+      if (!validTarget || currentTX > Turret.getDeadzoneAngleSize()) {
         this.mode = Mode.SEEK_LEFT;
-      } else if (currentTX < 0) {
+      } else if (currentTX < 0){
         this.mode = Mode.TARGET_IN_VIEW;
       }
     }
@@ -172,7 +172,7 @@ public class TurretAuto extends CommandBase {
   /**
    * Checks to see if the turret is at either limit, right now for soft limits
    */
-  private void checkLimits() { 
+  private void checkLimits() {
     if (myTurret.isAtLeftLimit()) {
       this.mode = Mode.AT_LEFT_LIMIT;
     } else if (myTurret.isAtRightLimit()) {
@@ -181,7 +181,7 @@ public class TurretAuto extends CommandBase {
   }
 
   /**
-   * Finds the last position of target detected 
+   * Finds the last position of target detected
    */
   private void updateLastKnownTargetAngle() { /** Finds the last position of target detected */
     lastTargetPosition = myTurret.getAngle() + myLimelight.getX();
@@ -190,7 +190,7 @@ public class TurretAuto extends CommandBase {
   /**
    * Seeks if target obstructed (I think)
    */
-  private void targetBlocked() { 
+  private void targetBlocked() {
     myTurret.angleTurn(lastTargetPosition);
 
     if (myLimelight.validTarget()) {
@@ -201,7 +201,7 @@ public class TurretAuto extends CommandBase {
       this.mode = Mode.SEEK_RIGHT;
     }
   }
-  
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
