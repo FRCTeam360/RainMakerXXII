@@ -163,8 +163,7 @@ public class TurretAuto extends CommandBase {
     } else {
       if (!validTarget || currentTX > Turret.getDeadzoneAngleSize()) {
         this.mode = Mode.SEEK_LEFT;
-      } else if (currentTX < 0);
-      {
+      } else if (currentTX < 0){
         this.mode = Mode.TARGET_IN_VIEW;
       }
     }
