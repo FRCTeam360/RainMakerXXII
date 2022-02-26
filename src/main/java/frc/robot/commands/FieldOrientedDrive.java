@@ -13,14 +13,13 @@ import static frc.robot.Constants.OIConstants.*;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 
 public class FieldOrientedDrive extends CommandBase {
-
   private static final String addRequirements = null;
 
   private final DriveTrain myDriveTrain;
 
   private final DriverControl driverCont; // driverCont?
 
-  SlewRateLimiter filter = new SlewRateLimiter(DriveTrain.ACCELERATION_LIMIT);
+  private final SlewRateLimiter filter = new SlewRateLimiter(DriveTrain.ACCELERATION_LIMIT);
 
   /** Creates a new FieldOrientedDrive. */
   public FieldOrientedDrive(DriveTrain driveTrain) {
