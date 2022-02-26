@@ -129,6 +129,18 @@ public class DriveTrain extends SubsystemBase {
    * @param rightMotorPercentage
    */
   public void drive(double leftMotorPercentage, double rightMotorPercentage) {
+    if (leftMotorPercentage > 1) {
+      leftMotorPercentage = 1;
+    } else if (leftMotorPercentage < -1) {
+      leftMotorPercentage = -1;
+    }
+
+    if (rightMotorPercentage > 1) {
+      rightMotorPercentage = 1;
+    } else if (rightMotorPercentage < -1) {
+      rightMotorPercentage = -1;
+    }
+
     motorLLead.set(TalonFXControlMode.PercentOutput, leftMotorPercentage);
     motorRLead.set(TalonFXControlMode.PercentOutput, rightMotorPercentage);
 
