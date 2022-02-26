@@ -23,14 +23,14 @@ public class ArcadeDrive extends CommandBase {
 
     myDriveTrain = driveTrain;
 
-
     addRequirements(myDriveTrain);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -40,23 +40,22 @@ public class ArcadeDrive extends CommandBase {
     double driveRight = 0;
     double driveLeft = 0;
 
-    if(Math.abs(driverCont.getLeftY()) >= xboxDeadzone) {
+    if (Math.abs(driverCont.getLeftY()) >= xboxDeadzone) {
       upDownSquared = driverCont.getLeftY() * driverCont.getLeftY();
-      if(driverCont.getLeftY() < 0){
+      if (driverCont.getLeftY() < 0) {
         upDownSquared = upDownSquared * -1;
       }
     }
-    if(Math.abs(driverCont.getLeftX()) >= xboxDeadzone) {
+    if (Math.abs(driverCont.getLeftX()) >= xboxDeadzone) {
       rightLeftSquared = driverCont.getLeftX() * driverCont.getLeftX();
-      if(driverCont.getLeftX() < 0){
+      if (driverCont.getLeftX() < 0) {
         rightLeftSquared = rightLeftSquared * -1;
-      } 
+      }
     }
 
     upDownSquared = upDownSquared * -1;
     rightLeftSquared = rightLeftSquared * -1;
 
-  
     driveLeft = upDownSquared + rightLeftSquared;
     driveRight = upDownSquared - rightLeftSquared;
 
@@ -65,15 +64,13 @@ public class ArcadeDrive extends CommandBase {
     driveLeft = Math.max(driveLeft, -1);
     driveRight = Math.max(driveRight, -1);
 
-    myDriveTrain.driveL(driveLeft);
-    myDriveTrain.driveR(driveRight);
+    myDriveTrain.drive(driveLeft, driveRight);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    myDriveTrain.driveL(0);
-    myDriveTrain.driveR(0);
+    myDriveTrain.drive(0, 0);
   }
 
   // Returns true when the command should end.
