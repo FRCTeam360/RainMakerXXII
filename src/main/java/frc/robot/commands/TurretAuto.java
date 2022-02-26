@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class TurretAuto extends CommandBase {
 
-  private Limelight myLimelight;
+  private Limelight myLimelight; 
   private Turret myTurret;
 
   public enum Direction {
@@ -79,8 +79,9 @@ public class TurretAuto extends CommandBase {
      * case TARGET_BLOCKED: this.targetBlocked();
      */
     default:
-    }
-  }
+    } 
+    System.out.println("mode " + mode ); 
+  } 
 
   /**
    * 94-106 finds error from limelight to adjust alignment to target and turns

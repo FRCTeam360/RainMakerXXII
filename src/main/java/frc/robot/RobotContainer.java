@@ -59,7 +59,7 @@ public class RobotContainer {
   private final TankDrive tankDrive = new TankDrive(driveTrain);
   private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
   private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
-  private final TurretAuto align = new TurretAuto(limelight, turret);
+  private final TurretAuto turretAuto = new TurretAuto(limelight, turret);
   private final TurretManual turretManual = new TurretManual(driveTrain);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -75,7 +75,7 @@ public class RobotContainer {
     intake.setDefaultCommand(runIntake);
     shooter.setDefaultCommand(setShoot);
     driveTrain.setDefaultCommand(tankDrive);
-    turret.setDefaultCommand(turretManual);
+    turret.setDefaultCommand(turretAuto);
 
   }
 
@@ -93,7 +93,7 @@ public class RobotContainer {
     new JoystickButton(driverCont, 4).whenPressed(tankDrive);
     new JoystickButton(driverCont, 3).whenPressed(arcadeDrive);
     new JoystickButton(operatorCont, 7).whenHeld(shooterJoy);
-    new JoystickButton(operatorCont, 8).whenHeld(align);
+    new JoystickButton(operatorCont, 8).whenHeld(turretManual);
   }
 
   /**

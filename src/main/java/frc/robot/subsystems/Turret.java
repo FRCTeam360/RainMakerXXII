@@ -20,10 +20,16 @@ public class Turret extends SubsystemBase {
   private DigitalInput middleLimitSwitch;
   private DigitalInput rightLimitSwitch;
 
-  public static final double kP = 0.05;
-  public static final double kI = 0;
-  public static final double kD = 0.01;
-  public static final double kF = 0;
+  public static final double kPAngle = 0.05;
+  public static final double kIAngle = 0;
+  public static final double kDAngle = 0.01;
+  public static final double kFAngle = 0;
+
+  public static final double kPLimelight = 0.015; //values may be altered, seperate for clarification , changer kPLimelight from .05
+  public static final double kILimelight = 0; //*
+  public static final double kDLimelight = 0.05; //* changed from 0.01 
+  public static final double kFLimelight = 0; //*
+
 
   public static final double AimMinCmd = 0.01;
 
@@ -97,7 +103,7 @@ public class Turret extends SubsystemBase {
     previousAngle = angle;
     angleTurnIntegral = angleTurnIntegral + error;
 
-    double turretInput = (error * Turret.kP) + (angleTurnIntegral * Turret.kI) - (deriv * Turret.kD);
+    double turretInput = (error * Turret.kPAngle) + (angleTurnIntegral * Turret.kIAngle) - (deriv * Turret.kDAngle) + (kFAngle);
 
     this.turn(turretInput);
   }
@@ -110,7 +116,7 @@ public class Turret extends SubsystemBase {
     alignIntegral = alignIntegral + aimError;
     pastTX = aimError;
 
-    double aimAdjust = (aimError * Turret.kP) + (alignIntegral * Turret.kI) - (deriv * Turret.kD);
+    double aimAdjust = (aimError * Turret.kPLimelight) + (alignIntegral * Turret.kILimelight) - (deriv * Turret.kDLimelight) + (kFLimelight);
 
     this.turn(aimAdjust);
   }
@@ -138,6 +144,5 @@ public class Turret extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println("Angle: " + this.getAngle());
   }
 }
