@@ -32,9 +32,6 @@ public class TurretAuto extends CommandBase {
 
   private Direction pastSeekDirection;
 
-  private double integral;
-  private double pastTX;
-
   public TurretAuto(Limelight limelight, Turret turret) {
     myLimelight = limelight;
     myTurret = turret;

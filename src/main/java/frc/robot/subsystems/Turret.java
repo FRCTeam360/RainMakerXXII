@@ -25,11 +25,11 @@ public class Turret extends SubsystemBase {
   public static final double kDAngle = 0.01;
   public static final double kFAngle = 0;
 
-  public static final double kPLimelight = 0.015; //values may be altered, seperate for clarification , changer kPLimelight from .05
-  public static final double kILimelight = 0; //*
-  public static final double kDLimelight = 0.05; //* changed from 0.01 
-  public static final double kFLimelight = 0; //*
-
+  public static final double kPLimelight = 0.015; // values may be altered, seperate for clarification , changer
+                                                  // kPLimelight from .05
+  public static final double kILimelight = 0; // *
+  public static final double kDLimelight = 0.05; // * changed from 0.01
+  public static final double kFLimelight = 0; // *
 
   public static final double AimMinCmd = 0.01;
 
@@ -46,7 +46,7 @@ public class Turret extends SubsystemBase {
   public static final double rightSoftLimit = -60;
 
   private double alignIntegral;
-  private double pastTX;
+  private double previousTX;
 
   public static Turret getInstance() {
     if (instance == null) {
@@ -90,9 +90,8 @@ public class Turret extends SubsystemBase {
 
   }
 
-  /**
+  /*
    * Turns turret to match angle provided to turret
-   * 
    * @param inputAngle inputAngle is the value for the turret to turn towards
    */
   public void angleTurn(double inputAngle) {
@@ -103,7 +102,8 @@ public class Turret extends SubsystemBase {
     previousAngle = angle;
     angleTurnIntegral = angleTurnIntegral + error;
 
-    double turretInput = (error * Turret.kPAngle) + (angleTurnIntegral * Turret.kIAngle) - (deriv * Turret.kDAngle) + (kFAngle);
+    double turretInput = (error * Turret.kPAngle) + (angleTurnIntegral * Turret.kIAngle) - (deriv * Turret.kDAngle)
+        + (kFAngle);
 
     this.turn(turretInput);
   }
@@ -111,12 +111,13 @@ public class Turret extends SubsystemBase {
   public void alignLimelight(double currentTX) {
 
     double aimError = -currentTX;
-    double deriv = aimError - pastTX;
+    double deriv = aimError - previousTX;
 
     alignIntegral = alignIntegral + aimError;
-    pastTX = aimError;
+    previousTX = aimError;
 
-    double aimAdjust = (aimError * Turret.kPLimelight) + (alignIntegral * Turret.kILimelight) - (deriv * Turret.kDLimelight) + (kFLimelight);
+    double aimAdjust = (aimError * Turret.kPLimelight) + (alignIntegral * Turret.kILimelight)
+        - (deriv * Turret.kDLimelight) + (kFLimelight);
 
     this.turn(aimAdjust);
   }
