@@ -46,7 +46,7 @@ public class SetShoot extends CommandBase {
     shootGoal = SmartDashboard.getNumber("Shoot Goal", 2000);
 
     if(driverCont.getRightTrigger() || operatorCont.getRightBumper()){
-      shooter.setVelocity(500);
+      shooter.setVelocity(shootGoal);
     } else {
       shooter.setSpeed(0.0);
     }

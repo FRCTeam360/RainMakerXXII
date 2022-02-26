@@ -19,7 +19,6 @@ public class RunFeeder extends CommandBase {
   private final Shooter myShooter;
   private final OperatorControl operatorCont;
   private final DriverControl driverCont;
-  private boolean newBallInSystem = false;
 
   public RunFeeder() {
     operatorCont = OperatorControl.getInstance();
@@ -43,30 +42,24 @@ public class RunFeeder extends CommandBase {
   @Override
   public void execute() {
 
-    if (!myFeeder.frontFeederStatus()) {
-      newBallInSystem = true;
-
-    }
-
     // if shooter at speed, run all
     if (myShooter.isAtSpeed()) {
       myTower.runTower(1);
       myFeeder.runFeeder(1);
 
       // if intake running, run shooter if no ball at top of tower
-    } else if (driverCont.getLeftTrigger() || newBallInSystem) {
-      if (myTower.topSensorStatus()) {
+    } else if (driverCont.getLeftTrigger()) {
+      if (myTower.ballInTower()) {
         myTower.runTower(1);
         myFeeder.runFeeder(0);
       } else {
         myTower.runTower(0);
-        newBallInSystem = false;
         myFeeder.runFeeder(0);
       }
     } else {
 
       // manually run feeder
-      if (operatorCont.getLeftTrigger()) {
+      if (operatorCont.getLeftTrigger() || driverCont.getLeftBumper()) {
         if (operatorCont.getXButton()) {
           myFeeder.runFeeder(-0.5);
         } else {
@@ -77,7 +70,7 @@ public class RunFeeder extends CommandBase {
       }
 
       // manually run tower;
-      if (operatorCont.getRightTrigger()) {
+      if (operatorCont.getRightTrigger() || driverCont.getRightBumper()) {
         if (operatorCont.getXButton()) {
           myTower.runTower(-1.0);
         } else {
