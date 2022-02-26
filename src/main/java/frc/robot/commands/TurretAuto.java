@@ -64,10 +64,10 @@ public class TurretAuto extends CommandBase {
       this.align();
       break;
     case AT_RIGHT_LIMIT:
-      this.waitToSeek(Direction.RIGHT);
+      this.waitAtLimit(Direction.RIGHT);
       break;
     case AT_LEFT_LIMIT:
-      this.waitToSeek(Direction.LEFT);
+      this.waitAtLimit(Direction.LEFT);
       /*
        * case CALLIBRATE: this.callibrate();
        */
@@ -76,9 +76,8 @@ public class TurretAuto extends CommandBase {
      * case TARGET_BLOCKED: this.targetBlocked();
      */
     default:
-    } 
-    System.out.println("mode " + mode ); 
-  } 
+    }
+  }
 
   /**
    * 94-106 finds error from limelight to adjust alignment to target and turns
@@ -147,21 +146,21 @@ public class TurretAuto extends CommandBase {
    * 
    * @param limitSide which limit the turret is at
    */
-  private void waitToSeek(Direction limitSide) {
+  private void waitAtLimit(Direction limitSide) {
     myTurret.turn(0);
     double currentTX = myLimelight.getX();
     boolean validTarget = myLimelight.validTarget();
 
     if (limitSide == Direction.LEFT) {
-      if (!validTarget || currentTX < -10) {
+      if (!validTarget || currentTX < -Turret.getDeadzoneAngleSize()) {
         this.mode = Mode.SEEK_RIGHT;
       } else if (currentTX > 0) {
         this.mode = Mode.TARGET_IN_VIEW;
       }
     } else {
-      if (!validTarget || currentTX > 10) {
+      if (!validTarget || currentTX > Turret.getDeadzoneAngleSize()) {
         this.mode = Mode.SEEK_LEFT;
-      } else if (currentTX < 0) {
+      } else if (currentTX < 0){
         this.mode = Mode.TARGET_IN_VIEW;
       }
     }

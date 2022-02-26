@@ -42,8 +42,12 @@ public class Turret extends SubsystemBase {
   private double previousAngle;
   private double angleTurnIntegral;
 
-  public static final double leftSoftLimit = 60;
-  public static final double rightSoftLimit = -60;
+  public static final double leftSoftLimit = 152;
+  public static final double rightSoftLimit = -152;
+
+  public static double getDeadzoneAngleSize(){
+    return 360 - leftSoftLimit + rightSoftLimit;
+  }
 
   private double alignIntegral;
   private double previousTX;
