@@ -23,8 +23,8 @@ public class AutoChooser {
     private final Command test2;
     private final Command tr2ball;
 
-    public AutoChooser(RobotContainer container){
-        
+    public AutoChooser(RobotContainer container) {
+
         selectedLocation = "None";
 
         locationChooser = new SendableChooser<>();
@@ -34,38 +34,42 @@ public class AutoChooser {
         test2 = new Test2(container.driveTrain);
         tr2ball = new T_R_2ball(container.driveTrain);
 
-        locationChooser.addOption("Test", "Test");
+        // locationChooser.addOption("Test", "Test");
         locationChooser.addOption("Hangar Left", "Hangar Left");
         locationChooser.addOption("Hangar Center", "Hangar Center");
         locationChooser.addOption("Hanger Right", "Hangar Right");
         locationChooser.addOption("Terminal Left", "Terminal Left");
         locationChooser.addOption("Terminal Center", "Terminal Center");
         locationChooser.addOption("Terminal Right", "Terminal Right");
+        locationChooser.setDefaultOption("Test", "Test");
 
         SmartDashboard.putData("Start Location", locationChooser);
         SmartDashboard.putData("Auto Choice", autoChooser);
         System.out.println("working");
-        autoChooser.setDefaultOption("Test", test2);
     }
 
     public void periodic() {
-        if ( !selectedLocation.equals( locationChooser.getSelected() ) ) { //If it changes or is being initialized
+        System.out.println("pls");
+        System.out.println("selectede location: " + selectedLocation);
+        System.out.println("autoChooser: " + autoChooser);
+        if (selectedLocation != null && !selectedLocation.equals(locationChooser.getSelected())) { // If it changes or is being initialized
 
-            selectedLocation = locationChooser.getSelected(); //Reset the SelectedLocation to what it actually is 
-            autoChooser = new SendableChooser<>(); //Clear the auto chooser
+            selectedLocation = locationChooser.getSelected(); // Reset the SelectedLocation to what it actually is
+            autoChooser = new SendableChooser<>(); // Clear the auto chooser
 
-            if (selectedLocation.equals("Test")) {
+            if ("Test".equals(selectedLocation)) {
                 autoChooser.addOption("Test", test);
             }
 
-            if (selectedLocation.equals("Terminal Right")) {
+            if ("Terminal Right".equals(selectedLocation)) {
                 autoChooser.addOption("2 ball", tr2ball);
+                System.out.println("TRRR");
             }
 
-            SmartDashboard.putData(autoChooser); //Update the Auto Choice with the new options and new chooser
+            SmartDashboard.putData("Auto Choice", autoChooser); // Update the Auto Choice with the new options and new chooser
 
         }
-        //Else do nothing cuz the location chooser hasn't changed states
+        // Else do nothing cuz the location chooser hasn't changed states
     }
 
     public Command getCommand() {
