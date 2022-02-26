@@ -52,6 +52,8 @@ public class DriveTrain extends SubsystemBase {
   private final MotorControllerGroup leftGroup;
   private final MotorControllerGroup rightGroup;
 
+  public static double ACCELERATION_LIMIT = 0;
+
   /** Creates a new ExampleSubsystem. */
   public DriveTrain() {
     motorLLead = new WPI_TalonFX(motorLLeadID);

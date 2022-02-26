@@ -7,7 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.operatorInterface.DriverControl;
 import frc.robot.subsystems.DriveTrain;
-
+import edu.wpi.first.math.filter.SlewRateLimiter;
 
 import static frc.robot.Constants.OIConstants.*;
 
@@ -17,14 +17,16 @@ public class ArcadeDrive extends CommandBase {
 
   private final DriverControl driverCont;
 
+  public final SlewRateLimiter filter = new SlewRateLimiter(DriveTrain.ACCELERATION_LIMIT);
+
   /** Creates a new ArcadeDrive. */
   public ArcadeDrive(DriveTrain driveTrain) {
     driverCont = DriverControl.getInstance();
 
     myDriveTrain = driveTrain;
 
-    addRequirements(myDriveTrain);
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(myDriveTrain);
   }
 
   // Called when the command is initially scheduled.
@@ -35,29 +37,29 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double rightLeftSquared = 0;
-    double upDownSquared = 0;
+    double turn = 0; // formerly rightLeftSquared
+    double forward = 0; // formerly upDownSquared
     double driveRight = 0;
     double driveLeft = 0;
 
     if (Math.abs(driverCont.getLeftY()) >= xboxDeadzone) {
-      upDownSquared = driverCont.getLeftY() * driverCont.getLeftY();
+      forward = driverCont.getLeftY() * driverCont.getLeftY();
       if (driverCont.getLeftY() < 0) {
-        upDownSquared = upDownSquared * -1;
+        forward = forward * -1;
       }
     }
     if (Math.abs(driverCont.getLeftX()) >= xboxDeadzone) {
-      rightLeftSquared = driverCont.getLeftX() * driverCont.getLeftX();
+      turn = driverCont.getLeftX() * driverCont.getLeftX();
       if (driverCont.getLeftX() < 0) {
-        rightLeftSquared = rightLeftSquared * -1;
+        turn = turn * -1;
       }
     }
 
-    upDownSquared = upDownSquared * -1;
-    rightLeftSquared = rightLeftSquared * -1;
+    forward = filter.calculate(forward) * -1;
+    turn = turn * -1;
 
-    driveLeft = upDownSquared + rightLeftSquared;
-    driveRight = upDownSquared - rightLeftSquared;
+    driveLeft = forward + turn;
+    driveRight = forward - turn;
 
     driveLeft = Math.min(driveLeft, 1);
     driveRight = Math.min(driveRight, 1);
