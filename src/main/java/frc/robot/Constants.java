@@ -29,14 +29,14 @@ public final class Constants {
         public static final double ksVolts = 0.57153;
         public static final double kvVoltSecondsPerMeter = 1.2796;
         public static final double kaVoltSecondsSquaredPerMeter = 0.1411;
-        public static final double kPDriveVel = 0.4;
+        public static final double kPDriveVel = 1.6425;
         public static final double kTrackwidthMeters = 0.641;
 
         public static final double kMaxSpeedMetersPerSecond = 1.0;
         public static final double kMaxAccelerationMetersPerSecondSquared = 1.0;
 
         //ramsete values - 2,.7 are default
-        public static final double kRamseteB = -2.0;
+        public static final double kRamseteB = 2.0;
         public static final double kRamseteZeta = 0.7;
 
         public static final boolean kGyroReversed = true; //Characterization says this isn't necessary but it seems to perform better....

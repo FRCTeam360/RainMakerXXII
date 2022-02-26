@@ -38,12 +38,12 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class DriveTrain extends SubsystemBase {
   
-  private static WPI_TalonFX motorLLead;
-  private static WPI_TalonFX motorLFollow1;
-  private static WPI_TalonFX motorLFollow2;
-  private static WPI_TalonFX motorRLead;
-  private static WPI_TalonFX motorRFollow1;
-  private static WPI_TalonFX motorRFollow2;
+  private WPI_TalonFX motorLLead;
+  private WPI_TalonFX motorLFollow1;
+  private WPI_TalonFX motorLFollow2;
+  private WPI_TalonFX motorRLead;
+  private WPI_TalonFX motorRFollow1;
+  private WPI_TalonFX motorRFollow2;
 
   public final DifferentialDrive m_differentialDrive;
 
@@ -134,10 +134,12 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void   driveR (double Rmotor) {
-    motorRLead.set(TalonFXControlMode.PercentOutput, Rmotor );
+    // motorRLead.set(TalonFXControlMode.PercentOutput, Rmotor );
+    rightGroup.set(Rmotor);
   }
   public void driveL (double Lmotor) {
-    motorLLead.set(TalonFXControlMode.PercentOutput, Lmotor );
+    // motorLLead.set(TalonFXControlMode.PercentOutput, Lmotor );
+    leftGroup.set(Lmotor);
   }
 
   public static DifferentialDriveKinematics getKinematics(){
@@ -229,10 +231,10 @@ public class DriveTrain extends SubsystemBase {
       motorRLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters
     );
     navxTestingDashboardReadouts();
-    System.out.println("distance x: " + Units.metersToFeet(m_odometry.getPoseMeters().getX()));
-    System.out.println("distance y: " + Units.metersToFeet(m_odometry.getPoseMeters().getY()));
-    System.out.println("Right encoder: " + Units.metersToFeet(motorLLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters));
-    System.out.println("Left encoder" + Units.metersToFeet(motorRLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters));
+    // System.out.println("distance x: " + Units.metersToFeet(m_odometry.getPoseMeters().getX()));
+    // System.out.println("distance y: " + Units.metersToFeet(m_odometry.getPoseMeters().getY()));
+    // System.out.println("Right encoder: " + Units.metersToFeet(motorLLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters));
+    // System.out.println("Left encoder" + Units.metersToFeet(motorRLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters));
   }
 
 
