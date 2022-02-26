@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class TurretAuto extends CommandBase {
 
-  private Limelight myLimelight;
+  private Limelight myLimelight; 
   private Turret myTurret;
 
   public enum Direction {
@@ -93,19 +93,16 @@ public class TurretAuto extends CommandBase {
       }
       return;
     }
-    double aimError = myLimelight.getX();
 
-    double aimAdjust = Turret.kP * aimError;
-    if (aimError > 0.2) {
-      aimAdjust += Turret.AimMinCmd;
-      this.mode = Mode.TARGET_IN_VIEW;
-    } else if (aimError < -0.2) {
-      aimAdjust -= Turret.AimMinCmd;
-      this.mode = Mode.TARGET_IN_VIEW;
-    } else {
+    double alignTX = myLimelight.getX();
+
+    myTurret.alignLimelight(alignTX);
+
+    if ((-1 <= alignTX && alignTX <= 1)) {
       this.mode = Mode.LOCKED_ON_TARGET;
+    } else {
+      this.mode = Mode.TARGET_IN_VIEW;
     }
-    myTurret.turn(-aimAdjust);
   }
 
   /**
@@ -188,7 +185,8 @@ public class TurretAuto extends CommandBase {
   }
 
   /**
-   * Seeks if target obstructed (I think)
+   * Changes the turret mode to the opposite seeking direction if the target is
+   * blocked, or to TARGET_IN_VIEW if there is a valid target.
    */
   private void targetBlocked() {
     myTurret.angleTurn(lastTargetPosition);
