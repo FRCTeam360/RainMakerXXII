@@ -37,18 +37,19 @@ public class TankDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double leftMotorPercentage = 0;
+    double rightMotorPercentage = 0;
+
     // create deadzone and look into new documentation
     if (Math.abs(driverCont.getRightY()) >= xboxDeadzone) {
-      myDriveTrain.drive(0, (-1 * driverCont.getRightY()));
-    } else {
-      myDriveTrain.drive(0, 0);
+      rightMotorPercentage = -1 * driverCont.getRightY();
     }
 
     if (Math.abs(driverCont.getLeftY()) >= xboxDeadzone) {
-      myDriveTrain.drive(0, (-1 * driverCont.getLeftY()));
-    } else {
-      myDriveTrain.drive(0, 0);
+      leftMotorPercentage = -1 * driverCont.getLeftY();
     }
+
+    myDriveTrain.drive(leftMotorPercentage, rightMotorPercentage);
   }
 
   // Called once the command ends or is interrupted.

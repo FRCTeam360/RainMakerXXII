@@ -104,7 +104,7 @@ public class FieldOrientedDrive extends CommandBase {
 
     // rotate based on right stick
     if (Math.abs(driverCont.getRightX()) >= xboxDeadzone) {
-      myDriveTrain.drive((0.5 * driverCont.getRightX()), 0.5 * driverCont.getRightX());
+      myDriveTrain.drive((driverCont.getRightX()), driverCont.getRightX());
     }
 
   }

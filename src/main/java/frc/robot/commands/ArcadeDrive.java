@@ -12,12 +12,11 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import static frc.robot.Constants.OIConstants.*;
 
 public class ArcadeDrive extends CommandBase {
-
   private final DriveTrain myDriveTrain;
 
   private final DriverControl driverCont;
 
-  public final SlewRateLimiter filter = new SlewRateLimiter(DriveTrain.ACCELERATION_LIMIT);
+  private final SlewRateLimiter filter = new SlewRateLimiter(DriveTrain.ACCELERATION_LIMIT);
 
   /** Creates a new ArcadeDrive. */
   public ArcadeDrive(DriveTrain driveTrain) {
@@ -37,8 +36,8 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double turn = 0; // formerly rightLeftSquared
-    double forward = 0; // formerly upDownSquared
+    double turn = 0; 
+    double forward = 0; 
     double driveRight = 0;
     double driveLeft = 0;
 
