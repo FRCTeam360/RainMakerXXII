@@ -52,7 +52,7 @@ public class DriveTrain extends SubsystemBase {
   private final MotorControllerGroup leftGroup;
   private final MotorControllerGroup rightGroup;
 
-  public static double ACCELERATION_LIMIT = 0;
+  public static double ACCELERATION_LIMIT = 0.5;
 
   /** Creates a new ExampleSubsystem. */
   public DriveTrain() {
