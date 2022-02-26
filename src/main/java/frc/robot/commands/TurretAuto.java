@@ -68,7 +68,7 @@ public class TurretAuto extends CommandBase {
       break;
     case AT_LEFT_LIMIT:
       this.waitAtLimit(Direction.LEFT);
-      /*
+      /*,
        * case CALLIBRATE: this.callibrate();
        */
       break;
@@ -163,7 +163,7 @@ public class TurretAuto extends CommandBase {
     } else {
       if (!validTarget || currentTX > Turret.getDeadzoneAngleSize()) {
         this.mode = Mode.SEEK_LEFT;
-      } else if (currentTX < 0){
+      } else if (currentTX < 0) {
         this.mode = Mode.TARGET_IN_VIEW;
       }
     }
@@ -200,6 +200,7 @@ public class TurretAuto extends CommandBase {
     } else if (myTimer.get() >= 50 && pastSeekDirection == Direction.RIGHT) {
       this.mode = Mode.SEEK_RIGHT;
     }
+
   }
 
   // Called once the command ends or is interrupted.

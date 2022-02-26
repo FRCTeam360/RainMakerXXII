@@ -17,10 +17,11 @@ public class Limelight extends SubsystemBase {
 
   private NetworkTableEntry camMode = table.getEntry("camMode");
 
-  public Limelight() {}
+  public Limelight() {
+  }
 
   public void changeCamMode() {
-    if(camMode.getDouble(0.0) == 1.0){
+    if (camMode.getDouble(0.0) == 1.0) {
       table.getEntry("camMode").setNumber(0.0);
       table.getEntry("ledMode").setNumber(1);
     } else {
@@ -34,7 +35,7 @@ public class Limelight extends SubsystemBase {
   }
 
   public boolean validTarget() {
-    return tv.getDouble(0.0) == 1.0;
+    return tv.getDouble(0.0) == 1.0 && ty.getDouble(0.0) <= -18;
   }
 
   public double getX() {
@@ -50,12 +51,12 @@ public class Limelight extends SubsystemBase {
   }
 
   // public void updateShooterVelocity () {
-  //   if ( validTarget() == true ) {
-  //     double yLime = getY();
-  //     targetVelocity = (aVal * yLime * yLime) + ( +bVal * yLime) + ( cVal ) ;
-  //   } else {
-  //     targetVelocity = backupTargetVelocity;
-  //   }
+  // if ( validTarget() == true ) {
+  // double yLime = getY();
+  // targetVelocity = (aVal * yLime * yLime) + ( +bVal * yLime) + ( cVal ) ;
+  // } else {
+  // targetVelocity = backupTargetVelocity;
+  // }
   // }
 
   @Override
