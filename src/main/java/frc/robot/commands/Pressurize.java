@@ -51,9 +51,9 @@ public class Pressurize extends CommandBase {
       timer.reset();
       timer.stop();
       shouldRun = true;
-
     }
   }
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
