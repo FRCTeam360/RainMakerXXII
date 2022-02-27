@@ -6,6 +6,10 @@ package frc.robot.subsystems;
 
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.SparkMaxRelativeEncoder;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -20,8 +24,8 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 public class Shooter extends SubsystemBase {
 
   private static final String kFF = null;
-  private CANSparkMax shooterLead;
-  private CANSparkMax shooterFollow;
+  private WPI_TalonFX shooterLead;
+  private WPI_TalonFX shooterFollow;
   private SparkMaxPIDController shooterPidController;
   private RelativeEncoder shooterEncoder;
 
@@ -57,23 +61,23 @@ public class Shooter extends SubsystemBase {
   private final SlewRateLimiter filter = new SlewRateLimiter(MAX_SHOOTER_ACCELERATION);
 
   private Shooter() {
-    shooterLead = new CANSparkMax(shooterLeadId, MotorType.kBrushless);
-    shooterFollow = new CANSparkMax(shooterFollowId, MotorType.kBrushless);
+    shooterLead = new WPI_TalonFX(shooterLeadId);
+    shooterFollow = new WPI_TalonFX(shooterFollowId);
 
-    shooterPidController = shooterLead.getPIDController();
+    // shooterPidController = shooterLead.getPIDController();
 
-    shooterEncoder = shooterLead.getEncoder();
+    // shooterEncoder = shooterLead.getEncoder();
 
-    shooterLead.restoreFactoryDefaults();
-    shooterFollow.restoreFactoryDefaults();
+    shooterLead.configFactoryDefault();
+    shooterFollow.configFactoryDefault();
 
-    shooterFollow.follow(shooterLead, true);
+    shooterFollow.follow(shooterLead);
 
-    shooterLead.setSmartCurrentLimit(40);
-    shooterFollow.setSmartCurrentLimit(40);
+    // shooterLead.setSmartCurrentLimit(40);
+    // shooterFollow.setSmartCurrentLimit(40);
 
-    shooterLead.setIdleMode(IdleMode.kCoast);
-    shooterFollow.setIdleMode(IdleMode.kCoast);
+    shooterLead.setNeutralMode(NeutralMode.Coast);
+    shooterFollow.setNeutralMode(NeutralMode.Coast);
 
     shooterLead.setInverted(true);
     // shooterLead.setSensorPhase(true); //the Follower isn't harvested for it's
@@ -98,7 +102,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getVelocity() {
-    return shooterLead.getEncoder().getVelocity();
+    return shooterLead.getSelectedSensorVelocity() / 2048;
   }
 
   @Override
