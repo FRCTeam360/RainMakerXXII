@@ -45,10 +45,10 @@ public class Shooter extends SubsystemBase {
   public static final int kSlotIdx = 0;
   public static final int kTimeOutMs = 30;
   public static final int kPIDLoopIdx = 0;
-  public static final double kP = 0.0009;
-  public static final double kI = 0;
-  public static final double kD = 0.0005;
-  public static final double kF = 5000;
+  public static  double kP = 0.0009;
+  public static  double kI = 0;
+  public static  double kD = 0.0005;
+  public static  double kF = 5000;
   public static final double kPeakOutput = 1;
 
   public static final double backupTargetVelocity = 14500; // Constant
@@ -85,10 +85,10 @@ public class Shooter extends SubsystemBase {
     // shooterLead.setSensorPhase(true); //the Follower isn't harvested for it's
     // encoder therefor rotation doesn't need to be modified
 
-    // SmartDashboard.putNumber("kP", 0.0);
-    // SmartDashboard.putNumber("kI", 0.0);
-    // SmartDashboard.putNumber("kD", 0.0);
-    // SmartDashboard.putNumber("kF", 0.0);
+    SmartDashboard.putNumber("kP", 0.0);
+    SmartDashboard.putNumber("kI", 0.0);
+    SmartDashboard.putNumber("kD", 0.0);
+    SmartDashboard.putNumber("kF", 0.0);
   }
 
   /**
@@ -109,10 +109,10 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // kP = SmartDashboard.getNumber("kP", 0.0);
-    // kI = SmartDashboard.getNumber("kI", 0.0);
-    // kD = SmartDashboard.getNumber("kD", 0.0);
-    // kF = SmartDashboard.getNumber("kF", 0.0);
+    kP = SmartDashboard.getNumber("kP", 0.0);
+    kI = SmartDashboard.getNumber("kI", 0.0);
+    kD = SmartDashboard.getNumber("kD", 0.0);
+    kF = SmartDashboard.getNumber("kF", 0.0);
 
     SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
     SmartDashboard.putNumber("Shooter Ticks", shooterLead.getSelectedSensorVelocity());

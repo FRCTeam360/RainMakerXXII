@@ -63,10 +63,10 @@ public class RunFeeder extends CommandBase {
 
       // manually run feeder
       if (operatorCont.getLeftTrigger() || driverCont.getLeftBumper()) {
-        if (operatorCont.getXButton()) {
-          feederPower = -0.5;
+        if (operatorCont.getXButton() || driverCont.getXButton()) {
+          feederPower = -1.0;
         } else {
-          feederPower = 0.5;
+          feederPower = 1.0;
         }
       } else {
         feederPower = 0.0;
@@ -74,7 +74,7 @@ public class RunFeeder extends CommandBase {
 
       // manually run tower;
       if (operatorCont.getRightTrigger() || driverCont.getRightBumper()) {
-        if (operatorCont.getXButton()) {
+        if (operatorCont.getXButton() || driverCont.getXButton()) {
           towerPower = -1.0;
         } else {
           towerPower = 1.0;
