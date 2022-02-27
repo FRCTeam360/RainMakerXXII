@@ -52,9 +52,7 @@ public final class Constants {
     }
 
     public static final class DigitalInputPorts {
-        public static final int leftLimitSwitchPort = 0;
-        public static final int middleLimitSwitchPort = 1;
-        public static final int rightLimitSwitchPort = 2;
         public static final int topTowerSensor = 0;
+        public static final int middleLimitSwitchPort = 2;
     }
 }
