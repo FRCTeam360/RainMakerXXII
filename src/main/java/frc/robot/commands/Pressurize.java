@@ -21,11 +21,11 @@ public class Pressurize extends CommandBase {
 
   /** Creates a new Pressurize. */
 
-  public Pressurize( Pneumatics inPneumatics) {
+  public Pressurize(Pneumatics inPneumatics) {
     pneumatics = inPneumatics;
     timer = new Timer();
-      shouldRun = true;
-      timer.reset();
+    shouldRun = true;
+    timer.reset();
     timer.stop();
 
     addRequirements(inPneumatics);// Use addRequirements() here to declare subsystem dependencies.
@@ -33,14 +33,15 @@ public class Pressurize extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(shouldRun == true && pneumatics.comp.getPressureSwitchValue()) {
+    if (shouldRun == true && pneumatics.comp.getPressureSwitchValue()) {
       pneumatics.pressurize();
-    } else if (shouldRun == true && ! pneumatics.comp.getPressureSwitchValue()) {
+    } else if (shouldRun == true && !pneumatics.comp.getPressureSwitchValue()) {
       shouldRun = false;
       pneumatics.stop();
       timer.reset();
@@ -55,7 +56,8 @@ public class Pressurize extends CommandBase {
   }
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
