@@ -15,6 +15,7 @@ import static frc.robot.Constants.CANIds.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 
 public class Shooter extends SubsystemBase {
 
@@ -51,6 +52,9 @@ public class Shooter extends SubsystemBase {
   public static final double aVal = 2.697; // Quad Ratic regression values
   public static final double bVal = -52.912;
   public static final double cVal = 14815.146;
+
+  public static final double MAX_SHOOTER_ACCELERATION = 0.8;
+  private final SlewRateLimiter filter = new SlewRateLimiter(MAX_SHOOTER_ACCELERATION);
 
   private Shooter() {
     shooterLead = new CANSparkMax(shooterLeadId, MotorType.kBrushless);
@@ -113,7 +117,7 @@ public class Shooter extends SubsystemBase {
    * @param output motor output from -1 to 1
    */
   public void setSpeed(double output) {
-    shooterLead.set(output);
+    shooterLead.set(filter.calculate(output));
   }
 
   /**
@@ -137,7 +141,7 @@ public class Shooter extends SubsystemBase {
     speed = Math.min(speed, 0.7);
     speed = Math.max(speed, -0.7);
 
-    this.setSpeed(speed);
+    this.setSpeed(filter.calculate(speed));
     SmartDashboard.putNumber("speed set", speed);
   }
 
