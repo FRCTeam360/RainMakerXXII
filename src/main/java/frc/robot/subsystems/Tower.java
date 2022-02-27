@@ -35,7 +35,7 @@ public class Tower extends SubsystemBase {
 
     tower.setIdleMode(IdleMode.kBrake);
 
-    tower.setInverted(true);
+    tower.setInverted(false);
 
     tower.setSmartCurrentLimit(20);
   }

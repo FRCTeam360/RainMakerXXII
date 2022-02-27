@@ -39,6 +39,8 @@ public class Shooter extends SubsystemBase {
   public double velocityTarget = 2000;
   public boolean isAtSpeed;
 
+  public double shooterToRPM = (600.0 / 2048.0) * (3.0 /2.0) ;
+
   // Old data, need to tune
   public static final int kSlotIdx = 0;
   public static final int kTimeOutMs = 30;
@@ -57,7 +59,7 @@ public class Shooter extends SubsystemBase {
   public static final double bVal = -52.912;
   public static final double cVal = 14815.146;
 
-  public static final double MAX_SHOOTER_ACCELERATION = 0.8;
+  public static final double MAX_SHOOTER_ACCELERATION = 1.0;
   private final SlewRateLimiter filter = new SlewRateLimiter(MAX_SHOOTER_ACCELERATION);
 
   private Shooter() {
@@ -102,7 +104,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getVelocity() {
-    return shooterLead.getSelectedSensorVelocity() / 2048;
+    return shooterLead.getSelectedSensorVelocity() * shooterToRPM ;
   }
 
   @Override
@@ -113,6 +115,7 @@ public class Shooter extends SubsystemBase {
     // kF = SmartDashboard.getNumber("kF", 0.0);
 
     SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
+    SmartDashboard.putNumber("Shooter Ticks", shooterLead.getSelectedSensorVelocity());
   }
 
   /**
@@ -142,8 +145,8 @@ public class Shooter extends SubsystemBase {
     double speed = (velocityTarget / kF) + (error * kP) + (integral * kI) - (deriv * kD);
 
     // temporary limiting of max output - will probably change
-    speed = Math.min(speed, 0.7);
-    speed = Math.max(speed, -0.7);
+    // speed = Math.min(speed, 0.7);
+    // speed = Math.max(speed, -0.7);
 
     this.setSpeed(filter.calculate(speed));
     SmartDashboard.putNumber("speed set", speed);

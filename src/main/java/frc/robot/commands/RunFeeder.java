@@ -42,8 +42,8 @@ public class RunFeeder extends CommandBase {
 
     //if shooter at speed, run all
     if(myShooter.isAtSpeed()){
-      myTower.runTower(1);
-      myFeeder.runFeeder(1);
+      // myTower.runTower(1);
+      // myFeeder.runFeeder(1);
     }else{
 
 
