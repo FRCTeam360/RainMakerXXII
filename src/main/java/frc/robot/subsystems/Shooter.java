@@ -39,7 +39,14 @@ public class Shooter extends SubsystemBase {
   public double velocityTarget = 2000;
   public boolean isAtSpeed;
 
-  public double shooterToRPM = (600.0 / 2048.0) * (3.0 /2.0) ;
+  // public static final double falconEncoderToRotations = 1.0 / 2048.0;
+  // public static final double decisecondsPerSeconds = 10.0;
+  // public static final double secondsPerMinutes = 60.0;
+  // public static final double falconRttnPerShooterRttn = 24.0 / 36.0;
+  // public static final double shooterToRPM = falconEncoderToRotations * falconRttnPerShooterRttn * decisecondsPerSeconds
+  //     * decisecondsPerSeconds;
+
+  public static final double shooterToRPM = (600.0 / 2048.0) * (3.0 /2.0) ;
 
   // Old data, need to tune
   public static final int kSlotIdx = 0;
@@ -85,10 +92,10 @@ public class Shooter extends SubsystemBase {
     // shooterLead.setSensorPhase(true); //the Follower isn't harvested for it's
     // encoder therefor rotation doesn't need to be modified
 
-    SmartDashboard.putNumber("kP", 0.0);
-    SmartDashboard.putNumber("kI", 0.0);
-    SmartDashboard.putNumber("kD", 0.0);
-    SmartDashboard.putNumber("kF", 0.0);
+    // SmartDashboard.putNumber("kP", 0.0);
+    // SmartDashboard.putNumber("kI", 0.0);
+    // SmartDashboard.putNumber("kD", 0.0);
+    // SmartDashboard.putNumber("kF", 0.0);
   }
 
   /**
