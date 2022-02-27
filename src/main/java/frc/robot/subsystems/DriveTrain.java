@@ -140,16 +140,6 @@ public class DriveTrain extends SubsystemBase {
     return navX.getYaw();
   }
 
-  public void driveR(double Rmotor) {
-    // motorRLead.set(TalonFXControlMode.PercentOutput, Rmotor );
-    rightGroup.set(Rmotor);
-  }
-
-  public void driveL(double Lmotor) {
-    // motorLLead.set(TalonFXControlMode.PercentOutput, Lmotor );
-    leftGroup.set(Lmotor);
-  }
-
   public static DifferentialDriveKinematics getKinematics() {
     return kDriveKinematics;
   }

@@ -41,17 +41,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-
-
 import frc.robot.subsystems.*;
+
 /**
  * This class is where the bulk of the robot should be declared. Since
- * Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in
- * the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of
- * the robot (including
- * subsystems, commands, and button mappings) should be declared here.
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
 
@@ -66,7 +63,7 @@ public class RobotContainer {
   public final Feeder feeder = Feeder.getInstance();
   public final Intake intake = Intake.getInstance();
   public final Limelight limelight = new Limelight();
-  public final Tower tower = Tower.getInstance(); 
+  public final Tower tower = Tower.getInstance();
   public final Pneumatics pneumatics = new Pneumatics();
 
   private final ShooterJoy shooterJoy = new ShooterJoy();
@@ -79,14 +76,17 @@ public class RobotContainer {
   private final TurretAuto turretAuto = new TurretAuto(limelight, turret);
   private final TurretManual turretManual = new TurretManual(driveTrain);
   private final Pressurize pressurize = new Pressurize(pneumatics);
-  
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
-    //Configure the button bindings
+    // Configure the button bindings
     configureDefaultCommands();
     configureButtonBindings();
   }
-  //scheduler will run these commands when nothing else scheduled
+
+  // scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
     // tower.setDefaultCommand(runFeeder);
     // feeder.setDefaultCommand(runFeeder);
@@ -100,11 +100,9 @@ public class RobotContainer {
 
   /**
    * Use this method to define your button->command mappings. Buttons can be
-   * created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
-   * it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * created by instantiating a {@link GenericHID} or one of its subclasses
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
 
   private void configureButtonBindings() {
@@ -115,6 +113,10 @@ public class RobotContainer {
     new JoystickButton(operatorCont, 8).whenHeld(turretManual);
   }
 
+  public DriveTrain getDriveTrain() {
+    return driveTrain;
+  }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -122,61 +124,61 @@ public class RobotContainer {
    */
   // public Command getAutonomousCommand() {
 
-    // return test;
+  // return test;
 
-    // // Create a voltage constraint to ensure we don't accelerate too fast
-    // var autoVoltageConstraint =
-    //     new DifferentialDriveVoltageConstraint(
-    //         new SimpleMotorFeedforward(
-    //             AutoConstants.ksVolts,
-    //             AutoConstants.kvVoltSecondsPerMeter,
-    //             AutoConstants.kaVoltSecondsSquaredPerMeter),
-    //         DriveTrain.kDriveKinematics,
-    //         10);
+  // // Create a voltage constraint to ensure we don't accelerate too fast
+  // var autoVoltageConstraint =
+  // new DifferentialDriveVoltageConstraint(
+  // new SimpleMotorFeedforward(
+  // AutoConstants.ksVolts,
+  // AutoConstants.kvVoltSecondsPerMeter,
+  // AutoConstants.kaVoltSecondsSquaredPerMeter),
+  // DriveTrain.kDriveKinematics,
+  // 10);
 
-    // // Create config for trajectory
-    // TrajectoryConfig config =
-    //     new TrajectoryConfig(
-    //             AutoConstants.kMaxSpeedMetersPerSecond,
-    //             AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-    //         // Add kinematics to ensure max speed is actually obeyed
-    //         .setKinematics(DriveTrain.kDriveKinematics)
-    //         // Apply the voltage constraint
-    //         .addConstraint(autoVoltageConstraint);
+  // // Create config for trajectory
+  // TrajectoryConfig config =
+  // new TrajectoryConfig(
+  // AutoConstants.kMaxSpeedMetersPerSecond,
+  // AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+  // // Add kinematics to ensure max speed is actually obeyed
+  // .setKinematics(DriveTrain.kDriveKinematics)
+  // // Apply the voltage constraint
+  // .addConstraint(autoVoltageConstraint);
 
-    // // An example trajectory to follow.  All units in meters.
-    // Trajectory exampleTrajectory =
-    //     TrajectoryGenerator.generateTrajectory(
-    //         // Start at the origin facing the +X direction
-    //         new Pose2d(0, 0, new Rotation2d(0)),
-    //         // Pass through these two interior waypoints, making an 's' curve path
-    //         List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-    //         // End 3 meters straight ahead of where we started, facing forward
-    //         new Pose2d(3, 0, new Rotation2d(0)),
-    //         // Pass config
-    //         config);
+  // // An example trajectory to follow. All units in meters.
+  // Trajectory exampleTrajectory =
+  // TrajectoryGenerator.generateTrajectory(
+  // // Start at the origin facing the +X direction
+  // new Pose2d(0, 0, new Rotation2d(0)),
+  // // Pass through these two interior waypoints, making an 's' curve path
+  // List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+  // // End 3 meters straight ahead of where we started, facing forward
+  // new Pose2d(3, 0, new Rotation2d(0)),
+  // // Pass config
+  // config);
 
-    // RamseteCommand ramseteCommand =
-    //     new RamseteCommand(
-    //         exampleTrajectory,
-    //         driveTrain::getPose,
-    //         new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
-    //         new SimpleMotorFeedforward(
-    //             AutoConstants.ksVolts,
-    //             AutoConstants.kvVoltSecondsPerMeter,
-    //             AutoConstants.kaVoltSecondsSquaredPerMeter),
-    //         DriveTrain.kDriveKinematics,
-    //         driveTrain::getWheelSpeeds,
-    //         new PIDController(AutoConstants.kPDriveVel, 0, 0),
-    //         new PIDController(AutoConstants.kPDriveVel, 0, 0),
-    //         // RamseteCommand passes volts to the callback
-    //         driveTrain::tankDriveVolts,
-    //         driveTrain);
+  // RamseteCommand ramseteCommand =
+  // new RamseteCommand(
+  // exampleTrajectory,
+  // driveTrain::getPose,
+  // new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
+  // new SimpleMotorFeedforward(
+  // AutoConstants.ksVolts,
+  // AutoConstants.kvVoltSecondsPerMeter,
+  // AutoConstants.kaVoltSecondsSquaredPerMeter),
+  // DriveTrain.kDriveKinematics,
+  // driveTrain::getWheelSpeeds,
+  // new PIDController(AutoConstants.kPDriveVel, 0, 0),
+  // new PIDController(AutoConstants.kPDriveVel, 0, 0),
+  // // RamseteCommand passes volts to the callback
+  // driveTrain::tankDriveVolts,
+  // driveTrain);
 
-    // // Reset odometry to the starting pose of the trajectory.
-    // // driveTrain.resetOdometry(exampleTrajectory.getInitialPose());
+  // // Reset odometry to the starting pose of the trajectory.
+  // // driveTrain.resetOdometry(exampleTrajectory.getInitialPose());
 
-    // // Run path following command, then stop at the end.
-    // return ramseteCommand.andThen(() -> driveTrain.tankDriveVolts(0, 0));
+  // // Run path following command, then stop at the end.
+  // return ramseteCommand.andThen(() -> driveTrain.tankDriveVolts(0, 0));
   // }
 }
