@@ -47,8 +47,8 @@ public final class Constants {
     }
 
     public static final class PneumaticConstants {
-        public static final int intakeForwardChannel = 0;
-        public static final int intakeReverseChannel = 1;
+        public static final int intakeForwardChannel = 1;
+        public static final int intakeReverseChannel = 0;
     }
 
     public static final class DigitalInputPorts {
