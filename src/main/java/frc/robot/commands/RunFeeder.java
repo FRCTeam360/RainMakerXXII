@@ -49,7 +49,7 @@ public class RunFeeder extends CommandBase {
 
       // if intake running, run shooter if no ball at top of tower
     } else if (driverCont.getLeftTrigger()) {
-      if (myTower.ballInTower()) {
+      if (myTower.ballNotInTower()) {
         myTower.runTower(1);
         myFeeder.runFeeder(0);
       } else {

@@ -51,7 +51,7 @@ public class Tower extends SubsystemBase {
     tower.set(speed);
   }
 
-  public boolean ballInTower() {
+  public boolean ballNotInTower() {
     return topSensor.get();
   }
 
