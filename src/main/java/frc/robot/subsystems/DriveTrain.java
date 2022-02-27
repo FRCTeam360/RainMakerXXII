@@ -36,7 +36,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 // import com.ctre.phoenix.motorcontrol.TalonFXControlMode.*;
 
 public class DriveTrain extends SubsystemBase {
-  
+
   private WPI_TalonFX motorLLead;
   private WPI_TalonFX motorLFollow1;
   private WPI_TalonFX motorLFollow2;
@@ -52,10 +52,12 @@ public class DriveTrain extends SubsystemBase {
   // sides
   // private double rightNewPos;
 
-  public AHRS navX = new AHRS(SPI.Port.kMXP); //For frc-characterization tool: "SPI.Port.kMXP" of type "NavX"
-  public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(AutoConstants.kTrackwidthMeters);
+  public AHRS navX = new AHRS(SPI.Port.kMXP); // For frc-characterization tool: "SPI.Port.kMXP" of type "NavX"
+  public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
+      AutoConstants.kTrackwidthMeters);
   public final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(getHeading());
-  public final static SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(AutoConstants.ksVolts, AutoConstants.kvVoltSecondsPerMeter, AutoConstants.kaVoltSecondsSquaredPerMeter);
+  public final static SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(AutoConstants.ksVolts,
+      AutoConstants.kvVoltSecondsPerMeter, AutoConstants.kaVoltSecondsSquaredPerMeter);
   public Pose2d pose;
 
   public PIDController leftPidController = new PIDController(AutoConstants.kPDriveVel, 0, 0);
@@ -99,34 +101,34 @@ public class DriveTrain extends SubsystemBase {
     motorRFollow1.setInverted(TalonFXInvertType.FollowMaster);
     motorRFollow2.setInverted(TalonFXInvertType.FollowMaster);
 
-    resetEncPos(); //Reset Encoders r navX yaw before m_odometry is defined
+    resetEncPos(); // Reset Encoders r navX yaw before m_odometry is defined
 
     // makes the 3 motor controllers function as 1 motor controller for autos
     leftGroup = new MotorControllerGroup(motorLLead, motorLFollow1, motorLFollow2);
     rightGroup = new MotorControllerGroup(motorRLead, motorRFollow1, motorRFollow2);
 
     m_differentialDrive = new DifferentialDrive(leftGroup, rightGroup);
-    m_differentialDrive.setSafetyEnabled(false); //So it won't stop the motors from moving
+    m_differentialDrive.setSafetyEnabled(false); // So it won't stop the motors from moving
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    leftGroup.setVoltage(leftVolts); //Answer is no   //Set to motor groups
-    rightGroup.setVoltage(rightVolts); //it's big brain time
-    m_differentialDrive.feed(); //Feed the motorsafety class so it doesnt disable the motors
+    leftGroup.setVoltage(leftVolts); // Answer is no //Set to motor groups
+    rightGroup.setVoltage(rightVolts); // it's big brain time
+    m_differentialDrive.feed(); // Feed the motorsafety class so it doesnt disable the motors
     System.out.println("left voltage output: " + leftVolts);
     System.out.println("right voltage output: " + rightVolts);
-    
-  }
-  
-  public void resetEncPos () { //For initialization resets encoder positions, for ramsete
-    motorLLead.setSelectedSensorPosition(0);
-    motorRLead.setSelectedSensorPosition(0);
-     navX.zeroYaw();
-     navX.setAngleAdjustment( -navX.getAngle() ); //Set angle offset
-     m_odometry.resetPosition(new Pose2d(), getHeading()); //Set odomentry to zero
+
   }
 
-  public Rotation2d getHeading(){
+  public void resetEncPos() { // For initialization resets encoder positions, for ramsete
+    motorLLead.setSelectedSensorPosition(0);
+    motorRLead.setSelectedSensorPosition(0);
+    navX.zeroYaw();
+    navX.setAngleAdjustment(-navX.getAngle()); // Set angle offset
+    m_odometry.resetPosition(new Pose2d(), getHeading()); // Set odomentry to zero
+  }
+
+  public Rotation2d getHeading() {
     return Rotation2d.fromDegrees(-navX.getAngle());
   }
 
@@ -138,16 +140,17 @@ public class DriveTrain extends SubsystemBase {
     return navX.getYaw();
   }
 
-  public void   driveR (double Rmotor) {
+  public void driveR(double Rmotor) {
     // motorRLead.set(TalonFXControlMode.PercentOutput, Rmotor );
     rightGroup.set(Rmotor);
   }
-  public void driveL (double Lmotor) {
+
+  public void driveL(double Lmotor) {
     // motorLLead.set(TalonFXControlMode.PercentOutput, Lmotor );
     leftGroup.set(Lmotor);
   }
 
-  public static DifferentialDriveKinematics getKinematics(){
+  public static DifferentialDriveKinematics getKinematics() {
     return kDriveKinematics;
   }
 
@@ -155,23 +158,23 @@ public class DriveTrain extends SubsystemBase {
     return m_odometry.getPoseMeters();
   }
 
-  public SimpleMotorFeedforward getFeedForward(){
+  public SimpleMotorFeedforward getFeedForward() {
     return feedForward;
   }
 
-  public PIDController getLeftController(){
+  public PIDController getLeftController() {
     return leftPidController;
   }
 
-  public PIDController getRightController(){
+  public PIDController getRightController() {
     return rightPidController;
   }
 
-  public double getLeftEncoderMeters(){
+  public double getLeftEncoderMeters() {
     return motorLLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters;
   }
 
-  public double getRightEncoderMeters(){
+  public double getRightEncoderMeters() {
     return motorRLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters;
   }
 
@@ -183,11 +186,12 @@ public class DriveTrain extends SubsystemBase {
     return motorRLead.getSelectedSensorVelocity() * AutoConstants.ticksToMeters;
   }
 
-  public DifferentialDriveWheelSpeeds getWheelSpeeds() { //Must be in meters/second
-    return new DifferentialDriveWheelSpeeds(
-      motorLLead.getSelectedSensorVelocity() * AutoConstants.ticksToMeters,
-      motorRLead.getSelectedSensorVelocity() * AutoConstants.ticksToMeters
-    ); //In example: m_leftEncoder.getRate() , m_rightEncoder.getRate() however, they set their rate to inclue their conversions
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() { // Must be in meters/second
+    return new DifferentialDriveWheelSpeeds(motorLLead.getSelectedSensorVelocity() * AutoConstants.ticksToMeters,
+        motorRLead.getSelectedSensorVelocity() * AutoConstants.ticksToMeters); // In example: m_leftEncoder.getRate() ,
+                                                                               // m_rightEncoder.getRate() however, they
+                                                                               // set their rate to inclue their
+                                                                               // conversions
   }
 
   public void brakeMode() {
@@ -208,12 +212,13 @@ public class DriveTrain extends SubsystemBase {
     motorRFollow2.setNeutralMode(NeutralMode.Coast);
   }
 
-  public void navxTestingDashboardReadouts () {
-    //SmartDashboard.putNumber("N ang", Math.IEEEremainder(navX.getAngle(), 360) );
-    SmartDashboard.putNumber("NAV ang", navX.getAngle() );
-    SmartDashboard.putString("Pos2D",  m_odometry.getPoseMeters().toString() );
+  public void navxTestingDashboardReadouts() {
+    // SmartDashboard.putNumber("N ang", Math.IEEEremainder(navX.getAngle(), 360) );
+    SmartDashboard.putNumber("NAV ang", navX.getAngle());
+    SmartDashboard.putString("Pos2D", m_odometry.getPoseMeters().toString());
     // System.out.print("NavX angle: " + navX.getAngle());
-    //SmartDashboard.putNumber("N pre", navX.getBarometricPressure()); //why this no work cri, just tryna get the pressure
+    // SmartDashboard.putNumber("N pre", navX.getBarometricPressure()); //why this
+    // no work cri, just tryna get the pressure
     SmartDashboard.putNumber("N yaw", navX.getYaw());
 
     // SmartDashboard.putBoolean("NAVC con", navX.isConnected());
@@ -234,16 +239,20 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    pose = m_odometry.update( //Must be in meters according to internets
-      getHeading(),
-      motorLLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters,
-      motorRLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters
-    );
+    pose = m_odometry.update( // Must be in meters according to internets
+        getHeading(), motorLLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters,
+        motorRLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters);
     navxTestingDashboardReadouts();
-    // System.out.println("distance x: " + Units.metersToFeet(m_odometry.getPoseMeters().getX()));
-    // System.out.println("distance y: " + Units.metersToFeet(m_odometry.getPoseMeters().getY()));
-    // System.out.println("Right encoder: " + Units.metersToFeet(motorLLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters));
-    // System.out.println("Left encoder" + Units.metersToFeet(motorRLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters));
+    // System.out.println("distance x: " +
+    // Units.metersToFeet(m_odometry.getPoseMeters().getX()));
+    // System.out.println("distance y: " +
+    // Units.metersToFeet(m_odometry.getPoseMeters().getY()));
+    // System.out.println("Right encoder: " +
+    // Units.metersToFeet(motorLLead.getSelectedSensorPosition() *
+    // AutoConstants.ticksToMeters));
+    // System.out.println("Left encoder" +
+    // Units.metersToFeet(motorRLead.getSelectedSensorPosition() *
+    // AutoConstants.ticksToMeters));
   }
 
   public void positionPrintouts() {
@@ -251,7 +260,11 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("Left Raw Pos", leftRawPos);
     double rightRawPos = motorRLead.getSelectedSensorPosition();
     SmartDashboard.putNumber("Right Raw Pos", rightRawPos);
+  }
 
+  public void drive(double leftMotorPercentage, double rightMotorPercentage) {
+    leftGroup.set(leftMotorPercentage);
+    rightGroup.set(rightMotorPercentage);
   }
 
   @Override
