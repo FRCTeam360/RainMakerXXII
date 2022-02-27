@@ -10,18 +10,18 @@ import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 import static frc.robot.Constants.CANIds.*;
+import static frc.robot.Constants.DigitalInputPorts.*;
 
 import java.io.DataInput;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 public class Tower extends SubsystemBase {
 
-  //DigitalInput topSensor = new DigitalInput(0);
-  //DigitalInput middleSensor = new DigitalInput(1);
-  //DigitalInput bottomSensor = new DigitalInput(2);
+  DigitalInput topSensor;
+  // DigitalInput middleSensor = new DigitalInput(1);
+  // DigitalInput bottomSensor = new DigitalInput(2);
   static Tower instance;
   // need to createbthird input for middle sensor
 
@@ -29,11 +29,13 @@ public class Tower extends SubsystemBase {
 
   private Tower() {
 
-    DigitalInput topSensor = new DigitalInput(2);
+    topSensor = new DigitalInput(topTowerSensor);
 
     tower = new CANSparkMax(towerId, MotorType.kBrushless);
 
     tower.setIdleMode(IdleMode.kBrake);
+
+    tower.setInverted(true);
 
     tower.setSmartCurrentLimit(20);
   }
@@ -47,6 +49,10 @@ public class Tower extends SubsystemBase {
 
   public void runTower(double speed) {
     tower.set(speed);
+  }
+
+  public boolean ballNotInTower() {
+    return topSensor.get();
   }
 
   @Override

@@ -30,7 +30,6 @@ import edu.wpi.first.wpilibj.SPI; //Port NavX is on
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 // import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -47,10 +46,11 @@ public class DriveTrain extends SubsystemBase {
 
   public final DifferentialDrive m_differentialDrive;
 
-  //private double leftVel;   // initializes velocities for left and right sides
-  //private double rightVel;
-  //private double leftNewPos;   // initializes new positions for left and right sides
-  //private double rightNewPos;
+  // private double leftVel; // initializes velocities for left and right sides
+  // private double rightVel;
+  // private double leftNewPos; // initializes new positions for left and right
+  // sides
+  // private double rightNewPos;
 
   public AHRS navX = new AHRS(SPI.Port.kMXP); //For frc-characterization tool: "SPI.Port.kMXP" of type "NavX"
   public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(AutoConstants.kTrackwidthMeters);
@@ -63,6 +63,8 @@ public class DriveTrain extends SubsystemBase {
 
   private final MotorControllerGroup leftGroup;
   private final MotorControllerGroup rightGroup;
+
+  public static double ACCELERATION_LIMIT = 0.5;
 
   /** Creates a new ExampleSubsystem. */
   public DriveTrain() {
@@ -78,15 +80,18 @@ public class DriveTrain extends SubsystemBase {
     motorLFollow2.configFactoryDefault();
     motorRLead.configFactoryDefault();
     motorRFollow1.configFactoryDefault();
-    motorRFollow2.configFactoryDefault(); 
+    motorRFollow2.configFactoryDefault();
 
-    // makes the second motor for left and right sides to follow the primary motor on the left and right
+    // makes the second motor for left and right sides to follow the primary motor
+    // on the left and right
     motorLFollow1.follow(motorLLead);
     motorLFollow2.follow(motorLLead);
     motorRFollow1.follow(motorRLead);
     motorRFollow2.follow(motorRLead);
 
-    // makes one side of the robot reverse direction in order to ensure that the robot goes forward when the joysticks are both forward and backwards when the joysticks are both backwards
+    // makes one side of the robot reverse direction in order to ensure that the
+    // robot goes forward when the joysticks are both forward and backwards when the
+    // joysticks are both backwards
     motorLLead.setInverted(TalonFXInvertType.CounterClockwise);
     motorLFollow1.setInverted(TalonFXInvertType.FollowMaster);
     motorLFollow2.setInverted(TalonFXInvertType.FollowMaster);
@@ -96,9 +101,9 @@ public class DriveTrain extends SubsystemBase {
 
     resetEncPos(); //Reset Encoders r navX yaw before m_odometry is defined
 
-    //makes the 3 motor controllers function as 1 motor controller for autos
-    leftGroup = new MotorControllerGroup( motorLLead , motorLFollow1, motorLFollow2 );
-    rightGroup = new MotorControllerGroup( motorRLead , motorRFollow1, motorRFollow2 );
+    // makes the 3 motor controllers function as 1 motor controller for autos
+    leftGroup = new MotorControllerGroup(motorLLead, motorLFollow1, motorLFollow2);
+    rightGroup = new MotorControllerGroup(motorRLead, motorRFollow1, motorRFollow2);
 
     m_differentialDrive = new DifferentialDrive(leftGroup, rightGroup);
     m_differentialDrive.setSafetyEnabled(false); //So it won't stop the motors from moving
@@ -193,6 +198,7 @@ public class DriveTrain extends SubsystemBase {
     motorRFollow1.setNeutralMode(NeutralMode.Brake);
     motorRFollow2.setNeutralMode(NeutralMode.Brake);
   }
+
   public void coastMode() {
     motorLLead.setNeutralMode(NeutralMode.Coast);
     motorLFollow1.setNeutralMode(NeutralMode.Coast);
@@ -210,17 +216,20 @@ public class DriveTrain extends SubsystemBase {
     //SmartDashboard.putNumber("N pre", navX.getBarometricPressure()); //why this no work cri, just tryna get the pressure
     SmartDashboard.putNumber("N yaw", navX.getYaw());
 
-    //SmartDashboard.putBoolean("NAVC con", navX.isConnected());
-    //SmartDashboard.putBoolean("NAV cal", navX.isCalibrating());
+    // SmartDashboard.putBoolean("NAVC con", navX.isConnected());
+    // SmartDashboard.putBoolean("NAV cal", navX.isCalibrating());
   }
 
-  // public double getHighestVelocity () { 
-  //   double leftSpeed = motorLLead.TalonFXSensorCollection.getIntegratedSensorVelocity() * AutoConstants.ticksToMeters;
-  //   double rightSpeed = motorRLead.getEncoder().getVelocity() * AutoConstants.ticksToMeters;
-  //   double highSpeed = Math.max( Math.abs(leftSpeed), Math.abs(rightSpeed) ); //Make em both positive
-  //   return highSpeed; //In meters per second
+  // public double getHighestVelocity () {
+  // double leftSpeed =
+  // motorLLead.TalonFXSensorCollection.getIntegratedSensorVelocity() *
+  // AutoConstants.ticksToMeters;
+  // double rightSpeed = motorRLead.getEncoder().getVelocity() *
+  // AutoConstants.ticksToMeters;
+  // double highSpeed = Math.max( Math.abs(leftSpeed), Math.abs(rightSpeed) );
+  // //Make em both positive
+  // return highSpeed; //In meters per second
   // 5}
-
 
   @Override
   public void periodic() {
@@ -236,8 +245,6 @@ public class DriveTrain extends SubsystemBase {
     // System.out.println("Right encoder: " + Units.metersToFeet(motorLLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters));
     // System.out.println("Left encoder" + Units.metersToFeet(motorRLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters));
   }
-
-
 
   public void positionPrintouts() {
     double leftRawPos = motorLLead.getSelectedSensorPosition();
