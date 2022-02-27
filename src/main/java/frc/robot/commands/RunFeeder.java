@@ -20,6 +20,9 @@ public class RunFeeder extends CommandBase {
   private final OperatorControl operatorCont;
   private final DriverControl driverCont;
 
+  private double towerPower = 0;
+  private double feederPower = 0;
+
   public RunFeeder() {
     operatorCont = OperatorControl.getInstance();
     driverCont = DriverControl.getInstance();
@@ -44,43 +47,46 @@ public class RunFeeder extends CommandBase {
 
     // if shooter at speed, run all
     if (myShooter.isAtSpeed()) {
-      myTower.runTower(1);
-      myFeeder.runFeeder(1);
+      towerPower = 1.0;
+      feederPower = 1.0;
 
       // if intake running, run shooter if no ball at top of tower
     } else if (driverCont.getLeftTrigger()) {
       if (myTower.ballNotInTower()) {
-        myTower.runTower(1);
-        myFeeder.runFeeder(0);
+        towerPower = 1.0;
+        feederPower = 0.0;
       } else {
-        myTower.runTower(0);
-        myFeeder.runFeeder(0);
+        towerPower = 0.0;
+        feederPower = 0.0;
       }
     } else {
 
       // manually run feeder
       if (operatorCont.getLeftTrigger() || driverCont.getLeftBumper()) {
         if (operatorCont.getXButton()) {
-          myFeeder.runFeeder(-0.5);
+          feederPower = -0.5;
         } else {
-          myFeeder.runFeeder(0.5);
+          feederPower = 0.5;
         }
       } else {
-        myFeeder.runFeeder(0.0);
+        feederPower = 0.0;
       }
 
       // manually run tower;
       if (operatorCont.getRightTrigger() || driverCont.getRightBumper()) {
         if (operatorCont.getXButton()) {
-          myTower.runTower(-1.0);
+          towerPower = -1.0;
         } else {
-          myTower.runTower(1.0);
+          towerPower = 1.0;
         }
       } else {
-        myTower.runTower(0.0);
+        towerPower = 0;
 
       }
     }
+
+    myTower.runTower(towerPower);
+    myFeeder.runFeeder(feederPower);
   }
 
   // Returns true when the command should end.
