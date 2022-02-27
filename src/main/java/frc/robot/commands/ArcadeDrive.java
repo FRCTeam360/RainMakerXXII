@@ -7,15 +7,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.operatorInterface.DriverControl;
 import frc.robot.subsystems.DriveTrain;
-
+import edu.wpi.first.math.filter.SlewRateLimiter;
 
 import static frc.robot.Constants.OIConstants.*;
 
 public class ArcadeDrive extends CommandBase {
-
   private final DriveTrain myDriveTrain;
 
   private final DriverControl driverCont;
+
+  private final SlewRateLimiter filter = new SlewRateLimiter(DriveTrain.ACCELERATION_LIMIT);
 
   /** Creates a new ArcadeDrive. */
   public ArcadeDrive(DriveTrain driveTrain) {
@@ -23,54 +24,54 @@ public class ArcadeDrive extends CommandBase {
 
     myDriveTrain = driveTrain;
 
-
-    addRequirements(myDriveTrain);
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(myDriveTrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double rightLeftSquared = 0;
-    double upDownSquared = 0;
+    double turn = 0; 
+    double forward = 0; 
     double driveRight = 0;
     double driveLeft = 0;
 
-    if(Math.abs(driverCont.getLeftY()) >= xboxDeadzone) {
-      upDownSquared = driverCont.getLeftY() * driverCont.getLeftY();
-      if(driverCont.getLeftY() < 0){
-        upDownSquared = upDownSquared * -1;
+    if (Math.abs(driverCont.getLeftY()) >= xboxDeadzone) {
+      forward = driverCont.getLeftY() * driverCont.getLeftY();
+      if (driverCont.getLeftY() < 0) {
+        forward = forward * -1;
       }
     }
-    if(Math.abs(driverCont.getLeftX()) >= xboxDeadzone) {
-      rightLeftSquared = driverCont.getLeftX() * driverCont.getLeftX();
-      if(driverCont.getLeftX() < 0){
-        rightLeftSquared = rightLeftSquared * -1;
-      } 
+    if (Math.abs(driverCont.getLeftX()) >= xboxDeadzone) {
+      turn = driverCont.getLeftX() * driverCont.getLeftX();
+      if (driverCont.getLeftX() < 0) {
+        turn = turn * -1;
+      }
     }
 
-  
-    driveLeft = upDownSquared + rightLeftSquared;
-    driveRight = upDownSquared - rightLeftSquared;
+    forward = filter.calculate(forward) * -1;
+    turn = turn * -1;
+
+    driveLeft = forward + turn;
+    driveRight = forward - turn;
 
     driveLeft = Math.min(driveLeft, 1);
     driveRight = Math.min(driveRight, 1);
     driveLeft = Math.max(driveLeft, -1);
     driveRight = Math.max(driveRight, -1);
 
-    myDriveTrain.driveL(driveLeft);
-    myDriveTrain.driveR(driveRight);
+    myDriveTrain.drive(driveLeft, driveRight);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    myDriveTrain.driveL(0);
-    myDriveTrain.driveR(0);
+    myDriveTrain.drive(0, 0);
   }
 
   // Returns true when the command should end.

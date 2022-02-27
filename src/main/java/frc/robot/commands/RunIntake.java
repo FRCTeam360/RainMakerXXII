@@ -17,7 +17,7 @@ public class RunIntake extends CommandBase {
   private final DriverControl driverCont;
   private final OperatorControl operatorCont;
 
-  public boolean isIntakeOut;
+  public boolean isIntakeOut = false;
 
   public RunIntake() {
     driverCont = DriverControl.getInstance();
@@ -29,6 +29,7 @@ public class RunIntake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    myIntake.intakeIn();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
