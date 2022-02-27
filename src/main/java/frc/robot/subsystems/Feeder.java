@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-
 import static frc.robot.Constants.CANIds.*;
 
 import com.revrobotics.CANSparkMax;
@@ -29,7 +28,7 @@ public class Feeder extends SubsystemBase {
 
     feeder.setSmartCurrentLimit(20);
 
-  }
+  } 
 
   /**
    * Gets the Singleton Feeder instance
@@ -37,7 +36,7 @@ public class Feeder extends SubsystemBase {
    * @return the Singleton Feeder instance
    */
   public static Feeder getInstance() {
-    if (instance == null) {
+    if (instance == null) { 
       instance = new Feeder();
     }
     return instance;
