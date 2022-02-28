@@ -119,11 +119,11 @@ public class TurretAuto extends CommandBase {
     pastSeekDirection = direction;
     switch (direction) {
       case LEFT:
-        myTurret.turn(0.2);
+        myTurret.turn(0.5);
         break;
       case RIGHT:
       default:
-        myTurret.turn(-0.2);
+        myTurret.turn(-0.5);
     }
   }
 

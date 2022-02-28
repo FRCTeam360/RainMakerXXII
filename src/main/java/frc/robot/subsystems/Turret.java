@@ -36,8 +36,8 @@ public class Turret extends SubsystemBase {
   private double previousAngle;
   private double integral;
 
-  public static final double leftSoftLimit = 60;
-  public static final double rightSoftLimit = -60;
+  public static final double leftSoftLimit = 120;
+  public static final double rightSoftLimit = -120;
 
   public static Turret getInstance() {
     if (instance == null) {
