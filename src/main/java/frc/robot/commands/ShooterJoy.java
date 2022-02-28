@@ -29,8 +29,8 @@ public class ShooterJoy extends CommandBase {
   @Override // Called every time the scheduler runs while the command is scheduled.
   public void execute() {
     // if (cont.getXButton()){
-    shooter.setSpeed(operatorCont.getLeftY() * -0.50);
-    SmartDashboard.putNumber("Shoot percent", operatorCont.getLeftY() * -0.50);
+    shooter.setSpeed(operatorCont.getLeftY() * -0.40);
+    SmartDashboard.putNumber("Shoot percent", operatorCont.getLeftY() * -0.40);
 
     // } else{
     // shooter.setVelocity(cont.getLeftY() * 5500);

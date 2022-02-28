@@ -30,6 +30,8 @@ public class RunIntake extends CommandBase {
   @Override
   public void initialize() {
     myIntake.intakeIn();
+    isIntakeOut = false;
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.operatorInterface.XboxCont;
 import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static frc.robot.Constants.CANIds.*;
 import static frc.robot.Constants.DigitalInputPorts.*;
@@ -35,7 +36,7 @@ public class Tower extends SubsystemBase {
 
     tower.setIdleMode(IdleMode.kBrake);
 
-    tower.setInverted(true);
+    tower.setInverted(false);
 
     tower.setSmartCurrentLimit(20);
   }
@@ -58,5 +59,6 @@ public class Tower extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Tower Temp", tower.getMotorTemperature());
   }
 }
