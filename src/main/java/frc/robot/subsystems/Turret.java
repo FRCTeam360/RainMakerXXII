@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,12 +22,14 @@ public class Turret extends SubsystemBase {
   private DigitalInput middleLimitSwitch;
   private DigitalInput rightLimitSwitch;
 
+  public static final double maxSpeed = 0.6;
+
   public static final double kPAngle = 0.05;
   public static final double kIAngle = 0;
   public static final double kDAngle = 0.01;
   public static final double kFAngle = 0;
 
-  public static final double kPLimelight = 0.0125; // values may be altered, seperate for clarification , changer
+  public static final double kPLimelight = 0.013; // values may be altered, seperate for clarification , changer
                                                   // kPLimelight from .05
   public static final double kILimelight = 0; // *
   public static final double kDLimelight = 0.0; // * changed from 0.01
@@ -43,10 +46,15 @@ public class Turret extends SubsystemBase {
   private double previousAngle;
   private double angleTurnIntegral;
 
-  public static final double leftSoftLimit = 120;
-  public static final double rightSoftLimit = -120;
+  public static final double leftSoftLimit = 90;
+  public static final double rightSoftLimit = -90;
 
-  public static double getDeadzoneAngleSize(){
+  public static final float leftSoftLimitEncoder = (float) (leftSoftLimit / gearBoxRatio / pulleyRatio
+      / degreesPerRotation);
+  public static final float rightSoftLimitEncoder = (float) (rightSoftLimit / gearBoxRatio / pulleyRatio
+      / degreesPerRotation);
+
+  public static double getDeadzoneAngleSize() {
     return 360 - leftSoftLimit + rightSoftLimit;
   }
 
@@ -72,6 +80,9 @@ public class Turret extends SubsystemBase {
 
     turretMotor.setInverted(false);
 
+    turretMotor.setSoftLimit(SoftLimitDirection.kReverse, leftSoftLimitEncoder);
+    turretMotor.setSoftLimit(SoftLimitDirection.kForward, rightSoftLimitEncoder);
+
     // leftLimitSwitch = new DigitalInput(Port);
     // rightLimitSwitch = new DigitalInput(rightLimitSwitchPort);
   }
@@ -91,12 +102,22 @@ public class Turret extends SubsystemBase {
   }
 
   public void turn(double speed) {
+
+    Math.min(maxSpeed, speed);
+    Math.max(-maxSpeed, speed);
+
     turretMotor.set(speed);
 
+    // if (isAtLeftLimit() || isAtRightLimit()) {
+    //   turretMotor.set(0);
+    // } else {
+    //   turretMotor.set(speed);
+    // }
   }
 
   /*
    * Turns turret to match angle provided to turret
+   * 
    * @param inputAngle inputAngle is the value for the turret to turn towards
    */
   public void angleTurn(double inputAngle) {
@@ -151,5 +172,7 @@ public class Turret extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Turret Angle", getAngle());
+    // System.out.println("Turret Angle: " + getAngle());
+    SmartDashboard.putNumber("Turret Encoder", turretMotor.getEncoder().getPosition());
   }
 }

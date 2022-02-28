@@ -52,7 +52,9 @@ public class DriveTrain extends SubsystemBase {
   private final MotorControllerGroup leftGroup;
   private final MotorControllerGroup rightGroup;
 
-  public static double ACCELERATION_LIMIT = 0.5;
+  public static double ACCELERATION_LIMIT = 2;
+
+  private double pastForwardSpeed = 0;
 
   /** Creates a new ExampleSubsystem. */
   public DriveTrain() {
@@ -99,7 +101,7 @@ public class DriveTrain extends SubsystemBase {
     m_differentialDrive = new DifferentialDrive(motorLLead, motorRLead);
     m_differentialDrive.setSafetyEnabled(false); // So it won't stop the motors from moving
 
-    this.coastMode();
+    this.brakeMode();
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
@@ -213,5 +215,23 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+  }
+
+  public double getForwardSpeed() {
+    double forward = (motorLLead.getSelectedSensorVelocity() + motorRLead.getSelectedSensorVelocity()) / 2;
+    System.out.println("forward: " + forward);
+    return forward;
+  }
+
+  public double getAcceleration() {
+    double forwardSpeed = this.getForwardSpeed();
+    double acceleration = forwardSpeed - this.pastForwardSpeed;
+    this.pastForwardSpeed = forwardSpeed;
+    return acceleration;
+  }
+
+  public Boolean isAccelerating() {
+    return (this.getForwardSpeed() > 0 && this.getAcceleration() > 0)
+        || (this.getForwardSpeed() < 0 && this.getAcceleration() < 0);
   }
 }

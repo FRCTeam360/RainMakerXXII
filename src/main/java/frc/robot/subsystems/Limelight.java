@@ -63,6 +63,6 @@ public class Limelight extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("lime tY", this.getY());
-    System.out.println("lime tY: " + this.getY());
+    // System.out.println("lime tY: " + this.getY());
   }
 }
