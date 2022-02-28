@@ -40,19 +40,20 @@ public class Turret extends SubsystemBase {
   public static final double gearBoxRatio = 1.0 / 20.0;
   public static final double pulleyRatio = 1.5 / 17.5;
   public static final double degreesPerRotation = 360 / 1;
+  public static final double rotationsPerTick = 1 / 42;
 
   private static Turret instance;
 
   private double previousAngle;
   private double angleTurnIntegral;
 
-  public static final double leftSoftLimit = 90;
-  public static final double rightSoftLimit = -90;
+  public static final float leftSoftLimit = 90;
+  public static final float rightSoftLimit = -90;
 
-  public static final float leftSoftLimitEncoder = (float) (leftSoftLimit / gearBoxRatio / pulleyRatio
-      / degreesPerRotation);
-  public static final float rightSoftLimitEncoder = (float) (rightSoftLimit / gearBoxRatio / pulleyRatio
-      / degreesPerRotation);
+  // public static final float leftSoftLimitEncoder = (float) (leftSoftLimit / gearBoxRatio / pulleyRatio
+  //     / degreesPerRotation);
+  // public static final float rightSoftLimitEncoder = (float) (rightSoftLimit / gearBoxRatio / pulleyRatio
+  //     / degreesPerRotation);
 
   public static double getDeadzoneAngleSize() {
     return 360 - leftSoftLimit + rightSoftLimit;
@@ -80,8 +81,13 @@ public class Turret extends SubsystemBase {
 
     turretMotor.setInverted(false);
 
-    turretMotor.setSoftLimit(SoftLimitDirection.kReverse, leftSoftLimitEncoder);
-    turretMotor.setSoftLimit(SoftLimitDirection.kForward, rightSoftLimitEncoder);
+    turretMotor.getEncoder().setVelocityConversionFactor(rotationsPerTick * gearBoxRatio * pulleyRatio * degreesPerRotation);
+
+    turretMotor.setSoftLimit(SoftLimitDirection.kForward, leftSoftLimit);
+    turretMotor.setSoftLimit(SoftLimitDirection.kReverse, rightSoftLimit);
+
+    turretMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    turretMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
     // leftLimitSwitch = new DigitalInput(Port);
     // rightLimitSwitch = new DigitalInput(rightLimitSwitchPort);
@@ -94,7 +100,7 @@ public class Turret extends SubsystemBase {
    */
   public double getAngle() {
     double encoderPosition = turretMotor.getEncoder().getPosition();
-    return encoderPosition * gearBoxRatio * pulleyRatio * degreesPerRotation;
+    return encoderPosition;   // * gearBoxRatio * pulleyRatio * degreesPerRotation;
   }
 
   public void zero() {
