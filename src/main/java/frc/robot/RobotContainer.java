@@ -78,7 +78,7 @@ public class RobotContainer {
     feeder.setDefaultCommand(runFeeder);
     intake.setDefaultCommand(runIntake);
     shooter.setDefaultCommand(setShoot);
-    driveTrain.setDefaultCommand(tankDrive);
+    driveTrain.setDefaultCommand(fieldOrientedDrive);
     pneumatics.setDefaultCommand(pressurize);
     turret.setDefaultCommand(turretManual);
 
@@ -94,9 +94,9 @@ public class RobotContainer {
    */
 
   private void configureButtonBindings() {
-    new JoystickButton(driverCont, 7).whenPressed(fieldOrientedDrive);
-    new JoystickButton(driverCont, 4).whenPressed(tankDrive);
-    new JoystickButton(driverCont, 3).whenPressed(arcadeDrive);
+    new JoystickButton(driverCont, 2).whenPressed(fieldOrientedDrive);
+    new JoystickButton(driverCont, 8).whenPressed(tankDrive);
+    new JoystickButton(driverCont, 4).whenPressed(arcadeDrive);
     new JoystickButton(operatorCont, 7).whenHeld(shooterJoy);
     new JoystickButton(operatorCont, 8).whenHeld(turretAuto);
   }

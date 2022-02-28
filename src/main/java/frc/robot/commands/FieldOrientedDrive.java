@@ -84,7 +84,7 @@ public class FieldOrientedDrive extends CommandBase {
     driveRight = Math.max(driveRight, -1);
 
     // drive reversed if bumper held
-    if (driverCont.getLeftBumper()) {
+    if (driverCont.getLeftStickButton()) {
       myDriveTrain.drive(driveRight * 0.5, driveLeft * 0.5);
     } else {
       myDriveTrain.drive(driveLeft * 0.5, driveRight * 0.5);
@@ -94,7 +94,7 @@ public class FieldOrientedDrive extends CommandBase {
     // driverCont.getX(Hand.kRight)); //arctan of stick inputs for radians
     // double lStickAngle = Math.toDegrees(contRadians); //radians to degrees
 
-    if (driverCont.getStartButton()) {
+    if (driverCont.getDPadUp()) {
       myDriveTrain.resetEncPos(); // reset angle when Y pressed
     }
 

@@ -46,7 +46,7 @@ public class TurretManual extends CommandBase {
   public void execute() {
     // System.out.println("Angle: " + myTurret.getAngle());
 
-    if (operatorCont.getDPadRight()) {
+    if (operatorCont.getDPadUp()) {
       myTurret.resetEncoderTicks();
     }
 
