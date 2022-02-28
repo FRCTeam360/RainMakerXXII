@@ -98,6 +98,8 @@ public class DriveTrain extends SubsystemBase {
 
     m_differentialDrive = new DifferentialDrive(motorLLead, motorRLead);
     m_differentialDrive.setSafetyEnabled(false); // So it won't stop the motors from moving
+
+    this.coastMode();
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {

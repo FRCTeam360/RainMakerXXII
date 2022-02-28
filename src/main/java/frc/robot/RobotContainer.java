@@ -80,7 +80,7 @@ public class RobotContainer {
     shooter.setDefaultCommand(setShoot);
     driveTrain.setDefaultCommand(tankDrive);
     pneumatics.setDefaultCommand(pressurize);
-    turret.setDefaultCommand(turretAuto);
+    turret.setDefaultCommand(turretManual);
 
   }
 
@@ -98,7 +98,7 @@ public class RobotContainer {
     new JoystickButton(driverCont, 4).whenPressed(tankDrive);
     new JoystickButton(driverCont, 3).whenPressed(arcadeDrive);
     new JoystickButton(operatorCont, 7).whenHeld(shooterJoy);
-    new JoystickButton(operatorCont, 8).whenHeld(turretManual);
+    new JoystickButton(operatorCont, 8).whenHeld(turretAuto);
   }
 
   /**

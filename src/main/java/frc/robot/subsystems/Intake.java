@@ -39,7 +39,7 @@ public class Intake extends SubsystemBase{
 
         intake.setSmartCurrentLimit(20);
 
-        intake.setInverted(false);
+        intake.setInverted(true);
     }
 
     //motor speed
