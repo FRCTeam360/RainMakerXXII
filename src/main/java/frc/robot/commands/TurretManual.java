@@ -44,32 +44,34 @@ public class TurretManual extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("Angle: " + myTurret.getAngle());
 
-    if(operatorCont.getDPadRight()){
+    if (operatorCont.getDPadRight()) {
       myTurret.resetEncoderTicks();
     }
 
     this.changeMode();
 
     switch (this.controlTypes) {
-      case POSITION_CONTROL:
-        this.positionControl();
-        break;
+    case POSITION_CONTROL:
+      this.positionControl();
+      break;
 
-      case FIELD_ORIENTED_CONTROL:
-        this.fieldOrientedControl();
-        break;
-      case POWER_CONTROL:
-      default:
-        this.powerControl();
-        break;
+    case FIELD_ORIENTED_CONTROL:
+      this.fieldOrientedControl();
+      break;
+    case POWER_CONTROL:
+    default:
+      this.powerControl();
+      break;
     }
     double encoderTick = myTurret.getEncoderTick();
     SmartDashboard.putNumber("gettick", encoderTick);
   }
 
   /**
-   * changeMode switches to POSITION_CONTROL and POWER_CONTROL by pressing on certain DPad buttons
+   * changeMode switches to POSITION_CONTROL and POWER_CONTROL by pressing on
+   * certain DPad buttons
    */
   private void changeMode() {
     if (operatorCont.getDPadLeft()) {
@@ -80,19 +82,21 @@ public class TurretManual extends CommandBase {
   }
 
   /**
-   * powerControl turns the turret based on operator controller right joystick x value and only moves if outside deadzone
+   * powerControl turns the turret based on operator controller right joystick x
+   * value and only moves if outside deadzone
    */
   private void powerControl() {
     if (Math.abs(operatorCont.getRightX()) > .125) {
-      myTurret.turn(operatorCont.getRightX());
+      myTurret.turn(-operatorCont.getRightX());
     } else {
       myTurret.turn(0);
     }
   }
 
   /**
-   * positionControl causes the turret to turn based on right joystick x and y values in terms of degrees
-   * causing turret to, relative to front of robot, match the joystick angle relative to positive y axis
+   * positionControl causes the turret to turn based on right joystick x and y
+   * values in terms of degrees causing turret to, relative to front of robot,
+   * match the joystick angle relative to positive y axis
    */
   private void positionControl() {
     double x = 0;
@@ -115,9 +119,9 @@ public class TurretManual extends CommandBase {
   }
 
   /**
-   * fieldOrientedControl controls the turret relative to the field
-   * as opposed to relative to the robot by getting navx yaw
-   * and the angle from operator controller's right joystick relative to positive y axis
+   * fieldOrientedControl controls the turret relative to the field as opposed to
+   * relative to the robot by getting navx yaw and the angle from operator
+   * controller's right joystick relative to positive y axis
    */
   private void fieldOrientedControl() {
 

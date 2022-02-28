@@ -18,9 +18,14 @@ public class RunFeeder extends CommandBase {
   private final Feeder myFeeder;
   private final Shooter myShooter;
   private final OperatorControl operatorCont;
+  private final DriverControl driverCont;
+
+  private double towerPower = 0;
+  private double feederPower = 0;
 
   public RunFeeder() {
     operatorCont = OperatorControl.getInstance();
+    driverCont = DriverControl.getInstance();
 
     myShooter = Shooter.getInstance();
     myTower = Tower.getInstance();
@@ -40,35 +45,48 @@ public class RunFeeder extends CommandBase {
   @Override
   public void execute() {
 
-    //if shooter at speed, run all
-    if(myShooter.isAtSpeed()){
-      myTower.runTower(1);
-      myFeeder.runFeeder(1);
-    }else{
+    // if shooter at speed, run all
+    if (myShooter.isAtSpeed()) {
+      towerPower = 1.0;
+      feederPower = 1.0;
 
-
-      //manually run feeder
-      if(operatorCont.getLeftTrigger()){
-        if(operatorCont.getXButton()){
-          myFeeder.runFeeder(-0.5);
-        } else {
-          myFeeder.runFeeder(0.5);
-        }
-      }else{
-        myFeeder.runFeeder(0.0);
+      // if intake running, run shooter if no ball at top of tower
+    } else if (driverCont.getLeftTrigger()) {
+      if (myTower.ballNotInTower()) {
+        towerPower = 1.0;
+        feederPower = 0.0;
+      } else {
+        towerPower = 0.0;
+        feederPower = 0.0;
       }
-      
-      //manually run tower
-      if(operatorCont.getRightTrigger()){
-        if(operatorCont.getXButton()){
-          myTower.runTower(-1.0);
+    } else {
+
+      // manually run feeder
+      if (operatorCont.getLeftTrigger() || driverCont.getLeftBumper()) {
+        if (operatorCont.getXButton()) {
+          feederPower = -0.5;
         } else {
-          myTower.runTower(1.0);
+          feederPower = 0.5;
         }
       } else {
-        myTower.runTower(0.0);
+        feederPower = 0.0;
+      }
+
+      // manually run tower;
+      if (operatorCont.getRightTrigger() || driverCont.getRightBumper()) {
+        if (operatorCont.getXButton()) {
+          towerPower = -1.0;
+        } else {
+          towerPower = 1.0;
+        }
+      } else {
+        towerPower = 0;
+
       }
     }
+
+    myTower.runTower(towerPower);
+    myFeeder.runFeeder(feederPower);
   }
 
   // Returns true when the command should end.
