@@ -33,8 +33,8 @@ public class Shooter extends SubsystemBase {
 
   public boolean shooterReady;
 
-  private double previousVelocity;
-  private double integral;
+  private double previousError;
+  private double integral = 0;
 
   public double velocityTarget = 2000;
   public boolean isAtSpeed;
@@ -52,10 +52,10 @@ public class Shooter extends SubsystemBase {
   public static final int kSlotIdx = 0;
   public static final int kTimeOutMs = 30;
   public static final int kPIDLoopIdx = 0;
-  public static  double kP = 0.0009;
-  public static  double kI = 0;
-  public static  double kD = 0.0005;
-  public static  double kF = 5000;
+  public static  double kP = 0.00025; //0.0009; NEO practive bot values 
+  public static  double kI = 0.00000000005; //0
+  public static  double kD = 0.0001; //0.0005;
+  public static  double kF = 8750; //5000
   public static final double kPeakOutput = 1;
 
   public static final double backupTargetVelocity = 14500; // Constant
@@ -116,13 +116,15 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    kP = SmartDashboard.getNumber("kP", 0.0);
-    kI = SmartDashboard.getNumber("kI", 0.0);
-    kD = SmartDashboard.getNumber("kD", 0.0);
-    kF = SmartDashboard.getNumber("kF", 0.0);
+    // kP = SmartDashboard.getNumber("kP", 0.0);
+    // kI = SmartDashboard.getNumber("kI", 0.0);
+    // kD = SmartDashboard.getNumber("kD", 0.0);
+    // kF = SmartDashboard.getNumber("kF", 0.0);
 
     SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
     SmartDashboard.putNumber("Shooter Ticks", shooterLead.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("Shooter Lead Temp", shooterLead.getTemperature());
+    SmartDashboard.putNumber("Shooter Follow Temp", shooterFollow.getTemperature());
   }
 
   /**
@@ -144,9 +146,10 @@ public class Shooter extends SubsystemBase {
     velocityTarget = target;
 
     double error = velocityTarget - this.getVelocity();
+    SmartDashboard.putNumber("error", error);
 
-    double deriv = velocityTarget - previousVelocity;
-    previousVelocity = this.getVelocity();
+    double deriv = error - previousError;
+    previousError = error;
     integral = integral + error;
 
     double speed = (velocityTarget / kF) + (error * kP) + (integral * kI) - (deriv * kD);

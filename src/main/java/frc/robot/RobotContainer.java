@@ -48,7 +48,7 @@ public class RobotContainer {
   private final Turret turret = Turret.getInstance();
   private final Shooter shooter = Shooter.getInstance();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  // private final DriveTrain driveTrain = new DriveTrain();
+  private final DriveTrain driveTrain = new DriveTrain();
   public final Feeder feeder = Feeder.getInstance();
   public final Intake intake = Intake.getInstance();
   public final Limelight limelight = new Limelight();
@@ -59,11 +59,11 @@ public class RobotContainer {
   private final SetShoot setShoot = new SetShoot(limelight);
   public final RunFeeder runFeeder = new RunFeeder();
   public final RunIntake runIntake = new RunIntake();
-  // private final TankDrive tankDrive = new TankDrive(driveTrain);
-  // private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
-  // private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
+  private final TankDrive tankDrive = new TankDrive(driveTrain);
+  private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
+  private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
   private final TurretAuto turretAuto = new TurretAuto(limelight, turret);
-  // private final TurretManual turretManual = new TurretManual(driveTrain);
+  private final TurretManual turretManual = new TurretManual(driveTrain);
   private final Pressurize pressurize = new Pressurize(pneumatics);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -74,13 +74,13 @@ public class RobotContainer {
   }
   //scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
-    // tower.setDefaultCommand(runFeeder);
-    // feeder.setDefaultCommand(runFeeder);
+    tower.setDefaultCommand(runFeeder);
+    feeder.setDefaultCommand(runFeeder);
     intake.setDefaultCommand(runIntake);
     shooter.setDefaultCommand(setShoot);
-    // driveTrain.setDefaultCommand(tankDrive);
+    driveTrain.setDefaultCommand(tankDrive);
     pneumatics.setDefaultCommand(pressurize);
-    // turret.setDefaultCommand(turretManual);
+    turret.setDefaultCommand(turretManual);
 
   }
 
@@ -94,9 +94,9 @@ public class RobotContainer {
    */
 
   private void configureButtonBindings() {
-    // new JoystickButton(driverCont, 7).whenPressed(fieldOrientedDrive);
-    // new JoystickButton(driverCont, 4).whenPressed(tankDrive);
-    // new JoystickButton(driverCont, 3).whenPressed(arcadeDrive);
+    new JoystickButton(driverCont, 7).whenPressed(fieldOrientedDrive);
+    new JoystickButton(driverCont, 4).whenPressed(tankDrive);
+    new JoystickButton(driverCont, 3).whenPressed(arcadeDrive);
     new JoystickButton(operatorCont, 7).whenHeld(shooterJoy);
     new JoystickButton(operatorCont, 8).whenHeld(turretAuto);
   }

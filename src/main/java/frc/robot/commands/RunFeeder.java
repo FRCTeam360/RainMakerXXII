@@ -46,27 +46,28 @@ public class RunFeeder extends CommandBase {
   public void execute() {
 
     // if shooter at speed, run all
-    if (myShooter.isAtSpeed()) {
-      towerPower = 1.0;
-      feederPower = 1.0;
+    // if (myShooter.isAtSpeed()) {
+    //   towerPower = 1.0;
+    //   feederPower = 1.0;
 
-      // if intake running, run shooter if no ball at top of tower
-    } else if (driverCont.getLeftTrigger()) {
-      if (myTower.ballNotInTower()) {
-        towerPower = 1.0;
-        feederPower = 0.0;
-      } else {
-        towerPower = 0.0;
-        feederPower = 0.0;
-      }
-    } else {
+    //   // if intake running, run shooter if no ball at top of tower
+    // } else 
+    // if (driverCont.getLeftTrigger()) {
+    //   // if (myTower.ballNotInTower()) {
+    //     towerPower = 1.0;
+    //     feederPower = 0.0;
+    //   // } else {
+    //   //   towerPower = 0.0;
+    //   //   feederPower = 0.0;
+    //   // }
+    // } else {
 
       // manually run feeder
       if (operatorCont.getLeftTrigger() || driverCont.getLeftBumper()) {
         if (operatorCont.getXButton() || driverCont.getXButton()) {
           feederPower = -1.0;
         } else {
-          feederPower = 1.0;
+          feederPower = 0.5;
         }
       } else {
         feederPower = 0.0;
@@ -83,7 +84,7 @@ public class RunFeeder extends CommandBase {
         towerPower = 0;
 
       }
-    }
+    // }
 
     myTower.runTower(towerPower);
     myFeeder.runFeeder(feederPower);
