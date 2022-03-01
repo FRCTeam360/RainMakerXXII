@@ -50,7 +50,7 @@ public class SetShoot extends CommandBase {
 
     double shootGoal = getShootGoal();
 
-    if(driverCont.getRightTrigger() || operatorCont.getRightBumper()){
+    if(driverCont.getRightTrigger() || operatorCont.getRightTrigger()){
       shooter.setVelocity(shootGoal);
     } else {
       shooter.setSpeed(0.0);

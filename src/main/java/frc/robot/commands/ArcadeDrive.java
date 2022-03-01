@@ -36,8 +36,8 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double turn = 0; 
-    double forward = 0; 
+    double turn = 0;
+    double forward = 0;
     double driveRight = 0;
     double driveLeft = 0;
 
@@ -54,8 +54,11 @@ public class ArcadeDrive extends CommandBase {
       }
     }
 
-    forward = filter.calculate(forward) * -1;
-    turn = turn * -1;
+    forward = -forward;
+    // if (myDriveTrain.isAccelerating()) {
+      forward = filter.calculate(forward);
+    // }
+    // turn = turn * -1;
 
     driveLeft = forward + turn;
     driveRight = forward - turn;

@@ -36,6 +36,8 @@ public class TurretAuto extends CommandBase {
     myLimelight = limelight;
     myTurret = turret;
 
+    myTimer = new Timer();
+
     this.mode = Mode.SEEK_RIGHT;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(myLimelight, turret);
@@ -72,9 +74,8 @@ public class TurretAuto extends CommandBase {
        * case CALLIBRATE: this.callibrate();
        */
       break;
-    /**
-     * case TARGET_BLOCKED: this.targetBlocked();
-     */
+    case TARGET_BLOCKED: 
+      this.targetBlocked();
     default:
     }
   }
@@ -86,11 +87,14 @@ public class TurretAuto extends CommandBase {
    */
   private void align() {
     if (!myLimelight.validTarget()) {
-      if (myTurret.getAngle() <= 0) {
-        this.mode = Mode.SEEK_LEFT;
-      } else {
-        this.mode = Mode.SEEK_RIGHT;
-      }
+
+      this.mode = Mode.TARGET_BLOCKED;
+
+      // if (myTurret.getAngle() <= 0) {
+      //   this.mode = Mode.SEEK_LEFT;
+      // } else {
+      //   this.mode = Mode.SEEK_RIGHT;
+      // }
       return;
     }
 
@@ -118,12 +122,12 @@ public class TurretAuto extends CommandBase {
     }
     pastSeekDirection = direction;
     switch (direction) {
-    case LEFT:
-      myTurret.turn(0.2);
-      break;
-    case RIGHT:
-    default:
-      myTurret.turn(-0.2);
+      case LEFT:
+        myTurret.turn(Turret.maxSpeed);
+        break;
+      case RIGHT:
+      default:
+        myTurret.turn(-Turret.maxSpeed);
     }
   }
 
@@ -190,13 +194,18 @@ public class TurretAuto extends CommandBase {
    */
   private void targetBlocked() {
     myTurret.angleTurn(lastTargetPosition);
+    myTimer.start();
 
     if (myLimelight.validTarget()) {
       this.mode = Mode.TARGET_IN_VIEW;
-    } else if (myTimer.get() >= 50 && pastSeekDirection == Direction.LEFT) {
+    } else if (myTimer.get() >= 1 && myTurret.getAngle() <= 0) {
       this.mode = Mode.SEEK_LEFT;
-    } else if (myTimer.get() >= 50 && pastSeekDirection == Direction.RIGHT) {
+      myTimer.stop();
+      myTimer.reset();
+    } else if (myTimer.get() >= 1 ) {
       this.mode = Mode.SEEK_RIGHT;
+      myTimer.stop();
+      myTimer.reset();
     }
   }
 
