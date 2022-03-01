@@ -6,6 +6,10 @@ package frc.robot.subsystems;
 
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.SparkMaxRelativeEncoder;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -15,12 +19,13 @@ import static frc.robot.Constants.CANIds.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 
 public class Shooter extends SubsystemBase {
 
   private static final String kFF = null;
-  private CANSparkMax shooterLead;
-  private CANSparkMax shooterFollow;
+  private WPI_TalonFX shooterLead;
+  private WPI_TalonFX shooterFollow;
   private SparkMaxPIDController shooterPidController;
   private RelativeEncoder shooterEncoder;
 
@@ -28,20 +33,29 @@ public class Shooter extends SubsystemBase {
 
   public boolean shooterReady;
 
-  private double previousVelocity;
-  private double integral;
+  private double previousError;
+  private double integral = 0;
 
   public double velocityTarget = 2000;
   public boolean isAtSpeed;
+
+  // public static final double falconEncoderToRotations = 1.0 / 2048.0;
+  // public static final double decisecondsPerSeconds = 10.0;
+  // public static final double secondsPerMinutes = 60.0;
+  // public static final double falconRttnPerShooterRttn = 24.0 / 36.0;
+  // public static final double shooterToRPM = falconEncoderToRotations * falconRttnPerShooterRttn * decisecondsPerSeconds
+  //     * decisecondsPerSeconds;
+
+  public static final double shooterToRPM = (600.0 / 2048.0) * (3.0 /2.0) ;
 
   // Old data, need to tune
   public static final int kSlotIdx = 0;
   public static final int kTimeOutMs = 30;
   public static final int kPIDLoopIdx = 0;
-  public static final double kP = 0.0009;
-  public static final double kI = 0;
-  public static final double kD = 0.0005;
-  public static final double kF = 5000;
+  public static  double kP = 0.00025; //0.0009; NEO practive bot values 
+  public static  double kI = 0.00000000005; //0
+  public static  double kD = 0.0001; //0.0005;
+  public static  double kF = 8750; //5000
   public static final double kPeakOutput = 1;
 
   public static final double backupTargetVelocity = 14500; // Constant
@@ -52,24 +66,27 @@ public class Shooter extends SubsystemBase {
   public static final double bVal = -52.912;
   public static final double cVal = 14815.146;
 
+  public static final double MAX_SHOOTER_ACCELERATION = 1.0;
+  private final SlewRateLimiter filter = new SlewRateLimiter(MAX_SHOOTER_ACCELERATION);
+
   private Shooter() {
-    shooterLead = new CANSparkMax(shooterLeadId, MotorType.kBrushless);
-    shooterFollow = new CANSparkMax(shooterFollowId, MotorType.kBrushless);
+    shooterLead = new WPI_TalonFX(shooterLeadId);
+    shooterFollow = new WPI_TalonFX(shooterFollowId);
 
-    shooterPidController = shooterLead.getPIDController();
+    // shooterPidController = shooterLead.getPIDController();
 
-    shooterEncoder = shooterLead.getEncoder();
+    // shooterEncoder = shooterLead.getEncoder();
 
-    shooterLead.restoreFactoryDefaults();
-    shooterFollow.restoreFactoryDefaults();
+    shooterLead.configFactoryDefault();
+    shooterFollow.configFactoryDefault();
 
-    shooterFollow.follow(shooterLead, true);
+    shooterFollow.follow(shooterLead);
 
-    shooterLead.setSmartCurrentLimit(40);
-    shooterFollow.setSmartCurrentLimit(40);
+    // shooterLead.setSmartCurrentLimit(40);
+    // shooterFollow.setSmartCurrentLimit(40);
 
-    shooterLead.setIdleMode(IdleMode.kCoast);
-    shooterFollow.setIdleMode(IdleMode.kCoast);
+    shooterLead.setNeutralMode(NeutralMode.Coast);
+    shooterFollow.setNeutralMode(NeutralMode.Coast);
 
     shooterLead.setInverted(true);
     // shooterLead.setSensorPhase(true); //the Follower isn't harvested for it's
@@ -94,7 +111,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getVelocity() {
-    return shooterLead.getEncoder().getVelocity();
+    return shooterLead.getSelectedSensorVelocity() * shooterToRPM ;
   }
 
   @Override
@@ -105,6 +122,9 @@ public class Shooter extends SubsystemBase {
     // kF = SmartDashboard.getNumber("kF", 0.0);
 
     SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
+    SmartDashboard.putNumber("Shooter Ticks", shooterLead.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("Shooter Lead Temp", shooterLead.getTemperature());
+    SmartDashboard.putNumber("Shooter Follow Temp", shooterFollow.getTemperature());
   }
 
   /**
@@ -113,7 +133,7 @@ public class Shooter extends SubsystemBase {
    * @param output motor output from -1 to 1
    */
   public void setSpeed(double output) {
-    shooterLead.set(output);
+    shooterLead.set(filter.calculate(output));
   }
 
   /**
@@ -126,18 +146,19 @@ public class Shooter extends SubsystemBase {
     velocityTarget = target;
 
     double error = velocityTarget - this.getVelocity();
+    SmartDashboard.putNumber("error", error);
 
-    double deriv = velocityTarget - previousVelocity;
-    previousVelocity = this.getVelocity();
+    double deriv = error - previousError;
+    previousError = error;
     integral = integral + error;
 
     double speed = (velocityTarget / kF) + (error * kP) + (integral * kI) - (deriv * kD);
 
     // temporary limiting of max output - will probably change
-    speed = Math.min(speed, 0.7);
-    speed = Math.max(speed, -0.7);
+    // speed = Math.min(speed, 0.7);
+    // speed = Math.max(speed, -0.7);
 
-    this.setSpeed(speed);
+    this.setSpeed(filter.calculate(speed));
     SmartDashboard.putNumber("speed set", speed);
   }
 

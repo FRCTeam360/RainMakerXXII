@@ -65,7 +65,9 @@ public class FieldOrientedDrive extends CommandBase {
     // field oriented drive conversion. forward = robot-based forward value, right =
     // robot-based turning adjustment
     double forward = upDownSquared * Math.cos(gyroRadians) + rightLeftSquared * Math.sin(gyroRadians);
-    forward = filter.calculate(forward);
+    // if(myDriveTrain.isAccelerating()){
+      forward = filter.calculate(forward);
+    // }
     double right = -1 * upDownSquared * Math.sin(gyroRadians) + rightLeftSquared * Math.cos(gyroRadians);
 
     // System.out.println("forward: " + forward);
@@ -82,7 +84,7 @@ public class FieldOrientedDrive extends CommandBase {
     driveRight = Math.max(driveRight, -1);
 
     // drive reversed if bumper held
-    if (driverCont.getLeftBumper()) {
+    if (driverCont.getLeftStickButton()) {
       myDriveTrain.drive(driveRight * 0.5, driveLeft * 0.5);
     } else {
       myDriveTrain.drive(driveLeft * 0.5, driveRight * 0.5);
@@ -92,7 +94,7 @@ public class FieldOrientedDrive extends CommandBase {
     // driverCont.getX(Hand.kRight)); //arctan of stick inputs for radians
     // double lStickAngle = Math.toDegrees(contRadians); //radians to degrees
 
-    if (driverCont.getStartButton()) {
+    if (driverCont.getDPadUp()) {
       myDriveTrain.resetEncPos(); // reset angle when Y pressed
     }
 
@@ -103,7 +105,8 @@ public class FieldOrientedDrive extends CommandBase {
 
     // rotate based on right stick
     if (Math.abs(driverCont.getRightX()) >= xboxDeadzone) {
-      myDriveTrain.drive((driverCont.getRightX()), driverCont.getRightX());
+      double turn = driverCont.getRightX() * 0.3;
+      myDriveTrain.drive(turn, -turn);
     }
 
   }
