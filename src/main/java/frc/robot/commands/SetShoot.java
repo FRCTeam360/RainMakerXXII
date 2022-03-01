@@ -20,11 +20,11 @@ public class SetShoot extends CommandBase {
   private final DriverControl driverCont;
   private final OperatorControl operatorCont;
 
-  // private static final double a = -0.002182938;
-  // private static final double b = -0.0146528457;
-  // private static final double c = 2.862058996;
-  // private static final double d = -46.47695902;
-  // private static final double e = 3261.531163;
+  private static final double a = -0.002182938;
+  private static final double b = -0.0146528457;
+  private static final double c = 2.862058996;
+  private static final double d = -46.47695902;
+  private static final double e = 3261.531163;
 
   /** Creates a new setShoot. */
   public SetShoot(Limelight limelight) {
@@ -48,7 +48,7 @@ public class SetShoot extends CommandBase {
 
    //SmartDashboard.getNumber("Shoot Goal", 3500);
 
-    double shootGoal = shooter.getShootGoal();
+    double shootGoal = getShootGoal();
 
     if(driverCont.getRightTrigger() || operatorCont.getRightTrigger()){
       shooter.setVelocity(shootGoal);
@@ -58,9 +58,9 @@ public class SetShoot extends CommandBase {
 
     // System.out.println("shootgoal" + shootGoal);
 
-    // SmartDashboard.putNumber("Shoot Goal", shootGoal);
+    SmartDashboard.putNumber("Shoot Goal", shootGoal);
 
-    // double shootError = Math.abs(shooter.getVelocity() * -1 - shootGoal);
+    double shootError = Math.abs(shooter.getVelocity() * -1 - shootGoal);
 
   }
 
@@ -69,12 +69,12 @@ public class SetShoot extends CommandBase {
    * gets shoot goal as determined by our quartic regression, using limelight y-value
    * @return shootGoal
    */
-  // public double getShootGoal(){
-  //   double limedY = myLimelight.getY();
+  public double getShootGoal(){
+    double limedY = myLimelight.getY();
 
-  //   return (a * Math.pow(limedY, 4)) + (b * Math.pow(limedY, 3) + (c * Math.pow(limedY, 2)) + (d * limedY) + e);  
+    return (a * Math.pow(limedY, 4)) + (b * Math.pow(limedY, 3) + (c * Math.pow(limedY, 2)) + (d * limedY) + e);  
 
-  // }
+  }
 
 
   // Called once the command ends or is interrupted.
