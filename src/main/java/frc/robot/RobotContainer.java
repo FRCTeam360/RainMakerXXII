@@ -36,13 +36,15 @@ public class RobotContainer {
   private final DriveTrain driveTrain = new DriveTrain();
   public final Feeder feeder = Feeder.getInstance();
   public final Intake intake = Intake.getInstance();
+  public final Climber climber = new Climber();
 
   public final RunFeeder runFeeder = new RunFeeder();
   public final RunIntake runIntake = new RunIntake();
   private final TankDrive tankDrive = new TankDrive(driveTrain);
   private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
   private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
-  
+  private final RunClimberManual runClimberManual = new RunClimberManual(climber);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -67,6 +69,8 @@ public class RobotContainer {
     new JoystickButton(driverCont, 7).whenPressed(fieldOrientedDrive);
     new JoystickButton(driverCont, 4).whenPressed(tankDrive);
     new JoystickButton(driverCont, 3).whenPressed(arcadeDrive);
+    new JoystickButton(operatorCont, 10).whileHeld(runClimberManual);
+
   }
 
 
