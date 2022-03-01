@@ -11,7 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import static frc.robot.Constants.ClimberConstants.*;
+import static frc.robot.Constants.CANIds.*;
 
 /** Add your docs here. */
 public class Climber extends SubsystemBase {
@@ -20,8 +20,8 @@ public class Climber extends SubsystemBase {
     private static CANSparkMax motorRight;
 
     public Climber() {
-        motorLeft = new CANSparkMax(motorLeftId, MotorType.kBrushless);
-        motorRight = new CANSparkMax(motorRightId, MotorType.kBrushless);
+        motorLeft = new CANSparkMax(climbLeftId, MotorType.kBrushless);
+        motorRight = new CANSparkMax(climbRightId, MotorType.kBrushless);
 
         motorLeft.setInverted(true);
         motorRight.setInverted(true);
