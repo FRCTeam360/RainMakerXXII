@@ -52,7 +52,7 @@ public class DriveTrain extends SubsystemBase {
   private final MotorControllerGroup leftGroup;
   private final MotorControllerGroup rightGroup;
 
-  public static double ACCELERATION_LIMIT = 2;
+  public static double ACCELERATION_LIMIT = 1.5;
 
   private double pastForwardSpeed = 0;
 

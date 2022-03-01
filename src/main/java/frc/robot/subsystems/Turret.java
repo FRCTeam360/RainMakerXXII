@@ -50,10 +50,10 @@ public class Turret extends SubsystemBase {
   public static final float leftSoftLimit = 90;
   public static final float rightSoftLimit = -90;
 
-  // public static final float leftSoftLimitEncoder = (float) (leftSoftLimit / gearBoxRatio / pulleyRatio
-  //     / degreesPerRotation);
-  // public static final float rightSoftLimitEncoder = (float) (rightSoftLimit / gearBoxRatio / pulleyRatio
-  //     / degreesPerRotation);
+  public static final float leftSoftLimitEncoder = (float) (leftSoftLimit / gearBoxRatio / pulleyRatio
+      / degreesPerRotation);
+  public static final float rightSoftLimitEncoder = (float) (rightSoftLimit / gearBoxRatio / pulleyRatio
+      / degreesPerRotation);
 
   public static double getDeadzoneAngleSize() {
     return 360 - leftSoftLimit + rightSoftLimit;
@@ -81,7 +81,7 @@ public class Turret extends SubsystemBase {
 
     turretMotor.setInverted(false);
 
-    turretMotor.getEncoder().setVelocityConversionFactor(rotationsPerTick * gearBoxRatio * pulleyRatio * degreesPerRotation);
+    // turretMotor.getEncoder().setVelocityConversionFactor(rotationsPerTick * gearBoxRatio * pulleyRatio * degreesPerRotation);
 
     turretMotor.setSoftLimit(SoftLimitDirection.kForward, leftSoftLimit);
     turretMotor.setSoftLimit(SoftLimitDirection.kReverse, rightSoftLimit);
@@ -100,7 +100,7 @@ public class Turret extends SubsystemBase {
    */
   public double getAngle() {
     double encoderPosition = turretMotor.getEncoder().getPosition();
-    return encoderPosition;   // * gearBoxRatio * pulleyRatio * degreesPerRotation;
+    return encoderPosition * gearBoxRatio * pulleyRatio * degreesPerRotation;
   }
 
   public void zero() {
