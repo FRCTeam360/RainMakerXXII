@@ -35,9 +35,11 @@ public class Intake extends SubsystemBase{
 
     private Intake() {
         this.intake = new CANSparkMax(intakeId, MotorType.kBrushless);
-        this.intakeMover = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, intakeForwardChannel, intakeReverseChannel);
+        this.intakeMover = new DoubleSolenoid(20, PneumaticsModuleType.REVPH, intakeForwardChannel, intakeReverseChannel);
 
         intake.setSmartCurrentLimit(20);
+
+        intake.setInverted(true);
     }
 
     //motor speed

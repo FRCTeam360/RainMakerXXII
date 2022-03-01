@@ -17,7 +17,7 @@ public class RunIntake extends CommandBase {
   private final DriverControl driverCont;
   private final OperatorControl operatorCont;
 
-  public boolean isIntakeOut;
+  public boolean isIntakeOut = false;
 
   public RunIntake() {
     driverCont = DriverControl.getInstance();
@@ -29,13 +29,16 @@ public class RunIntake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    myIntake.intakeIn();
+    isIntakeOut = false;
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (driverCont.getLeftTrigger() || operatorCont.getLeftBumper()){
-      if (operatorCont.getXButton() || driverCont.getBButton() ) {
+    if (driverCont.getLeftTrigger() || operatorCont.getLeftTrigger()){
+      if (operatorCont.getXButton() || driverCont.getXButton() ) {
         myIntake.run(-1.0);
       } else {
         myIntake.run(1.0); 
@@ -44,7 +47,7 @@ public class RunIntake extends CommandBase {
       myIntake.run(0.0); 
     }
 
-    if(driverCont.getAButtonPressed() || operatorCont.getYButtonPressed()) {
+    if(driverCont.getAButtonPressed() || operatorCont.getAButtonPressed()) {
       if(isIntakeOut){
         myIntake.intakeIn();
         isIntakeOut = false;
