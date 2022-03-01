@@ -70,8 +70,8 @@ public class Robot extends TimedRobot {
 
    m_autonomousCommand = m_autoChooser.getCommand();
 
-   m_robotContainer.driveTrain.brakeMode();
-   m_robotContainer.driveTrain.resetEncPos();
+   m_robotContainer.getDriveTrain().brakeMode();
+   m_robotContainer.getDriveTrain().resetEncPos();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -103,6 +103,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    
   }
 
   /** This function is called periodically during test mode. */

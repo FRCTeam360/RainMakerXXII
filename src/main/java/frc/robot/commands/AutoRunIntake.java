@@ -9,53 +9,28 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
-import frc.robot.operatorInterface.*;
 
-public class RunIntake extends CommandBase {
-  
+public class AutoRunIntake extends CommandBase {
   private final Intake myIntake;
-  private final DriverControl driverCont;
-  private final OperatorControl operatorCont;
 
-  public boolean isIntakeOut = false;
-
-  public RunIntake() {
-    driverCont = DriverControl.getInstance();
-    operatorCont = OperatorControl.getInstance();
-    myIntake = Intake.getInstance(); 
-    addRequirements(myIntake);
+  /**
+   * Creates a new AutoIntake.
+   */
+  public AutoRunIntake(Intake intake) {
+    myIntake = intake;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    myIntake.intakeIn();
-    isIntakeOut = false;
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (driverCont.getLeftTrigger() || operatorCont.getLeftTrigger()){
-      if (operatorCont.getXButton() || driverCont.getXButton() ) {
-        myIntake.run(-1.0);
-      } else {
-        myIntake.run(1.0); 
-      }
-    } else {
-      myIntake.run(0.0); 
-    }
-
-    if(driverCont.getAButtonPressed() || operatorCont.getAButtonPressed()) {
-      if(isIntakeOut){
-        myIntake.intakeIn();
-        isIntakeOut = false;
-      } else {
-        myIntake.intakeOut();
-        isIntakeOut = true;
-      }
-    }
+    myIntake.run(1);
   }
 
   // Called once the command ends or is interrupted.

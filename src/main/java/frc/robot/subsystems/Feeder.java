@@ -4,8 +4,8 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 
 import static frc.robot.Constants.CANIds.*;
 
@@ -29,7 +29,7 @@ public class Feeder extends SubsystemBase {
 
     feeder.setSmartCurrentLimit(20);
 
-  }
+  } 
 
   /**
    * Gets the Singleton Feeder instance
@@ -37,7 +37,7 @@ public class Feeder extends SubsystemBase {
    * @return the Singleton Feeder instance
    */
   public static Feeder getInstance() {
-    if (instance == null) {
+    if (instance == null) { 
       instance = new Feeder();
     }
     return instance;
@@ -51,5 +51,6 @@ public class Feeder extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Feeder Temp", feeder.getMotorTemperature());
   }
 }

@@ -20,7 +20,12 @@ public class SetShoot extends CommandBase {
   private final DriverControl driverCont;
   private final OperatorControl operatorCont;
 
-  public double shootGoal;
+  // private static final double a = -0.002182938;
+  // private static final double b = -0.0146528457;
+  // private static final double c = 2.862058996;
+  // private static final double d = -46.47695902;
+  // private static final double e = 3261.531163;
+
   /** Creates a new setShoot. */
   public SetShoot(Limelight limelight) {
     myLimelight = limelight;
@@ -34,18 +39,18 @@ public class SetShoot extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putNumber("Shoot Goal", 2000);
+    // SmartDashboard.putNumber("Shoot Goal", 2000);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    // shootGoal = myLimelight.getY();
+   //SmartDashboard.getNumber("Shoot Goal", 3500);
 
-    shootGoal = SmartDashboard.getNumber("Shoot Goal", 2000);
+    double shootGoal = shooter.getShootGoal();
 
-    if(driverCont.getRightTrigger() || operatorCont.getRightBumper()){
+    if(driverCont.getRightTrigger() || operatorCont.getRightTrigger()){
       shooter.setVelocity(shootGoal);
     } else {
       shooter.setSpeed(0.0);
@@ -53,9 +58,23 @@ public class SetShoot extends CommandBase {
 
     // System.out.println("shootgoal" + shootGoal);
 
-    double shootError = Math.abs(shooter.getVelocity() * -1 - shootGoal);
+    // SmartDashboard.putNumber("Shoot Goal", shootGoal);
+
+    // double shootError = Math.abs(shooter.getVelocity() * -1 - shootGoal);
 
   }
+
+
+  /**
+   * gets shoot goal as determined by our quartic regression, using limelight y-value
+   * @return shootGoal
+   */
+  // public double getShootGoal(){
+  //   double limedY = myLimelight.getY();
+
+  //   return (a * Math.pow(limedY, 4)) + (b * Math.pow(limedY, 3) + (c * Math.pow(limedY, 2)) + (d * limedY) + e);  
+
+  // }
 
 
   // Called once the command ends or is interrupted.

@@ -30,9 +30,9 @@ public class AutoChooser {
         locationChooser = new SendableChooser<>();
         autoChooser = new SendableChooser<>();
 
-        test = new Test(container.driveTrain);
-        test2 = new Test2(container.driveTrain);
-        tr2ball = new T_R_2ball(container.driveTrain);
+        test = new Test(container.getDriveTrain());
+        test2 = new Test2(container.getDriveTrain());
+        tr2ball = new T_R_2ball(container.getDriveTrain());
 
         // locationChooser.addOption("Test", "Test");
         locationChooser.addOption("Hangar Left", "Hangar Left");
