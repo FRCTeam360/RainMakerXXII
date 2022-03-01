@@ -144,6 +144,10 @@ public class DriveTrain extends SubsystemBase {
     return navX.getYaw();
   }
 
+  public void setAngleOffset(double offset){
+    navX.setAngleAdjustment(offset);
+  }
+
   public static DifferentialDriveKinematics getKinematics() {
     return kDriveKinematics;
   }

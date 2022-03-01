@@ -39,7 +39,7 @@ public class FieldOrientedDrive extends CommandBase {
   @Override
   public void execute() {
 
-    double gyroAngle = myDriveTrain.getYaw();
+    double gyroAngle = myDriveTrain.getHeadingAngle();
     double gyroRadians = Math.toRadians(gyroAngle);
 
     double rightLeftSquared = 0;
