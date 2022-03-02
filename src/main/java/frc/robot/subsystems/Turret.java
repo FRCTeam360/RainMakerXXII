@@ -55,12 +55,12 @@ public class Turret extends SubsystemBase {
   public static final float rightSoftLimitEncoder = (float) (rightSoftLimit / gearBoxRatio / pulleyRatio
       / degreesPerRotation);
 
-  public static double getDeadzoneAngleSize() {
-    return 360 - leftSoftLimit + rightSoftLimit;
-  }
-
   private double alignIntegral;
   private double previousTX;
+
+  public boolean pastMiddleLimitSwitchState = false;
+
+  private CANSparkMax turretMotor;
 
   public static Turret getInstance() {
     if (instance == null) {
@@ -68,8 +68,6 @@ public class Turret extends SubsystemBase {
     }
     return instance;
   }
-
-  private CANSparkMax turretMotor;
 
   /** Creates a new Turret. */
   public Turret() {
@@ -81,7 +79,8 @@ public class Turret extends SubsystemBase {
 
     turretMotor.setInverted(false);
 
-    // turretMotor.getEncoder().setVelocityConversionFactor(rotationsPerTick * gearBoxRatio * pulleyRatio * degreesPerRotation);
+    // turretMotor.getEncoder().setVelocityConversionFactor(rotationsPerTick *
+    // gearBoxRatio * pulleyRatio * degreesPerRotation);
 
     turretMotor.setSoftLimit(SoftLimitDirection.kForward, leftSoftLimit);
     turretMotor.setSoftLimit(SoftLimitDirection.kReverse, rightSoftLimit);
@@ -107,6 +106,20 @@ public class Turret extends SubsystemBase {
     this.angleTurn(0);
   }
 
+  public void limitSwitchResetAngle() {
+    boolean currentMiddleLimitState = this.checkMiddleLimitSwitch();
+
+    if (currentMiddleLimitState == true && pastMiddleLimitSwitchState == false) {
+      if (this.checkMiddleLimitSwitch() && turretMotor.getEncoder().getVelocity() > 0) {
+        resetEncoderTicks();
+      } else if (this.checkMiddleLimitSwitch() && turretMotor.getEncoder().getVelocity() < 0) {
+        System.out.println(turretMotor.getEncoder().getPosition());
+      }
+    }
+
+    pastMiddleLimitSwitchState = currentMiddleLimitState;
+  }
+
   public void turn(double speed) {
 
     Math.min(maxSpeed, speed);
@@ -115,9 +128,9 @@ public class Turret extends SubsystemBase {
     turretMotor.set(speed);
 
     // if (isAtLeftLimit() || isAtRightLimit()) {
-    //   turretMotor.set(0);
+    // turretMotor.set(0);
     // } else {
-    //   turretMotor.set(speed);
+    // turretMotor.set(speed);
     // }
   }
 
@@ -172,7 +185,10 @@ public class Turret extends SubsystemBase {
 
   public double getEncoderTick() {
     return turretMotor.getEncoder().getPosition();
+  }
 
+  public static double getDeadzoneAngleSize() {
+    return 360 - leftSoftLimit + rightSoftLimit;
   }
 
   @Override
