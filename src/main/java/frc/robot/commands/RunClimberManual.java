@@ -10,12 +10,12 @@ import frc.robot.subsystems.Climber;
 
 public class RunClimberManual extends CommandBase {
 
-  Climber myClimber;
-  OperatorControl operatorCont;
+  private Climber myClimber;
+  private final OperatorControl operatorCont;
   /** Creates a new RunClimber. */
   public RunClimberManual(Climber climber) {
     operatorCont = OperatorControl.getInstance();
-    climber = myClimber;
+    myClimber = climber;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -32,7 +32,10 @@ public class RunClimberManual extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    myClimber.runLeftClimber(0);
+    myClimber.runRightClimber(0);
+  }
 
   // Returns true when the command should end.
   @Override

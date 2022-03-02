@@ -24,10 +24,13 @@ public class Climber extends SubsystemBase {
         motorRight = new CANSparkMax(climbRightId, MotorType.kBrushless);
 
         motorLeft.setInverted(true);
-        motorRight.setInverted(true);
+        motorRight.setInverted(false);
 
         motorLeft.setIdleMode(IdleMode.kBrake);
         motorRight.setIdleMode(IdleMode.kBrake);
+
+        motorLeft.getEncoder().setPosition(0);
+        motorRight.getEncoder().setPosition(0);
 
         // Motors will either be falcon or neo, not sure yet but i can change the code
         // if need be
@@ -59,8 +62,17 @@ public class Climber extends SubsystemBase {
         SmartDashboard.putNumber("RC Temp", motorRight.getMotorTemperature());
         SmartDashboard.putNumber("LC Temp", motorLeft.getOutputCurrent());
         SmartDashboard.putNumber("RC Temp", motorRight.getOutputCurrent());
+
+        SmartDashboard.putNumber("LC encoder", motorLeft.getEncoder().getPosition());
+        SmartDashboard.putNumber("RC encoder", motorRight.getEncoder().getPosition());
         // not sure if these will be needed, but these are SmartDashboard values in the
         // RainMakerXXI code
+    }
+
+    @Override
+    public void periodic() {
+      // This method will be called once per scheduler run
+        this.printouts();
     }
 
 }
