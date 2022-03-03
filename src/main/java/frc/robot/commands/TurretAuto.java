@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class TurretAuto extends CommandBase {
 
-  private Limelight myLimelight; 
+  private Limelight myLimelight;
   private Turret myTurret;
 
   public enum Direction {
@@ -55,28 +55,28 @@ public class TurretAuto extends CommandBase {
     this.checkLimits();
     this.updateLastKnownTargetAngle();
     switch (this.mode) {
-    case SEEK_RIGHT:
-      this.seek(Direction.RIGHT);
-      break;
-    case SEEK_LEFT:
-      this.seek(Direction.LEFT);
-      break;
-    case TARGET_IN_VIEW:
-    case LOCKED_ON_TARGET:
-      this.align();
-      break;
-    case AT_RIGHT_LIMIT:
-      this.waitAtLimit(Direction.RIGHT);
-      break;
-    case AT_LEFT_LIMIT:
-      this.waitAtLimit(Direction.LEFT);
-      /*
-       * case CALLIBRATE: this.callibrate();
-       */
-      break;
-    case TARGET_BLOCKED: 
-      this.targetBlocked();
-    default:
+      case SEEK_RIGHT:
+        this.seek(Direction.RIGHT);
+        break;
+      case SEEK_LEFT:
+        this.seek(Direction.LEFT);
+        break;
+      case TARGET_IN_VIEW:
+      case LOCKED_ON_TARGET:
+        this.align();
+        break;
+      case AT_RIGHT_LIMIT:
+        this.waitAtLimit(Direction.RIGHT);
+        break;
+      case AT_LEFT_LIMIT:
+        this.waitAtLimit(Direction.LEFT);
+        /*
+         * case CALLIBRATE: this.callibrate();
+         */
+        break;
+      case TARGET_BLOCKED:
+        this.targetBlocked();
+      default:
     }
   }
 
@@ -91,9 +91,9 @@ public class TurretAuto extends CommandBase {
       this.mode = Mode.TARGET_BLOCKED;
 
       // if (myTurret.getAngle() <= 0) {
-      //   this.mode = Mode.SEEK_LEFT;
+      // this.mode = Mode.SEEK_LEFT;
       // } else {
-      //   this.mode = Mode.SEEK_RIGHT;
+      // this.mode = Mode.SEEK_RIGHT;
       // }
       return;
     }
@@ -135,11 +135,14 @@ public class TurretAuto extends CommandBase {
   // this.mode = mode;
   // }
 
-  /*
-   * public void callibrate() { if (myTurret.checkMiddleLimitSwitch()) {
-   * myTurret.resetEncoderTicks(); myTurret.turn(0); } else { // start turret on
-   * the left myTurret.turn(0.3); } }
-   */
+  public void callibrate() {
+    if (myTurret.checkMiddleLimitSwitch()) {
+      myTurret.resetEncoderTicks();
+      myTurret.turn(0);
+    } else { // start turret on the left
+      myTurret.turn(0.3);
+    }
+  }
 
   /**
    * If the target outside of the deadzone and is at the opposite side of the
@@ -164,7 +167,7 @@ public class TurretAuto extends CommandBase {
     } else {
       if (!validTarget || currentTX > Turret.getDeadzoneAngleSize()) {
         this.mode = Mode.SEEK_LEFT;
-      } else if (currentTX < 0){
+      } else if (currentTX < 0) {
         this.mode = Mode.TARGET_IN_VIEW;
       }
     }
@@ -202,7 +205,7 @@ public class TurretAuto extends CommandBase {
       this.mode = Mode.SEEK_LEFT;
       myTimer.stop();
       myTimer.reset();
-    } else if (myTimer.get() >= 1 ) {
+    } else if (myTimer.get() >= 1) {
       this.mode = Mode.SEEK_RIGHT;
       myTimer.stop();
       myTimer.reset();

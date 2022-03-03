@@ -91,6 +91,8 @@ public class Turret extends SubsystemBase {
 
     // leftLimitSwitch = new DigitalInput(Port);
     // rightLimitSwitch = new DigitalInput(rightLimitSwitchPort);
+
+    middleLimitSwitch = new DigitalInput(middleLimitSwitchPort);
   }
 
   /**

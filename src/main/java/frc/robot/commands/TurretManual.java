@@ -78,6 +78,8 @@ public class TurretManual extends CommandBase {
       this.controlTypes = ControlTypes.POSITION_CONTROL;
     } else if (operatorCont.getDPadDown()) {
       this.controlTypes = ControlTypes.POWER_CONTROL;
+    } else if (operatorCont.getDPadRight()) {
+      this.controlTypes = ControlTypes.FIELD_ORIENTED_CONTROL;
     }
   }
 
@@ -125,7 +127,7 @@ public class TurretManual extends CommandBase {
    */
   private void fieldOrientedControl() {
 
-    double gyroAngle = myDriveTrain.getYaw();
+    double gyroAngle = myDriveTrain.getHeadingAngle();
 
     double x = operatorCont.getRightX();
     double y = operatorCont.getRightY();
@@ -141,6 +143,7 @@ public class TurretManual extends CommandBase {
 
     // }
     double turretAngle = angle - gyroAngle;
+
     myTurret.angleTurn(turretAngle);
 
   }
