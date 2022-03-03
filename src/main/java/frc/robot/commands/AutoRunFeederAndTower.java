@@ -10,9 +10,9 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tower;
 
 public class AutoRunFeederAndTower extends CommandBase {
-  private final Tower myTower;
-  private final Feeder myFeeder;
-  private final Shooter myShooter;
+  private final Tower myTower = Tower.getInstance();
+  private final Feeder myFeeder = Feeder.getInstance();
+  private final Shooter myShooter = Shooter.getInstance();
   
   // private Boolean willEnd;
   // private Boolean ballPresentInitially;
@@ -22,9 +22,6 @@ public class AutoRunFeederAndTower extends CommandBase {
    * @param endOnExit if true will end when tower sensor has no ball
    */
   public AutoRunFeederAndTower() {
-    myTower = Tower.getInstance();
-    myFeeder = Feeder.getInstance();
-    myShooter = Shooter.getInstance();
 
     // willEnd = endOnExit;
 

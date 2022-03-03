@@ -6,19 +6,16 @@
 /*----------------------------------------------------------------------------*/
 package frc.robot.commands;
 
-import com.fasterxml.jackson.databind.type.MapType;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
 public class AutoExtendIntake extends CommandBase {
-  private final Intake intake;
+  private final Intake intake = Intake.getInstance();
 
   /**
    * Creates a new AutoExtendIntake.
    */
-  public AutoExtendIntake(Intake intake) {
-    this.intake = intake;
+  public AutoExtendIntake() {
     // Use addRequirements() here to declare subsystem dependencies.x
     addRequirements(intake);
   }

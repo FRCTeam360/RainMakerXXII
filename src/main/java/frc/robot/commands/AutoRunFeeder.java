@@ -8,11 +8,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
 
 public class AutoRunFeeder extends CommandBase {
-  private final Feeder feeder;
+  private final Feeder feeder = Feeder.getInstance();
 
   /** Creates a new AutoRunFeeder. */
   public AutoRunFeeder() {
-    feeder = Feeder.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(feeder);
   }

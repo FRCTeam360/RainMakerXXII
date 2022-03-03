@@ -35,7 +35,7 @@ public class AutoChooser {
         test = new Test(container.getDriveTrain());
         test2 = new Test2(container.getDriveTrain());
         tr2ball = new T_R_2ball(container.getDriveTrain());
-        hl2ball = new H_L_2ball(container.getDriveTrain(), container.intake, container.limelight, container.turret);
+        hl2ball = new H_L_2ball(container.getDriveTrain());
 
         // locationChooser.addOption("Test", "Test");
         locationChooser.addOption("Hangar Left", "Hangar Left");

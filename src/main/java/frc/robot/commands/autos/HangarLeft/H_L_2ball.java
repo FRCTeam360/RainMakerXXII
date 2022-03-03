@@ -40,6 +40,10 @@ import frc.robot.subsystems.Turret;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class H_L_2ball extends ParallelRaceGroup {
 
+  Turret turret = Turret.getInstance();
+  Limelight limelight = Limelight.getInstance();
+  Intake intake = Intake.getInstance();
+
   private static final String ball2JSON = "paths/2ball.wpilib.json";
   // Trajectory phase1 = new Trajectory();
 
@@ -51,7 +55,7 @@ public class H_L_2ball extends ParallelRaceGroup {
   AutoConfig.configRev
   );
   /** Creates a new T_R_2ball. */
-  public H_L_2ball(DriveTrain driveTrain, Intake intake, Limelight limelight, Turret turret) {
+  public H_L_2ball(DriveTrain driveTrain) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
@@ -74,10 +78,10 @@ public class H_L_2ball extends ParallelRaceGroup {
 
             // new AutoRunFeederAndTower(),
 
-            new AutoExtendIntake(intake),
+            new AutoExtendIntake(),
 
             new ParallelRaceGroup(
-                new AutoRunIntake(intake),
+                new AutoRunIntake(),
                 new MoveWithRamsete(
                     phase1,
                     driveTrain)

@@ -37,6 +37,11 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class DriveTrain extends SubsystemBase {
 
+  //Conversions for the Falcons
+  private static final double pi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
+  public static final double ticksToMeters = ( (pi * 0.1524) * ((15.0/85.0) * (24.0/46.0) /2048.0));
+
+
   private WPI_TalonFX motorLLead;
   private WPI_TalonFX motorLFollow1;
   private WPI_TalonFX motorLFollow2;
@@ -170,24 +175,24 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getLeftEncoderMeters() {
-    return motorLLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters;
+    return motorLLead.getSelectedSensorPosition() * ticksToMeters;
   }
 
   public double getRightEncoderMeters() {
-    return motorRLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters;
+    return motorRLead.getSelectedSensorPosition() * ticksToMeters;
   }
 
   public double getLeftEncoderMetersPerSec() {
-    return motorLLead.getSelectedSensorVelocity() * AutoConstants.ticksToMeters;
+    return motorLLead.getSelectedSensorVelocity() * ticksToMeters;
   }
 
   public double getRightEncoderMetersPerSec() {
-    return motorRLead.getSelectedSensorVelocity() * AutoConstants.ticksToMeters;
+    return motorRLead.getSelectedSensorVelocity() * ticksToMeters;
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() { // Must be in meters/second
-    return new DifferentialDriveWheelSpeeds(motorLLead.getSelectedSensorVelocity() * AutoConstants.ticksToMeters,
-        motorRLead.getSelectedSensorVelocity() * AutoConstants.ticksToMeters); // In example: m_leftEncoder.getRate() ,
+    return new DifferentialDriveWheelSpeeds(motorLLead.getSelectedSensorVelocity() * ticksToMeters,
+        motorRLead.getSelectedSensorVelocity() * ticksToMeters); // In example: m_leftEncoder.getRate() ,
                                                                                // m_rightEncoder.getRate() however, they
                                                                                // set their rate to inclue their
                                                                                // conversions
@@ -239,8 +244,8 @@ public class DriveTrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     pose = m_odometry.update( // Must be in meters according to internets
-        getHeading(), motorLLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters,
-        motorRLead.getSelectedSensorPosition() * AutoConstants.ticksToMeters);
+        getHeading(), motorLLead.getSelectedSensorPosition() * ticksToMeters,
+        motorRLead.getSelectedSensorPosition() * ticksToMeters);
     navxTestingDashboardReadouts();
     // System.out.println("distance x: " +
     // Units.metersToFeet(m_odometry.getPoseMeters().getX()));

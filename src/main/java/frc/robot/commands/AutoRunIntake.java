@@ -11,13 +11,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
 public class AutoRunIntake extends CommandBase {
-  private final Intake myIntake;
+  private final Intake intake = Intake.getInstance();
 
   /**
    * Creates a new AutoIntake.
    */
-  public AutoRunIntake(Intake intake) {
-    myIntake = intake;
+  public AutoRunIntake() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intake);
   }
@@ -30,13 +29,13 @@ public class AutoRunIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    myIntake.run(1);
+    intake.run(1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    myIntake.run(0);
+    intake.run(0);
   }
 
   // Returns true when the command should end.

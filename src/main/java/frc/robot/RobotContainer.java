@@ -56,15 +56,15 @@ public class RobotContainer {
   private final OperatorControl operatorCont = OperatorControl.getInstance();
   // The robot's subsystems and commands are defined here...
 
-  public final Turret turret = Turret.getInstance();
+  private final Turret turret = Turret.getInstance();
   private final Shooter shooter = Shooter.getInstance();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain driveTrain = new DriveTrain();
-  public final Feeder feeder = Feeder.getInstance();
-  public final Intake intake = Intake.getInstance();
-  public final Limelight limelight = Limelight.getInstance();
-  public final Tower tower = Tower.getInstance();
-  public final Pneumatics pneumatics = new Pneumatics();
+  private final Feeder feeder = Feeder.getInstance();
+  private final Intake intake = Intake.getInstance();
+  private final Limelight limelight = Limelight.getInstance();
+  private final Tower tower = Tower.getInstance();
+  private final Pneumatics pneumatics = new Pneumatics();
 
   private final ShooterJoy shooterJoy = new ShooterJoy();
   private final SetShoot setShoot = new SetShoot(limelight);

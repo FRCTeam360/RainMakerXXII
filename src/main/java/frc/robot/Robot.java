@@ -103,7 +103,6 @@ public class Robot extends TimedRobot {
 
     m_driveTrain.brakeMode();
     if (m_autonomousCommand != null) {
-      System.out.println("command scheduled");
       m_autonomousCommand.cancel();
     }
   }
