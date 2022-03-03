@@ -16,13 +16,10 @@ import static frc.robot.Constants.CANIds.*;
 /** Add your docs here. */
 public class Climber extends SubsystemBase {
 
-    private static CANSparkMax motorLeft;
-    private static CANSparkMax motorRight;
+    private final CANSparkMax motorLeft = new CANSparkMax(climbLeftId, MotorType.kBrushless);;
+    private final CANSparkMax motorRight = new CANSparkMax(climbRightId, MotorType.kBrushless);;
 
     public Climber() {
-        motorLeft = new CANSparkMax(climbLeftId, MotorType.kBrushless);
-        motorRight = new CANSparkMax(climbRightId, MotorType.kBrushless);
-
         motorLeft.setInverted(true);
         motorRight.setInverted(false);
 
@@ -57,7 +54,7 @@ public class Climber extends SubsystemBase {
         return motorRight.getEncoder().getPosition();
     }
 
-    public void printouts() {
+    private void printouts() {
         SmartDashboard.putNumber("LC Temp", motorLeft.getMotorTemperature());
         SmartDashboard.putNumber("RC Temp", motorRight.getMotorTemperature());
         SmartDashboard.putNumber("LC Temp", motorLeft.getOutputCurrent());
