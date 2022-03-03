@@ -90,6 +90,8 @@ public class Turret extends SubsystemBase {
 
     // leftLimitSwitch = new DigitalInput(Port);
     // rightLimitSwitch = new DigitalInput(rightLimitSwitchPort);
+    
+    middleLimitSwitch = new DigitalInput(middleLimitSwitchPort);
   }
 
   /**
@@ -200,5 +202,6 @@ public class Turret extends SubsystemBase {
     SmartDashboard.putNumber("Turret Angle", getAngle());
     // System.out.println("Turret Angle: " + getAngle());
     SmartDashboard.putNumber("Turret Encoder", turretMotor.getEncoder().getPosition());
+    // System.out.println("Limit: " + this.checkMiddleLimitSwitch());
   }
 }

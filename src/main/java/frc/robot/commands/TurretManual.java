@@ -78,6 +78,8 @@ public class TurretManual extends CommandBase {
       this.controlTypes = ControlTypes.POSITION_CONTROL;
     } else if (operatorCont.getDPadDown()) {
       this.controlTypes = ControlTypes.POWER_CONTROL;
+    } else if (operatorCont.getDPadRight()) {
+      this.controlTypes = ControlTypes.FIELD_ORIENTED_CONTROL;
     }
   }
 
