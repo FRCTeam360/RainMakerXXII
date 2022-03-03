@@ -88,7 +88,8 @@ public class Shooter extends SubsystemBase {
     shooterLead.setNeutralMode(NeutralMode.Coast);
     shooterFollow.setNeutralMode(NeutralMode.Coast);
 
-    shooterLead.setInverted(true);
+    shooterLead.setInverted(false);
+    shooterFollow.setInverted(true);
     // shooterLead.setSensorPhase(true); //the Follower isn't harvested for it's
     // encoder therefor rotation doesn't need to be modified
 

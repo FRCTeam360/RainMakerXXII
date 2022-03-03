@@ -126,6 +126,10 @@ public class DriveTrain extends SubsystemBase {
     return navX.getYaw();
   }
 
+  public double getHeadingAngle() {
+    return Math.IEEEremainder(-navX.getAngle(), 360);
+  }
+
   /**
    * Sets the lead motors to the percentage given.
    * 

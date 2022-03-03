@@ -141,6 +141,10 @@ public class Turret extends SubsystemBase {
    */
   public void angleTurn(double inputAngle) {
     double angle = this.getAngle();
+
+    // angle = Math.max(angle, myTurret.rightSoftLimit);
+    // angle = Math.min(angle, myTurret.leftSoftLimit);
+
     double error = inputAngle - angle;
 
     double deriv = angle - previousAngle;

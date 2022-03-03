@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 import frc.robot.operatorInterface.*;
@@ -29,8 +30,8 @@ public class RunIntake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    myIntake.intakeIn();
-    isIntakeOut = false;
+    // myIntake.intakeIn();
+    // isIntakeOut = false;
 
   }
 
@@ -56,6 +57,8 @@ public class RunIntake extends CommandBase {
         isIntakeOut = true;
       }
     }
+
+    SmartDashboard.putBoolean("intake out", isIntakeOut);
   }
 
   // Called once the command ends or is interrupted.
