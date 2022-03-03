@@ -74,10 +74,10 @@ public class Shooter extends SubsystemBase {
   private static final double d = -46.47695902;
   private static final double e = 3261.531163;
 
-  public static final double MAX_SHOOTER_ACCELERATION = 1.0;
+  public static final double MAX_SHOOTER_ACCELERATION = 0.7;
   private final SlewRateLimiter filter = new SlewRateLimiter(MAX_SHOOTER_ACCELERATION);
 
-  private Shooter(Limelight limelight) {
+  private Shooter() {
     shooterLead = new WPI_TalonFX(shooterLeadId);
     shooterFollow = new WPI_TalonFX(shooterFollowId);
 
@@ -96,9 +96,10 @@ public class Shooter extends SubsystemBase {
     shooterLead.setNeutralMode(NeutralMode.Coast);
     shooterFollow.setNeutralMode(NeutralMode.Coast);
 
-    shooterLead.setInverted(true);
+    shooterLead.setInverted(false);
+    shooterFollow.setInverted(true);
 
-    myLimelight = limelight;
+    myLimelight = Limelight.getInstance();
     // shooterLead.setSensorPhase(true); //the Follower isn't harvested for it's
     // encoder therefor rotation doesn't need to be modified
 
@@ -115,7 +116,7 @@ public class Shooter extends SubsystemBase {
    */
   public static Shooter getInstance() {
     if (instance == null) {
-      instance = new Shooter(myLimelight);
+      instance = new Shooter();
     }
     return instance;
   }
@@ -130,6 +131,9 @@ public class Shooter extends SubsystemBase {
     // kI = SmartDashboard.getNumber("kI", 0.0);
     // kD = SmartDashboard.getNumber("kD", 0.0);
     // kF = SmartDashboard.getNumber("kF", 0.0);
+
+    SmartDashboard.putNumber("sl amps", shooterLead.getSupplyCurrent());
+    SmartDashboard.putNumber("sf amps", shooterFollow.getSupplyCurrent());
 
     SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
     SmartDashboard.putNumber("Shoot Goal", this.getShootGoal());
@@ -175,6 +179,7 @@ public class Shooter extends SubsystemBase {
 
   public boolean isAtSpeed() {
     double error = velocityTarget - this.getVelocity();
+    System.out.println("error: " + error);
     return Math.abs(error) <= 100;
   }
   

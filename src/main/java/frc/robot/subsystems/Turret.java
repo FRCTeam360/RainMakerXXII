@@ -180,5 +180,7 @@ public class Turret extends SubsystemBase {
     SmartDashboard.putNumber("Turret Angle", getAngle());
     // System.out.println("Turret Angle: " + getAngle());
     SmartDashboard.putNumber("Turret Encoder", turretMotor.getEncoder().getPosition());
+
+    System.out.println("Limit: " + checkMiddleLimitSwitch());
   }
 }

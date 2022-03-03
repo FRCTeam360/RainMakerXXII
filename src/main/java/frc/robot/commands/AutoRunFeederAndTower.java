@@ -16,7 +16,7 @@ public class AutoRunFeederAndTower extends CommandBase {
   
   // private Boolean willEnd;
   // private Boolean ballPresentInitially;
-  private Boolean ballPassedSensor;
+  private Boolean ballPassedSensor = false;
   /** Creates a new AutoRunFeederAndTower.
    * 
    * @param endOnExit if true will end when tower sensor has no ball

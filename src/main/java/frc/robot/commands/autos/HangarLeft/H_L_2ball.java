@@ -40,26 +40,26 @@ import frc.robot.subsystems.Turret;
 public class H_L_2ball extends ParallelRaceGroup {
 
   private static final String ball2JSON = "paths/2ball.wpilib.json";
-  Trajectory phase1 = new Trajectory();
+  // Trajectory phase1 = new Trajectory();
 
-  // public static final Trajectory phase1 =
-  // TrajectoryGenerator.generateTrajectory(
-  // new Pose2d(0, 0, new Rotation2d(0)),
-  // List.of(),
-  // new Pose2d(1, 0, new Rotation2d(0)),
-  // AutoConfig.configRev
-  // );
+  public static final Trajectory phase1 =
+  TrajectoryGenerator.generateTrajectory(
+  new Pose2d(0, 0, new Rotation2d(0)),
+  List.of(),
+  new Pose2d(1, 0, new Rotation2d(0)),
+  AutoConfig.configRev
+  );
   /** Creates a new T_R_2ball. */
   public H_L_2ball(DriveTrain driveTrain, Intake intake, Limelight limelight, Turret turret) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
-    try {
-      Path ball2 = Filesystem.getDeployDirectory().toPath().resolve(ball2JSON);
-      phase1 = TrajectoryUtil.fromPathweaverJson(ball2);
-    } catch (IOException ex) {
-      DriverStation.reportError("Unable to open trajectory: " + ball2JSON, ex.getStackTrace());
-    }
+    // try {
+    //   Path ball2 = Filesystem.getDeployDirectory().toPath().resolve(ball2JSON);
+    //   phase1 = TrajectoryUtil.fromPathweaverJson(ball2);
+    // } catch (IOException ex) {
+    //   DriverStation.reportError("Unable to open trajectory: " + ball2JSON, ex.getStackTrace());
+    // }
 
     driveTrain.setAngleOffset(133.5);
 
@@ -75,12 +75,12 @@ public class H_L_2ball extends ParallelRaceGroup {
 
             new AutoExtendIntake(intake),
 
-            new ParallelRaceGroup(
-                new AutoRunIntake(intake),
-                new MoveWithRamsete(
-                    phase1,
-                    driveTrain)
-                        .andThen(() -> driveTrain.tankDriveVolts(0, 0))),
+            // new ParallelRaceGroup(
+            //     new AutoRunIntake(intake),
+                // new MoveWithRamsete(
+                //     phase1,
+                //     driveTrain)
+                //         .andThen(() -> driveTrain.tankDriveVolts(0, 0))),
 
             new AutoRunFeederAndTower()));
 
