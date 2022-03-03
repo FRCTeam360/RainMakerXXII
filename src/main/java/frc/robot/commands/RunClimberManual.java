@@ -26,8 +26,18 @@ public class RunClimberManual extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("climbing");
+    
+    if(Math.abs(operatorCont.getLeftY()) >= 0.125) {
       myClimber.runLeftClimber(operatorCont.getLeftY());
+    } else {
+      myClimber.runLeftClimber(0);
+    }
+    if(Math.abs(operatorCont.getRightY()) >= 0.125){
       myClimber.runRightClimber(operatorCont.getRightY());
+    } else {
+      myClimber.runRightClimber(0);
+    }
   }
 
   // Called once the command ends or is interrupted.
