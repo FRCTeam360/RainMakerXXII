@@ -74,7 +74,7 @@ public class Shooter extends SubsystemBase {
   private static final double d = -46.47695902;
   private static final double e = 3261.531163;
 
-  public static final double MAX_SHOOTER_ACCELERATION = 0.7;
+  public static final double MAX_SHOOTER_ACCELERATION = 0.5;
   private final SlewRateLimiter filter = new SlewRateLimiter(MAX_SHOOTER_ACCELERATION);
 
   private Shooter() {
@@ -148,7 +148,8 @@ public class Shooter extends SubsystemBase {
    * @param output motor output from -1 to 1
    */
   public void setSpeed(double output) {
-    shooterLead.set(filter.calculate(output));
+    // shooterLead.set(filter.calculate(output));
+    shooterLead.set(output);
   }
 
   /**
@@ -173,14 +174,15 @@ public class Shooter extends SubsystemBase {
     // speed = Math.min(speed, 0.7);
     // speed = Math.max(speed, -0.7);
 
-    this.setSpeed(filter.calculate(speed));
+    // this.setSpeed(filter.calculate(speed));
+    this.setSpeed(speed);
     SmartDashboard.putNumber("speed set", speed);
   }
 
   public boolean isAtSpeed() {
     double error = velocityTarget - this.getVelocity();
-    System.out.println("error: " + error);
-    return Math.abs(error) <= 100;
+    System.out.println("error: " + error);  
+    return Math.abs(error) <= 50 && this.getVelocity() != 0;
   }
   
   /**

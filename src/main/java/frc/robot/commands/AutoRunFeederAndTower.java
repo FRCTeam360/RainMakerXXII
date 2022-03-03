@@ -35,6 +35,7 @@ public class AutoRunFeederAndTower extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    ballPassedSensor = false;
     // ballPresentInitially = !myTower.ballNotInTower();
   }
 
@@ -43,7 +44,7 @@ public class AutoRunFeederAndTower extends CommandBase {
   public void execute() {
     if (myShooter.isAtSpeed()) {
       myTower.runTower(1.0);
-      myFeeder.runFeeder(1.0);
+      // myFeeder.runFeeder(1.0);
     }
 
     if (!myTower.ballNotInTower()){

@@ -24,6 +24,7 @@ import frc.robot.commands.AutoExtendIntake;
 import frc.robot.commands.AutoRunFeeder;
 import frc.robot.commands.AutoRunFeederAndTower;
 import frc.robot.commands.AutoRunIntake;
+import frc.robot.commands.AutoRunTower;
 import frc.robot.commands.AutoSetShoot;
 import frc.robot.commands.AutoTimer;
 import frc.robot.commands.MoveWithRamsete;
@@ -71,18 +72,26 @@ public class H_L_2ball extends ParallelRaceGroup {
 
         new SequentialCommandGroup(
 
-            new AutoRunFeederAndTower(),
+            // new AutoRunFeederAndTower(),
 
             new AutoExtendIntake(intake),
 
-            // new ParallelRaceGroup(
-            //     new AutoRunIntake(intake),
-                // new MoveWithRamsete(
-                //     phase1,
-                //     driveTrain)
-                //         .andThen(() -> driveTrain.tankDriveVolts(0, 0))),
+            new ParallelRaceGroup(
+                new AutoRunIntake(intake),
+                new MoveWithRamsete(
+                    phase1,
+                    driveTrain)
+                        .andThen(() -> driveTrain.tankDriveVolts(0, 0)))),
 
-            new AutoRunFeederAndTower()));
+            // new AutoRunFeederAndTower()));
+
+            new ParallelRaceGroup(
+
+            new AutoRunFeeder()));
+
+            // new AutoRunTower()
+            
+            // new AutoTimer(5)));
 
   }
 }

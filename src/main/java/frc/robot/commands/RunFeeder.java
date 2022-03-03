@@ -46,13 +46,12 @@ public class RunFeeder extends CommandBase {
   public void execute() {
 
     // if shooter at speed, run all
-    // if (myShooter.isAtSpeed()) {
-    //   towerPower = 1.0;
-    //   feederPower = 1.0;
-    //   System.out.println("at speed");
+    if (myShooter.isAtSpeed()) {
+      towerPower = 1.0;
+      feederPower = 1.0;
 
       // if intake running, run shooter if no ball at top of tower
-    // } else {
+    } else {
     // if (driverCont.getLeftTrigger()) {
     //   // if (myTower.ballNotInTower()) {
     //     towerPower = 1.0;
@@ -85,7 +84,7 @@ public class RunFeeder extends CommandBase {
         towerPower = 0;
 
       }
-    // }
+    }
   // }
 
     myTower.runTower(towerPower);

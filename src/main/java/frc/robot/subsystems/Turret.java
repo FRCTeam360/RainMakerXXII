@@ -62,6 +62,8 @@ public class Turret extends SubsystemBase {
   private double alignIntegral;
   private double previousTX;
 
+  private boolean pastMiddleLimitSwitchState;
+
   public static Turret getInstance() {
     if (instance == null) {
       instance = new Turret();
@@ -107,6 +109,20 @@ public class Turret extends SubsystemBase {
 
   public void zero() {
     this.angleTurn(0);
+  }
+
+  public void limitSwitchResetAngle() {
+    boolean currentMiddleLimitState = this.checkMiddleLimitSwitch();
+
+    if (currentMiddleLimitState == false && pastMiddleLimitSwitchState == true) {
+      // if (this.checkMiddleLimitSwitch() && turretMotor.getEncoder().getVelocity() > 0) {
+        resetEncoderTicks();
+      // } else if (this.checkMiddleLimitSwitch() && turretMotor.getEncoder().getVelocity() < 0) {
+      //   System.out.println(turretMotor.getEncoder().getPosition());
+      // }
+    }
+
+    pastMiddleLimitSwitchState = currentMiddleLimitState;
   }
 
   public void turn(double speed) {
@@ -183,6 +199,7 @@ public class Turret extends SubsystemBase {
     // System.out.println("Turret Angle: " + getAngle());
     SmartDashboard.putNumber("Turret Encoder", turretMotor.getEncoder().getPosition());
 
-    System.out.println("Limit: " + checkMiddleLimitSwitch());
+    this.limitSwitchResetAngle();
+    // System.out.println("Limit: " + checkMiddleLimitSwitch());
   }
 }
