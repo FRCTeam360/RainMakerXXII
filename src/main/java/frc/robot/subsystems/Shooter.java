@@ -31,7 +31,7 @@ public class Shooter extends SubsystemBase {
 
   private static Shooter instance;
 
-  private static Limelight myLimelight;
+  private final Limelight myLimelight = Limelight.getInstance();
 
   public boolean shooterReady;
 
@@ -98,8 +98,6 @@ public class Shooter extends SubsystemBase {
 
     shooterLead.setInverted(false);
     shooterFollow.setInverted(true);
-
-    myLimelight = Limelight.getInstance();
     // shooterLead.setSensorPhase(true); //the Follower isn't harvested for it's
     // encoder therefor rotation doesn't need to be modified
 

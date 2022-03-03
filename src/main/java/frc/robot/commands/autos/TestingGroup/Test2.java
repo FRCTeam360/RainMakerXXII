@@ -27,26 +27,22 @@ import frc.robot.subsystems.DriveTrain;
 public class Test2 extends SequentialCommandGroup {
 
   public static final Trajectory test = TrajectoryGenerator.generateTrajectory(
-    new Pose2d(0, 0, new Rotation2d(0)), 
-    List.of(
-      new Translation2d(2, 0),
-      new Translation2d(2, -2)
-    ), 
-    new Pose2d(0, -2, new Rotation2d(180)), 
-    AutoConfig.configFwd
-    );
+      new Pose2d(0, 0, new Rotation2d(0)),
+      List.of(
+          new Translation2d(2, 0),
+          new Translation2d(2, -2)),
+      new Pose2d(0, -2, new Rotation2d(180)),
+      AutoConfig.configFwd);
 
   /** Creates a new Test. */
   public Test2(DriveTrain driveTrain) {
 
     addCommands(
-      new MoveWithRamsete(
-        test, 
-        driveTrain
-      )
-      .andThen(() -> driveTrain.tankDriveVolts(0,0))
-    );
-    
+        new MoveWithRamsete(
+            test,
+            driveTrain)
+                .andThen(() -> driveTrain.tankDriveVolts(0, 0)));
+
     System.out.println("tessst");
     // addCommands();
   }

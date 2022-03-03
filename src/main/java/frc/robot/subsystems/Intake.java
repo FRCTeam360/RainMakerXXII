@@ -17,7 +17,7 @@ import static frc.robot.Constants.PneumaticConstants.*;
 /** Add your docs here. */
 public class Intake extends SubsystemBase {
     private static Intake instance;
-    public static boolean isIntakeOut;
+    private boolean isIntakeOut;
 
     /**
      * gets instance for the singleton
@@ -49,10 +49,12 @@ public class Intake extends SubsystemBase {
     }
 
     public void intakeIn() {
+        isIntakeOut = false;
         intakeMover.set(DoubleSolenoid.Value.kForward);
     }
 
     public void intakeOut() {
+        isIntakeOut = true;
         intakeMover.set(DoubleSolenoid.Value.kReverse);
     }
 

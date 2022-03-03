@@ -42,12 +42,12 @@ public class DriveTrain extends SubsystemBase {
   public static final double ticksToMeters = ( (pi * 0.1524) * ((15.0/85.0) * (24.0/46.0) /2048.0));
 
 
-  private WPI_TalonFX motorLLead;
-  private WPI_TalonFX motorLFollow1;
-  private WPI_TalonFX motorLFollow2;
-  private WPI_TalonFX motorRLead;
-  private WPI_TalonFX motorRFollow1;
-  private WPI_TalonFX motorRFollow2;
+  private WPI_TalonFX motorLLead = new WPI_TalonFX(motorLLeadID);
+  private WPI_TalonFX motorLFollow1 = new WPI_TalonFX(motorLFollow1ID);
+  private WPI_TalonFX motorLFollow2 = new WPI_TalonFX(motorLFollow2ID);
+  private WPI_TalonFX motorRLead = new WPI_TalonFX(motorRLeadID);
+  private WPI_TalonFX motorRFollow1 = new WPI_TalonFX(motorRFollow1ID);
+  private WPI_TalonFX motorRFollow2 = new WPI_TalonFX(motorRFollow2ID);
 
   public final DifferentialDrive m_differentialDrive;
 
@@ -60,29 +60,23 @@ public class DriveTrain extends SubsystemBase {
   public AHRS navX = new AHRS(SPI.Port.kMXP); // For frc-characterization tool: "SPI.Port.kMXP" of type "NavX"
   public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
       AutoConstants.kTrackwidthMeters);
-  public final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(getHeading());
+  private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(getHeading());
   public final static SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(AutoConstants.ksVolts,
       AutoConstants.kvVoltSecondsPerMeter, AutoConstants.kaVoltSecondsSquaredPerMeter);
-  public Pose2d pose;
+  private Pose2d pose;
 
-  public PIDController leftPidController = new PIDController(AutoConstants.kPDriveVel, 0, 0);
-  public PIDController rightPidController = new PIDController(AutoConstants.kPDriveVel, 0, 0);
+  private PIDController leftPidController = new PIDController(AutoConstants.kPDriveVel, 0, 0);
+  private PIDController rightPidController = new PIDController(AutoConstants.kPDriveVel, 0, 0);
 
   private final MotorControllerGroup leftGroup;
   private final MotorControllerGroup rightGroup;
 
-  public static double ACCELERATION_LIMIT = 1.5;
+  private static double ACCELERATION_LIMIT = 1.5;
 
   private double pastForwardSpeed = 0;
 
   /** Creates a new ExampleSubsystem. */
   public DriveTrain() {
-    motorLLead = new WPI_TalonFX(motorLLeadID);
-    motorLFollow1 = new WPI_TalonFX(motorLFollow1ID);
-    motorLFollow2 = new WPI_TalonFX(motorLFollow2ID);
-    motorRLead = new WPI_TalonFX(motorRLeadID);
-    motorRFollow1 = new WPI_TalonFX(motorRFollow1ID);
-    motorRFollow2 = new WPI_TalonFX(motorRFollow2ID);
 
     motorLLead.configFactoryDefault();
     motorLFollow1.configFactoryDefault();
@@ -124,8 +118,6 @@ public class DriveTrain extends SubsystemBase {
     leftGroup.setVoltage(leftVolts); // Answer is no //Set to motor groups
     rightGroup.setVoltage(rightVolts); // it's big brain time
     m_differentialDrive.feed(); // Feed the motorsafety class so it doesnt disable the motors
-    System.out.println("left voltage output: " + leftVolts);
-    System.out.println("right voltage output: " + rightVolts);
 
   }
 
@@ -196,6 +188,10 @@ public class DriveTrain extends SubsystemBase {
                                                                                // m_rightEncoder.getRate() however, they
                                                                                // set their rate to inclue their
                                                                                // conversions
+  }
+
+  public double getAccelerationLimit(){
+    return ACCELERATION_LIMIT;
   }
 
   public void brakeMode() {

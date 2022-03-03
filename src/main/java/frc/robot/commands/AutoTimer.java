@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class AutoTimer extends CommandBase {
 
-  Timer autoTimer;
-  double time;
+  private Timer autoTimer;
+  private double time;
 
   /** Creates a new AutoTimer. */
   public AutoTimer(double seconds) {

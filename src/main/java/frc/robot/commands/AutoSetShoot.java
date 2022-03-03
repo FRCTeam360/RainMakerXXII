@@ -8,18 +8,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
 public class AutoSetShoot extends CommandBase {
-  private final Shooter shooter;
+  private final Shooter shooter = Shooter.getInstance();
+
   /** Creates a new AutoSetShoot. */
   public AutoSetShoot() {
-    
-  shooter = Shooter.getInstance();
-  addRequirements(shooter);
+
+    addRequirements(shooter);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

@@ -19,7 +19,7 @@ import static frc.robot.Constants.DigitalInputPorts.*;
 public class Turret extends SubsystemBase {
 
   private DigitalInput leftLimitSwitch;
-  private DigitalInput middleLimitSwitch;
+  private DigitalInput middleLimitSwitch = new DigitalInput(middleLimitSwitchPort);
   private DigitalInput rightLimitSwitch;
 
   public static final double maxSpeed = 0.6;
@@ -93,8 +93,6 @@ public class Turret extends SubsystemBase {
 
     // leftLimitSwitch = new DigitalInput(Port);
     // rightLimitSwitch = new DigitalInput(rightLimitSwitchPort);
-
-    middleLimitSwitch = new DigitalInput(middleLimitSwitchPort);
   }
 
   /**
@@ -115,11 +113,7 @@ public class Turret extends SubsystemBase {
     boolean currentMiddleLimitState = this.checkMiddleLimitSwitch();
 
     if (currentMiddleLimitState == false && pastMiddleLimitSwitchState == true) {
-      // if (this.checkMiddleLimitSwitch() && turretMotor.getEncoder().getVelocity() > 0) {
         resetEncoderTicks();
-      // } else if (this.checkMiddleLimitSwitch() && turretMotor.getEncoder().getVelocity() < 0) {
-      //   System.out.println(turretMotor.getEncoder().getPosition());
-      // }
     }
 
     pastMiddleLimitSwitchState = currentMiddleLimitState;
@@ -200,6 +194,5 @@ public class Turret extends SubsystemBase {
     SmartDashboard.putNumber("Turret Encoder", turretMotor.getEncoder().getPosition());
 
     this.limitSwitchResetAngle();
-    // System.out.println("Limit: " + checkMiddleLimitSwitch());
   }
 }
