@@ -8,11 +8,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Tower;
 
 public class AutoRunTower extends CommandBase {
-  private final Tower tower;
+  private final Tower tower = Tower.getInstance();
 
   /** Creates a new AutoRunTower. */
   public AutoRunTower() {
-    tower = Tower.getInstance();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(tower);

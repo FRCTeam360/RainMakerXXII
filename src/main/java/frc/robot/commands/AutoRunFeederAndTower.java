@@ -23,8 +23,6 @@ public class AutoRunFeederAndTower extends CommandBase {
    */
   public AutoRunFeederAndTower() {
 
-    // willEnd = endOnExit;
-
     addRequirements(myTower, myFeeder);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -33,7 +31,6 @@ public class AutoRunFeederAndTower extends CommandBase {
   @Override
   public void initialize() {
     ballPassedSensor = false;
-    // ballPresentInitially = !myTower.ballNotInTower();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -41,7 +38,7 @@ public class AutoRunFeederAndTower extends CommandBase {
   public void execute() {
     if (myShooter.isAtSpeed()) {
       myTower.runTower(1.0);
-      // myFeeder.runFeeder(1.0);
+      myFeeder.runFeeder(1.0);
     }
 
     if (!myTower.ballNotInTower()){

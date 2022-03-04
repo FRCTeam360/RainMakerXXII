@@ -64,10 +64,6 @@ public class Shooter extends SubsystemBase {
   public static double targetVelocity = backupTargetVelocity; // will get changed in the future by limelight
                                                               // subsystem or a command...
 
-  // public static final double aVal = 2.697; // Quad Ratic regression values
-  // public static final double bVal = -52.912;
-  // public static final double cVal = 14815.146;
-
   private static final double a = -0.002182938;
   private static final double b = -0.0146528457;
   private static final double c = 2.862058996;
@@ -80,10 +76,6 @@ public class Shooter extends SubsystemBase {
   private Shooter() {
     shooterLead = new WPI_TalonFX(shooterLeadId);
     shooterFollow = new WPI_TalonFX(shooterFollowId);
-
-    // shooterPidController = shooterLead.getPIDController();
-
-    // shooterEncoder = shooterLead.getEncoder();
 
     shooterLead.configFactoryDefault();
     shooterFollow.configFactoryDefault();
@@ -98,8 +90,6 @@ public class Shooter extends SubsystemBase {
 
     shooterLead.setInverted(false);
     shooterFollow.setInverted(true);
-    // shooterLead.setSensorPhase(true); //the Follower isn't harvested for it's
-    // encoder therefor rotation doesn't need to be modified
 
     // SmartDashboard.putNumber("kP", 0.0);
     // SmartDashboard.putNumber("kI", 0.0);

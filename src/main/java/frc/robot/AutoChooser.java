@@ -52,9 +52,6 @@ public class AutoChooser {
     }
 
     public void periodic() {
-        // System.out.println("pls");
-        // System.out.println("selectede location: " + selectedLocation);
-        // System.out.println("autoChooser: " + autoChooser);
         if (selectedLocation != null && !selectedLocation.equals(locationChooser.getSelected())) { // If it changes or is being initialized
 
             selectedLocation = locationChooser.getSelected(); // Reset the SelectedLocation to what it actually is

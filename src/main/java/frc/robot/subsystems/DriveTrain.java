@@ -37,10 +37,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class DriveTrain extends SubsystemBase {
 
-  //Conversions for the Falcons
+  // Conversions for the Falcons
   private static final double pi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
-  public static final double ticksToMeters = ( (pi * 0.1524) * ((15.0/85.0) * (24.0/46.0) /2048.0));
-
+  public static final double ticksToMeters = ((pi * 0.1524) * ((15.0 / 85.0) * (24.0 / 46.0) / 2048.0));
 
   private WPI_TalonFX motorLLead = new WPI_TalonFX(motorLLeadID);
   private WPI_TalonFX motorLFollow1 = new WPI_TalonFX(motorLFollow1ID);
@@ -50,12 +49,6 @@ public class DriveTrain extends SubsystemBase {
   private WPI_TalonFX motorRFollow2 = new WPI_TalonFX(motorRFollow2ID);
 
   public final DifferentialDrive m_differentialDrive;
-
-  // private double leftVel; // initializes velocities for left and right sides
-  // private double rightVel;
-  // private double leftNewPos; // initializes new positions for left and right
-  // sides
-  // private double rightNewPos;
 
   public AHRS navX = new AHRS(SPI.Port.kMXP); // For frc-characterization tool: "SPI.Port.kMXP" of type "NavX"
   public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
@@ -141,7 +134,7 @@ public class DriveTrain extends SubsystemBase {
     return navX.getYaw();
   }
 
-  public void setAngleOffset(double offset){
+  public void setAngleOffset(double offset) {
     navX.setAngleAdjustment(offset);
   }
 
@@ -152,7 +145,6 @@ public class DriveTrain extends SubsystemBase {
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
   }
-
 
   public SimpleMotorFeedforward getFeedForward() {
     return feedForward;
@@ -183,14 +175,13 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() { // Must be in meters/second
+    // In example: m_leftEncoder.getRate() , m_rightEncoder.getRate() however, they
+    // set their rate to inclue their conversions
     return new DifferentialDriveWheelSpeeds(motorLLead.getSelectedSensorVelocity() * ticksToMeters,
-        motorRLead.getSelectedSensorVelocity() * ticksToMeters); // In example: m_leftEncoder.getRate() ,
-                                                                               // m_rightEncoder.getRate() however, they
-                                                                               // set their rate to inclue their
-                                                                               // conversions
+        motorRLead.getSelectedSensorVelocity() * ticksToMeters);
   }
 
-  public double getAccelerationLimit(){
+  public double getAccelerationLimit() {
     return ACCELERATION_LIMIT;
   }
 
