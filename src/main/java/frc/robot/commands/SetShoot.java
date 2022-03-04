@@ -20,12 +20,6 @@ public class SetShoot extends CommandBase {
   private final DriverControl driverCont;
   private final OperatorControl operatorCont;
 
-  // private static final double a = -0.002182938;
-  // private static final double b = -0.0146528457;
-  // private static final double c = 2.862058996;
-  // private static final double d = -46.47695902;
-  // private static final double e = 3261.531163;
-
   /** Creates a new setShoot. */
   public SetShoot(Limelight limelight) {
     myLimelight = limelight;
