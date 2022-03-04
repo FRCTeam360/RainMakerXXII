@@ -66,18 +66,18 @@ public class FieldOrientedDrive extends CommandBase {
 
     // field oriented drive conversion. forward = robot-based forward value, right =
     // robot-based turning adjustment
-    double forward = upDownSquared * Math.cos(gyroRadians) + rightLeftSquared * Math.sin(gyroRadians);
+    double right = -1*upDownSquared * Math.cos(gyroRadians) + rightLeftSquared * Math.sin(gyroRadians);
     // if(myDriveTrain.isAccelerating()){
-      forward = filter.calculate(forward);
+      // forward = filter.calculate(forward);
     // }
-    double right = -1 * upDownSquared * Math.sin(gyroRadians) + rightLeftSquared * Math.cos(gyroRadians);
+    double forward = -1 * upDownSquared * Math.sin(gyroRadians) + rightLeftSquared * Math.cos(gyroRadians);
 
     // System.out.println("forward: " + forward);
     // System.out.println("right: " + right);
 
     // sets drive values using previous values for right/left and forward/back
-    driveLeft = forward + right;
-    driveRight = forward - right;
+    driveLeft = forward - right;
+    driveRight = forward + right;
 
     // ensures motors are not passed value greater than 1 or less than -1
     driveLeft = Math.min(driveLeft, 1);
@@ -87,9 +87,9 @@ public class FieldOrientedDrive extends CommandBase {
 
     // drive reversed if bumper held
     if (driverCont.getLeftStickButton()) {
-      myDriveTrain.drive(driveRight * 0.5, driveLeft * 0.5);
+      myDriveTrain.drive(driveRight * -1.0, driveLeft * -1.0);
     } else {
-      myDriveTrain.drive(driveLeft * 0.5, driveRight * 0.5);
+      myDriveTrain.drive(driveLeft * -1.0, driveRight * -1.0);
     }
 
     // double contRadians = Math.atan2(driverCont.getY(getLeftX),
@@ -98,6 +98,7 @@ public class FieldOrientedDrive extends CommandBase {
 
     if (driverCont.getDPadUp()) {
       myDriveTrain.resetEncPos(); // reset angle when Y pressed
+      myDriveTrain.setAngleOffset(0);
     }
 
     // _________rotation control_____________

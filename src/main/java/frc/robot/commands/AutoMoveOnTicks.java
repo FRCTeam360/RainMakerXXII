@@ -30,12 +30,14 @@ public class AutoMoveOnTicks extends CommandBase {
   @Override
   public void execute() {
     myDriveTrain.drive(0.125, 0.125);
-    distance = (myDriveTrain.getLeftEncoderMeters() + myDriveTrain.getRightEncoderMeters()) / 2;
+    distance = (myDriveTrain.getLeftEncoderMeters());
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    myDriveTrain.drive(0, 0);
+  }
 
   // Returns true when the command should end.
   @Override

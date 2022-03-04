@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.util.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -37,6 +38,8 @@ public class Robot extends TimedRobot {
     m_autoChooser = new AutoChooser(m_robotContainer);
 
     m_driveTrain = new DriveTrain();
+
+    PortForwarder.add(5801, "360limelight.local", 80);
   }
 
   /**
@@ -70,12 +73,14 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+
     m_driveTrain.brakeMode();
 
-   m_autonomousCommand = m_autoChooser.getCommand();
+  //  m_autonomousCommand = m_autoChooser.getCommand();
 
-   m_robotContainer.getDriveTrain().brakeMode();
-   m_robotContainer.getDriveTrain().resetEncPos();
+  //  m_robotContainer.getDriveTrain().brakeMode();
+  //  m_robotContainer.getDriveTrain().resetEncPos();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

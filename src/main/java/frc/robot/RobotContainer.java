@@ -30,6 +30,7 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.CANIds.*;
 
 import frc.robot.commands.*;
+import frc.robot.commands.autos.Anywhere.Anywhere2ball;
 import frc.robot.commands.autos.TestingGroup.Test;
 import frc.robot.operatorInterface.DriverControl;
 import frc.robot.operatorInterface.OperatorControl;
@@ -78,6 +79,8 @@ public class RobotContainer {
   private final TurretManual turretManual = new TurretManual(driveTrain);
   private final Pressurize pressurize = new Pressurize(pneumatics);
 
+  private final Anywhere2ball anywhere2ball = new Anywhere2ball(driveTrain, 0);
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -93,7 +96,7 @@ public class RobotContainer {
     feeder.setDefaultCommand(runFeeder);
     intake.setDefaultCommand(runIntake);
     shooter.setDefaultCommand(setShoot);
-    driveTrain.setDefaultCommand(fieldOrientedDrive);
+    driveTrain.setDefaultCommand(tankDrive);
     pneumatics.setDefaultCommand(pressurize);
     turret.setDefaultCommand(turretManual);
 
@@ -125,6 +128,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return null;
+    return anywhere2ball;
   }
 }

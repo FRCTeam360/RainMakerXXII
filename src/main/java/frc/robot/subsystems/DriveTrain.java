@@ -71,6 +71,8 @@ public class DriveTrain extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   public DriveTrain() {
 
+    navX.calibrate();
+
     motorLLead.configFactoryDefault();
     motorLFollow1.configFactoryDefault();
     motorLFollow2.configFactoryDefault();
@@ -115,10 +117,11 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void resetEncPos() { // For initialization resets encoder positions, for ramsete
+    System.out.println("resetting");
     motorLLead.setSelectedSensorPosition(0);
     motorRLead.setSelectedSensorPosition(0);
     navX.zeroYaw();
-    navX.setAngleAdjustment(-navX.getAngle()); // Set angle offset
+    navX.setAngleAdjustment(0); // Set angle offset
     m_odometry.resetPosition(new Pose2d(), getHeading()); // Set odomentry to zero
   }
 
@@ -206,6 +209,7 @@ public class DriveTrain extends SubsystemBase {
   public void navxTestingDashboardReadouts() {
     // SmartDashboard.putNumber("N ang", Math.IEEEremainder(navX.getAngle(), 360) );
     SmartDashboard.putNumber("NAV ang", navX.getAngle());
+    SmartDashboard.putNumber("robot heading", this.getHeadingAngle());
     SmartDashboard.putString("Pos2D", m_odometry.getPoseMeters().toString());
     // System.out.print("NavX angle: " + navX.getAngle());
     // SmartDashboard.putNumber("N pre", navX.getBarometricPressure()); //why this
@@ -244,6 +248,9 @@ public class DriveTrain extends SubsystemBase {
     // System.out.println("Left encoder" +
     // Units.metersToFeet(motorRLead.getSelectedSensorPosition() *
     // AutoConstants.ticksToMeters));
+
+    SmartDashboard.putNumber("Left Encoder", getLeftEncoderMeters());
+    SmartDashboard.putNumber("Right Encoder", getRightEncoderMeters());
   }
 
   public void positionPrintouts() {
