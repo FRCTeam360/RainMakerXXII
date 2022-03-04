@@ -19,13 +19,15 @@ public class FieldOrientedDrive extends CommandBase {
 
   private final DriverControl driverCont; // driverCont?
 
-  private final SlewRateLimiter filter = new SlewRateLimiter(DriveTrain.ACCELERATION_LIMIT);
+  private final SlewRateLimiter filter;
 
   /** Creates a new FieldOrientedDrive. */
   public FieldOrientedDrive(DriveTrain driveTrain) {
     driverCont = DriverControl.getInstance();
 
     myDriveTrain = driveTrain;
+
+    filter = new SlewRateLimiter(myDriveTrain.getAccelerationLimit());
 
     addRequirements(myDriveTrain); // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -39,7 +41,7 @@ public class FieldOrientedDrive extends CommandBase {
   @Override
   public void execute() {
 
-    double gyroAngle = myDriveTrain.getYaw();
+    double gyroAngle = myDriveTrain.getHeadingAngle();
     double gyroRadians = Math.toRadians(gyroAngle);
 
     double rightLeftSquared = 0;

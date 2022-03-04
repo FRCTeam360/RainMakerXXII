@@ -31,6 +31,8 @@ public class Shooter extends SubsystemBase {
 
   private static Shooter instance;
 
+  private final Limelight myLimelight = Limelight.getInstance();
+
   public boolean shooterReady;
 
   private double previousError;
@@ -62,20 +64,18 @@ public class Shooter extends SubsystemBase {
   public static double targetVelocity = backupTargetVelocity; // will get changed in the future by limelight
                                                               // subsystem or a command...
 
-  public static final double aVal = 2.697; // Quad Ratic regression values
-  public static final double bVal = -52.912;
-  public static final double cVal = 14815.146;
+  private static final double a = -0.002182938;
+  private static final double b = -0.0146528457;
+  private static final double c = 2.862058996;
+  private static final double d = -46.47695902;
+  private static final double e = 3261.531163;
 
-  public static final double MAX_SHOOTER_ACCELERATION = 1.0;
+  public static final double MAX_SHOOTER_ACCELERATION = 0.5;
   private final SlewRateLimiter filter = new SlewRateLimiter(MAX_SHOOTER_ACCELERATION);
 
   private Shooter() {
     shooterLead = new WPI_TalonFX(shooterLeadId);
     shooterFollow = new WPI_TalonFX(shooterFollowId);
-
-    // shooterPidController = shooterLead.getPIDController();
-
-    // shooterEncoder = shooterLead.getEncoder();
 
     shooterLead.configFactoryDefault();
     shooterFollow.configFactoryDefault();
@@ -88,9 +88,8 @@ public class Shooter extends SubsystemBase {
     shooterLead.setNeutralMode(NeutralMode.Coast);
     shooterFollow.setNeutralMode(NeutralMode.Coast);
 
-    shooterLead.setInverted(true);
-    // shooterLead.setSensorPhase(true); //the Follower isn't harvested for it's
-    // encoder therefor rotation doesn't need to be modified
+    shooterLead.setInverted(false);
+    shooterFollow.setInverted(true);
 
     // SmartDashboard.putNumber("kP", 0.0);
     // SmartDashboard.putNumber("kI", 0.0);
@@ -121,7 +120,11 @@ public class Shooter extends SubsystemBase {
     // kD = SmartDashboard.getNumber("kD", 0.0);
     // kF = SmartDashboard.getNumber("kF", 0.0);
 
+    SmartDashboard.putNumber("sl amps", shooterLead.getSupplyCurrent());
+    SmartDashboard.putNumber("sf amps", shooterFollow.getSupplyCurrent());
+
     SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
+    SmartDashboard.putNumber("Shoot Goal", this.getShootGoal());
     SmartDashboard.putNumber("Shooter Ticks", shooterLead.getSelectedSensorVelocity());
     SmartDashboard.putNumber("Shooter Lead Temp", shooterLead.getTemperature());
     SmartDashboard.putNumber("Shooter Follow Temp", shooterFollow.getTemperature());
@@ -132,8 +135,9 @@ public class Shooter extends SubsystemBase {
    * 
    * @param output motor output from -1 to 1
    */
-  public void setSpeed(double output) {
-    shooterLead.set(filter.calculate(output));
+  public void setPower(double output) {
+    // shooterLead.set(filter.calculate(output));
+    shooterLead.set(output);
   }
 
   /**
@@ -158,12 +162,24 @@ public class Shooter extends SubsystemBase {
     // speed = Math.min(speed, 0.7);
     // speed = Math.max(speed, -0.7);
 
-    this.setSpeed(filter.calculate(speed));
+    this.setPower(speed);
     SmartDashboard.putNumber("speed set", speed);
   }
 
   public boolean isAtSpeed() {
     double error = velocityTarget - this.getVelocity();
-    return Math.abs(error) <= 100;
+    System.out.println("error: " + error);  
+    return Math.abs(error) <= 50 && this.getVelocity() != 0;
+  }
+  
+  /**
+   * gets shoot goal as determined by our quartic regression, using limelight y-value
+   * @return shootGoal
+   */
+  public double getShootGoal(){
+    double limedY = myLimelight.getY();
+
+    return (a * Math.pow(limedY, 4)) + (b * Math.pow(limedY, 3) + (c * Math.pow(limedY, 2)) + (d * limedY) + e);  
+
   }
 }

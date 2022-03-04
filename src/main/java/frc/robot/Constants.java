@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -18,10 +20,21 @@ package frc.robot;
  */
 public final class Constants {
     public static final class AutoConstants {
-        //Conversions for the Falcons
-        private static final double pi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
-        //public static final double ticksToMeters = ( ((15.0/85.0)*(30.0/40.0)) / 1.0 ) * ( (pi * .1524) / 1.0 ); 
-        public static final double ticksToMeters = ( ((15.0/85.0)*(30.0/40.0)) / 1.0 ) * ( (pi * .1524) / 1.0 );
+
+        //values for Ramsete controller
+        public static final double ksVolts = 0.57153;
+        public static final double kvVoltSecondsPerMeter = 1.2796;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.1411;
+        public static final double kPDriveVel = 1.6425;
+        public static final double kTrackwidthMeters = 0.641;
+
+        public static final double kMaxSpeedMetersPerSecond = 1.0;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1.0;
+
+        //ramsete values - 2,.7 are default
+        public static final double kRamseteB = 2.0;
+        public static final double kRamseteZeta = 0.7;
+
         public static final boolean kGyroReversed = true; //Characterization says this isn't necessary but it seems to perform better....
     }
 
@@ -49,12 +62,12 @@ public final class Constants {
     }
 
     public static final class PneumaticConstants {
-        public static final int intakeForwardChannel = 1;
-        public static final int intakeReverseChannel = 0;
+        public static final int intakeForwardChannel = 0;
+        public static final int intakeReverseChannel = 1;
     }
 
     public static final class DigitalInputPorts {
         public static final int topTowerSensor = 0;
-        public static final int middleLimitSwitchPort = 2;
+        public static final int middleLimitSwitchPort = 1;
     }
 }

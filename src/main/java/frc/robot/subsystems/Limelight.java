@@ -17,8 +17,16 @@ public class Limelight extends SubsystemBase {
   private NetworkTableEntry ta = table.getEntry("ta");
 
   private NetworkTableEntry camMode = table.getEntry("camMode");
+  private static Limelight instance;
 
-  public Limelight() {}
+  private Limelight() {}
+
+  public static Limelight getInstance(){
+    if(instance == null){
+      instance = new Limelight();
+    }
+    return instance;
+  }
 
   public void changeCamMode() {
     if(camMode.getDouble(0.0) == 1.0){

@@ -19,7 +19,7 @@ import static frc.robot.Constants.DigitalInputPorts.*;
 public class Turret extends SubsystemBase {
 
   private DigitalInput leftLimitSwitch;
-  private DigitalInput middleLimitSwitch;
+  private DigitalInput middleLimitSwitch = new DigitalInput(middleLimitSwitchPort);
   private DigitalInput rightLimitSwitch;
 
   public static final double maxSpeed = 0.6;
@@ -61,6 +61,8 @@ public class Turret extends SubsystemBase {
 
   private double alignIntegral;
   private double previousTX;
+
+  private boolean pastMiddleLimitSwitchState;
 
   public static Turret getInstance() {
     if (instance == null) {
@@ -105,6 +107,16 @@ public class Turret extends SubsystemBase {
 
   public void zero() {
     this.angleTurn(0);
+  }
+
+  public void limitSwitchResetAngle() {
+    boolean currentMiddleLimitState = this.checkMiddleLimitSwitch();
+
+    if (currentMiddleLimitState == false && pastMiddleLimitSwitchState == true) {
+        resetEncoderTicks();
+    }
+
+    pastMiddleLimitSwitchState = currentMiddleLimitState;
   }
 
   public void turn(double speed) {
@@ -178,7 +190,8 @@ public class Turret extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Turret Angle", getAngle());
-    // System.out.println("Turret Angle: " + getAngle());
     SmartDashboard.putNumber("Turret Encoder", turretMotor.getEncoder().getPosition());
+
+    this.limitSwitchResetAngle();
   }
 }

@@ -16,13 +16,15 @@ public class ArcadeDrive extends CommandBase {
 
   private final DriverControl driverCont;
 
-  private final SlewRateLimiter filter = new SlewRateLimiter(DriveTrain.ACCELERATION_LIMIT);
+  private final SlewRateLimiter filter;
 
   /** Creates a new ArcadeDrive. */
   public ArcadeDrive(DriveTrain driveTrain) {
     driverCont = DriverControl.getInstance();
 
     myDriveTrain = driveTrain;
+
+    filter = new SlewRateLimiter(myDriveTrain.getAccelerationLimit());
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(myDriveTrain);

@@ -5,18 +5,32 @@
 package frc.robot;
 
 import java.sql.Driver;
+import java.util.List;
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.OIConstants.*;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.CANIds.*;
 
 import frc.robot.commands.*;
+import frc.robot.commands.autos.TestingGroup.Test;
 import frc.robot.operatorInterface.DriverControl;
 import frc.robot.operatorInterface.OperatorControl;
 import frc.robot.subsystems.*;
@@ -27,17 +41,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-
-
 import frc.robot.subsystems.*;
+
 /**
  * This class is where the bulk of the robot should be declared. Since
- * Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in
- * the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of
- * the robot (including
- * subsystems, commands, and button mappings) should be declared here.
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
 
@@ -47,14 +58,13 @@ public class RobotContainer {
 
   private final Turret turret = Turret.getInstance();
   private final Shooter shooter = Shooter.getInstance();
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain driveTrain = new DriveTrain();
-  public final Feeder feeder = Feeder.getInstance();
-  public final Intake intake = Intake.getInstance();
-  public final Climber climber = new Climber();
-  public final Limelight limelight = new Limelight();
-  public final Tower tower = Tower.getInstance(); 
-  public final Pneumatics pneumatics = new Pneumatics();
+  private final Feeder feeder = Feeder.getInstance();
+  private final Intake intake = Intake.getInstance();
+  private final Limelight limelight = Limelight.getInstance();
+  private final Tower tower = Tower.getInstance();
+  private final Pneumatics pneumatics = new Pneumatics();
+  private final Climber climber = new Climber();
 
   private final ShooterJoy shooterJoy = new ShooterJoy();
   private final SetShoot setShoot = new SetShoot(limelight);
@@ -67,14 +77,17 @@ public class RobotContainer {
   private final TurretAuto turretAuto = new TurretAuto(limelight, turret);
   private final TurretManual turretManual = new TurretManual(driveTrain);
   private final Pressurize pressurize = new Pressurize(pneumatics);
-  
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
-    //Configure the button bindings
+    // Configure the button bindings
     configureDefaultCommands();
     configureButtonBindings();
   }
-  //scheduler will run these commands when nothing else scheduled
+
+  // scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
     tower.setDefaultCommand(runFeeder);
     feeder.setDefaultCommand(runFeeder);
@@ -88,11 +101,9 @@ public class RobotContainer {
 
   /**
    * Use this method to define your button->command mappings. Buttons can be
-   * created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
-   * it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * created by instantiating a {@link GenericHID} or one of its subclasses
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
 
   private void configureButtonBindings() {
@@ -104,13 +115,16 @@ public class RobotContainer {
     new JoystickButton(operatorCont, 10).whileHeld(runClimberManual);
   }
 
+  public DriveTrain getDriveTrain() {
+    return driveTrain;
+  }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
     return null;
   }
 }
