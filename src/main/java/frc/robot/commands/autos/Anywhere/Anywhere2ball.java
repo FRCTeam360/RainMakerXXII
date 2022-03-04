@@ -27,11 +27,11 @@ public class Anywhere2ball extends ParallelRaceGroup {
   Intake intake = Intake.getInstance();
 
   /** Creates a new T_R_2ball. */
-  public Anywhere2ball(DriveTrain driveTrain) {
+  public Anywhere2ball(DriveTrain driveTrain, double offset) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
-    // driveTrain.setAngleOffset(133.5);
+    driveTrain.setAngleOffset(offset);
 
     addCommands(
 
