@@ -53,7 +53,7 @@ public class SetShoot extends CommandBase {
     if(driverCont.getRightTrigger() || operatorCont.getRightTrigger()){
       shooter.setVelocity(shootGoal);
     } else {
-      shooter.setSpeed(0.0);
+      shooter.setPower(0.0);
     }
 
     // System.out.println("shootgoal" + shootGoal);
@@ -80,7 +80,7 @@ public class SetShoot extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.setSpeed(0);
+    shooter.setPower(0);
   }
 
   // Returns true when the command should end.

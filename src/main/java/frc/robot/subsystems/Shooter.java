@@ -135,7 +135,7 @@ public class Shooter extends SubsystemBase {
    * 
    * @param output motor output from -1 to 1
    */
-  public void setSpeed(double output) {
+  public void setPower(double output) {
     // shooterLead.set(filter.calculate(output));
     shooterLead.set(output);
   }
@@ -162,8 +162,7 @@ public class Shooter extends SubsystemBase {
     // speed = Math.min(speed, 0.7);
     // speed = Math.max(speed, -0.7);
 
-    // this.setSpeed(filter.calculate(speed));
-    this.setSpeed(speed);
+    this.setPower(speed);
     SmartDashboard.putNumber("speed set", speed);
   }
 

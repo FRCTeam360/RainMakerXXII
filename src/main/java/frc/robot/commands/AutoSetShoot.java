@@ -32,7 +32,7 @@ public class AutoSetShoot extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.setSpeed(0);
+    shooter.setPower(0);
   }
 
   // Returns true when the command should end.
