@@ -50,26 +50,9 @@ public class SetShoot extends CommandBase {
       shooter.setPower(0.0);
     }
 
-    // System.out.println("shootgoal" + shootGoal);
-
     // SmartDashboard.putNumber("Shoot Goal", shootGoal);
 
-    // double shootError = Math.abs(shooter.getVelocity() * -1 - shootGoal);
-
   }
-
-
-  /**
-   * gets shoot goal as determined by our quartic regression, using limelight y-value
-   * @return shootGoal
-   */
-  // public double getShootGoal(){
-  //   double limedY = myLimelight.getY();
-
-  //   return (a * Math.pow(limedY, 4)) + (b * Math.pow(limedY, 3) + (c * Math.pow(limedY, 2)) + (d * limedY) + e);  
-
-  // }
-
 
   // Called once the command ends or is interrupted.
   @Override
