@@ -127,7 +127,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getHeadingAngle() {
-    return Math.IEEEremainder(-navX.getAngle(), 360);
+    return Math.IEEEremainder(navX.getAngle(), 360);
   }
 
   public double getYaw() {
