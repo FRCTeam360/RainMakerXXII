@@ -64,6 +64,7 @@ public class RobotContainer {
   private final Limelight limelight = Limelight.getInstance();
   private final Tower tower = Tower.getInstance();
   private final Pneumatics pneumatics = new Pneumatics();
+  private final Climber climber = new Climber();
 
   private final ShooterJoy shooterJoy = new ShooterJoy();
   private final SetShoot setShoot = new SetShoot(limelight);
@@ -72,6 +73,7 @@ public class RobotContainer {
   private final TankDrive tankDrive = new TankDrive(driveTrain);
   private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
   private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
+  private final RunClimberManual runClimberManual = new RunClimberManual(climber);
   private final TurretAuto turretAuto = new TurretAuto(limelight, turret);
   private final TurretManual turretManual = new TurretManual(driveTrain);
   private final Pressurize pressurize = new Pressurize(pneumatics);
@@ -110,6 +112,7 @@ public class RobotContainer {
     new JoystickButton(driverCont, 4).whenPressed(arcadeDrive);
     new JoystickButton(operatorCont, 7).whenHeld(shooterJoy);
     new JoystickButton(operatorCont, 8).whenHeld(turretAuto);
+    new JoystickButton(operatorCont, 10).whileHeld(runClimberManual);
   }
 
   public DriveTrain getDriveTrain() {

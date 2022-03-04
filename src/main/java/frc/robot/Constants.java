@@ -51,6 +51,8 @@ public final class Constants {
         public static final int intakeId = 10;
         public static final int feederId = 12;
         public static final int towerId = 8;
+        public static final int climbLeftId = 13;
+        public static final int climbRightId = 14;
     }
 
     public static final class OIConstants {
