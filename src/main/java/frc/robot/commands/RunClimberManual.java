@@ -10,11 +10,10 @@ import frc.robot.subsystems.Climber;
 
 public class RunClimberManual extends CommandBase {
 
-  private Climber myClimber;
-  private final OperatorControl operatorCont;
+  private final Climber myClimber;
+  private final OperatorControl operatorCont = OperatorControl.getInstance();
   /** Creates a new RunClimber. */
   public RunClimberManual(Climber climber) {
-    operatorCont = OperatorControl.getInstance();
     myClimber = climber;
     // Use addRequirements() here to declare subsystem dependencies.
   }
