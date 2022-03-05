@@ -56,6 +56,7 @@ public class TankDrive extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     myDriveTrain.drive(0, 0);
+    System.out.println("TANK END");
   }
 
   // Returns true when the command should end.

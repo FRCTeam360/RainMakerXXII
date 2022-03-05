@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.CANIds.*;
 //import frc.robot.Constants.AutoConstants;
 
+import javax.swing.text.Style;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
@@ -251,6 +253,14 @@ public class DriveTrain extends SubsystemBase {
 
     SmartDashboard.putNumber("Left Encoder", getLeftEncoderMeters());
     SmartDashboard.putNumber("Right Encoder", getRightEncoderMeters());
+
+    System.out.println("right amps lead: " + motorRLead.getSupplyCurrent());
+    System.out.println("right amps follow1: " + motorRFollow1.getSupplyCurrent());
+    System.out.println("right amps follow2: " + motorRFollow2.getSupplyCurrent());
+
+    System.out.println("left amps lead: " + motorLLead.getSupplyCurrent());
+    System.out.println("left amps follow1: " + motorLFollow1.getSupplyCurrent());
+    System.out.println("left amps follow2: " + motorLFollow2.getSupplyCurrent());
   }
 
   public void positionPrintouts() {
@@ -261,8 +271,8 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void drive(double leftMotorPercentage, double rightMotorPercentage) {
-    leftGroup.set(leftMotorPercentage);
-    rightGroup.set(rightMotorPercentage);
+    motorLLead.set(leftMotorPercentage);
+    motorRLead.set(rightMotorPercentage);
   }
 
   @Override
