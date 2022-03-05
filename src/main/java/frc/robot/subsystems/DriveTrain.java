@@ -254,13 +254,13 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("Left Encoder", getLeftEncoderMeters());
     SmartDashboard.putNumber("Right Encoder", getRightEncoderMeters());
 
-    System.out.println("right amps lead: " + motorRLead.getSupplyCurrent());
-    System.out.println("right amps follow1: " + motorRFollow1.getSupplyCurrent());
-    System.out.println("right amps follow2: " + motorRFollow2.getSupplyCurrent());
+    // System.out.println("right amps lead: " + motorRLead.getSupplyCurrent());
+    // System.out.println("right amps follow1: " + motorRFollow1.getSupplyCurrent());
+    // System.out.println("right amps follow2: " + motorRFollow2.getSupplyCurrent());
 
-    System.out.println("left amps lead: " + motorLLead.getSupplyCurrent());
-    System.out.println("left amps follow1: " + motorLFollow1.getSupplyCurrent());
-    System.out.println("left amps follow2: " + motorLFollow2.getSupplyCurrent());
+    // System.out.println("left amps lead: " + motorLLead.getSupplyCurrent());
+    // System.out.println("left amps follow1[]\][\]: " + motorLFollow1.getSupplyCurrent());
+    // System.out.println("left amps follow2: " + motorLFollow2.getSupplyCurrent());
   }
 
   public void positionPrintouts() {
