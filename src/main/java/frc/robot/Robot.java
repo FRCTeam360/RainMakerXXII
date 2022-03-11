@@ -73,11 +73,11 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // m_driveTrain.brakeMode();
 
-  //  m_autonomousCommand = m_autoChooser.getCommand();
+   m_autonomousCommand = m_autoChooser.getCommand();
 
   //  m_robotContainer.getDriveTrain().brakeMode();
   //  m_robotContainer.getDriveTrain().resetEncPos();

@@ -251,16 +251,12 @@ public class DriveTrain extends SubsystemBase {
     // Units.metersToFeet(motorRLead.getSelectedSensorPosition() *
     // AutoConstants.ticksToMeters));
 
-    SmartDashboard.putNumber("Left Encoder", getLeftEncoderMeters());
-    SmartDashboard.putNumber("Right Encoder", getRightEncoderMeters());
-
-    // System.out.println("right amps lead: " + motorRLead.getSupplyCurrent());
-    // System.out.println("right amps follow1: " + motorRFollow1.getSupplyCurrent());
-    // System.out.println("right amps follow2: " + motorRFollow2.getSupplyCurrent());
-
-    // System.out.println("left amps lead: " + motorLLead.getSupplyCurrent());
-    // System.out.println("left amps follow1[]\][\]: " + motorLFollow1.getSupplyCurrent());
-    // System.out.println("left amps follow2: " + motorLFollow2.getSupplyCurrent());
+    SmartDashboard.putNumber("RL current", motorRLead.getSupplyCurrent());
+    SmartDashboard.putNumber("RF1 current", motorRFollow1.getSupplyCurrent());
+    SmartDashboard.putNumber("RF2 current", motorRFollow2.getSupplyCurrent());
+    SmartDashboard.putNumber("LL current", motorLLead.getSupplyCurrent());
+    SmartDashboard.putNumber("LF1 current", motorLFollow1.getSupplyCurrent());
+    SmartDashboard.putNumber("LF2 current", motorLFollow2.getSupplyCurrent());
   }
 
   public void positionPrintouts() {
@@ -282,7 +278,7 @@ public class DriveTrain extends SubsystemBase {
 
   public double getForwardSpeed() {
     double forward = (motorLLead.getSelectedSensorVelocity() + motorRLead.getSelectedSensorVelocity()) / 2;
-    System.out.println("forward: " + forward);
+    // System.out.println("forward: " + forward);
     return forward;
   }
 

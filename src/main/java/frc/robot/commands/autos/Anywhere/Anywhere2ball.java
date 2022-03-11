@@ -51,7 +51,7 @@ public class Anywhere2ball extends ParallelRaceGroup {
 
                 new SequentialCommandGroup(
 
-                    new AutoMoveOnTicks(driveTrain, 1.35)
+                    new AutoMoveOnTicks(driveTrain, 1.45)
                     ,
 
                     new AutoRunFeederAndTower(),
