@@ -68,7 +68,7 @@ public class FieldOrientedDrive extends CommandBase {
     // robot-based turning adjustment
     double forward = upDownSquared * Math.cos(gyroRadians) + rightLeftSquared * Math.sin(gyroRadians);
     // if(myDriveTrain.isAccelerating()){
-      forward = filter.calculate(forward);
+      // forward = filter.calculate(forward);
     // }
     double right = -1 * upDownSquared * Math.sin(gyroRadians) + rightLeftSquared * Math.cos(gyroRadians);
 
