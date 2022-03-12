@@ -4,44 +4,7 @@
 
 package frc.robot;
 
-import java.sql.Driver;
-import java.util.List;
-import java.util.function.BooleanSupplier;
-
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
-import frc.robot.Constants.OIConstants;
-import frc.robot.Constants.OIConstants.*;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.CANIds.*;
-
-import frc.robot.commands.*;
-import frc.robot.commands.autos.TestingGroup.Test;
-import frc.robot.operatorInterface.DriverControl;
-import frc.robot.operatorInterface.OperatorControl;
-import frc.robot.subsystems.*;
-import frc.robot.operatorInterface.OperatorControl;
-import frc.robot.commands.TurretAuto;
-
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-
-import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -52,50 +15,14 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
 
-  private final DriverControl driverCont = DriverControl.getInstance();
-  private final OperatorControl operatorCont = OperatorControl.getInstance();
-  // The robot's subsystems and commands are defined here...
-
-  private final Turret turret = Turret.getInstance();
-  private final Shooter shooter = Shooter.getInstance();
-  private final DriveTrain driveTrain = new DriveTrain();
-  private final Feeder feeder = Feeder.getInstance();
-  private final Intake intake = Intake.getInstance();
-  private final Limelight limelight = Limelight.getInstance();
-  private final Tower tower = Tower.getInstance();
-  private final Pneumatics pneumatics = new Pneumatics();
-  private final Climber climber = new Climber();
-
-  private final ShooterJoy shooterJoy = new ShooterJoy();
-  private final SetShoot setShoot = new SetShoot(limelight);
-  public final RunFeeder runFeeder = new RunFeeder();
-  public final RunIntake runIntake = new RunIntake();
-  private final TankDrive tankDrive = new TankDrive(driveTrain);
-  private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
-  private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
-  private final RunClimberManual runClimberManual = new RunClimberManual(climber);
-  private final TurretAuto turretAuto = new TurretAuto(limelight, turret);
-  private final TurretManual turretManual = new TurretManual(driveTrain);
-  private final Pressurize pressurize = new Pressurize(pneumatics);
-
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    // Configure the button bindings
-    configureDefaultCommands();
-    configureButtonBindings();
   }
 
   // scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
-    tower.setDefaultCommand(runFeeder);
-    feeder.setDefaultCommand(runFeeder);
-    intake.setDefaultCommand(runIntake);
-    shooter.setDefaultCommand(setShoot);
-    driveTrain.setDefaultCommand(fieldOrientedDrive);
-    pneumatics.setDefaultCommand(pressurize);
-    turret.setDefaultCommand(turretManual);
 
   }
 
@@ -107,16 +34,7 @@ public class RobotContainer {
    */
 
   private void configureButtonBindings() {
-    new JoystickButton(driverCont, 2).whenPressed(fieldOrientedDrive);
-    new JoystickButton(driverCont, 8).whenPressed(tankDrive);
-    new JoystickButton(driverCont, 4).whenPressed(arcadeDrive);
-    new JoystickButton(operatorCont, 7).whenHeld(shooterJoy);
-    new JoystickButton(operatorCont, 8).whenHeld(turretAuto);
-    new JoystickButton(operatorCont, 10).whileHeld(runClimberManual);
-  }
 
-  public DriveTrain getDriveTrain() {
-    return driveTrain;
   }
 
   /**
