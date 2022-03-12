@@ -166,6 +166,11 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("speed set", speed);
   }
 
+  public void coast() {
+    shooterLead.stopMotor();
+
+  }
+
   public boolean isAtSpeed() {
     double error = velocityTarget - this.getVelocity();
     System.out.println("error: " + error);  

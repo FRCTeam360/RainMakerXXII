@@ -47,7 +47,7 @@ public class SetShoot extends CommandBase {
     if(driverCont.getRightTrigger() || operatorCont.getRightTrigger()){
       shooter.setVelocity(shootGoal);
     } else {
-      shooter.setPower(0.0);
+      shooter.coast();
     }
 
     // SmartDashboard.putNumber("Shoot Goal", shootGoal);
@@ -57,7 +57,7 @@ public class SetShoot extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.setPower(0);
+    shooter.coast();
   }
 
   // Returns true when the command should end.
