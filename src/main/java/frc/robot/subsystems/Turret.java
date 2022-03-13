@@ -83,7 +83,7 @@ public class Turret extends SubsystemBase {
 
     turretMotor.setInverted(false);
 
-    // turretMotor.getEncoder().setVelocityConversionFactor(rotationsPerTick * gearBoxRatio * pulleyRatio * degreesPerRotation);
+    turretMotor.getEncoder().setVelocityConversionFactor(rotationsPerTick * gearBoxRatio * pulleyRatio * degreesPerRotation);
 
     turretMotor.setSoftLimit(SoftLimitDirection.kForward, leftSoftLimit);
     turretMotor.setSoftLimit(SoftLimitDirection.kReverse, rightSoftLimit);
