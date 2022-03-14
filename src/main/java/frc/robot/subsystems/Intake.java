@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -41,6 +42,8 @@ public class Intake extends SubsystemBase {
         intake.setSmartCurrentLimit(20);
 
         intake.setInverted(true);
+
+        intake.setIdleMode(IdleMode.kCoast);
     }
 
     // motor speed

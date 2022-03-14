@@ -87,9 +87,9 @@ public class FieldOrientedDrive extends CommandBase {
 
     // drive reversed if bumper held
     if (driverCont.getLeftStickButton()) {
-      myDriveTrain.drive(driveRight * 0.5, driveLeft * 0.5);
+      myDriveTrain.drive(driveRight * 1, driveLeft * 1);
     } else {
-      myDriveTrain.drive(driveLeft * 0.5, driveRight * 0.5);
+      myDriveTrain.drive(driveLeft * 1, driveRight * 1);
     }
 
     // double contRadians = Math.atan2(driverCont.getY(getLeftX),
