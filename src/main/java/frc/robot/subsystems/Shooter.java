@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.SparkMaxRelativeEncoder;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -49,28 +50,36 @@ public class Shooter extends SubsystemBase {
   //     * decisecondsPerSeconds;
 
   public static final double shooterToRPM = (600.0 / 2048.0) * (3.0 /2.0) ;
+  public static final double shooterToMotorRPM = (600.0 / 2048.0);
 
   // Old data, need to tune
   public static final int kSlotIdx = 0;
   public static final int kTimeOutMs = 30;
   public static final int kPIDLoopIdx = 0;
-  public static  double kP = 0.00025; //0.0009; NEO practive bot values 
-  public static  double kI = 0.00000000005; //0
-  public static  double kD = 0.0001; //0.0005;
-  public static  double kF = 8750; //5000
+  public static  double kP = 0.3; //0.00025; //0.0009; NEO practive bot values 
+  public static  double kI = 0.000083; //0.00000000005; //0
+  public static  double kD = 0; //0.0001; //0.0005;
+  public static  double kF = 0.0471; //8750; //5000
+  public static double kIz = 200;
   public static final double kPeakOutput = 1;
 
   public static final double backupTargetVelocity = 14500; // Constant
   public static double targetVelocity = backupTargetVelocity; // will get changed in the future by limelight
                                                               // subsystem or a command...
 
-  private static final double a = -0.002182938;
-  private static final double b = -0.0146528457;
-  private static final double c = 2.862058996;
-  private static final double d = -46.47695902;
-  private static final double e = 3261.531163;
+  // private static final double a = -0.002182938;
+  // private static final double b = -0.0146528457;
+  // private static final double c = 2.862058996;
+  // private static final double d = -46.47695902;
+  // private static final double e = 3261.531163;
 
-  public static final double MAX_SHOOTER_ACCELERATION = 0.5;
+  private static final double a = -0.001635;
+  private static final double b = -0.01922;
+  private static final double c = 2.735;
+  private static final double d = -48.38;
+  private static final double e = 3216;
+
+  public static final double MAX_SHOOTER_ACCELERATION = 5000;
   private final SlewRateLimiter filter = new SlewRateLimiter(MAX_SHOOTER_ACCELERATION);
 
   private Shooter() {
@@ -95,6 +104,17 @@ public class Shooter extends SubsystemBase {
     // SmartDashboard.putNumber("kI", 0.0);
     // SmartDashboard.putNumber("kD", 0.0);
     // SmartDashboard.putNumber("kF", 0.0);
+
+    shooterLead.config_kF(0, kF, kTimeOutMs);
+    shooterLead.config_kP(0, kP, kTimeOutMs);
+    shooterLead.config_kI(0, kI, kTimeOutMs);
+    shooterLead.config_kD(0, kD, kTimeOutMs);
+    shooterLead.config_IntegralZone(0, kIz, kTimeOutMs);
+    shooterLead.configNominalOutputForward(0, kTimeOutMs);
+    shooterLead.configNominalOutputReverse(0, kTimeOutMs);
+    shooterLead.configPeakOutputForward(1, kTimeOutMs);
+    shooterLead.configPeakOutputReverse(-1, kTimeOutMs);
+    
   }
 
   /**
@@ -147,28 +167,40 @@ public class Shooter extends SubsystemBase {
    */
   public void setVelocity(double target) {
 
-    velocityTarget = target;
+    if (target == 0) {
+      filter.reset(0);
+      this.setPower(0);
+      velocityTarget = 0;
+    } else {
+      velocityTarget = filter.calculate(target);
 
-    double error = velocityTarget - this.getVelocity();
-    SmartDashboard.putNumber("error", error);
+      shooterLead.set(ControlMode.Velocity, velocityTarget * 2/3 / shooterToMotorRPM);
+  
+      System.out.println(velocityTarget);
+    }
 
-    double deriv = error - previousError;
-    previousError = error;
-    integral = integral + error;
+    // velocityTarget = target;
 
-    double speed = (velocityTarget / kF) + (error * kP) + (integral * kI) - (deriv * kD);
+    // double error = velocityTarget - this.getVelocity();
+    // SmartDashboard.putNumber("error", error);
+
+    // double deriv = error - previousError;
+    // previousError = error;
+    // integral = integral + error;
+
+    // double speed = (velocityTarget / kF) + (error * kP) + (integral * kI) - (deriv * kD);
 
     // temporary limiting of max output - will probably change
     // speed = Math.min(speed, 0.7);
     // speed = Math.max(speed, -0.7);
 
-    this.setPower(speed);
-    SmartDashboard.putNumber("speed set", speed);
+    // this.setPower(speed);
+    // SmartDashboard.putNumber("speed set", speed);
   }
 
   public boolean isAtSpeed() {
     double error = velocityTarget - this.getVelocity();
-    System.out.println("error: " + error);  
+    // System.out.println("error: " + error);  
     return Math.abs(error) <= 50 && this.getVelocity() != 0;
   }
   
