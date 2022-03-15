@@ -244,6 +244,13 @@ public class DriveTrain extends SubsystemBase {
     // System.out.println("Left encoder" +
     // Units.metersToFeet(motorRLead.getSelectedSensorPosition() *
     // AutoConstants.ticksToMeters));
+
+    SmartDashboard.putNumber("RL Voltage", motorRLead.getMotorOutputVoltage());
+    SmartDashboard.putNumber("RF1 Voltage", motorRFollow1.getMotorOutputVoltage());
+    SmartDashboard.putNumber("RF2 Voltage", motorRFollow2.getMotorOutputVoltage());
+    SmartDashboard.putNumber("RL Amps", motorRLead.getSupplyCurrent());
+    SmartDashboard.putNumber("RF1 Amps", motorRFollow1.getSupplyCurrent());
+    SmartDashboard.putNumber("RF2 Amps", motorRFollow2.getSupplyCurrent());
   }
 
   public void positionPrintouts() {

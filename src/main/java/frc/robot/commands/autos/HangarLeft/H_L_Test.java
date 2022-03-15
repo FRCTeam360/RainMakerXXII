@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.AutoConfig;
 import frc.robot.commands.AutoExtendIntake;
 import frc.robot.commands.AutoRetractIntake;
+import frc.robot.commands.AutoRetractIntake;
 import frc.robot.commands.AutoRunFeeder;
 import frc.robot.commands.AutoRunFeederAndTower;
 import frc.robot.commands.AutoRunIntake;
@@ -39,7 +40,7 @@ import frc.robot.subsystems.Turret;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class H_L_2ball extends ParallelRaceGroup {
+public class H_L_Test extends ParallelRaceGroup {
 
   Turret turret = Turret.getInstance();
   Limelight limelight = Limelight.getInstance();
@@ -51,11 +52,11 @@ public class H_L_2ball extends ParallelRaceGroup {
   public static final Trajectory phase1 = TrajectoryGenerator.generateTrajectory(
       new Pose2d(0, 0, new Rotation2d(0)),
       List.of(),
-      new Pose2d(1, 0, new Rotation2d(0)),
+      new Pose2d(1, 1, new Rotation2d(90)),
       AutoConfig.configFwd);
 
   /** Creates a new T_R_2ball. */
-  public H_L_2ball(DriveTrain driveTrain) {
+  public H_L_Test(DriveTrain driveTrain) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 

@@ -8,11 +8,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tower;
+import edu.wpi.first.wpilibj.Timer;
 
 public class AutoRunFeederAndTower extends CommandBase {
   private final Tower myTower = Tower.getInstance();
   private final Feeder myFeeder = Feeder.getInstance();
   private final Shooter myShooter = Shooter.getInstance();
+  private final Timer myTimer = new Timer();
   
   // private Boolean willEnd;
   // private Boolean ballPresentInitially;
@@ -44,6 +46,10 @@ public class AutoRunFeederAndTower extends CommandBase {
     if (!myTower.ballNotInTower()){
       ballPassedSensor = true;
     }
+
+    if(ballPassedSensor && myTower.ballNotInTower()){
+      myTimer.start();
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -51,13 +57,15 @@ public class AutoRunFeederAndTower extends CommandBase {
   public void end(boolean interrupted) {
     myTower.runTower(0);
     myFeeder.runFeeder(0);
+    myTimer.stop();
+    myTimer.reset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(ballPassedSensor){
-      return myTower.ballNotInTower();
+    if(myTimer.get() >= 0.25){
+      return true;
     } else {
       return false;
     }

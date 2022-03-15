@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.autos.TestingGroup.*;
 import frc.robot.commands.autos.Anywhere.Anywhere2ball;
 import frc.robot.commands.autos.HangarLeft.H_L_2ball;
+import frc.robot.commands.autos.HangarLeft.H_L_Test;
 import frc.robot.commands.autos.HangarLeft.SimpleHL2ball;
 import frc.robot.commands.autos.TerminalLeft.SimpleTL2ball;
 import frc.robot.commands.autos.TerminalRight.*;
@@ -27,6 +28,7 @@ public class AutoChooser {
     private final Command test2;
     private final Command tr2ball;
     private final Command hl2ball;
+    private final Command hltest;
     private final Command anywhere2ball;
     private final Command simplehl;
     private final Command simpletl;
@@ -43,6 +45,7 @@ public class AutoChooser {
         test2 = new Test2(container.getDriveTrain());
         tr2ball = new T_R_2ball(container.getDriveTrain());
         hl2ball = new H_L_2ball(container.getDriveTrain());
+        hltest = new H_L_Test(container.getDriveTrain());
         anywhere2ball = new Anywhere2ball(container.getDriveTrain(), 0);
         simplehl = new SimpleHL2ball(container.getDriveTrain());
         simpletl = new SimpleTL2ball(container.getDriveTrain());
@@ -55,6 +58,7 @@ public class AutoChooser {
         locationChooser.addOption("Terminal Left", "Terminal Left");
         locationChooser.addOption("Terminal Center", "Terminal Center");
         locationChooser.addOption("Terminal Right", "Terminal Right");
+        locationChooser.addOption("Test", "Test");
         locationChooser.setDefaultOption("Anywhere", "Anywhere");
 
         SmartDashboard.putData("Start Location", locationChooser);
@@ -69,6 +73,7 @@ public class AutoChooser {
 
             if ("Test".equals(selectedLocation)) {
                 autoChooser.addOption("Test", test);
+                autoChooser.addOption("Test2", test2);
             }
 
             if ("Anywhere".equals(selectedLocation)) {
@@ -83,6 +88,7 @@ public class AutoChooser {
             if ("Hangar Left".equals(selectedLocation)) {
                 autoChooser.addOption("HL 2 ball", hl2ball);
                 autoChooser.addOption("Simple HL", simplehl);
+                autoChooser.addOption("HL Test", hltest);
             }
 
             if ("Terminal Right".equals(selectedLocation)) {
