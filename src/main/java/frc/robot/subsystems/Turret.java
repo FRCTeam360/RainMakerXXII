@@ -47,8 +47,8 @@ public class Turret extends SubsystemBase {
   private double previousAngle;
   private double angleTurnIntegral;
 
-  public static final float leftSoftLimit = 105;
-  public static final float rightSoftLimit = -105;
+  public static final float leftSoftLimit = 120;
+  public static final float rightSoftLimit = -120;
 
   public static final float leftSoftLimitEncoder = (float) (leftSoftLimit / gearBoxRatio / pulleyRatio
       / degreesPerRotation);
@@ -85,8 +85,8 @@ public class Turret extends SubsystemBase {
 
     // turretMotor.getEncoder().setVelocityConversionFactor(rotationsPerTick * gearBoxRatio * pulleyRatio * degreesPerRotation);
 
-    turretMotor.setSoftLimit(SoftLimitDirection.kForward, leftSoftLimit);
-    turretMotor.setSoftLimit(SoftLimitDirection.kReverse, rightSoftLimit);
+    turretMotor.setSoftLimit(SoftLimitDirection.kForward, leftSoftLimitEncoder);
+    turretMotor.setSoftLimit(SoftLimitDirection.kReverse, rightSoftLimitEncoder);
 
     turretMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
     turretMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);

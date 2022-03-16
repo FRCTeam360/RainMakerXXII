@@ -33,6 +33,7 @@ public class AutoChooser {
     private final Command simplehl;
     private final Command simpletl;
     private final Command simpletr;
+    private final Command trTest;
 
     public AutoChooser(RobotContainer container) {
 
@@ -44,6 +45,7 @@ public class AutoChooser {
         test = new Test(container.getDriveTrain());
         test2 = new Test2(container.getDriveTrain());
         tr2ball = new T_R_2ball(container.getDriveTrain());
+        trTest = new T_R_Test(container.getDriveTrain());
         hl2ball = new H_L_2ball(container.getDriveTrain());
         hltest = new H_L_Test(container.getDriveTrain());
         anywhere2ball = new Anywhere2ball(container.getDriveTrain(), 0);
@@ -66,7 +68,9 @@ public class AutoChooser {
     }
 
     public void periodic() {
-        if (selectedLocation != null && !selectedLocation.equals(locationChooser.getSelected())) { // If it changes or is being initialized
+        if (selectedLocation != null && !selectedLocation.equals(locationChooser.getSelected())) { // If it changes or
+                                                                                                   // is being
+                                                                                                   // initialized
 
             selectedLocation = locationChooser.getSelected(); // Reset the SelectedLocation to what it actually is
             autoChooser = new SendableChooser<>(); // Clear the auto chooser
@@ -83,6 +87,7 @@ public class AutoChooser {
             if ("Terminal Right".equals(selectedLocation)) {
                 autoChooser.addOption("TR 2 ball", tr2ball);
                 autoChooser.addOption("Simple TR", simpletr);
+                autoChooser.addOption("TR Test", trTest);
             }
 
             if ("Hangar Left".equals(selectedLocation)) {
@@ -95,7 +100,8 @@ public class AutoChooser {
                 autoChooser.addOption("Simple TR", simpletr);
             }
 
-            SmartDashboard.putData("Auto Choice", autoChooser); // Update the Auto Choice with the new options and new chooser
+            SmartDashboard.putData("Auto Choice", autoChooser); // Update the Auto Choice with the new options and new
+                                                                // chooser
 
         }
         // Else do nothing cuz the location chooser hasn't changed states

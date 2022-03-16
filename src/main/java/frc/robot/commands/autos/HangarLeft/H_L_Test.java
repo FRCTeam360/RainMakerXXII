@@ -52,7 +52,7 @@ public class H_L_Test extends ParallelRaceGroup {
   public static final Trajectory phase1 = TrajectoryGenerator.generateTrajectory(
       new Pose2d(0, 0, new Rotation2d(0)),
       List.of(),
-      new Pose2d(1, 1, new Rotation2d(90)),
+      new Pose2d(1.1, 1, new Rotation2d(90)),
       AutoConfig.configFwd);
 
   /** Creates a new T_R_2ball. */
@@ -86,12 +86,10 @@ public class H_L_Test extends ParallelRaceGroup {
 
                 new AutoRunIntake(),
 
-                // new SequentialCommandGroup(
+                new MoveWithRamsete(phase1, 
+                driveTrain)
+                .andThen(() -> driveTrain.tankDriveVolts(0, 0))
 
-                    new MoveWithRamsete(phase1, 
-                    driveTrain)
-                    .andThen(() -> driveTrain.tankDriveVolts(0, 0))
-                // )
             ), 
 
             new AutoRetractIntake(),
