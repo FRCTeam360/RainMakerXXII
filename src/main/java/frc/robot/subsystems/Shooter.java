@@ -168,10 +168,7 @@ public class Shooter extends SubsystemBase {
       velocityTarget = filter.calculate(target);
 
       shooterLead.set(ControlMode.Velocity, velocityTarget * 2 / 3 / shooterToMotorRPM);
-
-      System.out.println(velocityTarget);
     }
-
   }
 
   public boolean isAtSpeed() {
