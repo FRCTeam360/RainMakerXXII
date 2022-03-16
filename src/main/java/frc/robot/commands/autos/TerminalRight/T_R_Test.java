@@ -55,20 +55,14 @@ public class T_R_Test extends ParallelRaceGroup {
             new Pose2d(1.1, -1, new Rotation2d(-90)),
             AutoConfig.configFwd);
 
+    public static final Trajectory phase2 = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(1.1, -1, new Rotation2d(-90)),
+            List.of(),
+            new Pose2d(-1, -3.5, new Rotation2d(-135)),
+            AutoConfig.configFwd);
+
     /** Creates a new T_R_2ball. */
     public T_R_Test(DriveTrain driveTrain) {
-        // Add your commands in the addCommands() call, e.g.
-        // addCommands(new FooCommand(), new BarCommand());
-
-        // try {
-        // Path ball2 = Filesystem.getDeployDirectory().toPath().resolve(ball2JSON);
-        // phase1 = TrajectoryUtil.fromPathweaverJson(ball2);
-        // } catch (IOException ex) {
-        // DriverStation.reportError("Unable to open trajectory: " + ball2JSON,
-        // ex.getStackTrace());
-        // }
-
-        // driveTrain.setAngleOffset(133.5);
 
         addCommands(
 
@@ -78,34 +72,67 @@ public class T_R_Test extends ParallelRaceGroup {
 
                 new SequentialCommandGroup(
 
-                        // new AutoRunFeederAndTower(),
+                        new SequentialCommandGroup(
 
-                        new AutoExtendIntake(),
+                                // new AutoRunFeederAndTower(),
 
-                        new ParallelRaceGroup(
+                                new AutoExtendIntake(),
 
-                                new AutoRunIntake(),
+                                new ParallelRaceGroup(
 
-                                new MoveWithRamsete(phase1,
-                                        driveTrain)
-                                                .andThen(() -> driveTrain.tankDriveVolts(0, 0))
+                                        new AutoRunIntake(),
+
+                                        new MoveWithRamsete(phase1,
+                                                driveTrain)
+                                                        .andThen(() -> driveTrain.tankDriveVolts(0, 0))
+
+                                ),
+
+                                new AutoRetractIntake(),
+
+                                new ParallelRaceGroup(
+
+                                        new AutoRunIntake(),
+
+                                        new SequentialCommandGroup(
+
+                                                new AutoRunFeederAndTower(),
+
+                                                new AutoRunFeederAndTower())
+
+                                )
 
                         ),
 
-                        new AutoRetractIntake(),
+                        new SequentialCommandGroup(
 
-                        new ParallelRaceGroup(
+                                // new AutoRunFeederAndTower(),
 
-                                new AutoRunIntake(),
+                                new AutoExtendIntake(),
 
-                                new SequentialCommandGroup(
+                                new ParallelRaceGroup(
 
-                                        new AutoRunFeederAndTower(),
+                                        new AutoRunIntake(),
 
-                                        new AutoRunFeederAndTower())
+                                        new MoveWithRamsete(phase2,
+                                                driveTrain)
+                                                        .andThen(() -> driveTrain.tankDriveVolts(0, 0))
 
-                        )
+                                ),
 
-                ));
+                                new AutoRetractIntake(),
+
+                                new ParallelRaceGroup(
+
+                                        new AutoRunIntake(),
+
+                                        new SequentialCommandGroup(
+
+                                                new AutoRunFeederAndTower()
+
+                                        )
+
+                                ))));
     }
+
 }
