@@ -67,9 +67,7 @@ public class FieldOrientedDrive extends CommandBase {
     // field oriented drive conversion. forward = robot-based forward value, right =
     // robot-based turning adjustment
     double forward = upDownSquared * Math.cos(gyroRadians) + rightLeftSquared * Math.sin(gyroRadians);
-    // if(myDriveTrain.isAccelerating()){
-      // forward = filter.calculate(forward);
-    // }
+   
     double right = -1 * upDownSquared * Math.sin(gyroRadians) + rightLeftSquared * Math.cos(gyroRadians);
 
     // System.out.println("forward: " + forward);
