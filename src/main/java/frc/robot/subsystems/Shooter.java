@@ -165,6 +165,7 @@ public class Shooter extends SubsystemBase {
     if (target == 0) {
       filter.reset(0);
       this.setPower(0);
+      velocityTarget = 0;
     } else {
       velocityTarget = filter.calculate(target);
 
@@ -173,6 +174,9 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean isAtSpeed() {
+    if (velocityTarget == 0) {
+      return false;
+    }
     double error = velocityTarget - this.getVelocity();
     return Math.abs(error) <= 50 && this.getVelocity() != 0;
   }
