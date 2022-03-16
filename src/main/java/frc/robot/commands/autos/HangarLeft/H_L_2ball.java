@@ -95,7 +95,9 @@ public class H_L_2ball extends ParallelRaceGroup {
 
                     new AutoRunFeederAndTower()
                 )
-            )
+            ), 
+
+            new AutoRetractIntake()
         )
     );
 
