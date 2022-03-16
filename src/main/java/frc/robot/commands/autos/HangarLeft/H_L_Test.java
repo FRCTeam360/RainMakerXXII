@@ -68,7 +68,7 @@ public class H_L_Test extends ParallelRaceGroup {
     // ex.getStackTrace());
     // }
 
-    driveTrain.setAngleOffset(133.5);
+    // driveTrain.setAngleOffset(133.5);
 
     addCommands(
 
@@ -86,17 +86,29 @@ public class H_L_Test extends ParallelRaceGroup {
 
                 new AutoRunIntake(),
 
-                new SequentialCommandGroup(
+                // new SequentialCommandGroup(
 
                     new MoveWithRamsete(phase1, 
                     driveTrain)
-                    .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
+                    .andThen(() -> driveTrain.tankDriveVolts(0, 0))
+                // )
+            ), 
+
+            new AutoRetractIntake(),
+
+            new ParallelRaceGroup(
+            
+                new AutoRunIntake(),
+
+                new SequentialCommandGroup(
 
                     new AutoRunFeederAndTower(),
-
+        
                     new AutoRunFeederAndTower()
                 )
+
             )
+
         )
     );
 

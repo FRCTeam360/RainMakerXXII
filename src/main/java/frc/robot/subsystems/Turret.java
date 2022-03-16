@@ -47,8 +47,8 @@ public class Turret extends SubsystemBase {
   private double previousAngle;
   private double angleTurnIntegral;
 
-  public static final float leftSoftLimit = 90;
-  public static final float rightSoftLimit = -90;
+  public static final float leftSoftLimit = 105;
+  public static final float rightSoftLimit = -105;
 
   public static final float leftSoftLimitEncoder = (float) (leftSoftLimit / gearBoxRatio / pulleyRatio
       / degreesPerRotation);
