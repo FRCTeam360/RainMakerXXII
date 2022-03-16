@@ -109,7 +109,6 @@ public class Shooter extends SubsystemBase {
     shooterLead.configNominalOutputReverse(0, kTimeOutMs);
     shooterLead.configPeakOutputForward(1, kTimeOutMs);
     shooterLead.configPeakOutputReverse(-1, kTimeOutMs);
-
   }
 
   /**
@@ -161,7 +160,6 @@ public class Shooter extends SubsystemBase {
    * @param target target velocity in shooter RPMs
    */
   public void setVelocity(double target) {
-
     if (target == 0) {
       filter.reset(0);
       this.setPower(0);
@@ -189,8 +187,6 @@ public class Shooter extends SubsystemBase {
    */
   public double getShootGoal() {
     double limedY = myLimelight.getY();
-
     return (a * Math.pow(limedY, 4)) + (b * Math.pow(limedY, 3) + (c * Math.pow(limedY, 2)) + (d * limedY) + e);
-
   }
 }
