@@ -165,7 +165,6 @@ public class Shooter extends SubsystemBase {
     if (target == 0) {
       filter.reset(0);
       this.setPower(0);
-      velocityTarget = 0;
     } else {
       velocityTarget = filter.calculate(target);
 

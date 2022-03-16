@@ -77,6 +77,8 @@ public class RobotContainer {
   private final TurretAuto turretAuto = new TurretAuto(limelight, turret);
   private final TurretManual turretManual = new TurretManual(driveTrain);
   private final Pressurize pressurize = new Pressurize(pneumatics);
+  private final RunFeederAutomatically feedAutomatic = new RunFeederAutomatically();
+  private final RunTowerAutomatically towerAutomatic = new RunTowerAutomatically();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -89,8 +91,8 @@ public class RobotContainer {
 
   // scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
-    tower.setDefaultCommand(runFeeder);
-    feeder.setDefaultCommand(runFeeder);
+    tower.setDefaultCommand(towerAutomatic);
+    feeder.setDefaultCommand(feedAutomatic);
     intake.setDefaultCommand(runIntake);
     shooter.setDefaultCommand(setShoot);
     driveTrain.setDefaultCommand(fieldOrientedDrive);
