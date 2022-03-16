@@ -47,7 +47,7 @@ public class SetShoot extends CommandBase {
     if(driverCont.getRightTrigger() || operatorCont.getRightTrigger()){
       shooter.setVelocity(shootGoal);
     } else {
-      shooter.setPower(0.0);
+      shooter.setVelocity(0.0);
     }
 
     // SmartDashboard.putNumber("Shoot Goal", shootGoal);
