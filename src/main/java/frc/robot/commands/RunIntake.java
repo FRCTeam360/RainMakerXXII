@@ -48,15 +48,25 @@ public class RunIntake extends CommandBase {
       myIntake.run(0.0); 
     }
 
+    // if(driverCont.getAButtonPressed() || operatorCont.getAButtonPressed()) {
+    //   if(isIntakeOut){
+    //     myIntake.intakeIn();
+    //     isIntakeOut = false;
+    //   } else {
+    //     myIntake.intakeOut();
+    //     isIntakeOut = true;
+    //   }
+
     if(driverCont.getAButtonPressed() || operatorCont.getAButtonPressed()) {
-      if(isIntakeOut){
-        myIntake.intakeIn();
-        isIntakeOut = false;
-      } else {
-        myIntake.intakeOut();
-        isIntakeOut = true;
-      }
+      myIntake.intakeOut();
+      isIntakeOut = true;
     }
+
+    if(driverCont.getBButtonPressed() || operatorCont.getBButtonPressed()) {
+      myIntake.intakeIn();
+      isIntakeOut = false;
+    }
+    // }
 
     SmartDashboard.putBoolean("intake out", isIntakeOut);
   }

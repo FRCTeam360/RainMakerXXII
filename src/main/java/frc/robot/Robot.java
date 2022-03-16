@@ -70,11 +70,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
-    m_driveTrain.brakeMode();
-
    m_autonomousCommand = m_autoChooser.getCommand();
 
-   m_robotContainer.getDriveTrain().brakeMode();
+  //  m_robotContainer.getDriveTrain().brakeMode();
    m_robotContainer.getDriveTrain().resetEncPos();
 
     // schedule the autonomous command (example)
@@ -95,7 +93,7 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
 
-    m_driveTrain.brakeMode();
+    m_driveTrain.coastMode();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
