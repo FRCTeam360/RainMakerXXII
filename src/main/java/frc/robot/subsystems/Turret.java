@@ -121,8 +121,8 @@ public class Turret extends SubsystemBase {
 
   public void turn(double speed) {
 
-    Math.min(maxSpeed, speed);
-    Math.max(-maxSpeed, speed);
+    speed = Math.min(maxSpeed, speed);
+    speed = Math.max(-maxSpeed, speed);
 
     turretMotor.set(speed);
 
