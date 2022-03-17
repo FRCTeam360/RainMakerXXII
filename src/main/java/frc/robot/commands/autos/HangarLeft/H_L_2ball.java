@@ -30,7 +30,11 @@ import frc.robot.commands.AutoSetShoot;
 import frc.robot.commands.AutoTimer;
 import frc.robot.commands.MoveWithRamsete;
 import frc.robot.commands.RunFeeder;
+import frc.robot.commands.RunFeederAutomatically;
+import frc.robot.commands.RunTowerAutomatically;
 import frc.robot.commands.TurretAuto;
+import frc.robot.commands.WaitUntilBallPassedSensor;
+import frc.robot.commands.WaitUntilBallPassedSensor.Sensor;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
@@ -91,9 +95,23 @@ public class H_L_2ball extends ParallelRaceGroup {
                     driveTrain)
                     .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
 
-                    new AutoRunFeederAndTower(),
+                    new ParallelRaceGroup(
 
-                    new AutoRunFeederAndTower()
+                        new RunTowerAutomatically(),
+
+                        new WaitUntilBallPassedSensor(Sensor.TOP)
+
+                    ),
+
+                    new ParallelRaceGroup(
+        
+                        new RunTowerAutomatically(), 
+
+                        new RunFeederAutomatically(),
+
+                        new WaitUntilBallPassedSensor(Sensor.TOP)
+
+                    )
                 )
             ), 
 

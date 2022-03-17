@@ -21,6 +21,8 @@ public class WaitUntilBallPassedSensor extends CommandBase {
 
   Sensor selectedSensor;
   int sensorPort;
+  boolean pastBall = false;
+  boolean shouldEnd = false;
   /** Creates a new WaitUntilBallPassedSensor. */
   public WaitUntilBallPassedSensor(Sensor sensor) {
     selectedSensor = sensor;
@@ -29,9 +31,11 @@ public class WaitUntilBallPassedSensor extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    pastBall = false;
+  }
 
-  public boolean ballPassedSensor(){
+  public boolean ballInSensor(){
     switch (selectedSensor){
       case TOP:
       default:
@@ -50,6 +54,7 @@ public class WaitUntilBallPassedSensor extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
   }
 
   // Called once the command ends or is interrupted.
@@ -59,6 +64,14 @@ public class WaitUntilBallPassedSensor extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ballPassedSensor() && ballNotInSensor();
+
+    boolean ballInSensor = ballInSensor();
+
+    if(ballInSensor == false && pastBall == true){
+      return true;
+    }
+
+    pastBall = ballInSensor;
+    return false;
   }
 }
