@@ -101,7 +101,13 @@ public class H_L_2ball extends ParallelRaceGroup {
 
                         new WaitUntilBallPassedSensor(Sensor.TOP)
 
-                    ),
+                    )
+
+                )
+
+            ),
+            
+                    new AutoRetractIntake(true),
 
                     new ParallelRaceGroup(
         
@@ -113,10 +119,8 @@ public class H_L_2ball extends ParallelRaceGroup {
 
                     )
                 )
-            ), 
-
-            new AutoRetractIntake()
-        )
+            
+        
     );
 
   }

@@ -46,18 +46,18 @@ import frc.robot.subsystems.Turret;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class H_L_Test extends ParallelRaceGroup {
 
-  Turret turret = Turret.getInstance();
-  Limelight limelight = Limelight.getInstance();
-  Intake intake = Intake.getInstance();
+    Turret turret = Turret.getInstance();
+    Limelight limelight = Limelight.getInstance();
+    Intake intake = Intake.getInstance();
 
-  private static final String ball2JSON = "paths/2ball.wpilib.json";
-  // Trajectory phase1 = new Trajectory();
+    private static final String ball2JSON = "paths/2ball.wpilib.json";
+    // Trajectory phase1 = new Trajectory();
 
-  public static final Trajectory phase1 = TrajectoryGenerator.generateTrajectory(
-      new Pose2d(0, 0, new Rotation2d(0)),
-      List.of(),
-      new Pose2d(1.1, 1, new Rotation2d(90)),
-      AutoConfig.configFwd);
+    public static final Trajectory phase1 = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(0, 0, new Rotation2d(0)),
+            List.of(),
+            new Pose2d(1.1, 1, new Rotation2d(90)),
+            AutoConfig.configFwd);
 
   /** Creates a new T_R_2ball. */
   public H_L_Test(DriveTrain driveTrain) {
@@ -96,7 +96,7 @@ public class H_L_Test extends ParallelRaceGroup {
 
             ), 
 
-            new AutoRetractIntake(),
+            new AutoRetractIntake(true),
 
             new ParallelRaceGroup(
             
