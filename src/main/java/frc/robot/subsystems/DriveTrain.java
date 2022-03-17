@@ -104,7 +104,7 @@ public class DriveTrain extends SubsystemBase {
     m_differentialDrive = new DifferentialDrive(leftGroup, rightGroup);
     m_differentialDrive.setSafetyEnabled(false); // So it won't stop the motors from moving
 
-    this.brakeMode();
+    this.coastMode();
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
@@ -118,8 +118,9 @@ public class DriveTrain extends SubsystemBase {
     motorLLead.setSelectedSensorPosition(0);
     motorRLead.setSelectedSensorPosition(0);
     navX.zeroYaw();
-    navX.setAngleAdjustment(-navX.getAngle()); // Set angle offset
+    navX.setAngleAdjustment(0); // Set angle offset
     m_odometry.resetPosition(new Pose2d(), getHeading()); // Set odomentry to zero
+    System.out.println("reset");
   }
 
   public Rotation2d getHeading() {
@@ -244,13 +245,15 @@ public class DriveTrain extends SubsystemBase {
     // System.out.println("Left encoder" +
     // Units.metersToFeet(motorRLead.getSelectedSensorPosition() *
     // AutoConstants.ticksToMeters));
+    
+    SmartDashboard.putNumber("robot heading", getHeadingAngle());
 
-    SmartDashboard.putNumber("RL Voltage", motorRLead.getMotorOutputVoltage());
-    SmartDashboard.putNumber("RF1 Voltage", motorRFollow1.getMotorOutputVoltage());
-    SmartDashboard.putNumber("RF2 Voltage", motorRFollow2.getMotorOutputVoltage());
-    SmartDashboard.putNumber("RL Amps", motorRLead.getSupplyCurrent());
-    SmartDashboard.putNumber("RF1 Amps", motorRFollow1.getSupplyCurrent());
-    SmartDashboard.putNumber("RF2 Amps", motorRFollow2.getSupplyCurrent());
+    SmartDashboard.putNumber("RL current", motorRLead.getSupplyCurrent());
+    SmartDashboard.putNumber("RF1 current", motorRFollow1.getSupplyCurrent());
+    SmartDashboard.putNumber("RF2 current", motorRFollow2.getSupplyCurrent());
+    SmartDashboard.putNumber("LL current", motorLLead.getSupplyCurrent());
+    SmartDashboard.putNumber("LF1 current", motorLFollow1.getSupplyCurrent());
+    SmartDashboard.putNumber("LF2 current", motorLFollow2.getSupplyCurrent());
   }
 
   public void positionPrintouts() {
@@ -261,8 +264,16 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void drive(double leftMotorPercentage, double rightMotorPercentage) {
-    leftGroup.set(leftMotorPercentage);
-    rightGroup.set(rightMotorPercentage);
+    if(leftMotorPercentage == 0){
+      motorLLead.stopMotor();
+    } else {
+      motorLLead.set(leftMotorPercentage);
+    }
+    if(rightMotorPercentage == 0){
+        motorRLead.stopMotor();
+    } else {
+      motorRLead.set(rightMotorPercentage);
+    }
   }
 
   @Override

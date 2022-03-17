@@ -67,9 +67,6 @@ public class FieldOrientedDrive extends CommandBase {
     // field oriented drive conversion. forward = robot-based forward value, right =
     // robot-based turning adjustment
     double forward = upDownSquared * Math.cos(gyroRadians) + rightLeftSquared * Math.sin(gyroRadians);
-    // if(myDriveTrain.isAccelerating()){
-      forward = filter.calculate(forward);
-    // }
     double right = -1 * upDownSquared * Math.sin(gyroRadians) + rightLeftSquared * Math.cos(gyroRadians);
 
     // System.out.println("forward: " + forward);
@@ -87,9 +84,9 @@ public class FieldOrientedDrive extends CommandBase {
 
     // drive reversed if bumper held
     if (driverCont.getLeftStickButton()) {
-      myDriveTrain.drive(driveRight * 0.5, driveLeft * 0.5);
+      myDriveTrain.drive(driveRight * 1, driveLeft * 1);
     } else {
-      myDriveTrain.drive(driveLeft * 0.5, driveRight * 0.5);
+      myDriveTrain.drive(driveLeft * 1, driveRight * 1);
     }
 
     // double contRadians = Math.atan2(driverCont.getY(getLeftX),
