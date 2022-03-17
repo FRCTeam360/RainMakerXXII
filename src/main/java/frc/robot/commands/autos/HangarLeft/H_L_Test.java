@@ -32,6 +32,8 @@ import frc.robot.commands.AutoTimer;
 import frc.robot.commands.MoveWithRamsete;
 import frc.robot.commands.RunFeeder;
 import frc.robot.commands.TurretAuto;
+import frc.robot.commands.WaitUntilBallPassedSensor.*;
+import frc.robot.commands.WaitUntilBallPassedSensor;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
@@ -100,7 +102,13 @@ public class H_L_Test extends ParallelRaceGroup {
 
                 new SequentialCommandGroup(
 
-                    new AutoRunFeederAndTower(),
+                    new ParallelCommanGroup(
+
+                        new runTowerAutomatically(),
+
+                        new WaitUntilBallPassedSensor(Sensor.TOP)
+
+                    )
         
                     new AutoRunFeederAndTower()
                 )
