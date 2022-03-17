@@ -174,6 +174,9 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean isAtSpeed() {
+    if (velocityTarget == 0) {
+      return false;
+    }
     double error = velocityTarget - this.getVelocity();
     return Math.abs(error) <= 50 && this.getVelocity() != 0;
   }
