@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.AutoConfig;
 import frc.robot.commands.AutoExtendIntake;
+import frc.robot.commands.AutoFeedBall;
 import frc.robot.commands.AutoRetractIntake;
 import frc.robot.commands.AutoRetractIntake;
 import frc.robot.commands.AutoRunFeeder;
@@ -89,19 +90,10 @@ public class T_R_Test extends ParallelRaceGroup {
 
                                 ),
 
-                                new AutoRetractIntake(),
 
-                                new ParallelRaceGroup(
+                                new AutoFeedBall(), 
 
-                                        new AutoRunIntake(),
-
-                                        new SequentialCommandGroup(
-
-                                                new AutoRunFeederAndTower(),
-
-                                                new AutoRunFeederAndTower())
-
-                                )
+                                new AutoFeedBall()
 
                         ),
 
@@ -121,19 +113,9 @@ public class T_R_Test extends ParallelRaceGroup {
 
                                 ),
 
-                                new AutoRetractIntake(),
+                                new AutoFeedBall()
 
-                                new ParallelRaceGroup(
-
-                                        new AutoRunIntake(),
-
-                                        new SequentialCommandGroup(
-
-                                                new AutoRunFeederAndTower()
-
-                                        )
-
-                                ))));
+                                )));
     }
 
 }

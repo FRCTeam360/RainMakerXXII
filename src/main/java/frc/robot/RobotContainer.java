@@ -35,8 +35,6 @@ import frc.robot.operatorInterface.DriverControl;
 import frc.robot.operatorInterface.OperatorControl;
 import frc.robot.subsystems.*;
 import frc.robot.operatorInterface.OperatorControl;
-import frc.robot.commands.TurretAuto;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -79,6 +77,8 @@ public class RobotContainer {
   private final Pressurize pressurize = new Pressurize(pneumatics);
   private final RunFeederAutomatically feedAutomatic = new RunFeederAutomatically();
   private final RunTowerAutomatically towerAutomatic = new RunTowerAutomatically();
+  private final RunFeederManually runFeederManually = new RunFeederManually();
+  private final RunTowerManually runTowerManually = new RunTowerManually();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -115,6 +115,10 @@ public class RobotContainer {
     new JoystickButton(operatorCont, 7).whenHeld(shooterJoy);
     new JoystickButton(operatorCont, 8).whenHeld(turretAuto);
     new JoystickButton(operatorCont, 10).whileHeld(runClimberManual);
+    new JoystickButton(driverCont, 5).whileHeld(runFeederManually);
+    new JoystickButton(operatorCont, 5).whileHeld(runFeederManually);
+    new JoystickButton(driverCont, 6).whileHeld(runTowerManually);
+    new JoystickButton(operatorCont, 6).whileHeld(runTowerManually);
   }
 
   public DriveTrain getDriveTrain() {
