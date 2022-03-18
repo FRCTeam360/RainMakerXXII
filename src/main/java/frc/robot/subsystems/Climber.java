@@ -55,13 +55,13 @@ public class Climber extends SubsystemBase {
     }
 
     private void printouts() {
-        SmartDashboard.putNumber("LC Temp", motorLeft.getMotorTemperature());
-        SmartDashboard.putNumber("RC Temp", motorRight.getMotorTemperature());
-        SmartDashboard.putNumber("LC Temp", motorLeft.getOutputCurrent());
-        SmartDashboard.putNumber("RC Temp", motorRight.getOutputCurrent());
+        // SmartDashboard.putNumber("LC Temp", motorLeft.getMotorTemperature());
+        // SmartDashboard.putNumber("RC Temp", motorRight.getMotorTemperature());
+        // SmartDashboard.putNumber("LC Temp", motorLeft.getOutputCurrent());
+        // SmartDashboard.putNumber("RC Temp", motorRight.getOutputCurrent());
 
-        SmartDashboard.putNumber("LC encoder", motorLeft.getEncoder().getPosition());
-        SmartDashboard.putNumber("RC encoder", motorRight.getEncoder().getPosition());
+        // SmartDashboard.putNumber("LC encoder", motorLeft.getEncoder().getPosition());
+        // SmartDashboard.putNumber("RC encoder", motorRight.getEncoder().getPosition());
         // not sure if these will be needed, but these are SmartDashboard values in the
         // RainMakerXXI code
     }

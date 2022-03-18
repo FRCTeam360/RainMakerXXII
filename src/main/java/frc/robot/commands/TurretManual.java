@@ -66,7 +66,7 @@ public class TurretManual extends CommandBase {
       break;
     }
     double encoderTick = myTurret.getEncoderTick();
-    SmartDashboard.putNumber("gettick", encoderTick);
+    // SmartDashboard.putNumber("gettick", encoderTick);
   }
 
   /**

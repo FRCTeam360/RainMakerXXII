@@ -59,6 +59,6 @@ public class Tower extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Tower Temp", tower.getMotorTemperature());
+    // SmartDashboard.putNumber("Tower Temp", tower.getMotorTemperature());
   }
 }

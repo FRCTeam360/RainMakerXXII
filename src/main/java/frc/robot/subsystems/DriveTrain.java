@@ -257,12 +257,12 @@ public class DriveTrain extends SubsystemBase {
     
     SmartDashboard.putNumber("robot heading", getHeadingAngle());
 
-    SmartDashboard.putNumber("RL current", motorRLead.getSupplyCurrent());
-    SmartDashboard.putNumber("RF1 current", motorRFollow1.getSupplyCurrent());
-    SmartDashboard.putNumber("RF2 current", motorRFollow2.getSupplyCurrent());
-    SmartDashboard.putNumber("LL current", motorLLead.getSupplyCurrent());
-    SmartDashboard.putNumber("LF1 current", motorLFollow1.getSupplyCurrent());
-    SmartDashboard.putNumber("LF2 current", motorLFollow2.getSupplyCurrent());
+    // SmartDashboard.putNumber("RL current", motorRLead.getSupplyCurrent());
+    // SmartDashboard.putNumber("RF1 current", motorRFollow1.getSupplyCurrent());
+    // SmartDashboard.putNumber("RF2 current", motorRFollow2.getSupplyCurrent());
+    // SmartDashboard.putNumber("LL current", motorLLead.getSupplyCurrent());
+    // SmartDashboard.putNumber("LF1 current", motorLFollow1.getSupplyCurrent());
+    // SmartDashboard.putNumber("LF2 current", motorLFollow2.getSupplyCurrent());
   }
 
   public void positionPrintouts() {

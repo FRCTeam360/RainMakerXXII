@@ -134,8 +134,8 @@ public class Shooter extends SubsystemBase {
     // kD = SmartDashboard.getNumber("kD", 0.0);
     // kF = SmartDashboard.getNumber("kF", 0.0);
 
-    SmartDashboard.putNumber("sl amps", shooterLead.getSupplyCurrent());
-    SmartDashboard.putNumber("sf amps", shooterFollow.getSupplyCurrent());
+    // SmartDashboard.putNumber("sl amps", shooterLead.getSupplyCurrent());
+    // SmartDashboard.putNumber("sf amps", shooterFollow.getSupplyCurrent());
 
     SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
     SmartDashboard.putNumber("Shoot Goal", this.getShootGoal());
