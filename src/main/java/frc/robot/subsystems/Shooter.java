@@ -133,9 +133,9 @@ public class Shooter extends SubsystemBase {
 
     SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
     SmartDashboard.putNumber("Shoot Goal", this.getShootGoal());
-    SmartDashboard.putNumber("Shooter Ticks", shooterLead.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("Shooter Lead Temp", shooterLead.getTemperature());
-    SmartDashboard.putNumber("Shooter Follow Temp", shooterFollow.getTemperature());
+    // SmartDashboard.putNumber("Shooter Ticks", shooterLead.getSelectedSensorVelocity());
+    // SmartDashboard.putNumber("Shooter Lead Temp", shooterLead.getTemperature());
+    // SmartDashboard.putNumber("Shooter Follow Temp", shooterFollow.getTemperature());
   }
 
   /**

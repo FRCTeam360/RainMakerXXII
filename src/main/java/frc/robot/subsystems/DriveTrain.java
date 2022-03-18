@@ -251,9 +251,9 @@ public class DriveTrain extends SubsystemBase {
 
   public void positionPrintouts() {
     double leftRawPos = motorLLead.getSelectedSensorPosition();
-    SmartDashboard.putNumber("Left Raw Pos", leftRawPos);
+    // SmartDashboard.putNumber("Left Raw Pos", leftRawPos);
     double rightRawPos = motorRLead.getSelectedSensorPosition();
-    SmartDashboard.putNumber("Right Raw Pos", rightRawPos);
+    // SmartDashboard.putNumber("Right Raw Pos", rightRawPos);
   }
 
   public void drive(double leftMotorPercentage, double rightMotorPercentage) {

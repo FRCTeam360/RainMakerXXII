@@ -179,6 +179,6 @@ public class Turret extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Turret Angle", getAngle());
     // System.out.println("Turret Angle: " + getAngle());
-    SmartDashboard.putNumber("Turret Encoder", turretMotor.getEncoder().getPosition());
+    // SmartDashboard.putNumber("Turret Encoder", turretMotor.getEncoder().getPosition());
   }
 }
