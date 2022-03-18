@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.AutoConfig;
 import frc.robot.commands.AutoExtendIntake;
+import frc.robot.commands.AutoFeedBall;
 import frc.robot.commands.AutoRetractIntake;
 import frc.robot.commands.AutoRunFeeder;
 import frc.robot.commands.AutoRunFeederAndTower;
@@ -89,36 +90,16 @@ public class H_L_2ball extends ParallelRaceGroup {
 
                 new AutoRunIntake(),
 
-                new SequentialCommandGroup(
-
-                    new MoveWithRamsete(phase1, 
-                    driveTrain)
-                    .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
-
-                    new ParallelRaceGroup(
-
-                        new RunTowerAutomatically(),
-
-                        new WaitUntilBallPassedSensor(Sensor.TOP)
-
-                    )
-
-                )
+                new MoveWithRamsete(phase1, 
+                driveTrain)
+                .andThen(() -> driveTrain.tankDriveVolts(0, 0))
 
             ),
             
-                    new AutoRetractIntake(true),
+            new AutoFeedBall(), 
 
-                    new ParallelRaceGroup(
-        
-                        new RunTowerAutomatically(), 
-
-                        new RunFeederAutomatically(),
-
-                        new WaitUntilBallPassedSensor(Sensor.TOP)
-
-                    )
-                )
+            new AutoFeedBall()
+        )
             
         
     );
