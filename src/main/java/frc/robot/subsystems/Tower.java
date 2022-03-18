@@ -53,6 +53,7 @@ public class Tower extends SubsystemBase {
   }
 
   public boolean ballNotInTower() {
+    System.out.println("topsensor: " + topSensor.get());
     return topSensor.get();
   }
 

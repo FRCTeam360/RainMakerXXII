@@ -34,11 +34,11 @@ public class RunFeederAutomatically extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(myShooter.isAtSpeed()) {
-      myFeeder.runFeeder(1);
-    } else if(driverCont.getLeftTrigger() || operatorCont.getLeftTrigger()){
+    if(driverCont.getLeftTrigger() || operatorCont.getLeftTrigger()){
       if(myTower.ballNotInTower()) {
         myFeeder.runFeeder(1);
+      } else {
+        myFeeder.runFeeder(0);
       }
     } else {
       myFeeder.runFeeder(0);

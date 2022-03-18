@@ -34,11 +34,11 @@ public class RunTowerAutomatically extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(myShooter.isAtSpeed()) {
-      myTower.runTower(1);
-    } else if(driverCont.getLeftTrigger() || operatorCont.getLeftTrigger()){
+    if(driverCont.getLeftTrigger() || operatorCont.getLeftTrigger()){
       if(myTower.ballNotInTower()) {
         myTower.runTower(1);
+      } else {
+        myTower.runTower(0);
       }
     } else {
       myTower.runTower(0);
