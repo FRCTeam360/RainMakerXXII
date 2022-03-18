@@ -58,7 +58,7 @@ public class RobotContainer {
 
   private final Turret turret = Turret.getInstance();
   private final Shooter shooter = Shooter.getInstance();
-  private final DriveTrain driveTrain = new DriveTrain();
+  private final DriveTrain driveTrain = DriveTrain.getInstance();
   private final Feeder feeder = Feeder.getInstance();
   private final Intake intake = Intake.getInstance();
   private final Limelight limelight = Limelight.getInstance();
@@ -70,12 +70,12 @@ public class RobotContainer {
   private final SetShoot setShoot = new SetShoot(limelight);
   public final RunFeeder runFeeder = new RunFeeder();
   public final RunIntake runIntake = new RunIntake();
-  private final TankDrive tankDrive = new TankDrive(driveTrain);
-  private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
-  private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
+  private final TankDrive tankDrive = new TankDrive();
+  private final ArcadeDrive arcadeDrive = new ArcadeDrive();
+  private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive();
   private final RunClimberManual runClimberManual = new RunClimberManual(climber);
   private final TurretAuto turretAuto = new TurretAuto(limelight, turret);
-  private final TurretManual turretManual = new TurretManual(driveTrain);
+  private final TurretManual turretManual = new TurretManual();
   private final Pressurize pressurize = new Pressurize(pneumatics);
   private final RunFeederAutomatically feedAutomatic = new RunFeederAutomatically();
   private final RunTowerAutomatically towerAutomatic = new RunTowerAutomatically();

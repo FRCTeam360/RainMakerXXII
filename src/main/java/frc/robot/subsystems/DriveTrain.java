@@ -48,6 +48,8 @@ public class DriveTrain extends SubsystemBase {
   private WPI_TalonFX motorRFollow1 = new WPI_TalonFX(motorRFollow1ID);
   private WPI_TalonFX motorRFollow2 = new WPI_TalonFX(motorRFollow2ID);
 
+  private static DriveTrain instance;
+
   public final DifferentialDrive m_differentialDrive;
 
   public AHRS navX = new AHRS(SPI.Port.kMXP); // For frc-characterization tool: "SPI.Port.kMXP" of type "NavX"
@@ -107,9 +109,16 @@ public class DriveTrain extends SubsystemBase {
     this.coastMode();
   }
 
+  public static DriveTrain getInstance(){
+    if(instance == null){
+      instance = new DriveTrain();
+    }
+    return instance;
+  }
+
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    leftGroup.setVoltage(leftVolts); // Answer is no //Set to motor groups
-    rightGroup.setVoltage(rightVolts); // it's big brain time
+    motorLLead.setVoltage(leftVolts); // Answer is no //Set to motor groups
+    motorRLead.setVoltage(rightVolts); // it's big brain time
     m_differentialDrive.feed(); // Feed the motorsafety class so it doesnt disable the motors
 
   }

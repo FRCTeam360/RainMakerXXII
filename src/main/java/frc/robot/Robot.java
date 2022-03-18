@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
 
     m_autoChooser = new AutoChooser(m_robotContainer);
 
-    m_driveTrain = new DriveTrain();
+    m_driveTrain = DriveTrain.getInstance();
   }
 
   /**

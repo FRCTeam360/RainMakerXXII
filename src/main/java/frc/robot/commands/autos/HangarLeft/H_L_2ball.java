@@ -49,6 +49,7 @@ public class H_L_2ball extends ParallelRaceGroup {
   Turret turret = Turret.getInstance();
   Limelight limelight = Limelight.getInstance();
   Intake intake = Intake.getInstance();
+  DriveTrain driveTrain = DriveTrain.getInstance();
 
   private static final String ball2JSON = "paths/2ball.wpilib.json";
   // Trajectory phase1 = new Trajectory();
@@ -60,7 +61,7 @@ public class H_L_2ball extends ParallelRaceGroup {
       AutoConfig.configFwd);
 
   /** Creates a new T_R_2ball. */
-  public H_L_2ball(DriveTrain driveTrain) {
+  public H_L_2ball() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 

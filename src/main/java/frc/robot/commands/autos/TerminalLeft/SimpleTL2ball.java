@@ -7,7 +7,7 @@ import frc.robot.subsystems.DriveTrain;
 /** Add your docs here. */
 public class SimpleTL2ball extends Anywhere2ball{
 
-    public SimpleTL2ball(DriveTrain driveTrain){
-        super(driveTrain, 43.5); //offset to be determined
+    public SimpleTL2ball(){
+        super(43.5); //offset to be determined
     }
 }

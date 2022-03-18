@@ -22,10 +22,10 @@ public class FieldOrientedDrive extends CommandBase {
   private final SlewRateLimiter filter;
 
   /** Creates a new FieldOrientedDrive. */
-  public FieldOrientedDrive(DriveTrain driveTrain) {
+  public FieldOrientedDrive() {
     driverCont = DriverControl.getInstance();
 
-    myDriveTrain = driveTrain;
+    myDriveTrain = DriveTrain.getInstance();
 
     filter = new SlewRateLimiter(myDriveTrain.getAccelerationLimit());
 

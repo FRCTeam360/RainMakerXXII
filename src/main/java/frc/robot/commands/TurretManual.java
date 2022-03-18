@@ -25,9 +25,9 @@ public class TurretManual extends CommandBase {
   private ControlTypes controlTypes;
 
   /** Creates a new TurretManual. */
-  public TurretManual(DriveTrain driveTrain) {
+  public TurretManual() {
 
-    myDriveTrain = driveTrain;
+    myDriveTrain = DriveTrain.getInstance();
     myTurret = Turret.getInstance();
     operatorCont = OperatorControl.getInstance();
     addRequirements(myTurret);

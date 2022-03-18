@@ -25,9 +25,10 @@ public class Anywhere2ball extends ParallelRaceGroup {
   Turret turret = Turret.getInstance();
   Limelight limelight = Limelight.getInstance();
   Intake intake = Intake.getInstance();
+  DriveTrain driveTrain = DriveTrain.getInstance();
 
   /** Creates a new T_R_2ball. */
-  public Anywhere2ball(DriveTrain driveTrain, double offset) {
+  public Anywhere2ball(double offset) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
@@ -51,7 +52,7 @@ public class Anywhere2ball extends ParallelRaceGroup {
 
                 new SequentialCommandGroup(
 
-                    new AutoMoveOnTicks(driveTrain, 1.1),
+                    new AutoMoveOnTicks(1.1),
 
                     new AutoRunFeederAndTower(),
 

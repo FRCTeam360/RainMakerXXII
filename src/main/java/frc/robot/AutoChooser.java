@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.commands.autos.TestingGroup.*;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.commands.autos.Anywhere.Anywhere2ball;
 import frc.robot.commands.autos.HangarLeft.H_L_2ball;
 import frc.robot.commands.autos.HangarLeft.H_L_Test;
@@ -42,16 +43,16 @@ public class AutoChooser {
         locationChooser = new SendableChooser<>();
         autoChooser = new SendableChooser<>();
 
-        test = new Test(container.getDriveTrain());
-        test2 = new Test2(container.getDriveTrain());
-        tr2ball = new T_R_2ball(container.getDriveTrain());
-        trTest = new T_R_Test(container.getDriveTrain());
-        hl2ball = new H_L_2ball(container.getDriveTrain());
-        hltest = new H_L_Test(container.getDriveTrain());
-        anywhere2ball = new Anywhere2ball(container.getDriveTrain(), 0);
-        simplehl = new SimpleHL2ball(container.getDriveTrain());
-        simpletl = new SimpleTL2ball(container.getDriveTrain());
-        simpletr = new SimpleTR2ball(container.getDriveTrain());
+        test = new Test();
+        test2 = new Test2();
+        tr2ball = new T_R_2ball();
+        trTest = new T_R_Test();
+        hl2ball = new H_L_2ball();
+        hltest = new H_L_Test();
+        anywhere2ball = new Anywhere2ball(0);
+        simplehl = new SimpleHL2ball();
+        simpletl = new SimpleTL2ball();
+        simpletr = new SimpleTR2ball();
 
         // locationChooser.addOption("Test", "Test");
         locationChooser.addOption("Hangar Left", "Hangar Left");

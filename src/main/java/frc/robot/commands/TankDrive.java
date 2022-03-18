@@ -22,8 +22,8 @@ public class TankDrive extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public TankDrive(DriveTrain driveTrain) {
-    myDriveTrain = driveTrain;
+  public TankDrive() {
+    myDriveTrain = DriveTrain.getInstance();
     driverCont = DriverControl.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(myDriveTrain);

@@ -19,6 +19,8 @@ import frc.robot.subsystems.DriveTrain;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class T_R_2ball extends SequentialCommandGroup {
+  
+  DriveTrain driveTrain = DriveTrain.getInstance();
 
   public static final Trajectory phase1 = TrajectoryGenerator.generateTrajectory(
       new Pose2d(0, 0, new Rotation2d(0)),
@@ -27,7 +29,7 @@ public class T_R_2ball extends SequentialCommandGroup {
       AutoConfig.configRev);
 
   /** Creates a new T_R_2ball. */
-  public T_R_2ball(DriveTrain driveTrain) {
+  public T_R_2ball() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(

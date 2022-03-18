@@ -13,12 +13,12 @@ public class AutoMoveOnTicks extends CommandBase {
   private double target;
   private double distance;
   /** Creates a new AutoMoveOnTicks. */
-  public AutoMoveOnTicks(DriveTrain driveTrain, double meters) {
+  public AutoMoveOnTicks(double meters) {
 
-    myDriveTrain = driveTrain;
+    myDriveTrain = DriveTrain.getInstance();
     target = meters;
 
-    addRequirements(driveTrain);
+    addRequirements(myDriveTrain);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
