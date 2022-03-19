@@ -67,8 +67,8 @@ public final class Constants {
     }
 
     public static final class DigitalInputPorts {
-        public static final int topTowerSensor = 2;
-        public static final int bottomTowerSensor = 0;
+        public static final int topTowerSensor = 0;
+        public static final int bottomTowerSensor = 2;
         public static final int feederSensor = 3;
         public static final int middleLimitSwitchPort = 1;
     }

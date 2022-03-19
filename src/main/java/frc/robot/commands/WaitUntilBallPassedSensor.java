@@ -39,7 +39,7 @@ public class WaitUntilBallPassedSensor extends CommandBase {
     switch (selectedSensor){
       case TOP:
       default:
-        return !myTower.ballNotInTower();
+        return myTower.ballInTop();
     }
   }
 
@@ -47,7 +47,7 @@ public class WaitUntilBallPassedSensor extends CommandBase {
     switch (selectedSensor){
       case TOP:
       default:
-        return myTower.ballNotInTower();
+        return !myTower.ballInTop();
     }
   }
 

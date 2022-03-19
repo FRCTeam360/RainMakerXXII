@@ -43,11 +43,11 @@ public class AutoRunFeederAndTower extends CommandBase {
       myFeeder.runFeeder(1.0);
     }
 
-    if (!myTower.ballNotInTower()){
+    if (!myTower.ballNotInBottom()){
       ballPassedSensor = true;
     }
 
-    if(ballPassedSensor && myTower.ballNotInTower()){
+    if(ballPassedSensor && myTower.ballNotInBottom()){
       myTimer.start();
     }
   }

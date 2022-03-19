@@ -21,9 +21,9 @@ public class AutoFeedBall extends SequentialCommandGroup {
 
       new ParallelRaceGroup(
         
-        new RunTowerAutomatically(), 
+        new RunTowerAutomatically(true), 
 
-        new RunFeederAutomatically(), 
+        new RunFeederAutomatically(true), 
           
         new WaitUntilBallPassedSensor(Sensor.TOP)
       )

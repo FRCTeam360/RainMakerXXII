@@ -47,6 +47,9 @@ public class Feeder extends SubsystemBase {
     feeder.set(speed);
   }
 
+  public void updateFeederBallCount(){
+    
+  }
   
   @Override
   public void periodic() {

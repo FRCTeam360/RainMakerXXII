@@ -20,22 +20,34 @@ public class RunTowerAutomatically extends CommandBase {
   Tower myTower = Tower.getInstance();
   DriverControl driverCont = DriverControl.getInstance();
   OperatorControl operatorCont = OperatorControl.getInstance();
+
+  private boolean isInAuto = false;
+
   /** Creates a new runFeederWithSensor. */
   public RunTowerAutomatically() {
 
     addRequirements(myTower);
+    this.isInAuto = false;
     // Use addRequirements() here to declare subsystem dependencies.
+  }
+
+  public RunTowerAutomatically(boolean isInAuto) {
+    addRequirements(myTower);
+    this.isInAuto = isInAuto;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(driverCont.getLeftTrigger() || operatorCont.getLeftTrigger()){
-      if(myTower.ballNotInTower()) {
+    if (isInAuto && myShooter.isAtSpeed()) {
+      myFeeder.runFeeder(1);
+    } else if (driverCont.getLeftTrigger() || operatorCont.getLeftTrigger() || isInAuto) {
+      if (myTower.ballNotInBottom()) {
         myTower.runTower(1);
       } else {
         myTower.runTower(0);
@@ -43,7 +55,6 @@ public class RunTowerAutomatically extends CommandBase {
     } else {
       myTower.runTower(0);
     }
-
   }
 
   // Called once the command ends or is interrupted.

@@ -54,13 +54,23 @@ public class Tower extends SubsystemBase {
     tower.set(speed);
   }
 
-  public boolean ballNotInTower() {
+  public boolean ballNotInBottom() {
     return bottomSensor.get();
+  }
+
+  public boolean ballInBottom(){
+    return !bottomSensor.get();
+  }
+  
+  public boolean ballInTop(){
+    return !topSensor.get();
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     // SmartDashboard.putNumber("Tower Temp", tower.getMotorTemperature());
+    SmartDashboard.putBoolean("Top Sensor", topSensor.get());
+    SmartDashboard.putBoolean("Bottom Sensor", bottomSensor.get());
   }
 }
