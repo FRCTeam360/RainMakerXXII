@@ -18,6 +18,7 @@ import java.io.DataInput;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 public class Tower extends SubsystemBase {
 
   DigitalInput topSensor;
@@ -28,6 +29,10 @@ public class Tower extends SubsystemBase {
   // need to createbthird input for middle sensor
 
   private CANSparkMax tower;
+  private Tower pastTowerState;
+  private boolean pastBallState = false;
+
+  private CargoCounter mCargoCounter = CargoCounter.getInstance();
 
   private Tower() {
 
@@ -41,6 +46,7 @@ public class Tower extends SubsystemBase {
     tower.setInverted(false);
 
     tower.setSmartCurrentLimit(20);
+
   }
 
   public static Tower getInstance() {
@@ -58,12 +64,28 @@ public class Tower extends SubsystemBase {
     return bottomSensor.get();
   }
 
-  public boolean ballInBottom(){
+  public boolean ballInBottom() {
     return !bottomSensor.get();
   }
-  
-  public boolean ballInTop(){
+
+  public boolean ballInTop() {
     return !topSensor.get();
+  }
+
+  public void trackShots(){
+    double motorSpeed = getMotorSpeed();
+    boolean ballInTop = this.ballInTop();
+    boolean currentBallState = ballInTop;
+
+    if(motorSpeed >= 0 && !currentBallState && pastBallState){
+      mCargoCounter.incrementShootCount();
+    }
+
+    pastBallState = currentBallState;
+  }
+
+  public double getMotorSpeed(){
+    return this.tower.getEncoder().getVelocity();
   }
 
   @Override
@@ -72,5 +94,7 @@ public class Tower extends SubsystemBase {
     // SmartDashboard.putNumber("Tower Temp", tower.getMotorTemperature());
     SmartDashboard.putBoolean("Top Sensor", topSensor.get());
     SmartDashboard.putBoolean("Bottom Sensor", bottomSensor.get());
+
+    this.trackShots();
   }
 }

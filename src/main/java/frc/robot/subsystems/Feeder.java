@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 import static frc.robot.Constants.CANIds.*;
 
@@ -13,11 +14,15 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import static frc.robot.Constants.DigitalInputPorts.*;
+
 public class Feeder extends SubsystemBase {
 
   private CANSparkMax feeder;
 
   private static Feeder instance;
+  
+  final DigitalInput sensor = new DigitalInput(feederSensor);
 
   private Feeder() {
 
@@ -47,8 +52,8 @@ public class Feeder extends SubsystemBase {
     feeder.set(speed);
   }
 
-  public void updateFeederBallCount(){
-    
+  public boolean ballInFeeder(){
+    return !sensor.get();
   }
   
   @Override

@@ -80,6 +80,8 @@ public class RobotContainer {
   private final RunFeederManually runFeederManually = new RunFeederManually();
   private final RunTowerManually runTowerManually = new RunTowerManually();
 
+  private final QueueCargo queueCargo = new QueueCargo();
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -91,14 +93,13 @@ public class RobotContainer {
 
   // scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
-    tower.setDefaultCommand(towerAutomatic);
-    feeder.setDefaultCommand(feedAutomatic);
+    // tower.setDefaultCommand(queueCargo);
+    // feeder.setDefaultCommand(queueCargo);
     intake.setDefaultCommand(runIntake);
     shooter.setDefaultCommand(setShoot);
     driveTrain.setDefaultCommand(fieldOrientedDrive);
     pneumatics.setDefaultCommand(pressurize);
     turret.setDefaultCommand(turretManual);
-
   }
 
   /**
@@ -119,6 +120,7 @@ public class RobotContainer {
     new JoystickButton(operatorCont, 5).whileHeld(runFeederManually);
     new JoystickButton(driverCont, 6).whileHeld(runTowerManually);
     new JoystickButton(operatorCont, 6).whileHeld(runTowerManually);
+    new JoystickButton(operatorCont, 4).whileHeld(queueCargo);
   }
 
   public DriveTrain getDriveTrain() {
