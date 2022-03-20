@@ -28,8 +28,10 @@ import frc.robot.commands.AutoRunFeederAndTower;
 import frc.robot.commands.AutoRunIntake;
 import frc.robot.commands.AutoRunTower;
 import frc.robot.commands.AutoSetShoot;
+import frc.robot.commands.AutoShoot;
 import frc.robot.commands.AutoTimer;
 import frc.robot.commands.MoveWithRamsete;
+import frc.robot.commands.QueueBalls;
 import frc.robot.commands.RunFeeder;
 import frc.robot.commands.RunFeederAutomatically;
 import frc.robot.commands.RunTowerAutomatically;
@@ -75,6 +77,8 @@ public class H_L_2ball extends ParallelRaceGroup {
 
     driveTrain.setAngleOffset(133.5);
 
+    System.out.println("autoing");
+
     addCommands(
 
         new TurretAuto(limelight, turret),
@@ -91,15 +95,17 @@ public class H_L_2ball extends ParallelRaceGroup {
 
                 new AutoRunIntake(),
 
+                new QueueBalls(false),
+
                 new MoveWithRamsete(phase1, 
                 driveTrain)
                 .andThen(() -> driveTrain.tankDriveVolts(0, 0))
 
             ),
-            
-            new AutoFeedBall(), 
 
-            new AutoFeedBall()
+            new AutoRetractIntake(),
+            
+            new AutoShoot(2)
         )
             
         

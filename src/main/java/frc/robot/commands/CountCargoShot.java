@@ -25,14 +25,16 @@ public class CountCargoShot extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
-  public boolean cargoToShootReached(){
-    return this.initialShotCount + this.cargoToShoot >= mCargoCounter.getShotCount();
+  public boolean cargoToShootReached() {
+    return mCargoCounter.getShotCount() >= (this.initialShotCount + this.cargoToShoot);
   }
 
   // Returns true when the command should end.

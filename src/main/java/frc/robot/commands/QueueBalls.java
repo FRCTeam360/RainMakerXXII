@@ -7,7 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
-public class QueueCargo extends CommandBase {
+public class QueueBalls extends CommandBase {
 
   private final Shooter mShooter = Shooter.getInstance();
   private final Tower mTower = Tower.getInstance();
@@ -17,12 +17,15 @@ public class QueueCargo extends CommandBase {
     IDLE, FORWARD, REVERSE
   }
 
+  private boolean ignoreShooter;
+
   private ComponentState towerAction = ComponentState.IDLE, feederAction = ComponentState.IDLE;
 
   private ComponentState pastTowerAction = ComponentState.IDLE, pastFeederAction = ComponentState.IDLE;
 
   /** Creates a new QueueCargo. */
-  public QueueCargo() {
+  public QueueBalls(boolean shouldIgnoreShooter) {
+    ignoreShooter = shouldIgnoreShooter;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(mTower, mFeeder);
   }
@@ -44,7 +47,7 @@ public class QueueCargo extends CommandBase {
   }
 
   public void updateState() {
-    if (mShooter.isAtSpeed() || !mTower.ballInBottom()) {
+    if ((!ignoreShooter && mShooter.isAtSpeed()) || !mTower.ballInBottom()) {
       this.towerAction = ComponentState.FORWARD;
     } else {
       this.towerAction = ComponentState.IDLE;
