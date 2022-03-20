@@ -58,6 +58,10 @@ public class Limelight extends SubsystemBase {
     return ta.getDouble(0.0);
   }
 
+  public boolean isOnTarget(){
+    return validTarget() && Math.abs(this.getX()) <= 5;
+  }
+
   // public void updateShooterVelocity () {
   //   if ( validTarget() == true ) {
   //     double yLime = getY();
@@ -70,7 +74,9 @@ public class Limelight extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("isOnTarget", this.isOnTarget());
     SmartDashboard.putNumber("lime tY", this.getY());
+    SmartDashboard.putNumber("aimError", this.getX());
     // System.out.println("lime tY: " + this.getY());
   }
 }

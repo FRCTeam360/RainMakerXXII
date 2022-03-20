@@ -12,6 +12,7 @@ public class QueueBalls extends CommandBase {
   private final Shooter mShooter = Shooter.getInstance();
   private final Tower mTower = Tower.getInstance();
   private final Feeder mFeeder = Feeder.getInstance();
+  private final Limelight mLimelight = Limelight.getInstance();
 
   private enum ComponentState {
     IDLE, FORWARD, REVERSE
@@ -48,7 +49,7 @@ public class QueueBalls extends CommandBase {
   }
 
   public void updateState() {
-    if ((!ignoreShooter && mShooter.isAtSpeed()) || !mTower.ballInBottom()) {
+    if ((!ignoreShooter && mShooter.isAtSpeed() && mLimelight.isOnTarget()) || !mTower.ballInBottom()) {
       this.towerAction = ComponentState.FORWARD;
     } else {
       this.towerAction = ComponentState.IDLE;
