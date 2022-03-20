@@ -28,8 +28,8 @@ public final class Constants {
         public static final double kPDriveVel = 1.7177;
         public static final double kTrackwidthMeters = 0.641;
 
-        public static final double kMaxSpeedMetersPerSecond = 1.0;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1.0;
+        public static final double kMaxSpeedMetersPerSecond = 2.0;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 2.0;
 
         //ramsete values - 2,.7 are default
         public static final double kRamseteB = 2.0;

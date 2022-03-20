@@ -39,6 +39,15 @@ public class CargoCounter {
     cargoCount = 0;
   }
 
+  public void resetShotCount(){
+    shotCount = 0;
+  }
+
+  public void resetAll(){
+    resetCargoCount();
+    resetShotCount();
+  }
+
   public Integer getShotCount(){
     return this.shotCount;
   }

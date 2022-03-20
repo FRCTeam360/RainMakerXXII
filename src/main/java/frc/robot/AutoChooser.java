@@ -35,6 +35,7 @@ public class AutoChooser {
     private final Command simpletl;
     private final Command simpletr;
     private final Command trTest;
+    private final Command tr5test;
 
     public AutoChooser(RobotContainer container) {
 
@@ -46,13 +47,14 @@ public class AutoChooser {
         test = new Test();
         test2 = new Test2();
         tr2ball = new T_R_2ball();
-        trTest = new T_R_Test();
+        trTest = new T_R_3ball();
         hl2ball = new H_L_2ball();
         hltest = new H_L_Curve();
         anywhere2ball = new Anywhere2ball(0);
         simplehl = new SimpleHL2ball();
         simpletl = new SimpleTL2ball();
         simpletr = new SimpleTR2ball();
+        tr5test = new T_R_5BallTest();
 
         // locationChooser.addOption("Test", "Test");
         locationChooser.addOption("Hangar Left", "Hangar Left");
@@ -89,6 +91,7 @@ public class AutoChooser {
                 autoChooser.addOption("TR 2 ball", tr2ball);
                 autoChooser.addOption("Simple TR", simpletr);
                 autoChooser.addOption("TR Test", trTest);
+                autoChooser.addOption("TR 5 Test", tr5test);
             }
 
             if ("Hangar Left".equals(selectedLocation)) {

@@ -47,7 +47,7 @@ public class AutoRetractIntake extends CommandBase {
     intake.intakeIn();
 
     if (runIntake == true) {
-      intake.run(2);
+      intake.run(1);
     }
     ;
   }
@@ -65,7 +65,7 @@ public class AutoRetractIntake extends CommandBase {
   @Override
   public boolean isFinished() {
     if (runIntake == true) {
-      return myTimer.get() > 0.5;
+      return myTimer.get() > 2;
     } else {
       return true;
     }

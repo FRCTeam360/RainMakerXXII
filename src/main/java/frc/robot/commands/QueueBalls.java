@@ -33,6 +33,7 @@ public class QueueBalls extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("Starting QueueBalls");
     this.towerAction = ComponentState.IDLE;
     this.pastTowerAction = ComponentState.IDLE;
     this.feederAction = ComponentState.IDLE;
@@ -101,6 +102,7 @@ public class QueueBalls extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    System.out.println("Ending QueueBalls");
     this.stopTower();
     this.stopFeeder();
   }

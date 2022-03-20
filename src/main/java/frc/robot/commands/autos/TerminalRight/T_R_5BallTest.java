@@ -34,6 +34,7 @@ import frc.robot.commands.AutoSetShoot;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.AutoTimer;
 import frc.robot.commands.MoveWithRamsete;
+import frc.robot.commands.PrintTime;
 import frc.robot.commands.QueueBalls;
 import frc.robot.commands.QueueBalls;
 import frc.robot.commands.RunFeeder;
@@ -46,7 +47,7 @@ import frc.robot.subsystems.Turret;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class T_R_3ball extends ParallelRaceGroup {
+public class T_R_5BallTest extends ParallelRaceGroup {
 
     Turret turret = Turret.getInstance();
     Limelight limelight = Limelight.getInstance();
@@ -58,75 +59,71 @@ public class T_R_3ball extends ParallelRaceGroup {
 
     public static final Trajectory phase1 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, new Rotation2d(0)),
-            List.of(),
-            new Pose2d(1.1, -1, new Rotation2d(-90)),
-            AutoConfig.configFwd);
-
-    public static final Trajectory phase2 = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(1.1, -1, new Rotation2d(-90)),
             List.of(
-                new Translation2d(0, -2)
-            ),
+                    new Translation2d(1.1, -1),
+                    new Translation2d(0, -2)),
             new Pose2d(0, -2.75, new Rotation2d(-45)),
             AutoConfig.configFwd);
 
+    public static final Trajectory phase2 = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(0, -2.75, new Rotation2d(-45)),
+            List.of(
+                    new Translation2d(-1, -6)),
+            new Pose2d(0.85, -7.35, new Rotation2d(-45)),
+            AutoConfig.configFwd);
+
     /** Creates a new T_R_2ball. */
-    public T_R_3ball() {
-
+    public T_R_5BallTest() {
         addCommands(
-
                 new TurretAuto(limelight, turret),
-
                 new AutoSetShoot(),
-
+                new PrintTime(),
                 new SequentialCommandGroup(
-
-                        new SequentialCommandGroup(
-
-                                // new AutoRunFeederAndTower(),
-
-                                new AutoExtendIntake(),
-
-                                new ParallelRaceGroup(
-
-                                        new AutoRunIntake(),
-
-                                        new QueueBalls(true),
-
-                                        new MoveWithRamsete(phase1,
-                                                driveTrain)
-                                                        .andThen(() -> driveTrain.tankDriveVolts(0, 0))
-
-                                ),
-
+                        // new AutoRunFeederAndTower(),
+                        new AutoExtendIntake(),
+                        new AutoShoot(1),
+                        new ParallelRaceGroup(
+                                new AutoRunIntake(),
+                                new QueueBalls(true),
+                                new MoveWithRamsete(phase1,
+                                        driveTrain)
+                                                .andThen(() -> driveTrain.tankDriveVolts(0, 0))),
+                        new ParallelRaceGroup(
                                 new AutoRetractIntake(true),
+                                new AutoShoot(2)),
 
-                                new AutoShoot(2)
+                        new AutoExtendIntake(),
+                        new ParallelRaceGroup(
+                                new MoveWithRamsete(phase2,
+                                        driveTrain)
+                                                .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
+                                new AutoRunIntake()),
+                        new ParallelRaceGroup(
+                                new AutoRunIntake(),
+                                new QueueBalls(true)))
 
-                        ),
+        // new SequentialCommandGroup(
 
-                        new SequentialCommandGroup(
+        // new AutoExtendIntake(),
 
+        // new ParallelRaceGroup(
 
-                                new AutoExtendIntake(),
+        // new AutoRunIntake(),
 
-                                new ParallelRaceGroup(
+        // new QueueBalls(true),
 
-                                        new AutoRunIntake(),
+        // new MoveWithRamsete(phase2,
+        // driveTrain)
+        // .andThen(() -> driveTrain.tankDriveVolts(0, 0))
 
-                                        new QueueBalls(true),
+        // ),
 
-                                        new MoveWithRamsete(phase2,
-                                                driveTrain)
-                                                        .andThen(() -> driveTrain.tankDriveVolts(0, 0))
+        // new AutoRetractIntake(true),
 
-                                ),
+        // new AutoShoot(1)
 
-                                new AutoRetractIntake(true),
-
-                                new AutoShoot(1)
-
-                                )));
+        // )
+        );
     }
 
 }
