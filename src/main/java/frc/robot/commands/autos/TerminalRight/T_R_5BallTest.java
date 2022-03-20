@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.AutoConfig;
 import frc.robot.commands.AutoExtendIntake;
 import frc.robot.commands.AutoFeedBall;
@@ -72,6 +73,14 @@ public class T_R_5BallTest extends ParallelRaceGroup {
             new Pose2d(0.85, -7.35, new Rotation2d(-45)),
             AutoConfig.configFwd);
 
+    private static final Trajectory phase3 = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(0.85, -7.35, new Rotation2d(-45)),
+            List.of(
+            ),
+            new Pose2d(0.60, -7.1, new Rotation2d(-45)),
+            AutoConfig.configRev);
+    
+
     /** Creates a new T_R_2ball. */
     public T_R_5BallTest() {
         addCommands(
@@ -94,13 +103,22 @@ public class T_R_5BallTest extends ParallelRaceGroup {
 
                         new AutoExtendIntake(),
                         new ParallelRaceGroup(
-                                new MoveWithRamsete(phase2,
+                                new QueueBalls(true),
+                                new AutoRunIntake(),
+                                new SequentialCommandGroup(
+                                        new MoveWithRamsete(phase2,
                                         driveTrain)
                                                 .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
-                                new AutoRunIntake()),
-                        new ParallelRaceGroup(
-                                new AutoRunIntake(),
-                                new QueueBalls(true)))
+                                        new MoveWithRamsete(phase3,
+                                        driveTrain)
+                                                .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
+                                        new WaitCommand(2))
+                                        
+                                ),
+                        new AutoRetractIntake())
+                        
+                                
+                                
 
         // new SequentialCommandGroup(
 
