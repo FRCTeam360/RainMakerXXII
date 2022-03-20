@@ -10,7 +10,7 @@ import frc.robot.commands.autos.TestingGroup.*;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.commands.autos.Anywhere.Anywhere2ball;
 import frc.robot.commands.autos.HangarLeft.H_L_2ball;
-import frc.robot.commands.autos.HangarLeft.H_L_Test;
+import frc.robot.commands.autos.HangarLeft.H_L_Curve;
 import frc.robot.commands.autos.HangarLeft.SimpleHL2ball;
 import frc.robot.commands.autos.TerminalLeft.SimpleTL2ball;
 import frc.robot.commands.autos.TerminalRight.*;
@@ -48,7 +48,7 @@ public class AutoChooser {
         tr2ball = new T_R_2ball();
         trTest = new T_R_Test();
         hl2ball = new H_L_2ball();
-        hltest = new H_L_Test();
+        hltest = new H_L_Curve();
         anywhere2ball = new Anywhere2ball(0);
         simplehl = new SimpleHL2ball();
         simpletl = new SimpleTL2ball();

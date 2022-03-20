@@ -47,7 +47,7 @@ public class AutoRetractIntake extends CommandBase {
     intake.intakeIn();
 
     if (runIntake == true) {
-      intake.run(1);
+      intake.run(2);
     }
     ;
   }
