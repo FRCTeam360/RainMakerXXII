@@ -179,7 +179,7 @@ public class Shooter extends SubsystemBase {
     }
     double error = velocityTarget - this.getVelocity();
     SmartDashboard.putNumber("error", error);
-    return Math.abs(error) <= 50 && this.getVelocity() != 0;
+    return Math.abs(error) <= 45;
   }
 
   /**

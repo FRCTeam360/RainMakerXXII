@@ -19,6 +19,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -69,7 +70,7 @@ public class T_R_5BallTest extends ParallelRaceGroup {
     public static final Trajectory phase2 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, -2.75, new Rotation2d(-45)),
             List.of(
-                    new Translation2d(-1, -6)),
+                    new Translation2d(0, -7)),
             new Pose2d(0.85, -7.35, new Rotation2d(-45)),
             AutoConfig.configFwd);
 
@@ -86,7 +87,6 @@ public class T_R_5BallTest extends ParallelRaceGroup {
         addCommands(
                 new TurretAuto(limelight, turret),
                 new AutoSetShoot(),
-                new PrintTime(),
                 new SequentialCommandGroup(
                         // new AutoRunFeederAndTower(),
                         new AutoExtendIntake(),
@@ -97,7 +97,7 @@ public class T_R_5BallTest extends ParallelRaceGroup {
                                 new MoveWithRamsete(phase1,
                                         driveTrain)
                                                 .andThen(() -> driveTrain.tankDriveVolts(0, 0))),
-                        new ParallelRaceGroup(
+                        new ParallelCommandGroup(
                                 new AutoRetractIntake(true),
                                 new AutoShoot(2)),
 

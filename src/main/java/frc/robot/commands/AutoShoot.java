@@ -17,7 +17,8 @@ public class AutoShoot extends ParallelRaceGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new QueueBalls(shootBalls),
-      new CountCargoShot(cargoToShoot)
+      new CountCargoShot(cargoToShoot),
+      new PrintTime()
     );
   }
 }
