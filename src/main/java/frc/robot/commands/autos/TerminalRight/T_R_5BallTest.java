@@ -68,18 +68,27 @@ public class T_R_5BallTest extends ParallelRaceGroup {
             AutoConfig.configFwd);
 
     public static final Trajectory phase2 = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, -2.75, new Rotation2d(-45)),
+            new Pose2d(0, -3.5, new Rotation2d(-90)),
             List.of(
-                    new Translation2d(0, -7)),
-            new Pose2d(0.85, -7.35, new Rotation2d(-45)),
+                    //new Translation2d(0, -7)),
+            ),
+            new Pose2d(0.80, -7.3, new Rotation2d(-45)),
             AutoConfig.configFwd);
-
+        
     private static final Trajectory phase3 = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0.85, -7.35, new Rotation2d(-45)),
+            new Pose2d(0.80, -7.3, new Rotation2d(-45)),
             List.of(
             ),
             new Pose2d(0.60, -7.1, new Rotation2d(-45)),
             AutoConfig.configRev);
+    private static final Trajectory phase4 = TrajectoryGenerator.generateTrajectory(
+        new Pose2d(0.6, -7.1, new Rotation2d(-45)),
+        List.of(
+        ),
+        new Pose2d(0, -3.5, new Rotation2d(-45)),
+        AutoConfig.configRev);
+    
+    
     
 
     /** Creates a new T_R_2ball. */
@@ -99,23 +108,28 @@ public class T_R_5BallTest extends ParallelRaceGroup {
                                                 .andThen(() -> driveTrain.tankDriveVolts(0, 0))),
                         new ParallelCommandGroup(
                                 new AutoRetractIntake(true),
-                                new AutoShoot(2)))
+                                new AutoShoot(2)),
 
-                        // new AutoExtendIntake(),
-                        // new ParallelRaceGroup(
-                        //         new QueueBalls(true),
-                        //         new AutoRunIntake(),
-                        //         new SequentialCommandGroup(
-                        //                 new MoveWithRamsete(phase2,
-                        //                 driveTrain)
-                        //                         .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
-                        //                 new MoveWithRamsete(phase3,
-                        //                 driveTrain)
-                        //                         .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
-                        //                 new WaitCommand(2))
+                        new AutoExtendIntake(),
+                        new ParallelRaceGroup(
+                                new QueueBalls(true),
+                                new AutoRunIntake(),
+                                new SequentialCommandGroup(
+                                        new MoveWithRamsete(phase2,
+                                        driveTrain)
+                                                .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
+                                        new MoveWithRamsete(phase3,
+                                        driveTrain)
+                                                .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
+                                        new WaitCommand(2),
+                                        new MoveWithRamsete(phase4,
+                                        driveTrain)
+                                                .andThen(() -> driveTrain.tankDriveVolts(0, 0)))
                                         
-                        //         ),
-                        // new AutoRetractIntake())
+                                ),
+                                new AutoRetractIntake(),
+                                new AutoShoot(2)
+                        )
                         
                                 
                                 
