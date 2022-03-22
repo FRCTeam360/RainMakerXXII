@@ -29,7 +29,7 @@ public class Turret extends SubsystemBase {
   public static final double kDAngle = 0.01;
   public static final double kFAngle = 0;
 
-  public static final double kPLimelight = 0.013; // values may be altered, seperate for clarification , changer
+  public static final double kPLimelight = 0.026; // values may be altered, seperate for clarification , changer
                                                   // kPLimelight from .05
   public static final double kILimelight = 0; // *
   public static final double kDLimelight = 0.0; // * changed from 0.01
