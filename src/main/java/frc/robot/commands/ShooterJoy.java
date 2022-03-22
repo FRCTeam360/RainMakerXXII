@@ -30,7 +30,7 @@ public class ShooterJoy extends CommandBase {
   public void execute() {
     // if (cont.getXButton()){
     shooter.setPower(operatorCont.getLeftY() * -0.60);
-    SmartDashboard.putNumber("Shoot percent", operatorCont.getLeftY() * -0.60);
+    // SmartDashboard.putNumber("Shoot percent", operatorCont.getLeftY() * -0.60);
 
     // } else{
     // shooter.setVelocity(cont.getLeftY() * 5500);

@@ -68,11 +68,11 @@ public class Shooter extends SubsystemBase {
   public static double targetVelocity = backupTargetVelocity; // will get changed in the future by limelight
                                                               // subsystem or a command...
 
-  private static final double a = -0.001635;
-  private static final double b = -0.01922;
-  private static final double c = 2.735;
-  private static final double d = -48.38;
-  private static final double e = 3216;
+  private static final double a = 0.0086455746;
+  private static final double b = -0.1318250336;
+  private static final double c = 0.7137822277;
+  private static final double d = -30.47373396;
+  private static final double e = 3327.558816;
 
   public static final double MAX_SHOOTER_ACCELERATION = 5000;
   private final SlewRateLimiter filter = new SlewRateLimiter(MAX_SHOOTER_ACCELERATION);
@@ -138,7 +138,7 @@ public class Shooter extends SubsystemBase {
     // SmartDashboard.putNumber("sf amps", shooterFollow.getSupplyCurrent());
 
     SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
-    SmartDashboard.putNumber("Shoot Goal", this.getShootGoal());
+    // SmartDashboard.putNumber("Shoot Goal", this.getShootGoal());
     SmartDashboard.putNumber("Shooter Ticks", shooterLead.getSelectedSensorVelocity());
     SmartDashboard.putNumber("Shooter Lead Temp", shooterLead.getTemperature());
     SmartDashboard.putNumber("Shooter Follow Temp", shooterFollow.getTemperature());
@@ -180,6 +180,10 @@ public class Shooter extends SubsystemBase {
     double error = velocityTarget - this.getVelocity();
     SmartDashboard.putNumber("error", error);
     return Math.abs(error) <= 45;
+  }
+
+  public double getShooterVelocity() {
+    return shooterLead.get() / (2 / 3 / shooterToMotorRPM);
   }
 
   /**

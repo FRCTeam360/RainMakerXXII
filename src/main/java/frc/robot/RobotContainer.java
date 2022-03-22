@@ -64,6 +64,7 @@ public class RobotContainer {
   private final Pneumatics pneumatics = new Pneumatics();
   private final Climber climber = new Climber();
 
+  private final ShooterTesting shooterTesting = new ShooterTesting();
   private final ShooterJoy shooterJoy = new ShooterJoy();
   private final SetShoot setShoot = new SetShoot(limelight);
   public final RunFeeder runFeeder = new RunFeeder();

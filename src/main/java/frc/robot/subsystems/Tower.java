@@ -155,7 +155,7 @@ public class Tower extends SubsystemBase {
     SmartDashboard.putBoolean("Top Sensor", topSensor.get());
     SmartDashboard.putBoolean("Bottom Sensor", bottomSensor.get());
     SmartDashboard.putString("Tracking State", this.ballTrackingState.toString());
-    SmartDashboard.putNumber("Motor Speed", this.getMotorSpeed());
+    // SmartDashboard.putNumber("Motor Speed", this.getMotorSpeed());
 
     this.trackShots();
   }
