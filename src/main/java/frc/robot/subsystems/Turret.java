@@ -22,17 +22,17 @@ public class Turret extends SubsystemBase {
   private DigitalInput middleLimitSwitch = new DigitalInput(middleLimitSwitchPort);
   private DigitalInput rightLimitSwitch;
 
-  public static final double maxSpeed = 0.6;
+  public static final double maxSpeed = 0.8;
 
   public static final double kPAngle = 0.05;
   public static final double kIAngle = 0;
   public static final double kDAngle = 0.01;
   public static final double kFAngle = 0;
 
-  public static final double kPLimelight = 0.026; // values may be altered, seperate for clarification , changer
+  public static final double kPLimelight = 0.030; // values may be altered, seperate for clarification , changer
                                                   // kPLimelight from .05
   public static final double kILimelight = 0; // *
-  public static final double kDLimelight = 0.0; // * changed from 0.01
+  public static final double kDLimelight = 0.04; // * changed from 0.01
   public static final double kFLimelight = 0; // *
 
   public static final double AimMinCmd = 0.01;
@@ -121,8 +121,8 @@ public class Turret extends SubsystemBase {
 
   public void turn(double speed) {
 
-    Math.min(maxSpeed, speed);
-    Math.max(-maxSpeed, speed);
+    // Math.min(maxSpeed, speed);
+    // Math.max(-maxSpeed, speed);
 
     turretMotor.set(speed);
 
