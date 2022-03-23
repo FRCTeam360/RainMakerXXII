@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.AutoConfig;
+import frc.robot.Constants;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.commands.AutoExtendIntake;
 import frc.robot.commands.AutoFeedBall;
 import frc.robot.commands.AutoRetractIntake;
@@ -77,16 +79,17 @@ public class T_R_5Ball extends ParallelRaceGroup {
             List.of(
             // new Translation2d(0, -7)),
             ),
-            new Pose2d(0.60, -7, new Rotation2d(-45)),
+            new Pose2d(0.60 + AutoConstants.getXOffsetTerminal5Ball(), -7 + AutoConstants.getYOffsetTerminal5Ball(), new Rotation2d(-45)),
             AutoConfig.configFwdHigh);
 
     private static final Trajectory phase3 = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0.60, -7, new Rotation2d(-45)),
+            new Pose2d(0.60 + AutoConstants.getXOffsetTerminal5Ball(), -7 + AutoConstants.getYOffsetTerminal5Ball(), new Rotation2d(-45)),
             List.of(),
-            new Pose2d(0.5, -6.9, new Rotation2d(-45)),
+            new Pose2d(0.5 + AutoConstants.getXOffsetTerminal5Ball(), -6.9 + AutoConstants.getYOffsetTerminal5Ball(), new Rotation2d(-45)),
             AutoConfig.configRevHigh);
+            
     private static final Trajectory phase4 = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0.50, -6.9, new Rotation2d(-45)),
+            new Pose2d(0.5 + AutoConstants.getXOffsetTerminal5Ball(), -6.9 + AutoConstants.getYOffsetTerminal5Ball(), new Rotation2d(-45)),
             List.of(),
             new Pose2d(0, -3.5, new Rotation2d(-45)),
             AutoConfig.configRevHigh);
@@ -97,7 +100,7 @@ public class T_R_5Ball extends ParallelRaceGroup {
                 new TurretAuto(limelight, turret),
                 new AutoSetShoot(),
                 new PrintTime(),
-                new WaitCommand(15),
+                // new WaitCommand(15),
 
                 new SequentialCommandGroup(
                         // new AutoRunFeederAndTower(),

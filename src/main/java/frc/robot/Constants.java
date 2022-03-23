@@ -21,6 +21,23 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 public final class Constants {
     public static final class AutoConstants {
 
+        private static final double xOffsetTerminal5Ball = -0.13;
+        private static final double yOffsetTerminal5Ball = -0.13;
+
+        public static double getXOffsetTerminal5Ball() {
+            if(getFieldType() == FieldType.COMP) {
+                return xOffsetTerminal5Ball;
+            }
+            return 0.0;
+        }
+
+        public static double getYOffsetTerminal5Ball() {
+            if(getFieldType() == FieldType.COMP) {
+                return yOffsetTerminal5Ball;
+            }
+            return 0.0;
+        }
+
         //values for Ramsete controller
         public static final double ksVolts = 0.59619;
         public static final double kvVoltSecondsPerMeter = 1.2895;
@@ -74,5 +91,15 @@ public final class Constants {
         public static final int bottomTowerSensor = 2;
         public static final int feederSensor = 3;
         public static final int middleLimitSwitchPort = 1;
+    }
+
+    public enum FieldType {
+        COMP, PRACTICE
+    }
+
+    private static final FieldType fieldType = FieldType.COMP;
+
+    public static FieldType getFieldType(){
+        return fieldType;
     }
 }
