@@ -60,7 +60,7 @@ public class H_L_2ball extends ParallelRaceGroup {
       new Pose2d(0, 0, new Rotation2d(0)),
       List.of(),
       new Pose2d(1, 0, new Rotation2d(0)),
-      AutoConfig.configFwdHigh);
+      AutoConfig.configFwdLow);
 
   /** Creates a new T_R_2ball. */
   public H_L_2ball() {

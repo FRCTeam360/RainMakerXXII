@@ -37,8 +37,8 @@ public class AutoConfig {
 
         public static final TrajectoryConfig configFwdLow = 
         new TrajectoryConfig(
-            AutoConstants.kMaxSpeedMetersPerSecondHigh, 
-            AutoConstants.kMaxAccelerationMetersPerSecondSquaredHigh
+            AutoConstants.kMaxSpeedMetersPerSecondLow, 
+            AutoConstants.kMaxAccelerationMetersPerSecondSquaredLow
         )
         .setKinematics(DriveTrain.getKinematics()) // Add kinematics to ensure max speed is actually obeyed
         .addConstraint(autoVoltageConstraint) // Apply the voltage constraint

@@ -49,7 +49,7 @@ import frc.robot.subsystems.Turret;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class T_R_5BallTest extends ParallelRaceGroup {
+public class T_R_5Ball extends ParallelRaceGroup {
 
     Turret turret = Turret.getInstance();
     Limelight limelight = Limelight.getInstance();
@@ -92,7 +92,7 @@ public class T_R_5BallTest extends ParallelRaceGroup {
             AutoConfig.configRevHigh);
 
     /** Creates a new T_R_2ball. */
-    public T_R_5BallTest() {
+    public T_R_5Ball() {
         addCommands(
                 new TurretAuto(limelight, turret),
                 new AutoSetShoot(),

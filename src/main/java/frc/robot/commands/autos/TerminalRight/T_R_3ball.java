@@ -101,7 +101,7 @@ public class T_R_3ball extends ParallelRaceGroup {
 
                                 new AutoRetractIntake(true),
 
-                                new AutoShoot(2)
+                                new AutoShoot(1)
 
                         ),
 
@@ -124,7 +124,7 @@ public class T_R_3ball extends ParallelRaceGroup {
 
                                 new AutoRetractIntake(true),
 
-                                new AutoShoot(1)
+                                new AutoShoot(2)
 
                                 )));
     }

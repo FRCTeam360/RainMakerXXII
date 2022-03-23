@@ -29,7 +29,7 @@ public class AutoChooser {
     private final Command test2;
     private final Command tr2ball;
     private final Command hl2ball;
-    private final Command hltest;
+    private final Command hlCurve;
     private final Command anywhere2ball;
     private final Command simplehl;
     private final Command simpletl;
@@ -49,12 +49,12 @@ public class AutoChooser {
         tr2ball = new T_R_2ball();
         tr3ball = new T_R_3ball();
         hl2ball = new H_L_2ball();
-        hltest = new H_L_Curve();
+        hlCurve = new H_L_Curve();
         anywhere2ball = new Anywhere2ball(0);
         simplehl = new SimpleHL2ball();
         simpletl = new SimpleTL2ball();
         simpletr = new SimpleTR2ball();
-        tr5test = new T_R_5BallTest();
+        tr5test = new T_R_5Ball();
 
         // locationChooser.addOption("Test", "Test");
         locationChooser.addOption("Hangar Left", "Hangar Left");
@@ -97,7 +97,7 @@ public class AutoChooser {
             if ("Hangar Left".equals(selectedLocation)) {
                 autoChooser.addOption("HL 2 ball", hl2ball);
                 autoChooser.addOption("Simple HL", simplehl);
-                autoChooser.addOption("HL Test", hltest);
+                autoChooser.addOption("HL curve", hlCurve);
             }
 
             if ("Terminal Right".equals(selectedLocation)) {

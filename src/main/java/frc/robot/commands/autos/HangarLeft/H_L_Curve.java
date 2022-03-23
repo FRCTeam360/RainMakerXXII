@@ -60,12 +60,13 @@ public class H_L_Curve extends ParallelRaceGroup {
             new Pose2d(0, 0, new Rotation2d(0)),
             List.of(),
             new Pose2d(1.1, 1, new Rotation2d(90)),
-            AutoConfig.configFwdHigh);
+            AutoConfig.configFwdLow);
 
   /** Creates a new T_R_2ball. */
   public H_L_Curve() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+    
 
     // try {
     // Path ball2 = Filesystem.getDeployDirectory().toPath().resolve(ball2JSON);
