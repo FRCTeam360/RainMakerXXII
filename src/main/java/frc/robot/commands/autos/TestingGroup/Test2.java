@@ -34,7 +34,7 @@ public class Test2 extends SequentialCommandGroup {
           new Translation2d(2, 0),
           new Translation2d(2, -2)),
       new Pose2d(0, -2, new Rotation2d(180)),
-      AutoConfig.configFwd);
+      AutoConfig.configFwdHigh);
 
   /** Creates a new Test. */
   public Test2() {

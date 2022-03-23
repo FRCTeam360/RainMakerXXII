@@ -26,7 +26,7 @@ public class T_R_2ball extends SequentialCommandGroup {
       new Pose2d(0, 0, new Rotation2d(0)),
       List.of(),
       new Pose2d(1, 0, new Rotation2d(0)),
-      AutoConfig.configRev);
+      AutoConfig.configRevHigh);
 
   /** Creates a new T_R_2ball. */
   public T_R_2ball() {

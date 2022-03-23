@@ -39,13 +39,13 @@ public class Test extends ParallelRaceGroup {
       new Pose2d(0, 0, new Rotation2d(0)),
       List.of(),
       new Pose2d(2, 0, new Rotation2d(0)),
-      AutoConfig.configFwd);
+      AutoConfig.configFwdHigh);
 
   public static final Trajectory test2 = TrajectoryGenerator.generateTrajectory(
       new Pose2d(2, 0, new Rotation2d(0)),
       List.of(),
       new Pose2d(0, 0, new Rotation2d(0)),
-      AutoConfig.configRev);
+      AutoConfig.configRevHigh);
 
   /** Creates a new Test. */
   public Test() {

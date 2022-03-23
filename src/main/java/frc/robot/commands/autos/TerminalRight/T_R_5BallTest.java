@@ -63,14 +63,14 @@ public class T_R_5BallTest extends ParallelRaceGroup {
             new Pose2d(0, 0, new Rotation2d(0)),
             List.of(),
             new Pose2d(1.1, -1, new Rotation2d(-90)),
-            AutoConfig.configFwd);
+            AutoConfig.configFwdHigh);
 
     public static final Trajectory phase11 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(1.1, -1, new Rotation2d(-90)),
             List.of(
                     new Translation2d(.25, -3)),
             new Pose2d(0, -3.5, new Rotation2d(-90)),
-            AutoConfig.configFwd);
+            AutoConfig.configFwdHigh);
 
     public static final Trajectory phase2 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, -3.5, new Rotation2d(-90)),
@@ -78,18 +78,18 @@ public class T_R_5BallTest extends ParallelRaceGroup {
             // new Translation2d(0, -7)),
             ),
             new Pose2d(0.60, -7, new Rotation2d(-45)),
-            AutoConfig.configFwd);
+            AutoConfig.configFwdHigh);
 
     private static final Trajectory phase3 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0.60, -7, new Rotation2d(-45)),
             List.of(),
             new Pose2d(0.5, -6.9, new Rotation2d(-45)),
-            AutoConfig.configRev);
+            AutoConfig.configRevHigh);
     private static final Trajectory phase4 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0.50, -6.9, new Rotation2d(-45)),
             List.of(),
             new Pose2d(0, -3.5, new Rotation2d(-45)),
-            AutoConfig.configRev);
+            AutoConfig.configRevHigh);
 
     /** Creates a new T_R_2ball. */
     public T_R_5BallTest() {

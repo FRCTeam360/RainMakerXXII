@@ -34,7 +34,7 @@ public class AutoChooser {
     private final Command simplehl;
     private final Command simpletl;
     private final Command simpletr;
-    private final Command trTest;
+    private final Command tr3ball;
     private final Command tr5test;
 
     public AutoChooser(RobotContainer container) {
@@ -47,7 +47,7 @@ public class AutoChooser {
         test = new Test();
         test2 = new Test2();
         tr2ball = new T_R_2ball();
-        trTest = new T_R_3ball();
+        tr3ball = new T_R_3ball();
         hl2ball = new H_L_2ball();
         hltest = new H_L_Curve();
         anywhere2ball = new Anywhere2ball(0);
@@ -90,7 +90,7 @@ public class AutoChooser {
             if ("Terminal Right".equals(selectedLocation)) {
                 autoChooser.addOption("TR 2 ball", tr2ball);
                 autoChooser.addOption("Simple TR", simpletr);
-                autoChooser.addOption("TR Test", trTest);
+                autoChooser.addOption("TR 3 ball", tr3ball);
                 autoChooser.addOption("TR 5 Test", tr5test);
             }
 
