@@ -127,6 +127,8 @@ public class T_R_3ball extends ParallelRaceGroup {
                                 new AutoShoot(2)
 
                                 )));
+
+        driveTrain.setAngleOffset(-88.5);
     }
 
 }

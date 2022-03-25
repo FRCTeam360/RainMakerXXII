@@ -37,5 +37,7 @@ public class T_R_2ball extends SequentialCommandGroup {
             phase1,
             driveTrain)
                 .andThen(() -> driveTrain.tankDriveVolts(0, 0)));
+
+    driveTrain.setAngleOffset(-88.5);
   }
 }

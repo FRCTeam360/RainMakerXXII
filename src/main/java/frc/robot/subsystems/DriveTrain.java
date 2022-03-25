@@ -37,6 +37,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class DriveTrain extends SubsystemBase {
 
+  public double offsetAngle = 0;
+
   // Conversions for the Falcons
   private static final double pi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
   public static final double ticksToMeters = ((pi * 0.1524) * ((15.0 / 85.0) * (24.0 / 46.0) / 2048.0));
@@ -148,6 +150,10 @@ public class DriveTrain extends SubsystemBase {
     navX.setAngleAdjustment(offset);
   }
 
+  public void setOffset(){
+    navX.setAngleAdjustment(offsetAngle);
+  }
+
   public static DifferentialDriveKinematics getKinematics() {
     return kDriveKinematics;
   }
@@ -216,7 +222,7 @@ public class DriveTrain extends SubsystemBase {
   public void navxTestingDashboardReadouts() {
     // SmartDashboard.putNumber("N ang", Math.IEEEremainder(navX.getAngle(), 360) );
     SmartDashboard.putNumber("NAV ang", navX.getAngle());
-    SmartDashboard.putString("Pos2D", m_odometry.getPoseMeters().toString());
+    // SmartDashboard.putString("Pos2D", m_odometry.getPoseMeters().toString());
     // System.out.print("NavX angle: " + navX.getAngle());
     // SmartDashboard.putNumber("N pre", navX.getBarometricPressure()); //why this
     // no work cri, just tryna get the pressure

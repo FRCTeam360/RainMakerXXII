@@ -93,7 +93,7 @@ public class QueueBalls extends CommandBase {
   }
 
   public void runFeeder() {
-    mFeeder.runFeeder(0.75);
+    mFeeder.runFeeder(0.7);
   }
 
   public void stopFeeder() {

@@ -75,7 +75,6 @@ public class H_L_2ball extends ParallelRaceGroup {
     // ex.getStackTrace());
     // }
 
-    driveTrain.setAngleOffset(133.5);
 
     System.out.println("autoing");
 
@@ -95,7 +94,7 @@ public class H_L_2ball extends ParallelRaceGroup {
 
                 new AutoRunIntake(),
 
-                new QueueBalls(false),
+                new QueueBalls(true),
 
                 new MoveWithRamsete(phase1, 
                 driveTrain)
@@ -111,5 +110,8 @@ public class H_L_2ball extends ParallelRaceGroup {
         
     );
 
+
+
   }
+
 }
