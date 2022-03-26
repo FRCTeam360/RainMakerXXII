@@ -97,7 +97,7 @@ public final class Constants {
         COMP, PRACTICE
     }
 
-    private static final FieldType fieldType = FieldType.PRACTICE;
+    private static final FieldType fieldType = FieldType.COMP;
 
     public static FieldType getFieldType(){
         return fieldType;

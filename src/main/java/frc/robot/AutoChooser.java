@@ -64,6 +64,13 @@ public class AutoChooser {
         test = new Test();
         test2 = new Test2();
 
+        autoChooser.addOption("Anywhere 2 Ball", anywhere2Ball);
+        autoChooser.addOption("Hang L 2 Ball", hangarLeft2Ball);
+        autoChooser.addOption("Hang L Curve", hangarLeft2BallCurve);
+        autoChooser.addOption("Term R 2 Ball", terminalRight2Ball);
+        autoChooser.addOption("Term R 3 Ball", terminalRight3Ball);
+        autoChooser.addOption("Term R 5 Ball", terminalRight5Ball);
+
         // locationChooser.addOption("Test", "Test");
         // locationChooser.addOption("Hangar Left", "Hangar Left");
         // locationChooser.addOption("Hangar Center", "Hangar Center");
@@ -78,46 +85,46 @@ public class AutoChooser {
         SmartDashboard.putData("Auto Choice", autoChooser);
     }
 
-    public void periodic() {
-        // if (selectedLocation != null && !selectedLocation.equals(locationChooser.getSelected())) { // If it changes or
-                                                                                                   // is being
-                                                                                                   // initialized
+    // public void periodic() {
+    //     // if (selectedLocation != null && !selectedLocation.equals(locationChooser.getSelected())) { // If it changes or
+    //                                                                                                // is being
+    //                                                                                                // initialized
 
-            // selectedLocation = locationChooser.getSelected(); // Reset the SelectedLocation to what it actually is
-            autoChooser = new SendableChooser<>(); // Clear the auto chooser
+    //         // selectedLocation = locationChooser.getSelected(); // Reset the SelectedLocation to what it actually is
+    //         autoChooser = new SendableChooser<>(); // Clear the auto chooser
 
-            // if ("Test".equals(selectedLocation)) {
-            //     autoChooser.addOption("Test", test);
-            //     autoChooser.addOption("Test2", test2);
-            // }
+    //         // if ("Test".equals(selectedLocation)) {
+    //         //     autoChooser.addOption("Test", test);
+    //         //     autoChooser.addOption("Test2", test2);
+    //         // }
 
-            // if ("Anywhere".equals(selectedLocation)) {
-                autoChooser.addOption("Simple anywhere", anywhere2Ball);
-            // }
+    //         // if ("Anywhere".equals(selectedLocation)) {
+    //             autoChooser.addOption("Simple anywhere", anywhere2Ball);
+    //         // }
 
-            // if ("Terminal Right".equals(selectedLocation)) {
-                // autoChooser.addOption("Simple TR", simpleTerminalRight);
-                autoChooser.addOption("TR 2 ball", terminalRight2Ball);
-                autoChooser.addOption("TR 3 ball", terminalRight3Ball);
-                autoChooser.addOption("TR 5 ball", terminalRight5Ball);
-            // }
+    //         // if ("Terminal Right".equals(selectedLocation)) {
+    //             // autoChooser.addOption("Simple TR", simpleTerminalRight);
+    //             autoChooser.addOption("TR 2 ball", terminalRight2Ball);
+    //             autoChooser.addOption("TR 3 ball", terminalRight3Ball);
+    //             autoChooser.addOption("TR 5 ball", terminalRight5Ball);
+    //         // }
 
-            // if ("Hangar Left".equals(selectedLocation)) {
-                // autoChooser.addOption("Simple HL", simpleHangarLeft);
-                autoChooser.addOption("HL 2 ball", hangarLeft2Ball);
-                autoChooser.addOption("HL 2 ball curve", hangarLeft2BallCurve);
-            // }
+    //         // if ("Hangar Left".equals(selectedLocation)) {
+    //             // autoChooser.addOption("Simple HL", simpleHangarLeft);
+    //             autoChooser.addOption("HL 2 ball", hangarLeft2Ball);
+    //             autoChooser.addOption("HL 2 ball curve", hangarLeft2BallCurve);
+    //         // }
 
-            // if ("Terminal Right".equals(selectedLocation)) {
-                // autoChooser.addOption("Simple TR", simpleTerminalRight);
-            // }
+    //         // if ("Terminal Right".equals(selectedLocation)) {
+    //             // autoChooser.addOption("Simple TR", simpleTerminalRight);
+    //         // }
 
-            SmartDashboard.putData("Auto Choice", autoChooser); // Update the Auto Choice with the new options and new
-                                                                // chooser
+    //         SmartDashboard.putData("Auto Choice", autoChooser); // Update the Auto Choice with the new options and new
+    //                                                             // chooser
 
-        }
-        // Else do nothing cuz the location chooser hasn't changed states
-    // }
+    //     }
+    //     // Else do nothing cuz the location chooser hasn't changed states
+    // // }
 
     public Command getCommand() {
         return autoChooser.getSelected();
