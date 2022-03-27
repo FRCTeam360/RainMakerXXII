@@ -21,8 +21,8 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 public final class Constants {
     public static final class AutoConstants {
 
-        private static final double xOffsetTerminal5Ball = -0.13;
-        private static final double yOffsetTerminal5Ball = -0.13;
+        private static final double xOffsetTerminal5Ball = -0.13 - 0.2;
+        private static final double yOffsetTerminal5Ball = -0.13 + 0.35;
 
         public static double getXOffsetTerminal5Ball() {
             if(getFieldType() == FieldType.COMP) {

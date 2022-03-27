@@ -119,8 +119,10 @@ public class T_R_5Ball extends ParallelRaceGroup {
                                         driveTrain)
                                                 .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
                                 new QueueBalls(true)),
-                        new ParallelCommandGroup(
-                                new AutoRetractIntake(true),
+                        new ParallelRaceGroup(
+                                new SequentialCommandGroup(
+                                        new AutoRetractIntake(true),
+                                        new AutoRunIntake()),
                                 new AutoShoot(2)),
 
                         new ParallelRaceGroup(
