@@ -64,10 +64,6 @@ public class AutoRunFeederAndTower extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(myTimer.get() >= 0.25){
-      return true;
-    } else {
-      return false;
-    }
+    return myTimer.get() >= 0.25;
   }
 }

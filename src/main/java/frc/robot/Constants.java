@@ -25,14 +25,14 @@ public final class Constants {
         private static final double yOffsetTerminal5Ball = -0.13;
 
         public static double getXOffsetTerminal5Ball() {
-            if(getFieldType() == FieldType.COMP) {
+            if(fieldType == FieldType.COMP) {
                 return xOffsetTerminal5Ball;
             }
             return 0.0;
         }
 
         public static double getYOffsetTerminal5Ball() {
-            if(getFieldType() == FieldType.COMP) {
+            if(fieldType == FieldType.COMP) {
                 return yOffsetTerminal5Ball;
             }
             return 0.0;
@@ -97,9 +97,6 @@ public final class Constants {
         COMP, PRACTICE
     }
 
-    private static final FieldType fieldType = FieldType.COMP;
+    public static final FieldType fieldType = FieldType.COMP;
 
-    public static FieldType getFieldType(){
-        return fieldType;
-    }
 }

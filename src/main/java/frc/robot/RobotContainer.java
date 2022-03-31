@@ -76,8 +76,6 @@ public class RobotContainer {
   private final TurretAuto turretAuto = new TurretAuto(limelight, turret);
   private final TurretManual turretManual = new TurretManual();
   private final Pressurize pressurize = new Pressurize(pneumatics);
-  private final RunFeederAutomatically feedAutomatic = new RunFeederAutomatically();
-  private final RunTowerAutomatically towerAutomatic = new RunTowerAutomatically();
   private final RunFeederManually runFeederManually = new RunFeederManually();
   private final RunTowerManually runTowerManually = new RunTowerManually();
 
