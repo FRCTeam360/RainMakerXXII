@@ -8,6 +8,7 @@ import static frc.robot.Constants.CANIds.*;
 //import frc.robot.Constants.AutoConstants;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
@@ -72,6 +73,8 @@ public class DriveTrain extends SubsystemBase {
 
   private double pastForwardSpeed = 0;
 
+  private StatorCurrentLimitConfiguration statorLimit = new StatorCurrentLimitConfiguration(true, 40, 40, 0.01);
+
   /** Creates a new ExampleSubsystem. */
   public DriveTrain() {
 
@@ -98,6 +101,13 @@ public class DriveTrain extends SubsystemBase {
     motorRLead.setInverted(TalonFXInvertType.Clockwise);
     motorRFollow1.setInverted(TalonFXInvertType.FollowMaster);
     motorRFollow2.setInverted(TalonFXInvertType.FollowMaster);
+
+    motorLLead.configStatorCurrentLimit(statorLimit);
+    motorLFollow1.configStatorCurrentLimit(statorLimit);
+    motorLFollow2.configStatorCurrentLimit(statorLimit);
+    motorRLead.configStatorCurrentLimit(statorLimit);
+    motorRFollow1.configStatorCurrentLimit(statorLimit);
+    motorRFollow2.configStatorCurrentLimit(statorLimit);
 
     resetEncPos(); // Reset Encoders r navX yaw before m_odometry is defined
 
