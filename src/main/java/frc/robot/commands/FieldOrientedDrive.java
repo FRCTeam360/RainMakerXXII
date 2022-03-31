@@ -22,10 +22,10 @@ public class FieldOrientedDrive extends CommandBase {
   private final SlewRateLimiter filter;
 
   /** Creates a new FieldOrientedDrive. */
-  public FieldOrientedDrive(DriveTrain driveTrain) {
+  public FieldOrientedDrive() {
     driverCont = DriverControl.getInstance();
 
-    myDriveTrain = driveTrain;
+    myDriveTrain = DriveTrain.getInstance();
 
     filter = new SlewRateLimiter(myDriveTrain.getAccelerationLimit());
 
@@ -106,6 +106,12 @@ public class FieldOrientedDrive extends CommandBase {
     if (Math.abs(driverCont.getRightX()) >= xboxDeadzone) {
       double turn = driverCont.getRightX() * 0.3;
       myDriveTrain.drive(turn, -turn);
+    }
+
+    if(driverCont.getRightStickButtonPressed()){
+      myDriveTrain.brakeMode();
+    } else if(driverCont.getRightStickButtonReleased()){
+      myDriveTrain.coastMode();
     }
 
   }

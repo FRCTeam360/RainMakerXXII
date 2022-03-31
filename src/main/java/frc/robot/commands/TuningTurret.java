@@ -5,21 +5,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Turret;
 
-public class AutoMoveOnTicks extends CommandBase {
+public class TuningTurret extends CommandBase {
 
-  private DriveTrain myDriveTrain;
-  private double target;
-  private double distance;
-  /** Creates a new AutoMoveOnTicks. */
-  public AutoMoveOnTicks(double meters) {
+  private final Turret mTurret = Turret.getInstance();
 
-    myDriveTrain = DriveTrain.getInstance();
-    target = meters;
-
-    addRequirements(myDriveTrain);
+  /** Creates a new TuningTurret. */
+  public TuningTurret() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(mTurret);
+
+    
   }
 
   // Called when the command is initially scheduled.
@@ -29,8 +26,7 @@ public class AutoMoveOnTicks extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    myDriveTrain.drive(0.125, 0.125);
-    distance = (myDriveTrain.getLeftEncoderMeters() + myDriveTrain.getRightEncoderMeters()) / 2;
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +36,6 @@ public class AutoMoveOnTicks extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return distance >= target;
+    return false;
   }
 }

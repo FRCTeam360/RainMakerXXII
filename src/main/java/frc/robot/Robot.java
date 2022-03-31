@@ -7,8 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.DriveTrain;
-
+import frc.robot.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -24,6 +23,8 @@ public class Robot extends TimedRobot {
 
   private DriveTrain m_driveTrain;
 
+  private CargoCounter m_cargoCounter;
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -36,7 +37,9 @@ public class Robot extends TimedRobot {
 
     m_autoChooser = new AutoChooser(m_robotContainer);
 
-    m_driveTrain = new DriveTrain();
+    m_driveTrain = DriveTrain.getInstance();
+    
+    m_cargoCounter = CargoCounter.getInstance();
   }
 
   /**
@@ -59,16 +62,19 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     m_driveTrain.coastMode();
+    m_cargoCounter.resetAll();
   }
 
   @Override
   public void disabledPeriodic() {
-    m_autoChooser.periodic();
+    // m_autoChooser.periodic();
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+
+    m_cargoCounter.resetAll();
 
    m_autonomousCommand = m_autoChooser.getCommand();
 
@@ -97,6 +103,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
   }
 
   /** This function is called periodically during operator control. */

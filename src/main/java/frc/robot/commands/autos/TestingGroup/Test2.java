@@ -25,6 +25,8 @@ import frc.robot.subsystems.DriveTrain;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Test2 extends SequentialCommandGroup {
+  
+  DriveTrain driveTrain = DriveTrain.getInstance();
 
   public static final Trajectory test = TrajectoryGenerator.generateTrajectory(
       new Pose2d(0, 0, new Rotation2d(0)),
@@ -32,10 +34,10 @@ public class Test2 extends SequentialCommandGroup {
           new Translation2d(2, 0),
           new Translation2d(2, -2)),
       new Pose2d(0, -2, new Rotation2d(180)),
-      AutoConfig.configFwd);
+      AutoConfig.configFwdHigh);
 
   /** Creates a new Test. */
-  public Test2(DriveTrain driveTrain) {
+  public Test2() {
 
     addCommands(
         new MoveWithRamsete(

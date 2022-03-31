@@ -13,42 +13,48 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.AutoConfig;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.commands.AutoSetShoot;
+import frc.robot.commands.AutoShoot;
 import frc.robot.commands.MoveWithRamsete;
+import frc.robot.commands.TurretAuto;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Turret;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class Test extends SequentialCommandGroup {
+public class Test extends ParallelRaceGroup {
+    
+  DriveTrain driveTrain = DriveTrain.getInstance();
+  Limelight limelight = Limelight.getInstance();
+  Turret turret = Turret.getInstance();
 
   public static final Trajectory test = TrajectoryGenerator.generateTrajectory(
       new Pose2d(0, 0, new Rotation2d(0)),
       List.of(),
       new Pose2d(2, 0, new Rotation2d(0)),
-      AutoConfig.configFwd);
+      AutoConfig.configFwdHigh);
 
   public static final Trajectory test2 = TrajectoryGenerator.generateTrajectory(
       new Pose2d(2, 0, new Rotation2d(0)),
       List.of(),
       new Pose2d(0, 0, new Rotation2d(0)),
-      AutoConfig.configRev);
+      AutoConfig.configRevHigh);
 
   /** Creates a new Test. */
-  public Test(DriveTrain driveTrain) {
+  public Test() {
 
     addCommands(
-        new MoveWithRamsete(
-            test,
-            driveTrain)
-                .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
-        new MoveWithRamsete(
-            test2,
-            driveTrain)
-                .andThen(() -> driveTrain.tankDriveVolts(0, 0)));
+        new TurretAuto(limelight, turret),
+        new AutoSetShoot(),
+        new AutoShoot(2)
+    );
 
     System.out.println("tessst");
     // addCommands();

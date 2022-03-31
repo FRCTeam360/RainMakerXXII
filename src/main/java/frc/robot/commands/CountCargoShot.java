@@ -5,41 +5,41 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.CargoCounter;
 
-public class AutoMoveOnTicks extends CommandBase {
+public class CountCargoShot extends CommandBase {
+  private final CargoCounter mCargoCounter = CargoCounter.getInstance();
+  Integer initialShotCount, cargoToShoot;
 
-  private DriveTrain myDriveTrain;
-  private double target;
-  private double distance;
-  /** Creates a new AutoMoveOnTicks. */
-  public AutoMoveOnTicks(double meters) {
-
-    myDriveTrain = DriveTrain.getInstance();
-    target = meters;
-
-    addRequirements(myDriveTrain);
+  /** Creates a new CountCargoShot. */
+  public CountCargoShot(Integer cargoToShoot) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.cargoToShoot = cargoToShoot;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    this.initialShotCount = mCargoCounter.getShotCount();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    myDriveTrain.drive(0.125, 0.125);
-    distance = (myDriveTrain.getLeftEncoderMeters() + myDriveTrain.getRightEncoderMeters()) / 2;
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
+
+  public boolean cargoToShootReached() {
+    return mCargoCounter.getShotCount() >= (this.initialShotCount + this.cargoToShoot);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return distance >= target;
+    return cargoToShootReached();
   }
 }

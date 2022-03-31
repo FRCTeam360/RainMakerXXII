@@ -8,6 +8,7 @@ import static frc.robot.Constants.CANIds.*;
 //import frc.robot.Constants.AutoConstants;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
@@ -37,6 +38,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class DriveTrain extends SubsystemBase {
 
+  public double offsetAngle = 0;
+
   // Conversions for the Falcons
   private static final double pi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
   public static final double ticksToMeters = ((pi * 0.1524) * ((15.0 / 85.0) * (24.0 / 46.0) / 2048.0));
@@ -47,6 +50,8 @@ public class DriveTrain extends SubsystemBase {
   private WPI_TalonFX motorRLead = new WPI_TalonFX(motorRLeadID);
   private WPI_TalonFX motorRFollow1 = new WPI_TalonFX(motorRFollow1ID);
   private WPI_TalonFX motorRFollow2 = new WPI_TalonFX(motorRFollow2ID);
+
+  private static DriveTrain instance;
 
   public final DifferentialDrive m_differentialDrive;
 
@@ -67,6 +72,8 @@ public class DriveTrain extends SubsystemBase {
   private static double ACCELERATION_LIMIT = 1.5;
 
   private double pastForwardSpeed = 0;
+
+  private StatorCurrentLimitConfiguration statorLimit = new StatorCurrentLimitConfiguration(true, 40, 40, 0.01);
 
   /** Creates a new ExampleSubsystem. */
   public DriveTrain() {
@@ -95,6 +102,13 @@ public class DriveTrain extends SubsystemBase {
     motorRFollow1.setInverted(TalonFXInvertType.FollowMaster);
     motorRFollow2.setInverted(TalonFXInvertType.FollowMaster);
 
+    motorLLead.configStatorCurrentLimit(statorLimit);
+    motorLFollow1.configStatorCurrentLimit(statorLimit);
+    motorLFollow2.configStatorCurrentLimit(statorLimit);
+    motorRLead.configStatorCurrentLimit(statorLimit);
+    motorRFollow1.configStatorCurrentLimit(statorLimit);
+    motorRFollow2.configStatorCurrentLimit(statorLimit);
+
     resetEncPos(); // Reset Encoders r navX yaw before m_odometry is defined
 
     // makes the 3 motor controllers function as 1 motor controller for autos
@@ -107,9 +121,16 @@ public class DriveTrain extends SubsystemBase {
     this.coastMode();
   }
 
+  public static DriveTrain getInstance(){
+    if(instance == null){
+      instance = new DriveTrain();
+    }
+    return instance;
+  }
+
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    leftGroup.setVoltage(leftVolts); // Answer is no //Set to motor groups
-    rightGroup.setVoltage(rightVolts); // it's big brain time
+    motorLLead.setVoltage(leftVolts); // Answer is no //Set to motor groups
+    motorRLead.setVoltage(rightVolts); // it's big brain time
     m_differentialDrive.feed(); // Feed the motorsafety class so it doesnt disable the motors
 
   }
@@ -137,6 +158,10 @@ public class DriveTrain extends SubsystemBase {
 
   public void setAngleOffset(double offset) {
     navX.setAngleAdjustment(offset);
+  }
+
+  public void setOffset(){
+    navX.setAngleAdjustment(offsetAngle);
   }
 
   public static DifferentialDriveKinematics getKinematics() {
@@ -207,7 +232,7 @@ public class DriveTrain extends SubsystemBase {
   public void navxTestingDashboardReadouts() {
     // SmartDashboard.putNumber("N ang", Math.IEEEremainder(navX.getAngle(), 360) );
     SmartDashboard.putNumber("NAV ang", navX.getAngle());
-    SmartDashboard.putString("Pos2D", m_odometry.getPoseMeters().toString());
+    // SmartDashboard.putString("Pos2D", m_odometry.getPoseMeters().toString());
     // System.out.print("NavX angle: " + navX.getAngle());
     // SmartDashboard.putNumber("N pre", navX.getBarometricPressure()); //why this
     // no work cri, just tryna get the pressure
@@ -248,12 +273,12 @@ public class DriveTrain extends SubsystemBase {
     
     SmartDashboard.putNumber("robot heading", getHeadingAngle());
 
-    SmartDashboard.putNumber("RL current", motorRLead.getSupplyCurrent());
-    SmartDashboard.putNumber("RF1 current", motorRFollow1.getSupplyCurrent());
-    SmartDashboard.putNumber("RF2 current", motorRFollow2.getSupplyCurrent());
-    SmartDashboard.putNumber("LL current", motorLLead.getSupplyCurrent());
-    SmartDashboard.putNumber("LF1 current", motorLFollow1.getSupplyCurrent());
-    SmartDashboard.putNumber("LF2 current", motorLFollow2.getSupplyCurrent());
+    // SmartDashboard.putNumber("RL current", motorRLead.getSupplyCurrent());
+    // SmartDashboard.putNumber("RF1 current", motorRFollow1.getSupplyCurrent());
+    // SmartDashboard.putNumber("RF2 current", motorRFollow2.getSupplyCurrent());
+    // SmartDashboard.putNumber("LL current", motorLLead.getSupplyCurrent());
+    // SmartDashboard.putNumber("LF1 current", motorLFollow1.getSupplyCurrent());
+    // SmartDashboard.putNumber("LF2 current", motorLFollow2.getSupplyCurrent());
   }
 
   public void positionPrintouts() {

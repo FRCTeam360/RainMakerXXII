@@ -22,17 +22,17 @@ public class Turret extends SubsystemBase {
   private DigitalInput middleLimitSwitch = new DigitalInput(middleLimitSwitchPort);
   private DigitalInput rightLimitSwitch;
 
-  public static final double maxSpeed = 0.6;
+  public static final double maxSpeed = 0.8;
 
   public static final double kPAngle = 0.05;
   public static final double kIAngle = 0;
   public static final double kDAngle = 0.01;
   public static final double kFAngle = 0;
 
-  public static final double kPLimelight = 0.013; // values may be altered, seperate for clarification , changer
+  public static final double kPLimelight = 0.030; // values may be altered, seperate for clarification , changer
                                                   // kPLimelight from .05
   public static final double kILimelight = 0; // *
-  public static final double kDLimelight = 0.0; // * changed from 0.01
+  public static final double kDLimelight = 0.04; // * changed from 0.01
   public static final double kFLimelight = 0; // *
 
   public static final double AimMinCmd = 0.01;
@@ -47,8 +47,8 @@ public class Turret extends SubsystemBase {
   private double previousAngle;
   private double angleTurnIntegral;
 
-  public static final float leftSoftLimit = 90;
-  public static final float rightSoftLimit = -90;
+  public static final float leftSoftLimit = 120;
+  public static final float rightSoftLimit = -120;
 
   public static final float leftSoftLimitEncoder = (float) (leftSoftLimit / gearBoxRatio / pulleyRatio
       / degreesPerRotation);
@@ -85,8 +85,8 @@ public class Turret extends SubsystemBase {
 
     // turretMotor.getEncoder().setVelocityConversionFactor(rotationsPerTick * gearBoxRatio * pulleyRatio * degreesPerRotation);
 
-    turretMotor.setSoftLimit(SoftLimitDirection.kForward, leftSoftLimit);
-    turretMotor.setSoftLimit(SoftLimitDirection.kReverse, rightSoftLimit);
+    turretMotor.setSoftLimit(SoftLimitDirection.kForward, leftSoftLimitEncoder);
+    turretMotor.setSoftLimit(SoftLimitDirection.kReverse, rightSoftLimitEncoder);
 
     turretMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
     turretMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
@@ -121,8 +121,8 @@ public class Turret extends SubsystemBase {
 
   public void turn(double speed) {
 
-    Math.min(maxSpeed, speed);
-    Math.max(-maxSpeed, speed);
+    // Math.min(maxSpeed, speed);
+    // Math.max(-maxSpeed, speed);
 
     turretMotor.set(speed);
 
@@ -190,8 +190,8 @@ public class Turret extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Turret Angle", getAngle());
-    SmartDashboard.putNumber("Turret Encoder", turretMotor.getEncoder().getPosition());
-    System.out.println("limit: " + middleLimitSwitch.get());
+    // SmartDashboard.putNumber("Turret Encoder", turretMotor.getEncoder().getPosition());
+    // System.out.println("limit: " + middleLimitSwitch.get());
     this.limitSwitchResetAngle();
   }
 }

@@ -11,9 +11,9 @@ public class Characterize extends CommandBase {
     private Double m_prevAngle = 0.0;
     private Double m_prevTime = 0.0;
     private boolean m_resetComplete;
-    public Characterize(DriveTrain subsystem) {
+    public Characterize() {
 
-        m_drivebase = subsystem;
+        m_drivebase = DriveTrain.getInstance();
         addRequirements(m_drivebase);   
     }
 

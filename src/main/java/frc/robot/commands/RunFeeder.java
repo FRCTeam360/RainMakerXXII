@@ -78,7 +78,7 @@ public class RunFeeder extends CommandBase {
 
       }
     } else if (driverCont.getLeftTrigger() || operatorCont.getLeftTrigger()) {
-      if (myTower.ballNotInTower()) {
+      if (myTower.ballNotInBottom()) {
         towerPower = 1.0;
         feederPower = 1.0;
       } else {

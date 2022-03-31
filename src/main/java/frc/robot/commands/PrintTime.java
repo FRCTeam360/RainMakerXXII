@@ -5,41 +5,37 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveTrain;
+import edu.wpi.first.wpilibj.Timer;
 
-public class AutoMoveOnTicks extends CommandBase {
+public class PrintTime extends CommandBase {
 
-  private DriveTrain myDriveTrain;
-  private double target;
-  private double distance;
-  /** Creates a new AutoMoveOnTicks. */
-  public AutoMoveOnTicks(double meters) {
+  private Timer mTimer = new Timer();
 
-    myDriveTrain = DriveTrain.getInstance();
-    target = meters;
-
-    addRequirements(myDriveTrain);
+  /** Creates a new PrintTime. */
+  public PrintTime() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    mTimer.start();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    myDriveTrain.drive(0.125, 0.125);
-    distance = (myDriveTrain.getLeftEncoderMeters() + myDriveTrain.getRightEncoderMeters()) / 2;
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    mTimer.stop();
+    System.out.println("this is auto time:" + mTimer.get());
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return distance >= target;
+    return false;
   }
 }

@@ -21,15 +21,35 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 public final class Constants {
     public static final class AutoConstants {
 
+        private static final double xOffsetTerminal5Ball = -0.13;
+        private static final double yOffsetTerminal5Ball = -0.13;
+
+        public static double getXOffsetTerminal5Ball() {
+            if(getFieldType() == FieldType.COMP) {
+                return xOffsetTerminal5Ball;
+            }
+            return 0.0;
+        }
+
+        public static double getYOffsetTerminal5Ball() {
+            if(getFieldType() == FieldType.COMP) {
+                return yOffsetTerminal5Ball;
+            }
+            return 0.0;
+        }
+
         //values for Ramsete controller
-        public static final double ksVolts = 0.57153;
-        public static final double kvVoltSecondsPerMeter = 1.2796;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.1411;
-        public static final double kPDriveVel = 1.6425;
+        public static final double ksVolts = 0.59619;
+        public static final double kvVoltSecondsPerMeter = 1.2895;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.16441;
+        public static final double kPDriveVel = 1.7177;
         public static final double kTrackwidthMeters = 0.641;
 
-        public static final double kMaxSpeedMetersPerSecond = 1.0;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1.0;
+        public static final double kMaxSpeedMetersPerSecondHigh = 2.0;
+        public static final double kMaxAccelerationMetersPerSecondSquaredHigh = 2.0;
+
+        public static final double kMaxSpeedMetersPerSecondLow = 1.0;
+        public static final double kMaxAccelerationMetersPerSecondSquaredLow = 1.0;
 
         //ramsete values - 2,.7 are default
         public static final double kRamseteB = 2.0;
@@ -68,6 +88,18 @@ public final class Constants {
 
     public static final class DigitalInputPorts {
         public static final int topTowerSensor = 0;
+        public static final int bottomTowerSensor = 2;
+        public static final int feederSensor = 3;
         public static final int middleLimitSwitchPort = 1;
+    }
+
+    public enum FieldType {
+        COMP, PRACTICE
+    }
+
+    private static final FieldType fieldType = FieldType.COMP;
+
+    public static FieldType getFieldType(){
+        return fieldType;
     }
 }

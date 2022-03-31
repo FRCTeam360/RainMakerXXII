@@ -5,35 +5,41 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Shooter;
+import frc.robot.operatorInterface.DriverControl;
+import frc.robot.operatorInterface.OperatorControl;
+import frc.robot.subsystems.Tower;
 
-public class AutoSetShoot extends CommandBase {
-  private final Shooter shooter = Shooter.getInstance();
-
-  /** Creates a new AutoSetShoot. */
-  public AutoSetShoot() {
-
-    addRequirements(shooter);
+public class RunTowerManually extends CommandBase {
+  private final Tower myTower;
+  private final OperatorControl operatorCont;
+  private final DriverControl driverCont;
+  /** Creates a new RunFeederManually. */
+  public RunTowerManually() {
+    myTower = Tower.getInstance();
+    operatorCont = OperatorControl.getInstance();
+    driverCont = DriverControl.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(myTower);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    shooter.setVelocity(0);
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double shootGoal = shooter.getShootGoal();
-    shooter.setVelocity(shootGoal);
+    if (operatorCont.getXButton() || driverCont.getXButton()) {
+      myTower.runTower(-1.0);
+    } else {
+      myTower.runTower(1.0);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.setVelocity(0);
+    myTower.runTower(0);
   }
 
   // Returns true when the command should end.
