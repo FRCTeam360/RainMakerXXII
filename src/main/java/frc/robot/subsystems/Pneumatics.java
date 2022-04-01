@@ -16,7 +16,7 @@ public class Pneumatics extends SubsystemBase{
 
     public Pneumatics() {
         //remains unresolved
-        comp = new Compressor(20, PneumaticsModuleType.REVPH);
+        comp = new Compressor(20, PneumaticsModuleType.CTREPCM);
     }
 
     public void pressurize(){

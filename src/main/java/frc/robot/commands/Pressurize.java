@@ -39,24 +39,13 @@ public class Pressurize extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (shouldRun == true && pneumatics.comp.getPressureSwitchValue()) {
-      pneumatics.pressurize();
-    } else if (shouldRun == true && !pneumatics.comp.getPressureSwitchValue()) {
-      shouldRun = false;
-      pneumatics.stop();
-      timer.reset();
-      timer.start();
-    }
-    if (timer.get() > 0.5) {
-      timer.reset();
-      timer.stop();
-      shouldRun = true;
-    }
+    pneumatics.pressurize();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    pneumatics.stop();
   }
 
   // Returns true when the command should end.
