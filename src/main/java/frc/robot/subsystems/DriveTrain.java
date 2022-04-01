@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 
@@ -74,6 +75,8 @@ public class DriveTrain extends SubsystemBase {
   private double pastForwardSpeed = 0;
 
   private StatorCurrentLimitConfiguration statorLimit = new StatorCurrentLimitConfiguration(true, 40, 40, 0.01);
+  private SlewRateLimiter driveLLimiter = new SlewRateLimiter(1.1);
+  private SlewRateLimiter driveRLimiter = new SlewRateLimiter(1.1);
 
   /** Creates a new ExampleSubsystem. */
   public DriveTrain() {
@@ -102,12 +105,12 @@ public class DriveTrain extends SubsystemBase {
     motorRFollow1.setInverted(TalonFXInvertType.FollowMaster);
     motorRFollow2.setInverted(TalonFXInvertType.FollowMaster);
 
-    motorLLead.configStatorCurrentLimit(statorLimit);
-    motorLFollow1.configStatorCurrentLimit(statorLimit);
-    motorLFollow2.configStatorCurrentLimit(statorLimit);
-    motorRLead.configStatorCurrentLimit(statorLimit);
-    motorRFollow1.configStatorCurrentLimit(statorLimit);
-    motorRFollow2.configStatorCurrentLimit(statorLimit);
+    // motorLLead.configStatorCurrentLimit(statorLimit);
+    // motorLFollow1.configStatorCurrentLimit(statorLimit);
+    // motorLFollow2.configStatorCurrentLimit(statorLimit);
+    // motorRLead.configStatorCurrentLimit(statorLimit);
+    // motorRFollow1.configStatorCurrentLimit(statorLimit);
+    // motorRFollow2.configStatorCurrentLimit(statorLimit);
 
     resetEncPos(); // Reset Encoders r navX yaw before m_odometry is defined
 
@@ -289,16 +292,18 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void drive(double leftMotorPercentage, double rightMotorPercentage) {
-    if(leftMotorPercentage == 0){
-      motorLLead.stopMotor();
-    } else {
+    // if(leftMotorPercentage == 0){
+      // motorLLead.stopMotor();
+    // } else {
+      leftMotorPercentage = driveLLimiter.calculate(leftMotorPercentage);
       motorLLead.set(leftMotorPercentage);
-    }
-    if(rightMotorPercentage == 0){
-        motorRLead.stopMotor();
-    } else {
+    // }
+    // if(rightMotorPercentage == 0){
+        // motorRLead.stopMotor();
+    // } else {
+      rightMotorPercentage = driveRLimiter.calculate(rightMotorPercentage);
       motorRLead.set(rightMotorPercentage);
-    }
+    // }
   }
 
   @Override

@@ -129,22 +129,26 @@ public class TurretManual extends CommandBase {
 
     double gyroAngle = myDriveTrain.getHeadingAngle();
 
-    double x = operatorCont.getRightX();
-    double y = operatorCont.getRightY();
-    double angle = Math.abs(Math.atan(x / y));
-    if (y < 0 && x > 0) {
-      angle = 180 - angle;
-    } else if (y < 0 && x < 0) {
-      angle = -180 + angle;
-    } else if (y > 0 && x < 0) {
-      angle = -1 * angle;
-    }
-    // else if(y>0 && x>0) {
+    double x = 0;
+    double y = 0;
+    if (Math.abs(operatorCont.getRightX()) > .125 || Math.abs(operatorCont.getRightY()) > .125) {
+      x = -operatorCont.getRightX();
+      y = operatorCont.getRightY();
+      double angle = Math.atan(x / y); // Math.abs()
+      angle = Math.toDegrees(angle);
+      if (y < 0 && x > 0) {
+        angle = 180 + angle; // -
+      } else if (y < 0 && x < 0) {
+        angle = -180 + angle;
+      }
 
-    // }
-    double turretAngle = angle - gyroAngle;
+    double turretAngle =  gyroAngle - angle;
 
     myTurret.angleTurn(turretAngle);
+
+  } else {
+    myTurret.turn(0);
+  }
 
   }
 
