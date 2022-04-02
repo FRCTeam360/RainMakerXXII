@@ -65,9 +65,9 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
     public static final Trajectory phase2 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(1.1, 1, new Rotation2d(90)),
             List.of(
-              new Translation2d(1.7, 3)
+              new Translation2d(1.3, 2.5)
             ),
-            new Pose2d(1.7, 6, new Rotation2d(45)),
+            new Pose2d(1.7, 6, new Rotation2d(-55)),
             AutoConfig.configFwdLow);
       
 
