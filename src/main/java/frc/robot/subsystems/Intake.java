@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Utils;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 import static frc.robot.Constants.CANIds.*;
@@ -37,7 +38,7 @@ public class Intake extends SubsystemBase {
 
     private Intake() {
         this.intake = new CANSparkMax(intakeId, MotorType.kBrushless);
-        this.intakeMover = new DoubleSolenoid(20, PneumaticsModuleType.CTREPCM, intakeForwardChannel, intakeReverseChannel);
+        this.intakeMover = new DoubleSolenoid(20, Utils.getPneumaticsType(), intakeForwardChannel, intakeReverseChannel);
 
         intake.setSmartCurrentLimit(20);
 

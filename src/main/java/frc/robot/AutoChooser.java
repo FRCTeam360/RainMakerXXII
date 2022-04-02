@@ -30,6 +30,7 @@ public class AutoChooser {
     private final Command hangarLeft2Ball;
     private final Command hangarLeft2BallCurve;
     private final Command simpleHangarLeft;
+    private final Command hangarLeft2BallPlusEmergencyBall;
 
     private final Command simpleTerminalLeft;
 
@@ -53,6 +54,7 @@ public class AutoChooser {
         hangarLeft2Ball = new H_L_2ball();
         hangarLeft2BallCurve = new H_L_Curve();
         simpleHangarLeft = new SimpleHL2ball();
+        hangarLeft2BallPlusEmergencyBall = new H_L_2ballPlusEmergencyBall();
 
         simpleTerminalLeft = new SimpleTL2ball();
         
@@ -67,6 +69,7 @@ public class AutoChooser {
         autoChooser.addOption("Anywhere 2 Ball", anywhere2Ball);
         autoChooser.addOption("Hang L 2 Ball", hangarLeft2Ball);
         autoChooser.addOption("Hang L Curve", hangarLeft2BallCurve);
+        autoChooser.addOption("Hang L 2 Ball + Emergency Ball", hangarLeft2BallPlusEmergencyBall);
         autoChooser.addOption("Term R 2 Ball", terminalRight2Ball);
         autoChooser.addOption("Term R 3 Ball", terminalRight3Ball);
         autoChooser.addOption("Term R 5 Ball", terminalRight5Ball);
