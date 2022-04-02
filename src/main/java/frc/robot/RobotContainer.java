@@ -81,7 +81,7 @@ public class RobotContainer {
   private final RunFeederManually runFeederManually = new RunFeederManually();
   private final RunTowerManually runTowerManually = new RunTowerManually();
 
-  private final QueueBalls queueCargo = new QueueBalls(false);
+  private final QueueBalls queueCargo = new QueueBalls(true);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.

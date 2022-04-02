@@ -75,8 +75,8 @@ public class DriveTrain extends SubsystemBase {
   private double pastForwardSpeed = 0;
 
   private StatorCurrentLimitConfiguration statorLimit = new StatorCurrentLimitConfiguration(true, 40, 40, 0.01);
-  private SlewRateLimiter driveLLimiter = new SlewRateLimiter(1.1);
-  private SlewRateLimiter driveRLimiter = new SlewRateLimiter(1.1);
+  private SlewRateLimiter driveLLimiter = new SlewRateLimiter(1.5);
+  private SlewRateLimiter driveRLimiter = new SlewRateLimiter(1.5);
 
   /** Creates a new ExampleSubsystem. */
   public DriveTrain() {

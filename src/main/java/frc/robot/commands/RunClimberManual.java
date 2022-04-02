@@ -7,14 +7,19 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.operatorInterface.OperatorControl;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
 public class RunClimberManual extends CommandBase {
 
   private final Climber myClimber;
+  private final Shooter myShooter = Shooter.getInstance();
+  private final Intake myIntake = Intake.getInstance();
   private final OperatorControl operatorCont = OperatorControl.getInstance();
   /** Creates a new RunClimber. */
   public RunClimberManual(Climber climber) {
     myClimber = climber;
+    addRequirements(myClimber, myShooter, myIntake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -25,15 +30,21 @@ public class RunClimberManual extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Math.abs(operatorCont.getLeftY()) >= 0.125) {
-      myClimber.runLeftClimber(operatorCont.getLeftY());
+    if(operatorCont.getLeftTrigger()){
+      myClimber.runBothClimbersUp();
+    } else if(operatorCont.getRightTrigger()){
+      myClimber.runBothClimbersDown();
     } else {
-      myClimber.runLeftClimber(0);
-    }
-    if(Math.abs(operatorCont.getRightY()) >= 0.125){
-      myClimber.runRightClimber(operatorCont.getRightY());
-    } else {
-      myClimber.runRightClimber(0);
+      if(Math.abs(operatorCont.getLeftY()) >= 0.125) {
+        myClimber.runLeftClimber(-operatorCont.getLeftY());
+      } else {
+        myClimber.runLeftClimber(0);
+      }
+      if(Math.abs(operatorCont.getRightY()) >= 0.125){
+        myClimber.runRightClimber(-operatorCont.getRightY());
+      } else {
+        myClimber.runRightClimber(0);
+      }
     }
   }
 
