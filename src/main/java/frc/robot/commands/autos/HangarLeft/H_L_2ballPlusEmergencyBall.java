@@ -53,8 +53,7 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
   public static final Trajectory phase1 = TrajectoryGenerator.generateTrajectory(
       new Pose2d(0, 0, new Rotation2d(0)),
       List.of(),
-      new Pose2d(1.1, 1, new Rotation2d(
-      80)),
+      new Pose2d(1.1, 1, new Rotation2d(-80)),
       AutoConfig.configFwdHigh);
 
   public static final Trajectory phase2 = TrajectoryGenerator.generateTrajectory(
@@ -123,11 +122,15 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
                         new AutoRunIntake(),
                         new WaitCommand(5)),
 
-                    new RetractRunIntake(3),
+                    new ParallelCommandGroup(
+                        new RetractRunIntake(3),
 
-                    new MoveWithRamsete(phase3,
-                        driveTrain)
-                            .andThen(() -> driveTrain.tankDriveVolts(0, 0)))),
+                        new MoveWithRamsete(phase3,
+                            driveTrain)
+                                .andThen(() -> driveTrain.tankDriveVolts(0, 0))
+                    )
+                  )
+              ),
 
             new AutoShoot(1)
 
