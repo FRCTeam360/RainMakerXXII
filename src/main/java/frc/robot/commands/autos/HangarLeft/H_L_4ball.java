@@ -33,7 +33,7 @@ import frc.robot.subsystems.Turret;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
+public class H_L_4ball extends ParallelRaceGroup {
 
   Turret turret = Turret.getInstance();
   Limelight limelight = Limelight.getInstance();
@@ -46,24 +46,30 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
       new Pose2d(0, 0, new Rotation2d(0)),
       List.of(),
       new Pose2d(1.1, 1, new Rotation2d(-80)),
-      AutoConfig.configFwdHigh);
+      AutoConfig.configFwdLow);
 
   public static final Trajectory phase2 = TrajectoryGenerator.generateTrajectory(
       new Pose2d(1.1, 1, new Rotation2d(-80)),
       List.of(
           new Translation2d(1.3, 2.5)),
-      new Pose2d(1.7, 6, new Rotation2d(-55)),
-      AutoConfig.configFwdHigh);
+      new Pose2d(0.9, 6.3, new Rotation2d(-55)),
+      AutoConfig.configFwdLow);
+
+  public static final Trajectory phase22 = TrajectoryGenerator.generateTrajectory(
+      new Pose2d(0.9, 6.3, new Rotation2d(-55)),
+      List.of(),
+      new Pose2d(0.9, 6.1, new Rotation2d(-55)),
+      AutoConfig.configRevLow);
 
   public static final Trajectory phase3 = TrajectoryGenerator.generateTrajectory(
-      new Pose2d(1.7, 6, new Rotation2d(-55)),
+      new Pose2d(0.9, 6.1, new Rotation2d(-55)),
       List.of(
           new Translation2d(1.6, 4.5)),
       new Pose2d(1.5, 3, new Rotation2d(20)),
-      AutoConfig.configRevHigh);
+      AutoConfig.configRevLow);
 
   /** Creates a new T_R_2ball. */
-  public H_L_2ballPlusEmergencyBall() {
+  public H_L_4ball() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
@@ -73,7 +79,7 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
 
         new AutoSetShoot(),
 
-        new WaitCommand(15),
+        // new WaitCommand(15),
 
         new SequentialCommandGroup(
 
@@ -98,28 +104,46 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
                     new AutoRetractIntake(true),
                     new AutoRunIntake())),
 
-            new MoveWithRamsete(phase2,
-                driveTrain)
-                    .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
-
             new ParallelRaceGroup(
-                new QueueBalls(true),
+                new MoveWithRamsete(phase2,
+                    driveTrain)
+                        .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
 
                 new SequentialCommandGroup(
                     new AutoExtendIntake(),
+                    new AutoRunIntake())),
 
-                    new ParallelRaceGroup(
-                        new AutoRunIntake(),
-                        new WaitCommand(3)),
+            new ParallelRaceGroup(
+                new AutoRunIntake(),
+                new MoveWithRamsete(phase22,
+                    driveTrain)
+                        .andThen(() -> driveTrain.tankDriveVolts(0, 0))
+            ),
 
-                    new ParallelCommandGroup(
-                        new RetractRunIntake(3),
+            new ParallelRaceGroup(
+                new AutoRunIntake(),
+                new WaitCommand(1.0)
+            ),
 
-                        new MoveWithRamsete(phase3,
-                            driveTrain)
-                                .andThen(() -> driveTrain.tankDriveVolts(0, 0))))),
+            new AutoRetractIntake()
 
-            new AutoShoot(1)
+        // new ParallelRaceGroup(
+        // new QueueBalls(true),
+
+        // new SequentialCommandGroup(
+
+        // new ParallelRaceGroup(
+        // new AutoRunIntake(),
+        // new WaitCommand(3)),
+
+        // new ParallelCommandGroup(
+        // new RetractRunIntake(2),
+
+        // new MoveWithRamsete(phase3,
+        // driveTrain)
+        // .andThen(() -> driveTrain.tankDriveVolts(0, 0))))),
+
+        // new AutoShoot(2)
 
         )
 
