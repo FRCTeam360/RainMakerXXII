@@ -64,10 +64,6 @@ public class AutoRetractIntake extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (runIntake == true) {
-      return myTimer.get() > 0.25;
-    } else {
-      return true;
-    }
+    return !runIntake || myTimer.get() > 0.25;
   }
 }
