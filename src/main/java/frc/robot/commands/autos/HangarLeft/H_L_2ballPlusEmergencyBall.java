@@ -53,7 +53,7 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
             new Pose2d(0, 0, new Rotation2d(0)),
             List.of(),
             new Pose2d(1.1, 1, new Rotation2d(90)),
-            AutoConfig.configFwdLow);
+            AutoConfig.configFwdHigh);
     
     public static final Trajectory phase2 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(1.1, 1, new Rotation2d(90)),
@@ -61,13 +61,15 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
               new Translation2d(1.3, 2.5)
             ),
             new Pose2d(1.7, 6, new Rotation2d(-55)),
-            AutoConfig.configFwdLow);
+            AutoConfig.configFwdHigh);
 
     public static final Trajectory phase3 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(1.7, 6, new Rotation2d(-55)),
-            List.of(),
-            new Pose2d(1, 3, new Rotation2d(100)),
-            AutoConfig.configFwdLow);
+            List.of(
+              new Translation2d(1.6, 4.5)
+            ),
+            new Pose2d(1.5, 3, new Rotation2d(20)),
+            AutoConfig.configRevHigh);
       
 
   /** Creates a new T_R_2ball. */
@@ -124,7 +126,7 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
 
               new RetractRunIntake(3),
 
-              new SequentialCommandGroup(
+              new SequentialCommandGroup( //potentially unnecessary?
 
                 new MoveWithRamsete(phase3, 
                 driveTrain)
