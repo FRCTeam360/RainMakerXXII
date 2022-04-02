@@ -7,6 +7,7 @@ package frc.robot.commands.autos.HangarLeft;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Queue;
 
 import javax.swing.Timer;
 
@@ -42,41 +43,38 @@ import frc.robot.subsystems.Turret;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
 
-    Turret turret = Turret.getInstance();
-    Limelight limelight = Limelight.getInstance();
-    Intake intake = Intake.getInstance();
-    DriveTrain driveTrain = DriveTrain.getInstance();
+  Turret turret = Turret.getInstance();
+  Limelight limelight = Limelight.getInstance();
+  Intake intake = Intake.getInstance();
+  DriveTrain driveTrain = DriveTrain.getInstance();
 
-    private static final String ball2JSON = "paths/2ball.wpilib.json";
+  private static final String ball2JSON = "paths/2ball.wpilib.json";
 
-    public static final Trajectory phase1 = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 0, new Rotation2d(0)),
-            List.of(),
-            new Pose2d(1.1, 1, new Rotation2d(90)),
-            AutoConfig.configFwdHigh);
-    
-    public static final Trajectory phase2 = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(1.1, 1, new Rotation2d(90)),
-            List.of(
-              new Translation2d(1.3, 2.5)
-            ),
-            new Pose2d(1.7, 6, new Rotation2d(-55)),
-            AutoConfig.configFwdHigh);
+  public static final Trajectory phase1 = TrajectoryGenerator.generateTrajectory(
+      new Pose2d(0, 0, new Rotation2d(0)),
+      List.of(),
+      new Pose2d(1.1, 1, new Rotation2d(
+      80)),
+      AutoConfig.configFwdHigh);
 
-    public static final Trajectory phase3 = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(1.7, 6, new Rotation2d(-55)),
-            List.of(
-              new Translation2d(1.6, 4.5)
-            ),
-            new Pose2d(1.5, 3, new Rotation2d(20)),
-            AutoConfig.configRevHigh);
-      
+  public static final Trajectory phase2 = TrajectoryGenerator.generateTrajectory(
+      new Pose2d(1.1, 1, new Rotation2d(-80)),
+      List.of(
+          new Translation2d(1.3, 2.5)),
+      new Pose2d(1.7, 6, new Rotation2d(-55)),
+      AutoConfig.configFwdHigh);
+
+  public static final Trajectory phase3 = TrajectoryGenerator.generateTrajectory(
+      new Pose2d(1.7, 6, new Rotation2d(-55)),
+      List.of(
+          new Translation2d(1.6, 4.5)),
+      new Pose2d(1.5, 3, new Rotation2d(20)),
+      AutoConfig.configRevHigh);
 
   /** Creates a new T_R_2ball. */
   public H_L_2ballPlusEmergencyBall() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-
 
     addCommands(
 
@@ -84,7 +82,7 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
 
         new AutoSetShoot(),
 
-        //new WaitCommand(15),
+        // new WaitCommand(15),
 
         new SequentialCommandGroup(
 
@@ -98,44 +96,41 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
 
                 new QueueBalls(true),
 
-                new MoveWithRamsete(phase1, 
-                driveTrain)
-                .andThen(() -> driveTrain.tankDriveVolts(0, 0))
+                new MoveWithRamsete(phase1,
+                    driveTrain)
+                        .andThen(() -> driveTrain.tankDriveVolts(0, 0))
 
-            ), 
-
-            new ParallelRaceGroup(
-              new AutoShoot(2),
-
-              new SequentialCommandGroup(
-                new AutoRetractIntake(true),
-                new AutoRunIntake()
-              )
             ),
 
-            new MoveWithRamsete(phase2, 
+            new ParallelRaceGroup(
+                new AutoShoot(2),
+
+                new SequentialCommandGroup(
+                    new AutoRetractIntake(true),
+                    new AutoRunIntake())),
+
+            new MoveWithRamsete(phase2,
                 driveTrain)
-                .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
+                    .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
 
-                new AutoExtendIntake(),
+            new ParallelRaceGroup(
+                new QueueBalls(true),
 
-                new ParallelRaceGroup(
-                  new AutoRunIntake(),
-                  new WaitCommand(5)
-                ),
+                new SequentialCommandGroup(
+                    new AutoExtendIntake(),
 
-              new RetractRunIntake(3),
+                    new ParallelRaceGroup(
+                        new AutoRunIntake(),
+                        new WaitCommand(5)),
 
-              new SequentialCommandGroup( //potentially unnecessary?
+                    new RetractRunIntake(3),
 
-                new MoveWithRamsete(phase3, 
-                driveTrain)
-                .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
-                
-                new AutoShoot(1)
-                )
-              
-            
+                    new MoveWithRamsete(phase3,
+                        driveTrain)
+                            .andThen(() -> driveTrain.tankDriveVolts(0, 0)))),
+
+            new AutoShoot(1)
+
         )
 
     );
