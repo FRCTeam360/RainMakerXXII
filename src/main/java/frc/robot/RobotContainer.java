@@ -78,6 +78,7 @@ public class RobotContainer {
   private final Pressurize pressurize = new Pressurize(pneumatics);
   private final RunFeederManually runFeederManually = new RunFeederManually();
   private final RunTowerManually runTowerManually = new RunTowerManually();
+  private final ManualSetShoot manualSetShoot = new ManualSetShoot();
 
   private final QueueBalls queueCargo = new QueueBalls(false);
 
@@ -120,6 +121,7 @@ public class RobotContainer {
     new JoystickButton(driverCont, 6).whileHeld(runTowerManually);
     new JoystickButton(operatorCont, 6).whileHeld(runTowerManually);
     new JoystickButton(operatorCont, 4).whileHeld(queueCargo);
+    new JoystickButton(operatorCont, 9).whileHeld(manualSetShoot);
   }
 
   public DriveTrain getDriveTrain() {
