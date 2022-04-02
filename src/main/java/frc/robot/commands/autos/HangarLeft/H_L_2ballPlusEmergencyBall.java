@@ -18,27 +18,20 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.AutoConfig;
 import frc.robot.commands.AutoExtendIntake;
 import frc.robot.commands.AutoRetractIntake;
-import frc.robot.commands.AutoRetractIntake;
-import frc.robot.commands.AutoRunFeeder;
-import frc.robot.commands.AutoRunFeederAndTower;
 import frc.robot.commands.AutoRunIntake;
-import frc.robot.commands.AutoRunTower;
 import frc.robot.commands.AutoSetShoot;
 import frc.robot.commands.AutoShoot;
-import frc.robot.commands.AutoTimer;
 import frc.robot.commands.MoveWithRamsete;
 import frc.robot.commands.QueueBalls;
-import frc.robot.commands.RunFeeder;
+import frc.robot.commands.RetractRunIntake;
 import frc.robot.commands.TurretAuto;
-import frc.robot.commands.WaitUntilBallPassedSensor.*;
-import frc.robot.commands.WaitUntilBallPassedSensor;
-import frc.robot.commands.RunTowerAutomatically;
-import frc.robot.commands.RunFeederAutomatically;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
@@ -69,6 +62,12 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
             ),
             new Pose2d(1.7, 6, new Rotation2d(-55)),
             AutoConfig.configFwdLow);
+
+    public static final Trajectory phase3 = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(1.7, 6, new Rotation2d(-55)),
+            List.of(),
+            new Pose2d(1, 3, new Rotation2d(100)),
+            AutoConfig.configFwdLow);
       
 
   /** Creates a new T_R_2ball. */
@@ -82,6 +81,8 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
         new TurretAuto(limelight, turret),
 
         new AutoSetShoot(),
+
+        //new WaitCommand(15),
 
         new SequentialCommandGroup(
 
@@ -107,13 +108,32 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
               new SequentialCommandGroup(
                 new AutoRetractIntake(true),
                 new AutoRunIntake()
-
               )
             ),
 
             new MoveWithRamsete(phase2, 
                 driveTrain)
-                .andThen(() -> driveTrain.tankDriveVolts(0, 0))
+                .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
+
+                new AutoExtendIntake(),
+
+                new ParallelRaceGroup(
+                  new AutoRunIntake(),
+                  new WaitCommand(5)
+                ),
+
+              new RetractRunIntake(3),
+
+              new SequentialCommandGroup(
+
+                new MoveWithRamsete(phase3, 
+                driveTrain)
+                .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
+                
+                new AutoShoot(1)
+                )
+              
+            
         )
 
     );
