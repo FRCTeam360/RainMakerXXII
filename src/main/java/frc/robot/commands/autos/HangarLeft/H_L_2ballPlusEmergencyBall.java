@@ -67,7 +67,7 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
             List.of(
               new Translation2d(1.7, 3)
             ),
-            new Pose2d(1.7, 6, new Rotation2d(60)),
+            new Pose2d(1.7, 6, new Rotation2d(45)),
             AutoConfig.configFwdLow);
       
 
@@ -110,9 +110,6 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
 
               )
             ),
-
-
-
 
             new MoveWithRamsete(phase2, 
                 driveTrain)
