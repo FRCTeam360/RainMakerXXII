@@ -5,6 +5,7 @@
 package frc.robot.commands.autos.HangarLeft;
 
 import java.util.List;
+import java.util.Queue;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -39,6 +40,8 @@ public class H_L_4ball extends ParallelRaceGroup {
   Limelight limelight = Limelight.getInstance();
   Intake intake = Intake.getInstance();
   DriveTrain driveTrain = DriveTrain.getInstance();
+
+  private static final boolean shouldIgnoreShooter = true;
 
   private static final String ball2JSON = "paths/2ball.wpilib.json";
 
@@ -114,6 +117,7 @@ public class H_L_4ball extends ParallelRaceGroup {
                     new AutoRunIntake())),
 
             new ParallelRaceGroup(
+                new QueueBalls(shouldIgnoreShooter),
                 new AutoRunIntake(),
                 new MoveWithRamsete(phase22,
                     driveTrain)
@@ -124,8 +128,22 @@ public class H_L_4ball extends ParallelRaceGroup {
                 new AutoRunIntake(),
                 new WaitCommand(1.0)
             ),
+            
+            new ParallelCommandGroup(
+              new RetractRunIntake(2),
 
-            new AutoRetractIntake()
+              new ParallelRaceGroup(
+                new MoveWithRamsete(phase3,
+                        driveTrain)
+                            .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
+                new QueueBalls(shouldIgnoreShooter)
+                
+              )
+            ),
+
+            new AutoShoot(2)
+
+      
 
         // new ParallelRaceGroup(
         // new QueueBalls(true),
