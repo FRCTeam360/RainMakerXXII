@@ -49,7 +49,6 @@ public class AutoRetractIntake extends CommandBase {
     if (runIntake == true) {
       intake.run(1);
     }
-    ;
   }
 
   // Called once the command ends or is interrupted.

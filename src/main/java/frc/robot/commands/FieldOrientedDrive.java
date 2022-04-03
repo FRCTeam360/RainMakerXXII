@@ -108,6 +108,12 @@ public class FieldOrientedDrive extends CommandBase {
       myDriveTrain.drive(turn, -turn);
     }
 
+    if(driverCont.getRightStickButtonPressed()){
+      myDriveTrain.brakeMode();
+    } else if(driverCont.getRightStickButtonReleased()){
+      myDriveTrain.coastMode();
+    }
+
   }
 
   // Called once the command ends or is interrupted.
