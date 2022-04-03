@@ -82,8 +82,6 @@ public class H_L_4ball extends ParallelRaceGroup {
 
         new AutoSetShoot(),
 
-        // new WaitCommand(15),
-
         new SequentialCommandGroup(
 
             new AutoExtendIntake(),
