@@ -108,4 +108,5 @@ public final class Constants {
     public static FieldType getFieldType(){
         return fieldType;
     }
+    public static final int kLongCANTimeoutMs = 100;
 }

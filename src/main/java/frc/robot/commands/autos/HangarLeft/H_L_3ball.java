@@ -33,7 +33,7 @@ import frc.robot.subsystems.Turret;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
+public class H_L_3ball extends ParallelRaceGroup {
 
   Turret turret = Turret.getInstance();
   Limelight limelight = Limelight.getInstance();
@@ -63,7 +63,7 @@ public class H_L_2ballPlusEmergencyBall extends ParallelRaceGroup {
       AutoConfig.configRevHigh);
 
   /** Creates a new T_R_2ball. */
-  public H_L_2ballPlusEmergencyBall() {
+  public H_L_3ball() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
