@@ -26,23 +26,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.AutoConfig;
 import frc.robot.Constants;
 import frc.robot.Constants.AutoConstants;
-import frc.robot.commands.AutoExtendIntake;
-import frc.robot.commands.AutoFeedBall;
-import frc.robot.commands.AutoRetractIntake;
-import frc.robot.commands.AutoRetractIntake;
-import frc.robot.commands.AutoRunFeeder;
-import frc.robot.commands.AutoRunFeederAndTower;
-import frc.robot.commands.AutoRunIntake;
-import frc.robot.commands.AutoRunTower;
-import frc.robot.commands.AutoSetShoot;
-import frc.robot.commands.AutoShoot;
-import frc.robot.commands.AutoTimer;
-import frc.robot.commands.MoveWithRamsete;
-import frc.robot.commands.PrintTime;
-import frc.robot.commands.QueueBalls;
-import frc.robot.commands.QueueBalls;
-import frc.robot.commands.RunFeeder;
-import frc.robot.commands.TurretAuto;
+import frc.robot.commands.*;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
@@ -119,8 +103,10 @@ public class T_R_5Ball extends ParallelRaceGroup {
                                         driveTrain)
                                                 .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
                                 new QueueBalls(true)),
-                        new ParallelCommandGroup(
-                                new AutoRetractIntake(true),
+                        new ParallelRaceGroup(
+                                new SequentialCommandGroup(
+                                        new AutoRetractIntake(true),
+                                        new AutoRunIntake()),
                                 new AutoShoot(2)),
 
                         new ParallelRaceGroup(
