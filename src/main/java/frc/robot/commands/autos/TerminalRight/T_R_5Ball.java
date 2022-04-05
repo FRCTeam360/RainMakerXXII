@@ -19,6 +19,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -87,6 +88,7 @@ public class T_R_5Ball extends ParallelRaceGroup {
                 // new WaitCommand(15),
 
                 new SequentialCommandGroup(
+                    new InstantCommand(() -> driveTrain.setDriveOffset(1.5)),
                         // new AutoRunFeederAndTower(),
                         new AutoExtendIntake(),
                         // new AutoShoot(1),

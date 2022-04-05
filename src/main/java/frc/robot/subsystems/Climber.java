@@ -38,9 +38,9 @@ public class Climber extends SubsystemBase {
         motorRight.setSoftLimit(SoftLimitDirection.kReverse, 0);
     
         motorLeft.enableSoftLimit(SoftLimitDirection.kForward, true);
-        motorLeft.enableSoftLimit(SoftLimitDirection.kReverse, true);
+        motorLeft.enableSoftLimit(SoftLimitDirection.kReverse, false);
         motorRight.enableSoftLimit(SoftLimitDirection.kForward, true);
-        motorRight.enableSoftLimit(SoftLimitDirection.kReverse, true);
+        motorRight.enableSoftLimit(SoftLimitDirection.kReverse, false);
 
         // Motors will either be falcon or neo, not sure yet but i can change the code
         // if need be
@@ -64,8 +64,8 @@ public class Climber extends SubsystemBase {
     public void runBothClimbersDown(){
         difference = getLeftPos() - getRightPos();
         double diff = difference / 100;
-            motorLeft.set(-0.6 - diff);
-            motorRight.set(-0.6 + diff);
+            motorLeft.set(-0.8 - diff);
+            motorRight.set(-0.8 + diff);
     }
 
     public void resetClimberEncoders() {

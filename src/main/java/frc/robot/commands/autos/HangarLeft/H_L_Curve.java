@@ -17,6 +17,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.AutoConfig;
@@ -59,7 +60,7 @@ public class H_L_Curve extends ParallelRaceGroup {
     // ex.getStackTrace());
     // }
 
-    // driveTrain.setAngleOffset(133.5);
+    // driveTrain.angleAdjust(133.5);
 
     addCommands(
 
@@ -68,6 +69,8 @@ public class H_L_Curve extends ParallelRaceGroup {
         new AutoSetShoot(),
 
         new SequentialCommandGroup(
+
+            new InstantCommand(() -> driveTrain.setDriveOffset(133.5)),
 
             // new AutoRunFeederAndTower(),
 
@@ -88,7 +91,6 @@ public class H_L_Curve extends ParallelRaceGroup {
             new AutoRetractIntake(true),
 
             new AutoShoot(2)
-
         )
     );
 

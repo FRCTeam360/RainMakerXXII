@@ -40,6 +40,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 public class DriveTrain extends SubsystemBase {
 
   public double offsetAngle = 0;
+  private double driveOffset = 0;
 
   // Conversions for the Falcons
   private static final double pi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
@@ -143,16 +144,32 @@ public class DriveTrain extends SubsystemBase {
     motorRLead.setSelectedSensorPosition(0);
     navX.zeroYaw();
     navX.setAngleAdjustment(0); // Set angle offset
+    offsetAngle = 0;
     m_odometry.resetPosition(new Pose2d(), getHeading()); // Set odomentry to zero
     System.out.println("reset");
+  }
+
+  public void angleAdjust(double adjust){
+    navX.reset();
+    navX.setAngleAdjustment(adjust);
+    System.out.println("angle set");
   }
 
   public Rotation2d getHeading() {
     return Rotation2d.fromDegrees(-navX.getAngle());
   }
 
+  public void setDriveOffset(double offset){
+    driveOffset = offset + 90;
+  }
+
+  public void implementOffset(){
+    offsetAngle = driveOffset;
+    System.out.println("offsetting to: " + offsetAngle);
+  }
+
   public double getHeadingAngle() {
-    return Math.IEEEremainder(navX.getAngle(), 360);
+    return Math.IEEEremainder(navX.getAngle(), 360) + offsetAngle;
   }
 
   public double getYaw() {

@@ -5,10 +5,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.operatorInterface.OperatorControl;
 import frc.robot.subsystems.Shooter;
 
 public class ManualSetShoot extends CommandBase {
   private Shooter shooter;
+  private OperatorControl operatorCont = OperatorControl.getInstance();
 
   /** Creates a new ManualSetShoot. */
   public ManualSetShoot() {
@@ -24,7 +26,17 @@ public class ManualSetShoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setVelocity(3625);
+    if(operatorCont.getRawButton(7)){
+      if(operatorCont.getXButton()){
+        shooter.setVelocity(-1000);
+      } else {
+        shooter.setVelocity(1500);
+      }
+    }else if(operatorCont.getLeftStickButton()){
+      shooter.setVelocity(3625);
+    } else {
+      shooter.setVelocity(0);
+    }
   }
 
   // Called once the command ends or is interrupted.

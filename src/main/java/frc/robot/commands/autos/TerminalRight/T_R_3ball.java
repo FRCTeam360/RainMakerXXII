@@ -19,6 +19,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.AutoConfig;
@@ -65,6 +66,8 @@ public class T_R_3ball extends ParallelRaceGroup {
                 new AutoSetShoot(),
 
                 new SequentialCommandGroup(
+
+                        new InstantCommand(() -> driveTrain.setDriveOffset(1.5)),
 
                         new SequentialCommandGroup(
 
