@@ -9,7 +9,11 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -17,6 +21,8 @@ import static frc.robot.Constants.CANIds.*;
 import static frc.robot.Constants.DigitalInputPorts.*;
 
 public class Turret extends SubsystemBase {
+
+  private NetworkTableEntry turretAngleEntry;
 
   private DigitalInput leftLimitSwitch;
   private DigitalInput middleLimitSwitch = new DigitalInput(middleLimitSwitchPort);
@@ -47,8 +53,8 @@ public class Turret extends SubsystemBase {
   private double previousAngle;
   private double angleTurnIntegral;
 
-  public static final float leftSoftLimit = 135;
-  public static final float rightSoftLimit = -135;
+  public static final float leftSoftLimit = 150;
+  public static final float rightSoftLimit = -150;
 
   public static final float leftSoftLimitEncoder = (float) (leftSoftLimit / gearBoxRatio / pulleyRatio
       / degreesPerRotation);
@@ -144,6 +150,7 @@ public class Turret extends SubsystemBase {
 
     double deriv = angle - previousAngle;
     previousAngle = angle;
+
     angleTurnIntegral = angleTurnIntegral + error;
 
     double turretInput = (error * Turret.kPAngle) + (angleTurnIntegral * Turret.kIAngle) - (deriv * Turret.kDAngle)

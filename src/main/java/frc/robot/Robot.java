@@ -104,6 +104,8 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
+    m_driveTrain.implementOffset();
+
   }
 
   /** This function is called periodically during operator control. */

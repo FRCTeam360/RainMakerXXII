@@ -5,17 +5,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.operatorInterface.OperatorControl;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.*;
 
-public class ManualSetShoot extends CommandBase {
-  private Shooter shooter;
-  private OperatorControl operatorCont = OperatorControl.getInstance();
-
-  /** Creates a new ManualSetShoot. */
-  public ManualSetShoot() {
-    shooter = Shooter.getInstance();
-    addRequirements(shooter); 
+public class ReverseIntake extends CommandBase {
+  private final Intake intake = Intake.getInstance();
+  /** Creates a new ReverseIntake. */
+  public ReverseIntake() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -26,24 +21,12 @@ public class ManualSetShoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(operatorCont.getRawButton(7)){
-      if(operatorCont.getXButton()){
-        shooter.setVelocity(-1000);
-      } else {
-        shooter.setVelocity(1500);
-      }
-    }else if(operatorCont.getLeftStickButton()){
-      shooter.setVelocity(3625);
-    } else {
-      shooter.setVelocity(0);
-    }
+    intake.run(-1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    shooter.setVelocity(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

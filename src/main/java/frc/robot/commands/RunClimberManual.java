@@ -7,14 +7,23 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.operatorInterface.OperatorControl;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
 
 public class RunClimberManual extends CommandBase {
 
   private final Climber myClimber;
+  private final Shooter myShooter = Shooter.getInstance();
+  private final Intake myIntake = Intake.getInstance();
+  private final Turret myTurret = Turret.getInstance();
+  private final Limelight myLimelight = Limelight.getInstance();
   private final OperatorControl operatorCont = OperatorControl.getInstance();
   /** Creates a new RunClimber. */
   public RunClimberManual(Climber climber) {
     myClimber = climber;
+    addRequirements(myClimber, myShooter, myIntake, myTurret);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -25,15 +34,23 @@ public class RunClimberManual extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Math.abs(operatorCont.getLeftY()) >= 0.125) {
-      myClimber.runLeftClimber(operatorCont.getLeftY());
+    // myLimelight.ledOff();
+
+    if(operatorCont.getLeftTrigger()){
+      myClimber.runBothClimbersUp();
+    } else if(operatorCont.getRightTrigger()){
+      myClimber.runBothClimbersDown();
     } else {
-      myClimber.runLeftClimber(0);
-    }
-    if(Math.abs(operatorCont.getRightY()) >= 0.125){
-      myClimber.runRightClimber(operatorCont.getRightY());
-    } else {
-      myClimber.runRightClimber(0);
+      if(Math.abs(operatorCont.getLeftY()) >= 0.125) {
+        myClimber.runLeftClimber(-operatorCont.getLeftY());
+      } else {
+        myClimber.runLeftClimber(0);
+      }
+      if(Math.abs(operatorCont.getRightY()) >= 0.125){
+        myClimber.runRightClimber(-operatorCont.getRightY());
+      } else {
+        myClimber.runRightClimber(0);
+      }
     }
   }
 
@@ -42,6 +59,7 @@ public class RunClimberManual extends CommandBase {
   public void end(boolean interrupted) {
     myClimber.runLeftClimber(0);
     myClimber.runRightClimber(0);
+    // myLimelight.ledOn();
   }
 
   // Returns true when the command should end.

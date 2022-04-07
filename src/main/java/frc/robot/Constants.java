@@ -97,6 +97,16 @@ public final class Constants {
         COMP, PRACTICE
     }
 
-    public static final FieldType fieldType = FieldType.COMP;
+    public enum RobotType {
+        COMP, PRACTICE
+    }
 
+    public static final FieldType fieldType = FieldType.COMP;
+    
+    public static final RobotType robotType = RobotType.COMP;
+
+    public static FieldType getFieldType(){
+        return fieldType;
+    }
+    public static final int kLongCANTimeoutMs = 100;
 }

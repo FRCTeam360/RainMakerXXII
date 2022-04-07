@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 
@@ -39,6 +40,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 public class DriveTrain extends SubsystemBase {
 
   public double offsetAngle = 0;
+  private double driveOffset = 0;
 
   // Conversions for the Falcons
   private static final double pi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
@@ -74,6 +76,8 @@ public class DriveTrain extends SubsystemBase {
   private double pastForwardSpeed = 0;
 
   private StatorCurrentLimitConfiguration statorLimit = new StatorCurrentLimitConfiguration(true, 40, 40, 0.01);
+  private SlewRateLimiter driveLLimiter = new SlewRateLimiter(1.0);
+  private SlewRateLimiter driveRLimiter = new SlewRateLimiter(1.0);
 
   /** Creates a new ExampleSubsystem. */
   public DriveTrain() {
@@ -102,12 +106,12 @@ public class DriveTrain extends SubsystemBase {
     motorRFollow1.setInverted(TalonFXInvertType.FollowMaster);
     motorRFollow2.setInverted(TalonFXInvertType.FollowMaster);
 
-    motorLLead.configStatorCurrentLimit(statorLimit);
-    motorLFollow1.configStatorCurrentLimit(statorLimit);
-    motorLFollow2.configStatorCurrentLimit(statorLimit);
-    motorRLead.configStatorCurrentLimit(statorLimit);
-    motorRFollow1.configStatorCurrentLimit(statorLimit);
-    motorRFollow2.configStatorCurrentLimit(statorLimit);
+    // motorLLead.configStatorCurrentLimit(statorLimit);
+    // motorLFollow1.configStatorCurrentLimit(statorLimit);
+    // motorLFollow2.configStatorCurrentLimit(statorLimit);
+    // motorRLead.configStatorCurrentLimit(statorLimit);
+    // motorRFollow1.configStatorCurrentLimit(statorLimit);
+    // motorRFollow2.configStatorCurrentLimit(statorLimit);
 
     resetEncPos(); // Reset Encoders r navX yaw before m_odometry is defined
 
@@ -140,16 +144,32 @@ public class DriveTrain extends SubsystemBase {
     motorRLead.setSelectedSensorPosition(0);
     navX.zeroYaw();
     navX.setAngleAdjustment(0); // Set angle offset
+    offsetAngle = 0;
     m_odometry.resetPosition(new Pose2d(), getHeading()); // Set odomentry to zero
     System.out.println("reset");
+  }
+
+  public void angleAdjust(double adjust){
+    navX.reset();
+    navX.setAngleAdjustment(adjust);
+    System.out.println("angle set");
   }
 
   public Rotation2d getHeading() {
     return Rotation2d.fromDegrees(-navX.getAngle());
   }
 
+  public void setDriveOffset(double offset){
+    driveOffset = offset + 90;
+  }
+
+  public void implementOffset(){
+    offsetAngle = driveOffset;
+    System.out.println("offsetting to: " + offsetAngle);
+  }
+
   public double getHeadingAngle() {
-    return Math.IEEEremainder(navX.getAngle(), 360);
+    return Math.IEEEremainder(navX.getAngle(), 360) + offsetAngle;
   }
 
   public double getYaw() {
@@ -289,16 +309,18 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void drive(double leftMotorPercentage, double rightMotorPercentage) {
-    if(leftMotorPercentage == 0){
-      motorLLead.stopMotor();
-    } else {
+    // if(leftMotorPercentage == 0){
+      // motorLLead.stopMotor();
+    // } else {
+      leftMotorPercentage = driveLLimiter.calculate(leftMotorPercentage);
       motorLLead.set(leftMotorPercentage);
-    }
-    if(rightMotorPercentage == 0){
-        motorRLead.stopMotor();
-    } else {
+    // }
+    // if(rightMotorPercentage == 0){
+        // motorRLead.stopMotor();
+    // } else {
+      rightMotorPercentage = driveRLimiter.calculate(rightMotorPercentage);
       motorRLead.set(rightMotorPercentage);
-    }
+    // }
   }
 
   @Override

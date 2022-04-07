@@ -5,17 +5,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.operatorInterface.OperatorControl;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.DriveTrain;
 
-public class ManualSetShoot extends CommandBase {
-  private Shooter shooter;
-  private OperatorControl operatorCont = OperatorControl.getInstance();
-
-  /** Creates a new ManualSetShoot. */
-  public ManualSetShoot() {
-    shooter = Shooter.getInstance();
-    addRequirements(shooter); 
+public class isRobotStopped extends CommandBase {
+  private final DriveTrain mDriveTrain = DriveTrain.getInstance();
+  /** Creates a new isRobotStopped. */
+  public isRobotStopped() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -26,28 +21,19 @@ public class ManualSetShoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(operatorCont.getRawButton(7)){
-      if(operatorCont.getXButton()){
-        shooter.setVelocity(-1000);
-      } else {
-        shooter.setVelocity(1500);
-      }
-    }else if(operatorCont.getLeftStickButton()){
-      shooter.setVelocity(3625);
-    } else {
-      shooter.setVelocity(0);
-    }
+    System.out.println("DriveTrain speed is: " + mDriveTrain.getLeftEncoderMetersPerSec());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.setVelocity(0);
+    System.out.println("DriveTrain has been stopped.");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    double minDriveTrainSpeed = 0.1;
+    return Math.abs(mDriveTrain.getLeftEncoderMetersPerSec()) < minDriveTrainSpeed && Math.abs(mDriveTrain.getRightEncoderMetersPerSec()) < minDriveTrainSpeed;
   }
 }

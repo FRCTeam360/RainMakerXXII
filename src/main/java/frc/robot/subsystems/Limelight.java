@@ -42,6 +42,14 @@ public class Limelight extends SubsystemBase {
     }
   }
 
+  // public void ledOff(){
+  //   table.getEntry("ledMode").setNumber(0);
+  // }
+
+  // public void ledOn(){
+  //   table.getEntry("ledMode").setNumber(1);
+  // }
+
   public double getCamMode() {
     return camMode.getDouble(0.0);
   }

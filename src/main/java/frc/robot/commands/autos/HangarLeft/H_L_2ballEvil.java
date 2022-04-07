@@ -21,7 +21,19 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.AutoConfig;
-import frc.robot.commands.*;
+import frc.robot.commands.AutoExtendIntake;
+import frc.robot.commands.AutoRetractIntake;
+import frc.robot.commands.AutoRunFeeder;
+import frc.robot.commands.AutoRunFeederAndTower;
+import frc.robot.commands.AutoRunIntake;
+import frc.robot.commands.AutoRunTower;
+import frc.robot.commands.AutoSetShoot;
+import frc.robot.commands.AutoShoot;
+import frc.robot.commands.AutoTimer;
+import frc.robot.commands.MoveWithRamsete;
+import frc.robot.commands.QueueBalls;
+import frc.robot.commands.RunFeeder;
+import frc.robot.commands.TurretAuto;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
@@ -30,37 +42,30 @@ import frc.robot.subsystems.Turret;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class H_L_Curve extends ParallelRaceGroup {
+public class H_L_2ballEvil extends ParallelRaceGroup {
 
-    Turret turret = Turret.getInstance();
-    Limelight limelight = Limelight.getInstance();
-    Intake intake = Intake.getInstance();
-    DriveTrain driveTrain = DriveTrain.getInstance();
+  Turret turret = Turret.getInstance();
+  Limelight limelight = Limelight.getInstance();
+  Intake intake = Intake.getInstance();
+  DriveTrain driveTrain = DriveTrain.getInstance();
 
-    private static final String ball2JSON = "paths/2ball.wpilib.json";
-    // Trajectory phase1 = new Trajectory();
+  private static final String ball2JSON = "paths/2ball.wpilib.json";
+  // Trajectory phase1 = new Trajectory();
 
-    public static final Trajectory phase1 = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 0, new Rotation2d(0)),
-            List.of(),
-            new Pose2d(1.1, 1, new Rotation2d(90)),
-            AutoConfig.configFwdLow);
+  public static final Trajectory phase1 = TrajectoryGenerator.generateTrajectory(
+      new Pose2d(0, 0, new Rotation2d(0)),
+      List.of(),
+      new Pose2d(1, 0, new Rotation2d(0)),
+      AutoConfig.configFwdLow);
+
+  public static final Trajectory phase2 = TrajectoryGenerator.generateTrajectory(
+      new Pose2d(1, 0, new Rotation2d(0)),
+      List.of(),
+      new Pose2d(1.4, -1, new Rotation2d(0)),
+      AutoConfig.configFwdLow);
 
   /** Creates a new T_R_2ball. */
-  public H_L_Curve() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    
-
-    // try {
-    // Path ball2 = Filesystem.getDeployDirectory().toPath().resolve(ball2JSON);
-    // phase1 = TrajectoryUtil.fromPathweaverJson(ball2);
-    // } catch (IOException ex) {
-    // DriverStation.reportError("Unable to open trajectory: " + ball2JSON,
-    // ex.getStackTrace());
-    // }
-
-    // driveTrain.angleAdjust(133.5);
+  public H_L_2ballEvil() {
 
     addCommands(
 
@@ -71,8 +76,6 @@ public class H_L_Curve extends ParallelRaceGroup {
         new SequentialCommandGroup(
 
             new InstantCommand(() -> driveTrain.setDriveOffset(133.5)),
-
-            // new AutoRunFeederAndTower(),
 
             new AutoExtendIntake(),
 
@@ -86,13 +89,16 @@ public class H_L_Curve extends ParallelRaceGroup {
                 driveTrain)
                 .andThen(() -> driveTrain.tankDriveVolts(0, 0))
 
-            ), 
+            ),
 
-            new AutoRetractIntake(true),
+            new AutoRetractIntake(),
+            
+            new AutoShoot(2),
 
-            new AutoShoot(2)
+            new MoveWithRamsete(phase2, 
+                driveTrain)
+                .andThen(() -> driveTrain.tankDriveVolts(0, 0))
         )
     );
-
   }
 }
