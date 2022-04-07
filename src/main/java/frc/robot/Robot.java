@@ -104,7 +104,6 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    // m_driveTrain.setDriveOffset(133.5);
     m_driveTrain.implementOffset();
 
   }

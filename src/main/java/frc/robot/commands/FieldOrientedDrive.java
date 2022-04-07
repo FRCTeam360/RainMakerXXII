@@ -108,11 +108,11 @@ public class FieldOrientedDrive extends CommandBase {
     // double rotationRight = -1 * driverCont.getY(Hand.kRight) *
     // Math.sin(gyroRadians) + driverCont.getX(Hand.kRight) * Math.cos(gyroRadians);
 
-    // rotate based on right stick
-    if (Math.abs(driverCont.getRightX()) >= xboxDeadzone) {
-      double turn = driverCont.getRightX() * 0.5;
-      myDriveTrain.drive(turn, -turn);
-    }
+    // // rotate based on right stick
+    // if (Math.abs(driverCont.getRightX()) >= xboxDeadzone) {
+    //   double turn = driverCont.getRightX() * 0.5;
+    //   myDriveTrain.drive(turn, -turn);
+    // }
 
     if(driverCont.getRightStickButtonPressed()){
       myDriveTrain.brakeMode();
