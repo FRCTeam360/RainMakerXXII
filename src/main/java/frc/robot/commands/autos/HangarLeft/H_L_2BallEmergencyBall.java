@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.AutoConfig;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.commands.AutoExtendIntake;
 import frc.robot.commands.AutoRetractIntake;
 import frc.robot.commands.AutoRunFeeder;
@@ -59,11 +60,11 @@ public class H_L_2BallEmergencyBall extends ParallelRaceGroup {
             new Pose2d(1.1, 1, new Rotation2d(-80)),
             List.of(
                     new Translation2d(1.3, 2.5)),
-            new Pose2d(1.7, 6, new Rotation2d(-55)),
+            new Pose2d(1.7 + AutoConstants.getXOffsetHangarEmergency(), 6 + AutoConstants.getYOffsetHangarEmergency(), new Rotation2d(-55)),
             AutoConfig.configFwdHigh);
 
     public static final Trajectory phase3 = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(1.7, 6, new Rotation2d(-55)),
+            new Pose2d(1.7 + AutoConstants.getXOffsetHangarEmergency(), 6 + AutoConstants.getYOffsetHangarEmergency(), new Rotation2d(-55)),
             List.of(
                     new Translation2d(1.6, 4.5)),
             new Pose2d(0.5, 2, new Rotation2d(20)),

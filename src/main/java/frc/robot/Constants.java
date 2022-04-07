@@ -23,6 +23,10 @@ public final class Constants {
 
         private static final double xOffsetTerminal5Ball = -0.13 - 0.2;
         private static final double yOffsetTerminal5Ball = -0.13 + 0.35;
+        private static final double xOffsetHangarEmergency = 0;
+        private static final double yOffsetHangarEmergency = 0;
+        private static final double xOffsetHangar4Ball = 0;
+        private static final double yOffsetHangar4Ball = 0;
 
         public static double getXOffsetTerminal5Ball() {
             if(fieldType == FieldType.COMP) {
@@ -37,6 +41,34 @@ public final class Constants {
             }
             return 0.0;
         }
+
+        public static double getXOffsetHangarEmergency() {
+          if(fieldType == FieldType.COMP) {
+              return xOffsetHangarEmergency;
+          }
+          return 0.0;
+      }
+
+      public static double getYOffsetHangarEmergency() {
+          if(fieldType == FieldType.COMP) {
+              return yOffsetHangarEmergency;
+          }
+          return 0.0;
+      }
+
+        public static double getXOffsetHangar4Ball() {
+          if(fieldType == FieldType.COMP) {
+              return xOffsetHangar4Ball;
+          }
+          return 0.0;
+      }
+
+      public static double getYOffsetHangar4Ball() {
+          if(fieldType == FieldType.COMP) {
+              return yOffsetHangar4Ball;
+          }
+          return 0.0;
+      }
 
         //values for Ramsete controller
         public static final double ksVolts = 0.59619;

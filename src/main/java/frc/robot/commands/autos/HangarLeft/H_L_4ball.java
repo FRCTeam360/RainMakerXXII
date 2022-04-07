@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.AutoConfig;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.commands.AutoExtendIntake;
 import frc.robot.commands.AutoRetractIntake;
 import frc.robot.commands.AutoRunIntake;
@@ -56,17 +57,17 @@ public class H_L_4ball extends ParallelRaceGroup {
       new Pose2d(1.1, 1, new Rotation2d(-80)),
       List.of(
           new Translation2d(1.3, 2.5)),
-      new Pose2d(0.9, 6.3, new Rotation2d(-55)),
+      new Pose2d(0.9 + AutoConstants.getXOffsetHangar4Ball(), 6.3 + AutoConstants.getYOffsetHangar4Ball(), new Rotation2d(-55)),
       AutoConfig.configFwdHigh);
 
   public static final Trajectory phase22 = TrajectoryGenerator.generateTrajectory(
-      new Pose2d(0.9, 6.3, new Rotation2d(-55)),
+      new Pose2d(0.9 + AutoConstants.getXOffsetHangar4Ball(), 6.3 + AutoConstants.getYOffsetHangar4Ball(), new Rotation2d(-55)),
       List.of(),
-      new Pose2d(0.9, 6.1, new Rotation2d(-55)),
+      new Pose2d(0.9 + AutoConstants.getXOffsetHangar4Ball(), 6.1 + AutoConstants.getYOffsetHangar4Ball(), new Rotation2d(-55)),
       AutoConfig.configRevHigh);
 
   public static final Trajectory phase3 = TrajectoryGenerator.generateTrajectory(
-      new Pose2d(0.9, 6.1, new Rotation2d(-55)),
+      new Pose2d(0.9 + AutoConstants.getXOffsetHangar4Ball(), 6.1 + AutoConstants.getYOffsetHangar4Ball(), new Rotation2d(-55)),
       List.of(
           new Translation2d(1.6, 4.5)),
       new Pose2d(1.5, 3, new Rotation2d(20)),
