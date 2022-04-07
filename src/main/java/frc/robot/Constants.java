@@ -101,7 +101,7 @@ public final class Constants {
         COMP, PRACTICE
     }
 
-    public static final FieldType fieldType = FieldType.PRACTICE;
+    public static final FieldType fieldType = FieldType.COMP;
     
     public static final RobotType robotType = RobotType.COMP;
 
