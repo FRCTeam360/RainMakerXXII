@@ -104,6 +104,7 @@ public class T_R_5Ball extends ParallelRaceGroup {
                                 new AutoRunIntake(),
                                 new AutoShoot(2)
                         ),
+                        new AutoExtendIntake(),
                         new ParallelRaceGroup(
                                 new AutoRunIntake(),
                                 new MoveWithRamsete(phase11,
