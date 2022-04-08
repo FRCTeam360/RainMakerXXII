@@ -85,6 +85,7 @@ public class T_R_5Ball extends ParallelRaceGroup {
                 new TurretAuto(limelight, turret),
                 new AutoSetShoot(),
                 new PrintTime(),
+                new TakeSnapshots(),
                 // new WaitCommand(15),
 
                 new SequentialCommandGroup(
@@ -98,7 +99,7 @@ public class T_R_5Ball extends ParallelRaceGroup {
                                                 .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
                                 new AutoRunIntake(),
                                 new QueueBalls(true)),
-                        new AutoShoot(1),
+                        new AutoShoot(2),
                         new ParallelRaceGroup(
                                 new AutoRunIntake(),
                                 new MoveWithRamsete(phase11,
@@ -109,7 +110,7 @@ public class T_R_5Ball extends ParallelRaceGroup {
                                 new SequentialCommandGroup(
                                         new AutoRetractIntake(true),
                                         new AutoRunIntake()),
-                                new AutoShoot(2)),
+                                new AutoShoot(1)),
 
                         new ParallelRaceGroup(
                                 new SequentialCommandGroup(

@@ -90,7 +90,12 @@ public class H_L_Curve extends ParallelRaceGroup {
 
             new AutoRetractIntake(true),
 
-            new AutoShoot(2)
+            new ParallelRaceGroup(
+
+                new AutoShoot(2), 
+
+                new AutoRunIntake()
+            )
         )
     );
 
