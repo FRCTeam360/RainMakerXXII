@@ -3,5 +3,8 @@
     "deleteAfter": false,
     "localDir": "C:\\Users\\User\\Desktop\\RainMakerXXII\\.DataLogTool",
     "serverTeam": "360"
+  },
+  "output": {
+    "outputFolder": "C:\\Users\\User\\Desktop\\RainMakerXXII\\.DataLogTool"
   }
 }

@@ -29,7 +29,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 
 import com.kauailabs.navx.frc.AHRS; //If error here check updates: install vendor online use: https://www.kauailabs.com/dist/frc/2021/navx_frc.json
 import edu.wpi.first.wpilibj.SPI; //Port NavX is on
-
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -60,10 +60,11 @@ public class DriveTrain extends SubsystemBase {
   public AHRS navX = new AHRS(SPI.Port.kMXP); // For frc-characterization tool: "SPI.Port.kMXP" of type "NavX"
   public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
       AutoConstants.kTrackwidthMeters);
-  private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(getHeading());
+  private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(getHeading(), new Pose2d(8, 4, new Rotation2d()));
   public final static SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(AutoConstants.ksVolts,
       AutoConstants.kvVoltSecondsPerMeter, AutoConstants.kaVoltSecondsSquaredPerMeter);
   private Pose2d pose;
+  private Field2d theField = new Field2d();
 
   private PIDController leftPidController = new PIDController(AutoConstants.kPDriveVel, 0, 0);
   private PIDController rightPidController = new PIDController(AutoConstants.kPDriveVel, 0, 0);
@@ -123,6 +124,8 @@ public class DriveTrain extends SubsystemBase {
     m_differentialDrive.setSafetyEnabled(false); // So it won't stop the motors from moving
 
     this.coastMode();
+
+    SmartDashboard.putData("field", theField);
   }
 
   public static DriveTrain getInstance(){
@@ -279,6 +282,7 @@ public class DriveTrain extends SubsystemBase {
     pose = m_odometry.update( // Must be in meters according to internets
         getHeading(), motorLLead.getSelectedSensorPosition() * ticksToMeters,
         motorRLead.getSelectedSensorPosition() * ticksToMeters);
+      theField.setRobotPose(m_odometry.getPoseMeters());
     navxTestingDashboardReadouts();
     // System.out.println("distance x: " +
     // Units.metersToFeet(m_odometry.getPoseMeters().getX()));
