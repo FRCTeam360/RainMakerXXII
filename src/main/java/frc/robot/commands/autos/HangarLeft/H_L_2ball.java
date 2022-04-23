@@ -90,7 +90,12 @@ public class H_L_2ball extends ParallelRaceGroup {
 
             new AutoRetractIntake(),
             
-            new AutoShoot(2)
+            new ParallelRaceGroup(
+
+              new AutoShoot(2), 
+
+              new AutoRunIntake()
+            )
         )
             
         

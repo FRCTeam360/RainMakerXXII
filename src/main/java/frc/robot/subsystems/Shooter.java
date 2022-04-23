@@ -195,6 +195,6 @@ public class Shooter extends SubsystemBase {
    */
   public double getShootGoal() {
     double limedY = myLimelight.getY();
-    return (a * Math.pow(limedY, 4)) + (b * Math.pow(limedY, 3) + (c * Math.pow(limedY, 2)) + (d * limedY) + e);
+    return ((a * Math.pow(limedY, 4)) + (b * Math.pow(limedY, 3) + (c * Math.pow(limedY, 2)) + (d * limedY) + e)) * 0.99;
   }
 }

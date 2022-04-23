@@ -16,9 +16,11 @@ public class Limelight extends SubsystemBase {
   private NetworkTableEntry ty = table.getEntry("ty");
   private NetworkTableEntry ta = table.getEntry("ta");
   private NetworkTableEntry tl = table.getEntry("tl");
+  private NetworkTableEntry snap = table.getEntry("snapshot");
 
   private NetworkTableEntry camMode = table.getEntry("camMode");
   private static Limelight instance;
+
 
   private double latency;
   private int latencyCounter = 0;
@@ -74,6 +76,10 @@ public class Limelight extends SubsystemBase {
     return validTarget() && Math.abs(this.getX()) <= 5;
   }
 
+  public void takeSnapshot(){
+    snap.setNumber(1.0);
+  }
+
   // public void updateShooterVelocity () {
   //   if ( validTarget() == true ) {
   //     double yLime = getY();
@@ -101,6 +107,7 @@ public class Limelight extends SubsystemBase {
     this.latency = latency;
 
     SmartDashboard.putBoolean("limelight comms", latencyCounter < 10);
+    // System.out.println("ll snap state: " + snap.getDouble(0.0));
     // System.out.println("lime tY: " + this.getY());
   }
 }
