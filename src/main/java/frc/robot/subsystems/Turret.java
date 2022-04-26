@@ -50,6 +50,8 @@ public class Turret extends SubsystemBase {
 
   private static Turret instance;
 
+  private DriveTrain myDriveTrain = DriveTrain.getInstance();
+
   private double previousAngle;
   private double angleTurnIntegral;
 
@@ -161,7 +163,7 @@ public class Turret extends SubsystemBase {
 
   public void alignLimelight(double currentTX) {
 
-    double aimError = -currentTX;
+    double aimError = - shootOnMove(currentTX);
     double deriv = aimError - previousTX;
 
     alignIntegral = alignIntegral + aimError;
@@ -171,6 +173,16 @@ public class Turret extends SubsystemBase {
         - (deriv * Turret.kDLimelight) + (kFLimelight);
 
     this.turn(aimAdjust);
+  }
+
+  private double shootOnMove(double angle){
+    if(getAngle() > 45 && getAngle() < 135){
+      return angle + (myDriveTrain.getForwardSpeed() * 2);
+    } else if (getAngle() < -45 && getAngle() > -135){
+      return angle + (myDriveTrain.getForwardSpeed() * -2);
+    } else {
+      return angle;
+    }
   }
 
   public void resetEncoderTicks() {
