@@ -74,10 +74,6 @@ public class ArcadeDrive extends CommandBase {
     driveRight = Math.max(driveRight, -1);
 
     myDriveTrain.drive(driveLeft, driveRight);
-
-    if(operatorCont.getXButtonPressed()) {
-      myDriveTrain.resetOdometry(10, 10, 0);
-    }
   }
 
   // Called once the command ends or is interrupted.

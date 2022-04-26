@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
 //import static frc.robot.Constants.DriveTrainConstants.*;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.operatorInterface.OperatorControl;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -60,7 +61,7 @@ public class DriveTrain extends SubsystemBase {
   public AHRS navX = new AHRS(SPI.Port.kMXP); // For frc-characterization tool: "SPI.Port.kMXP" of type "NavX"
   public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
       AutoConstants.kTrackwidthMeters);
-  private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(getHeading(), new Pose2d(8, 4, new Rotation2d()));
+  private final DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(getHeading(), new Pose2d(0, 0, new Rotation2d()));
   public final static SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(AutoConstants.ksVolts,
       AutoConstants.kvVoltSecondsPerMeter, AutoConstants.kaVoltSecondsSquaredPerMeter);
   private Pose2d pose;
@@ -80,8 +81,12 @@ public class DriveTrain extends SubsystemBase {
   private SlewRateLimiter driveLLimiter = new SlewRateLimiter(1.2);
   private SlewRateLimiter driveRLimiter = new SlewRateLimiter(1.2);
 
+  private final OperatorControl operatorCont;
+
   /** Creates a new ExampleSubsystem. */
   public DriveTrain() {
+
+    operatorCont = OperatorControl.getInstance();
 
     motorLLead.configFactoryDefault();
     motorLFollow1.configFactoryDefault();
@@ -284,25 +289,12 @@ public class DriveTrain extends SubsystemBase {
         motorRLead.getSelectedSensorPosition() * ticksToMeters);
       theField.setRobotPose(m_odometry.getPoseMeters());
     navxTestingDashboardReadouts();
-    // System.out.println("distance x: " +
-    // Units.metersToFeet(m_odometry.getPoseMeters().getX()));
-    // System.out.println("distance y: " +
-    // Units.metersToFeet(m_odometry.getPoseMeters().getY()));
-    // System.out.println("Right encoder: " +
-    // Units.metersToFeet(motorLLead.getSelectedSensorPosition() *
-    // AutoConstants.ticksToMeters));
-    // System.out.println("Left encoder" +
-    // Units.metersToFeet(motorRLead.getSelectedSensorPosition() *
-    // AutoConstants.ticksToMeters));
     
     SmartDashboard.putNumber("robot heading", getHeadingAngle());
 
-    // SmartDashboard.putNumber("RL current", motorRLead.getSupplyCurrent());
-    // SmartDashboard.putNumber("RF1 current", motorRFollow1.getSupplyCurrent());
-    // SmartDashboard.putNumber("RF2 current", motorRFollow2.getSupplyCurrent());
-    // SmartDashboard.putNumber("LL current", motorLLead.getSupplyCurrent());
-    // SmartDashboard.putNumber("LF1 current", motorLFollow1.getSupplyCurrent());
-    // SmartDashboard.putNumber("LF2 current", motorLFollow2.getSupplyCurrent());
+    if(operatorCont.getXButtonPressed()) {
+      this.resetOdometry(5, 5, 90);
+    }
   }
 
   public void positionPrintouts() {
@@ -333,7 +325,10 @@ public class DriveTrain extends SubsystemBase {
     motorLLead.setSelectedSensorPosition(0);
     motorRLead.setSelectedSensorPosition(0);
 
+    this.angleAdjust(rotation);
     pose = new Pose2d(x, y, desiredRotation2d);
+
+    System.out.println("resetting odometry");
 
     m_odometry.resetPosition(pose, desiredRotation2d);
   }
