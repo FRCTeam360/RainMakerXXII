@@ -327,6 +327,17 @@ public class DriveTrain extends SubsystemBase {
     // }
   }
 
+  public void resetOdometry(double x, double y, double rotation) {
+    Rotation2d desiredRotation2d = new Rotation2d(Units.degreesToRadians(rotation));
+
+    motorLLead.setSelectedSensorPosition(0);
+    motorRLead.setSelectedSensorPosition(0);
+
+    pose = new Pose2d(x, y, desiredRotation2d);
+
+    m_odometry.resetPosition(pose, desiredRotation2d);
+  }
+
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
