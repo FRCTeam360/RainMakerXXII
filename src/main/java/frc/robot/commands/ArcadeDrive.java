@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.operatorInterface.DriverControl;
+import frc.robot.operatorInterface.OperatorControl;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 
@@ -14,6 +15,7 @@ import static frc.robot.Constants.OIConstants.*;
 public class ArcadeDrive extends CommandBase {
   private final DriveTrain myDriveTrain;
 
+  private final OperatorControl operatorCont;
   private final DriverControl driverCont;
 
   private final SlewRateLimiter filter;
@@ -21,6 +23,7 @@ public class ArcadeDrive extends CommandBase {
   /** Creates a new ArcadeDrive. */
   public ArcadeDrive() {
     driverCont = DriverControl.getInstance();
+    operatorCont = OperatorControl.getInstance();
 
     myDriveTrain = DriveTrain.getInstance();
 
@@ -71,6 +74,10 @@ public class ArcadeDrive extends CommandBase {
     driveRight = Math.max(driveRight, -1);
 
     myDriveTrain.drive(driveLeft, driveRight);
+
+    if(operatorCont.getXButtonPressed()) {
+      myDriveTrain.resetOdometry(10, 10, 0);
+    }
   }
 
   // Called once the command ends or is interrupted.
