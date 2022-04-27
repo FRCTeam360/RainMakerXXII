@@ -293,7 +293,7 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("robot heading", getHeadingAngle());
 
     if(operatorCont.getXButtonPressed()) {
-      this.resetOdometry(5, 5, 90);
+      this.resetOdometry(5, 5, 180);
     }
   }
 
