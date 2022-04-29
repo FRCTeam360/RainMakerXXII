@@ -176,10 +176,11 @@ public class Turret extends SubsystemBase {
   }
 
   private double shootOnMove(double angle){
+    System.out.println("speed: " + myDriveTrain.getVelocityMetersPerSec());
     if(getAngle() > 45 && getAngle() < 135){
-      return angle + (myDriveTrain.getForwardSpeed() * 2);
+      return angle + (myDriveTrain.getVelocityMetersPerSec() * 150);
     } else if (getAngle() < -45 && getAngle() > -135){
-      return angle + (myDriveTrain.getForwardSpeed() * -2);
+      return angle + (myDriveTrain.getVelocityMetersPerSec() * -150);
     } else {
       return angle;
     }

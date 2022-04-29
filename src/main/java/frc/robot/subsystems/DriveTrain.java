@@ -223,6 +223,10 @@ public class DriveTrain extends SubsystemBase {
     return motorRLead.getSelectedSensorVelocity() * ticksToMeters;
   }
 
+  public double getVelocityMetersPerSec(){
+    return (getLeftEncoderMetersPerSec() + getRightEncoderMetersPerSec()) / 2;
+  }
+
   public DifferentialDriveWheelSpeeds getWheelSpeeds() { // Must be in meters/second
     // In example: m_leftEncoder.getRate() , m_rightEncoder.getRate() however, they
     // set their rate to inclue their conversions
