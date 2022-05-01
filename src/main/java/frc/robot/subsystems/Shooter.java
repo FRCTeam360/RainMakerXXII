@@ -41,6 +41,7 @@ public class Shooter extends SubsystemBase {
   private double integral = 0;
 
   public double velocityTarget = 2000;
+  private double previousTarget;
   public boolean isAtSpeed;
 
   // public static final double falconEncoderToRotations = 1.0 / 2048.0;
@@ -168,10 +169,20 @@ public class Shooter extends SubsystemBase {
       this.setPower(0);
       velocityTarget = 0;
     } else {
+
+      target = shootOnMove(target);
+
       velocityTarget = filter.calculate(target);
 
       shooterLead.set(ControlMode.Velocity, velocityTarget * 2 / 3 / shooterToMotorRPM);
     }
+  }
+
+  private double shootOnMove(double target){
+    double deriv = target - previousTarget;
+    previousTarget = target;
+
+    return target + (deriv * 1);
   }
 
   public boolean isAtSpeed() {
