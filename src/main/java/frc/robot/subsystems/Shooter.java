@@ -4,41 +4,25 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.SparkMaxRelativeEncoder;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import static frc.robot.Constants.CANIds.*;
-import static frc.robot.Constants.kLongCANTimeoutMs;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 
 public class Shooter extends SubsystemBase {
-
-  private static final String kFF = null;
   private WPI_TalonFX shooterLead;
   private WPI_TalonFX shooterFollow;
-  private SparkMaxPIDController shooterPidController;
-  private RelativeEncoder shooterEncoder;
 
   private static Shooter instance;
 
   private final Limelight myLimelight = Limelight.getInstance();
 
   public boolean shooterReady;
-
-  private double previousError;
-  private double integral = 0;
 
   public double velocityTarget = 2000;
   public boolean isAtSpeed;
@@ -87,19 +71,11 @@ public class Shooter extends SubsystemBase {
 
     shooterFollow.follow(shooterLead);
 
-    // shooterLead.setSmartCurrentLimit(40);
-    // shooterFollow.setSmartCurrentLimit(40);
-
     shooterLead.setNeutralMode(NeutralMode.Coast);
     shooterFollow.setNeutralMode(NeutralMode.Coast);
 
     shooterLead.setInverted(false);
     shooterFollow.setInverted(true);
-
-    // SmartDashboard.putNumber("kP", 0.0);
-    // SmartDashboard.putNumber("kI", 0.0);
-    // SmartDashboard.putNumber("kD", 0.0);
-    // SmartDashboard.putNumber("kF", 0.0);
 
     shooterLead.config_kF(0, kF, kTimeOutMs);
     shooterLead.config_kP(0, kP, kTimeOutMs);
@@ -130,20 +106,9 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // kP = SmartDashboard.getNumber("kP", 0.0);
-    // kI = SmartDashboard.getNumber("kI", 0.0);
-    // kD = SmartDashboard.getNumber("kD", 0.0);
-    // kF = SmartDashboard.getNumber("kF", 0.0);
-
-    // SmartDashboard.putNumber("sl amps", shooterLead.getSupplyCurrent());
-    // SmartDashboard.putNumber("sf amps", shooterFollow.getSupplyCurrent());
 
     SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
-    // SmartDashboard.putNumber("Shoot Goal", this.getShootGoal());
     SmartDashboard.putNumber("Shooter Ticks", shooterLead.getSelectedSensorVelocity());
-    // SmartDashboard.putNumber("Shooter Lead Temp", shooterLead.getTemperature());
-    // SmartDashboard.putNumber("Shooter Follow Temp", shooterFollow.getTemperature());
-
     SmartDashboard.putBoolean("shooter ready", isAtSpeed());
   }
 
@@ -153,7 +118,6 @@ public class Shooter extends SubsystemBase {
    * @param output motor output from -1 to 1
    */
   public void setPower(double output) {
-    // shooterLead.set(filter.calculate(output));
     shooterLead.set(output);
   }
 

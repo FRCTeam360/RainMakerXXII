@@ -253,28 +253,9 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void navxTestingDashboardReadouts() {
-    // SmartDashboard.putNumber("N ang", Math.IEEEremainder(navX.getAngle(), 360) );
     SmartDashboard.putNumber("NAV ang", navX.getAngle());
-    // SmartDashboard.putString("Pos2D", m_odometry.getPoseMeters().toString());
-    // System.out.print("NavX angle: " + navX.getAngle());
-    // SmartDashboard.putNumber("N pre", navX.getBarometricPressure()); //why this
-    // no work cri, just tryna get the pressure
-    SmartDashboard.putNumber("N yaw", navX.getYaw());
-
-    // SmartDashboard.putBoolean("NAVC con", navX.isConnected());
-    // SmartDashboard.putBoolean("NAV cal", navX.isCalibrating());
+    SmartDashboard.putNumber("N yaw", navX.getYaw());;
   }
-
-  // public double getHighestVelocity () {
-  // double leftSpeed =
-  // motorLLead.TalonFXSensorCollection.getIntegratedSensorVelocity() *
-  // AutoConstants.ticksToMeters;
-  // double rightSpeed = motorRLead.getEncoder().getVelocity() *
-  // AutoConstants.ticksToMeters;
-  // double highSpeed = Math.max( Math.abs(leftSpeed), Math.abs(rightSpeed) );
-  // //Make em both positive
-  // return highSpeed; //In meters per second
-  // 5}
 
   @Override
   public void periodic() {
@@ -284,25 +265,8 @@ public class DriveTrain extends SubsystemBase {
         motorRLead.getSelectedSensorPosition() * ticksToMeters);
       theField.setRobotPose(m_odometry.getPoseMeters());
     navxTestingDashboardReadouts();
-    // System.out.println("distance x: " +
-    // Units.metersToFeet(m_odometry.getPoseMeters().getX()));
-    // System.out.println("distance y: " +
-    // Units.metersToFeet(m_odometry.getPoseMeters().getY()));
-    // System.out.println("Right encoder: " +
-    // Units.metersToFeet(motorLLead.getSelectedSensorPosition() *
-    // AutoConstants.ticksToMeters));
-    // System.out.println("Left encoder" +
-    // Units.metersToFeet(motorRLead.getSelectedSensorPosition() *
-    // AutoConstants.ticksToMeters));
     
     SmartDashboard.putNumber("robot heading", getHeadingAngle());
-
-    // SmartDashboard.putNumber("RL current", motorRLead.getSupplyCurrent());
-    // SmartDashboard.putNumber("RF1 current", motorRFollow1.getSupplyCurrent());
-    // SmartDashboard.putNumber("RF2 current", motorRFollow2.getSupplyCurrent());
-    // SmartDashboard.putNumber("LL current", motorLLead.getSupplyCurrent());
-    // SmartDashboard.putNumber("LF1 current", motorLFollow1.getSupplyCurrent());
-    // SmartDashboard.putNumber("LF2 current", motorLFollow2.getSupplyCurrent());
   }
 
   public void positionPrintouts() {
@@ -313,18 +277,10 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void drive(double leftMotorPercentage, double rightMotorPercentage) {
-    // if(leftMotorPercentage == 0){
-      // motorLLead.stopMotor();
-    // } else {
       leftMotorPercentage = driveLLimiter.calculate(leftMotorPercentage);
       motorLLead.set(leftMotorPercentage);
-    // }
-    // if(rightMotorPercentage == 0){
-        // motorRLead.stopMotor();
-    // } else {
       rightMotorPercentage = driveRLimiter.calculate(rightMotorPercentage);
       motorRLead.set(rightMotorPercentage);
-    // }
   }
 
   public void resetOdometry(double x, double y, double rotation) {

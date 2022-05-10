@@ -5,15 +5,12 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -21,9 +18,6 @@ import static frc.robot.Constants.CANIds.*;
 import static frc.robot.Constants.DigitalInputPorts.*;
 
 public class Turret extends SubsystemBase {
-
-  private NetworkTableEntry turretAngleEntry;
-
   private DigitalInput leftLimitSwitch;
   private DigitalInput middleLimitSwitch = new DigitalInput(middleLimitSwitchPort);
   private DigitalInput rightLimitSwitch;

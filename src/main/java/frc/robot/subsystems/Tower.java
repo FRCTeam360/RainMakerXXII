@@ -5,15 +5,11 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.operatorInterface.XboxCont;
-import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static frc.robot.Constants.CANIds.*;
 import static frc.robot.Constants.DigitalInputPorts.*;
-
-import java.io.DataInput;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -23,10 +19,7 @@ public class Tower extends SubsystemBase {
 
   DigitalInput topSensor;
   DigitalInput bottomSensor;
-  // DigitalInput middleSensor = new DigitalInput(1);
-  // DigitalInput bottomSensor = new DigitalInput(2);
   static Tower instance;
-  // need to createbthird input for middle sensor
 
   private CANSparkMax tower;
   private Tower pastTowerState;
