@@ -169,16 +169,24 @@ public class Turret extends SubsystemBase {
     this.turn(aimAdjust);
   }
 
-  private double shootOnMove(double angle){
-    System.out.println("speed: " + myDriveTrain.getVelocityMetersPerSec());
-    if(getAngle() > 45 && getAngle() < 135){
-      return angle + (myDriveTrain.getVelocityMetersPerSec() * 125);
-    } else if (getAngle() < -45 && getAngle() > -135){
-      return angle + (myDriveTrain.getVelocityMetersPerSec() * -125);
-    } else {
-      return angle;
-    }
+  public double getTargetRelativeVelocity(){
+    return myDriveTrain.getVelocityMetersPerSec() * Math.sin(Math.toRadians(getAngle()));
   }
+
+  private double shootOnMove(double angle){
+    return angle + (getTargetRelativeVelocity() * 125);
+  }
+
+  // private double shootOnMove(double angle){
+  //   System.out.println("speed: " + myDriveTrain.getVelocityMetersPerSec());
+  //   if(getAngle() > 45 && getAngle() < 135){
+  //     return angle + (myDriveTrain.getVelocityMetersPerSec() * 125);
+  //   } else if (getAngle() < -45 && getAngle() > -135){
+  //     return angle + (myDriveTrain.getVelocityMetersPerSec() * -125);
+  //   } else {
+  //     return angle;
+  //   }
+  // }
 
   public void resetEncoderTicks() {
     turretMotor.getEncoder().setPosition(0);
