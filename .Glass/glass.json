@@ -1,7 +1,15 @@
 {
   "NetworkTables": {
+    "LiveWindow": {
+      "open": true
+    },
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/LiveWindow/Climber": "Subsystem",
+      "/LiveWindow/Intake": "Subsystem",
+      "/LiveWindow/Limelight": "Subsystem",
+      "/LiveWindow/Pneumatics": "Subsystem",
+      "/LiveWindow/Tower": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
       "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
       "/LiveWindow/Ungrouped/DigitalInput[1]": "Digital Input",
@@ -64,6 +72,7 @@
     },
     "windows": {
       "/SmartDashboard/field": {
+        "image": "C:\\Users\\User\\Desktop\\PathWeaver\\src\\main\\resources\\edu\\wpi\\first\\pathweaver\\2022-field.png",
         "window": {
           "visible": true
         }
