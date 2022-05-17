@@ -44,14 +44,6 @@ public class Limelight extends SubsystemBase {
     }
   }
 
-  // public void ledOff(){
-  //   table.getEntry("ledMode").setNumber(0);
-  // }
-
-  // public void ledOn(){
-  //   table.getEntry("ledMode").setNumber(1);
-  // }
-
   public double getCamMode() {
     return camMode.getDouble(0.0);
   }
@@ -80,15 +72,6 @@ public class Limelight extends SubsystemBase {
     snap.setNumber(1.0);
   }
 
-  // public void updateShooterVelocity () {
-  //   if ( validTarget() == true ) {
-  //     double yLime = getY();
-  //     targetVelocity = (aVal * yLime * yLime) + ( +bVal * yLime) + ( cVal ) ;
-  //   } else {
-  //     targetVelocity = backupTargetVelocity;
-  //   }
-  // }
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -107,7 +90,5 @@ public class Limelight extends SubsystemBase {
     this.latency = latency;
 
     SmartDashboard.putBoolean("limelight comms", latencyCounter < 10);
-    // System.out.println("ll snap state: " + snap.getDouble(0.0));
-    // System.out.println("lime tY: " + this.getY());
   }
 }
