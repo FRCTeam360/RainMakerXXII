@@ -26,6 +26,7 @@ public class Shooter extends SubsystemBase {
 
   public double velocityTarget = 2000;
   private double previousTarget;
+  private double newTarget;
   public boolean isAtSpeed;
 
   // public static final double falconEncoderToRotations = 1.0 / 2048.0;
@@ -134,7 +135,7 @@ public class Shooter extends SubsystemBase {
       velocityTarget = 0;
     } else {
 
-      target = shootOnMove(target);
+      // target = shootOnMove(target);
 
       velocityTarget = filter.calculate(target);
 
@@ -142,11 +143,19 @@ public class Shooter extends SubsystemBase {
     }
   }
 
-  private double shootOnMove(double target){
+  private double shootOnMove(double target) {
     double deriv = target - previousTarget;
     previousTarget = target;
+    SmartDashboard.putNumber("deriv: ", deriv);
 
-    return target + (deriv * 1);
+    if (deriv >= 0) {
+      newTarget = target + (deriv * 125);
+    } else {
+      newTarget = target + (deriv * 35);
+    }
+
+    // SmartDashboard.putNumber("shootSpeedAdjust", (deriv * 125));
+    return newTarget;
   }
 
   public boolean isAtSpeed() {
@@ -170,6 +179,7 @@ public class Shooter extends SubsystemBase {
    */
   public double getShootGoal() {
     double limedY = myLimelight.getY();
-    return ((a * Math.pow(limedY, 4)) + (b * Math.pow(limedY, 3) + (c * Math.pow(limedY, 2)) + (d * limedY) + e)) * 0.99;
+    return ((a * Math.pow(limedY, 4)) + (b * Math.pow(limedY, 3) + (c * Math.pow(limedY, 2)) + (d * limedY) + e))
+        * 1.00;
   }
 }
