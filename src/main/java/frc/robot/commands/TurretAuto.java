@@ -32,13 +32,29 @@ public class TurretAuto extends CommandBase {
 
   private Direction pastSeekDirection;
 
+  private Boolean isFiveBallAuto;
+
   public TurretAuto(Limelight limelight, Turret turret) {
+    this.isFiveBallAuto = false;
     myLimelight = limelight;
     myTurret = turret;
 
     myTimer = new Timer();
 
-    this.mode = Mode.SEEK_RIGHT;
+    this.mode = Mode.SEEK_LEFT;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(myLimelight, turret);
+
+  }
+
+  public TurretAuto(Limelight limelight, Turret turret, Boolean isFiveBallAuto) {
+    this.isFiveBallAuto = isFiveBallAuto;
+    myLimelight = limelight;
+    myTurret = turret;
+
+    myTimer = new Timer();
+
+    this.mode = Mode.SEEK_LEFT;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(myLimelight, turret);
 
@@ -52,6 +68,7 @@ public class TurretAuto extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
     this.checkLimits();
     this.updateLastKnownTargetAngle();
     switch (this.mode) {
@@ -202,11 +219,11 @@ public class TurretAuto extends CommandBase {
     if (myLimelight.validTarget()) {
       this.mode = Mode.TARGET_IN_VIEW;
     } else if (myTimer.get() >= 1 && myTurret.getAngle() <= 0) {
-      this.mode = Mode.SEEK_LEFT;
+      this.mode = isFiveBallAuto ? Mode.SEEK_RIGHT : Mode.SEEK_LEFT;
       myTimer.stop();
       myTimer.reset();
     } else if (myTimer.get() >= 1) {
-      this.mode = Mode.SEEK_RIGHT;
+      this.mode = isFiveBallAuto ? Mode.SEEK_LEFT : Mode.SEEK_RIGHT;
       myTimer.stop();
       myTimer.reset();
     }
