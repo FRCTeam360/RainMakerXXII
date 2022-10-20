@@ -65,7 +65,7 @@ public class Limelight extends SubsystemBase {
   }
 
   public boolean isOnTarget(){
-    return validTarget() && Math.abs(this.getX()) <= 5;
+    return validTarget() && Math.abs(this.getX()) <= 4;
   }
 
   public void takeSnapshot(){

@@ -218,11 +218,11 @@ public class TurretAuto extends CommandBase {
 
     if (myLimelight.validTarget()) {
       this.mode = Mode.TARGET_IN_VIEW;
-    } else if (myTimer.get() >= 1 && myTurret.getAngle() <= 0) {
+    } else if (myTimer.get() >= 0.1 && myTurret.getAngle() <= 0) {
       this.mode = isFiveBallAuto ? Mode.SEEK_RIGHT : Mode.SEEK_LEFT;
       myTimer.stop();
       myTimer.reset();
-    } else if (myTimer.get() >= 1) {
+    } else if (myTimer.get() >= 0.1) {
       this.mode = isFiveBallAuto ? Mode.SEEK_LEFT : Mode.SEEK_RIGHT;
       myTimer.stop();
       myTimer.reset();

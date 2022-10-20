@@ -112,10 +112,10 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(driverCont, 2).whenPressed(fieldOrientedDrive);
     new JoystickButton(driverCont, 8).whileHeld(tankDrive);
-    new JoystickButton(driverCont, 4).whenPressed(arcadeDrive);
+    // new JoystickButton(driverCont, 4).whenPressed(arcadeDrive);
     new JoystickButton(operatorCont, 7).whenHeld(manualSetShoot);
     new JoystickButton(operatorCont, 8).whenHeld(turretManual);
-    new JoystickButton(operatorCont, 10).whileHeld(runClimberManual);
+    new JoystickButton(operatorCont, 10).whileHeld(runClimberManual, false);
     new JoystickButton(driverCont, 5).whileHeld(runFeederManually);
     new JoystickButton(operatorCont, 5).whileHeld(runFeederManually);
     new JoystickButton(driverCont, 6).whileHeld(runTowerManually);
