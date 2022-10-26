@@ -137,7 +137,7 @@ public class Shooter extends SubsystemBase {
       velocityTarget = 0;
     } else {
 
-      // target = shootOnMove(target);
+      target = shootOnMove(target);
 
       velocityTarget = filter.calculate(target);
 

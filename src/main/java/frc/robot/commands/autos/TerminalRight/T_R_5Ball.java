@@ -86,13 +86,18 @@ public class T_R_5Ball extends ParallelRaceGroup {
   /** Creates a new T_R_2ball. */
   public T_R_5Ball() {
     addCommands(
-        new TurretAuto(limelight, turret, true),
+        // new TurretAuto(limelight, turret, true),
         new AutoSetShoot(),
         new PrintTime(),
         new TakeSnapshots(),
         // new WaitCommand(15),
 
         new SequentialCommandGroup(
+
+        new ParallelRaceGroup(
+
+            new TurretAuto(limelight, turret, true),
+          
             new InstantCommand(() -> driveTrain.setDriveOffset(1.5)),
             // new AutoRunFeederAndTower(),
             new AutoExtendIntake(),
@@ -118,9 +123,14 @@ public class T_R_5Ball extends ParallelRaceGroup {
                 new SequentialCommandGroup(
                     new AutoRetractIntake(true),
                     new AutoRunIntake()),
-                new AutoShoot(1)),
+                new AutoShoot(1))
+                
+        ),
 
             new ParallelRaceGroup(
+
+                new InstantCommand(() -> turret.angleTurn(0)),
+
                 new SequentialCommandGroup(
                     new AutoExtendIntake(),
                     new AutoRunIntake()),
@@ -140,6 +150,7 @@ public class T_R_5Ball extends ParallelRaceGroup {
             ),
 
             new ParallelCommandGroup(
+                new TurretAuto(limelight, turret, true),
                 new AutoRetractIntake(true),
                 new AutoShoot(2)))
 
