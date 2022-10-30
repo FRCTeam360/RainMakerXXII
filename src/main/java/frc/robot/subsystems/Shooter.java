@@ -171,7 +171,7 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("error", error);
     SmartDashboard.putNumber("shooter target", velocityTarget);
 
-    return Math.abs(error) <= 100;
+    return Math.abs(error) <= 45;
     // if(timer.get() == 0) {
     //   if( Math.abs(error) <= 45){
     //     timer.start();

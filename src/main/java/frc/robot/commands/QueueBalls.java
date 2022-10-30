@@ -24,6 +24,8 @@ public class QueueBalls extends CommandBase {
 
   private ComponentState pastTowerAction = ComponentState.IDLE, pastFeederAction = ComponentState.IDLE;
 
+  private boolean wasAtSpeed = false;
+
   /** Creates a new QueueCargo. */
   public QueueBalls(boolean shouldIgnoreShooter) {
     ignoreShooter = shouldIgnoreShooter;
@@ -39,6 +41,8 @@ public class QueueBalls extends CommandBase {
     this.pastTowerAction = ComponentState.IDLE;
     this.feederAction = ComponentState.IDLE;
     this.pastFeederAction = ComponentState.IDLE;
+
+    wasAtSpeed = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -46,10 +50,14 @@ public class QueueBalls extends CommandBase {
   public void execute() {
     this.updateState();
     this.runState();
+
+    if(Shooter.getInstance().isAtSpeed()){
+      wasAtSpeed = true;
+    }
   }
 
   public void updateState() {
-    if ((!ignoreShooter && mShooter.isAtSpeed() && mLimelight.isOnTarget()) || !mTower.ballInBottom()) {
+    if ((!ignoreShooter && wasAtSpeed && mLimelight.isOnTarget()) || !mTower.ballInBottom()) {
       this.towerAction = ComponentState.FORWARD;
     } else {
       this.towerAction = ComponentState.IDLE;
