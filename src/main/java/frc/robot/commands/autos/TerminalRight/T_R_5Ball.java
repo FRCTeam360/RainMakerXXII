@@ -97,6 +97,8 @@ public class T_R_5Ball extends ParallelRaceGroup {
         new ParallelRaceGroup(
 
             new TurretAuto(limelight, turret, true),
+
+            new SequentialCommandGroup(
           
             new InstantCommand(() -> driveTrain.setDriveOffset(1.5)),
             // new AutoRunFeederAndTower(),
@@ -125,11 +127,11 @@ public class T_R_5Ball extends ParallelRaceGroup {
                     new AutoRunIntake()),
                 new AutoShoot(1))
                 
-        ),
+        )),
 
             new ParallelRaceGroup(
 
-                new InstantCommand(() -> turret.angleTurn(0)),
+                new TurnTurretToAngle(0),
 
                 new SequentialCommandGroup(
                     new AutoExtendIntake(),

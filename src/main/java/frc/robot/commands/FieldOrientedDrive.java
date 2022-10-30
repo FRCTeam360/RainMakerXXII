@@ -21,6 +21,13 @@ public class FieldOrientedDrive extends CommandBase {
 
   private final SlewRateLimiter filter;
 
+  private double integral;
+  private double previousRight;
+
+  private static final double kP = 1;
+  private static final double kI = 0;
+  private static final double kD = 0;
+
   /** Creates a new FieldOrientedDrive. */
   public FieldOrientedDrive() {
     driverCont = DriverControl.getInstance();
@@ -71,6 +78,13 @@ public class FieldOrientedDrive extends CommandBase {
 
     // System.out.println("forward: " + forward);
     // System.out.println("right: " + right);
+
+    double deriv = right - previousRight;
+
+    integral = integral + right;
+    previousRight = right;
+
+    right = (right * kP) + (integral * kI) - (deriv * kD);
 
     // sets drive values using previous values for right/left and forward/back
     driveLeft = forward + right;

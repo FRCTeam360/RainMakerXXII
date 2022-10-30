@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import static frc.robot.Constants.CANIds.*;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -64,6 +65,8 @@ public class Shooter extends SubsystemBase {
   public static final double MAX_SHOOTER_ACCELERATION = 5000;
   private final SlewRateLimiter filter = new SlewRateLimiter(MAX_SHOOTER_ACCELERATION);
 
+  private Timer timer = new Timer();
+
   private Shooter() {
     shooterLead = new WPI_TalonFX(shooterLeadId);
     shooterFollow = new WPI_TalonFX(shooterFollowId);
@@ -111,7 +114,7 @@ public class Shooter extends SubsystemBase {
 
     SmartDashboard.putNumber("Shooter Velocity", this.getVelocity());
     SmartDashboard.putNumber("Shooter Ticks", shooterLead.getSelectedSensorVelocity());
-    SmartDashboard.putBoolean("shooter ready", isAtSpeed());
+    SmartDashboard.putBoolean("shooter ready", dashboardIsAtSpeed());
     SmartDashboard.putNumber("shoot l temp", shooterLead.getTemperature());
     SmartDashboard.putNumber("shoot f temp", shooterFollow.getTemperature());
   }
@@ -166,6 +169,29 @@ public class Shooter extends SubsystemBase {
     }
     double error = velocityTarget - this.getVelocity();
     SmartDashboard.putNumber("error", error);
+    SmartDashboard.putNumber("shooter target", velocityTarget);
+
+    return Math.abs(error) <= 100;
+    // if(timer.get() == 0) {
+    //   if( Math.abs(error) <= 45){
+    //     timer.start();
+    //     return true;
+    //   }
+    // } else if(timer.get() >= 0.3){
+    //   timer.stop();
+    //   timer.reset();
+    // } else{
+    //   return true;
+    // }
+    // return false;
+  }
+
+  public boolean dashboardIsAtSpeed() {
+    if (velocityTarget == 0) {
+      return false;
+    }
+    double error = velocityTarget - this.getVelocity();
+
     return Math.abs(error) <= 45;
   }
 
@@ -182,6 +208,6 @@ public class Shooter extends SubsystemBase {
   public double getShootGoal() {
     double limedY = myLimelight.getY();
     return ((a * Math.pow(limedY, 4)) + (b * Math.pow(limedY, 3) + (c * Math.pow(limedY, 2)) + (d * limedY) + e))
-        * 1.00;
+        * 0.99;
   }
 }
