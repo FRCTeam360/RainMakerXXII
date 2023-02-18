@@ -4,66 +4,35 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-
 import static frc.robot.Constants.CANIds.*;
-import static frc.robot.Constants.PneumaticConstants.*;
+import com.revrobotics.CANSparkMax;
 
-/** Add your docs here. */
 public class Intake extends SubsystemBase {
-    private static Intake instance;
-    private boolean isIntakeOut;
-
-    /**
-     * gets instance for the singleton
-     * 
-     * @return instance
-     */
-    public static Intake getInstance() {
-        if (instance == null) {
-            instance = new Intake();
-        }
-        return instance;
+  private static Intake instance;
+  /** Creates a new Intake. */
+  private CANSparkMax myIntake;
+  public static Intake getInstance(){
+    if(instance == null) {
+      instance = new Intake();
     }
+    return instance;
+  }
+  private Intake() {
+    myIntake = new CANSparkMax(intakeId, MotorType.kBrushless);
+  
+  }
 
-    private CANSparkMax intake;
-    private DoubleSolenoid intakeMover;
+  public void runIntake(double speed) {
+    myIntake.set(speed);
+  }
 
-    private Intake() {
-        this.intake = new CANSparkMax(intakeId, MotorType.kBrushless);
-        this.intakeMover = new DoubleSolenoid(20, PneumaticsModuleType.REVPH, intakeForwardChannel, intakeReverseChannel);
+  public void stopIntake() {
+    myIntake.set(0);
+  }
 
-        intake.setSmartCurrentLimit(20);
-
-        intake.setInverted(true);
-    }
-
-    // motor speed
-    public void run(double speed) {
-        intake.set(speed);
-    }
-
-    public void intakeIn() {
-        isIntakeOut = false;
-        intakeMover.set(DoubleSolenoid.Value.kForward);
-    }
-
-    public void intakeOut() {
-        isIntakeOut = true;
-        intakeMover.set(DoubleSolenoid.Value.kReverse);
-    }
-
-    public boolean getIsIntakeOut() {
-        return isIntakeOut;
-    }
-
-    @Override
-    public void periodic() {
-    }
-
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
 }

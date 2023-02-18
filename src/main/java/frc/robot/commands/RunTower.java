@@ -5,35 +5,39 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Tower;
 
-public class AutoSetShoot extends CommandBase {
-  private final Shooter shooter = Shooter.getInstance();
+public class RunTower extends CommandBase {
+  private Tower myTower;
+  private final DriverControl drive;
+  /** Creates a new RunTower. */
+  public RunTower() {
+    myTower = Tower.getInstance();
+    drive = DriverControl.getInstance();
 
-  /** Creates a new AutoSetShoot. */
-  public AutoSetShoot() {
-
-    addRequirements(shooter);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double shootGoal = shooter.getShootGoal();
-    shooter.setVelocity(shootGoal);
+    if(drive.getRightBumper()) {
+      myTower.runTower(1.0);
+      if(drive.getBButton()) {
+        myTower.runTower(-1.0);
+      }
+    } else {
+      myTower.stopTower();
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    shooter.setPower(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
