@@ -6,7 +6,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.CANIds.*;
-import com.revrobotics.CANSparkMax;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
@@ -27,7 +28,7 @@ public class Shooter extends SubsystemBase {
     myShooterFollow.follow(myShooterLead);
   }
 
-  public void myShooterLead(double speed) {
+  public void runShooter(double speed) {
     myShooterLead.set(speed);
   }
 

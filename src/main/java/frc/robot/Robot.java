@@ -20,7 +20,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  private AutoChooser m_autoChooser;
 
   private DriveTrain m_driveTrain;
 
@@ -34,7 +33,6 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    m_autoChooser = new AutoChooser(m_robotContainer);
 
     m_driveTrain = new DriveTrain();
   }
@@ -63,7 +61,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    m_autoChooser.periodic();
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
@@ -72,7 +69,6 @@ public class Robot extends TimedRobot {
 
     m_driveTrain.brakeMode();
 
-   m_autonomousCommand = m_autoChooser.getCommand();
 
    m_robotContainer.getDriveTrain().brakeMode();
    m_robotContainer.getDriveTrain().resetEncPos();

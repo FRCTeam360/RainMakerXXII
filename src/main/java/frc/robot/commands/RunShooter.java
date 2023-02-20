@@ -6,16 +6,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.operatorInterface.DriverControl;
-import frc.robot.subsystems.Tower;
+import frc.robot.subsystems.Shooter;
 
-public class RunTower extends CommandBase {
-  private Tower myTower;
-  private final DriverControl drive;
-  /** Creates a new RunTower. */
-  public RunTower() {
-    myTower = Tower.getInstance();
+public class RunShooter extends CommandBase {
+  private Shooter myShooter;
+  public final DriverControl drive;
+
+  /** Creates a new RunShooter. */
+  public RunShooter() {
+    myShooter = Shooter.getInstance();
     drive = DriverControl.getInstance();
-
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -26,13 +26,13 @@ public class RunTower extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(drive.getRightBumper()) {
-      myTower.runTower(1.0);
-      if(drive.getBButton()) {
-        myTower.runTower(-1.0);
+    if(drive.getRightTrigger()) {
+      myShooter.runShooter(1.0);
+      if(drive.getXButton()) {
+        myShooter.runShooter(-1.0);
       }
     } else {
-      myTower.stopTower();
+      myShooter.stopShooter();
     }
   }
 

@@ -30,12 +30,10 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.CANIds.*;
 
 import frc.robot.commands.*;
-import frc.robot.commands.autos.TestingGroup.Test;
 import frc.robot.operatorInterface.DriverControl;
 import frc.robot.operatorInterface.OperatorControl;
 import frc.robot.subsystems.*;
 import frc.robot.operatorInterface.OperatorControl;
-import frc.robot.commands.TurretAuto;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -66,17 +64,10 @@ public class RobotContainer {
   private final Pneumatics pneumatics = new Pneumatics();
   private final Climber climber = new Climber();
 
-  private final ShooterJoy shooterJoy = new ShooterJoy();
-  private final SetShoot setShoot = new SetShoot(limelight);
   public final RunFeeder runFeeder = new RunFeeder();
   public final RunIntake runIntake = new RunIntake();
-  private final TankDrive tankDrive = new TankDrive(driveTrain);
-  private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveTrain);
-  private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive(driveTrain);
-  private final RunClimberManual runClimberManual = new RunClimberManual(climber);
-  private final TurretAuto turretAuto = new TurretAuto(limelight, turret);
-  private final TurretManual turretManual = new TurretManual(driveTrain);
-  private final Pressurize pressurize = new Pressurize(pneumatics);
+  public final RunShooter runShooter = new RunShooter();
+  public final RunTower runTower = new RunTower();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -89,13 +80,10 @@ public class RobotContainer {
 
   // scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
-    tower.setDefaultCommand(runFeeder);
+    tower.setDefaultCommand(runTower);
     feeder.setDefaultCommand(runFeeder);
     intake.setDefaultCommand(runIntake);
-    shooter.setDefaultCommand(setShoot);
-    driveTrain.setDefaultCommand(fieldOrientedDrive);
-    pneumatics.setDefaultCommand(pressurize);
-    turret.setDefaultCommand(turretManual);
+    shooter.setDefaultCommand(runShooter);
 
   }
 
@@ -107,12 +95,6 @@ public class RobotContainer {
    */
 
   private void configureButtonBindings() {
-    new JoystickButton(driverCont, 2).whenPressed(fieldOrientedDrive);
-    new JoystickButton(driverCont, 8).whenPressed(tankDrive);
-    new JoystickButton(driverCont, 4).whenPressed(arcadeDrive);
-    new JoystickButton(operatorCont, 7).whenHeld(shooterJoy);
-    new JoystickButton(operatorCont, 8).whenHeld(turretAuto);
-    new JoystickButton(operatorCont, 10).whileHeld(runClimberManual);
   }
 
   public DriveTrain getDriveTrain() {

@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.CANIds.*;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Feeder extends SubsystemBase {
   /** Creates a new Feeder. */
@@ -29,7 +30,6 @@ public class Feeder extends SubsystemBase {
   public void stopFeeder() {
     myFeeder.set(0);
   }
-}
 
   @Override
   public void periodic() {
