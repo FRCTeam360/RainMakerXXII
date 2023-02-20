@@ -20,7 +20,7 @@ public class Feeder extends SubsystemBase {
     return instance;
   }
   private Feeder() {
-    myFeeder = new CANSparkMax(feederId, MotorType.kBrushless);
+    this.myFeeder = new CANSparkMax(feederId, MotorType.kBrushless);
    }
   
   public void runFeeder(double speed) {
@@ -28,7 +28,7 @@ public class Feeder extends SubsystemBase {
   }
   
   public void stopFeeder() {
-    myFeeder.set(0);
+    myFeeder.set(0.0);
   }
 
   @Override
