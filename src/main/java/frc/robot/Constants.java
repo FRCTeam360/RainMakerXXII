@@ -45,7 +45,7 @@ public final class Constants {
         //public static final int motorRLeadID = 4;
         //public static final int motorRFollow1ID = 5;
         //public static final int motorRFollow2ID = 6;
-        //public static final int turretMotorID = 11;
+        public static final int turretMotorID = 11;
         public static final int shooterLeadId = 7;
         public static final int shooterFollowId = 9;
         public static final int intakeId = 10;

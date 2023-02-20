@@ -4,12 +4,33 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import frc.robot.Constants.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Turret extends SubsystemBase {
+  private static Turret instance;
+  /** Creates a new Intake. */
+  private CANSparkMax myTurret;
+  public static Turret getInstance(){
+    if(instance == null) {
+      instance = new Turret();
+    }
+    return instance;
+  }
   /** Creates a new Turret. */
-  public Turret() {}
+  private Turret() {
+    myTurret = new CANSparkMax(CANIds.turretId, MotorType.kBrushless);
+  
+  }
+  public void runTurret(double speed) {
+    myTurret.set(speed);
+  }
 
+  public void stopTurret() {
+    myTurret.set(0);
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
