@@ -4,61 +4,40 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.DigitalInput;
-
+import com.ctre.phoenix.motorcontrol.MotorCommutation;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import static frc.robot.Constants.CANIds.*;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import static frc.robot.Constants.DigitalInputPorts.*;
+import edu.wpi.first.wpilibj.CAN;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Feeder extends SubsystemBase {
-
-  private CANSparkMax feeder;
-
+  private CANSparkMax motor;
   private static Feeder instance;
-  
-  final DigitalInput sensor = new DigitalInput(feederSensor);
+  /** Creates a new Feeder. */
+  public Feeder() {
+    motor = new CANSparkMax (feederId, MotorType.kBrushless);
+  }
 
-  private Feeder() {
+  public void runFeeder(double speed){
+    motor.set(speed);
+  }
 
-    feeder = new CANSparkMax(feederId, MotorType.kBrushless);
+  public void stopFeeder(){
+    motor.set(0);
+  }
 
-    feeder.setIdleMode(IdleMode.kBrake);
-
-    feeder.setInverted(true);
-
-    feeder.setSmartCurrentLimit(20);
-
-  } 
-
-  /**
-   * Gets the Singleton Feeder instance
-   * 
-   * @return the Singleton Feeder instance
-   */
   public static Feeder getInstance() {
-    if (instance == null) { 
+    if(instance == null){
       instance = new Feeder();
     }
     return instance;
   }
 
-  public void runFeeder(double speed) {
-    feeder.set(speed);
-  }
-
-  public boolean ballInFeeder(){
-    return !sensor.get();
-  }
-  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Feeder Temp", feeder.getMotorTemperature());
   }
-}
+} 

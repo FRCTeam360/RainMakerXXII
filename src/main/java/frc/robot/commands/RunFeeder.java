@@ -2,106 +2,46 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-//used to be named RunFeeder.java 
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Tower;
+import frc.robot.operatorInterface.DriverControl;
 import frc.robot.subsystems.Feeder;
-import frc.robot.subsystems.Shooter;
-import frc.robot.operatorInterface.*;
 
 public class RunFeeder extends CommandBase {
-
-  private final Tower myTower;
-  private final Feeder myFeeder;
-  private final Shooter myShooter;
-  private final OperatorControl operatorCont;
-  private final DriverControl driverCont;
-
-  private double towerPower = 0;
-  private double feederPower = 0;
-
+  private Feeder feeder;
+  private final DriverControl drive;
+  /** Creates a new RunFeeder. */
   public RunFeeder() {
-    operatorCont = OperatorControl.getInstance();
-    driverCont = DriverControl.getInstance();
-
-    myShooter = Shooter.getInstance();
-    myTower = Tower.getInstance();
-    myFeeder = Feeder.getInstance();
-
-    addRequirements(myTower, myFeeder);
-
+    feeder = Feeder.getInstance();
+    drive = DriverControl.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(feeder);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    // if shooter at speed, run all
-    // if (myShooter.isAtSpeed()) {
-    //   towerPower = 1.0;
-    //   feederPower = 1.0;
-
-      // if intake running, run shooter if no ball at top of tower
-    // } else {
-
-      if(operatorCont.getLeftBumper() || driverCont.getLeftBumper() || operatorCont.getRightBumper() || driverCont.getRightBumper()) {
-
-      // manually run feeder
-      if (operatorCont.getLeftBumper() || driverCont.getLeftBumper()) {
-        if (operatorCont.getXButton() || driverCont.getXButton()) {
-          feederPower = -1.0;
-        } else {
-          feederPower = 0.5;
-        }
-      } else {
-        feederPower = 0.0;
+    if(drive.getLeftTrigger()) {
+      feeder.runFeeder(1.0);
+      if(drive.getYButton()){
+        feeder.runFeeder(-1.0);
       }
-
-      // manually run tower;
-      if (operatorCont.getRightBumper() || driverCont.getRightBumper()) {
-        if (operatorCont.getXButton() || driverCont.getXButton()) {
-          towerPower = -1.0;
-        } else {
-          towerPower = 1.0;
-        }
-      } else {
-        towerPower = 0;
-
-      }
-    } else if (driverCont.getLeftTrigger() || operatorCont.getLeftTrigger()) {
-      if (myTower.ballNotInBottom()) {
-        towerPower = 1.0;
-        feederPower = 1.0;
-      } else {
-        towerPower = 0.0;
-        feederPower = 0.0;
-      }
-  } else {
-    towerPower = 0;
-    feederPower = 0;
+    } else{
+      feeder.stopFeeder();
+    }
   }
 
-    myTower.runTower(towerPower);
-    myFeeder.runFeeder(feederPower);
-  }
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
-
   @Override
-  public void end(boolean interrupted) {
-    myTower.runTower(0.0);
-    myFeeder.runFeeder(0.0);
-  }
-
   public boolean isFinished() {
     return false;
   }

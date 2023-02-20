@@ -5,13 +5,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.*;
+import frc.robot.operatorInterface.DriverControl;
+import frc.robot.subsystems.Shooter;
 
-public class ReverseIntake extends CommandBase {
-  private final Intake intake = Intake.getInstance();
-  /** Creates a new ReverseIntake. */
-  public ReverseIntake() {
+public class RunShooter extends CommandBase {
+  private Shooter shooter;
+  private final DriverControl drive;
+  /** Creates a new RunFeeder. */
+  public RunShooter() {
+    shooter = Shooter.getInstance();
+    drive = DriverControl.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -21,7 +26,14 @@ public class ReverseIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.run(-1);
+    if(drive.getRightTrigger()) {
+      shooter.runShooterLead(1.0);
+      if(drive.getBButton()){
+        shooter.runShooterLead(-1.0);
+      }
+    } else{
+      shooter.stopShooterLead();
+    }
   }
 
   // Called once the command ends or is interrupted.

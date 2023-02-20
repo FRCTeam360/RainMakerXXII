@@ -30,7 +30,6 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.CANIds.*;
 
 import frc.robot.commands.*;
-import frc.robot.commands.autos.TestingGroup.Test;
 import frc.robot.operatorInterface.DriverControl;
 import frc.robot.operatorInterface.OperatorControl;
 import frc.robot.subsystems.*;
@@ -56,31 +55,16 @@ public class RobotContainer {
 
   private final Turret turret = Turret.getInstance();
   private final Shooter shooter = Shooter.getInstance();
-  private final DriveTrain driveTrain = DriveTrain.getInstance();
   private final Feeder feeder = Feeder.getInstance();
   private final Intake intake = Intake.getInstance();
   private final Limelight limelight = Limelight.getInstance();
   private final Tower tower = Tower.getInstance();
   private final Pneumatics pneumatics = new Pneumatics();
   private final Climber climber = new Climber();
-
-  private final ShooterTesting shooterTesting = new ShooterTesting();
-  private final ShooterJoy shooterJoy = new ShooterJoy();
-  private final SetShoot setShoot = new SetShoot(limelight);
   public final RunFeeder runFeeder = new RunFeeder();
   public final RunIntake runIntake = new RunIntake();
-  private final TankDrive tankDrive = new TankDrive();
-  private final ArcadeDrive arcadeDrive = new ArcadeDrive();
-  private final FieldOrientedDrive fieldOrientedDrive = new FieldOrientedDrive();
-  private final RunClimberManual runClimberManual = new RunClimberManual(climber);
-  private final TurretAuto turretAuto = new TurretAuto(limelight, turret);
-  private final TurretManual turretManual = new TurretManual();
-  private final Pressurize pressurize = new Pressurize(pneumatics);
-  private final RunFeederManually runFeederManually = new RunFeederManually();
-  private final RunTowerManually runTowerManually = new RunTowerManually();
-  private final ManualSetShoot manualSetShoot = new ManualSetShoot();
-
-  private final QueueBalls queueCargo = new QueueBalls(true);
+  public final RunShooter runShooter = new RunShooter();
+  public final RunTower runTower = new RunTower();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -95,11 +79,10 @@ public class RobotContainer {
   private void configureDefaultCommands() {
     // tower.setDefaultCommand(queueCargo);
     // feeder.setDefaultCommand(queueCargo);
+    feeder.setDefaultCommand(runFeeder);
     intake.setDefaultCommand(runIntake);
-    shooter.setDefaultCommand(setShoot);
-    driveTrain.setDefaultCommand(fieldOrientedDrive);
-    pneumatics.setDefaultCommand(pressurize);
-    turret.setDefaultCommand(turretAuto);
+    shooter.setDefaultCommand(runShooter);
+    tower.setDefaultCommand(runTower);
   }
 
   /**
@@ -110,22 +93,6 @@ public class RobotContainer {
    */
 
   private void configureButtonBindings() {
-    new JoystickButton(driverCont, 2).whenPressed(fieldOrientedDrive);
-    new JoystickButton(driverCont, 8).whileHeld(tankDrive);
-    new JoystickButton(driverCont, 4).whenPressed(arcadeDrive);
-    new JoystickButton(operatorCont, 7).whenHeld(manualSetShoot);
-    new JoystickButton(operatorCont, 8).whenHeld(turretManual);
-    new JoystickButton(operatorCont, 10).whileHeld(runClimberManual);
-    new JoystickButton(driverCont, 5).whileHeld(runFeederManually);
-    new JoystickButton(operatorCont, 5).whileHeld(runFeederManually);
-    new JoystickButton(driverCont, 6).whileHeld(runTowerManually);
-    new JoystickButton(operatorCont, 6).whileHeld(runTowerManually);
-    new JoystickButton(operatorCont, 4).whileHeld(queueCargo);
-    new JoystickButton(operatorCont, 9).whileHeld(manualSetShoot);
-  }
-
-  public DriveTrain getDriveTrain() {
-    return driveTrain;
   }
 
   /**

@@ -1,81 +1,44 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.operatorInterface.DriverControl;
 import frc.robot.subsystems.Intake;
-import frc.robot.operatorInterface.*;
 
 public class RunIntake extends CommandBase {
-  
-  private final Intake myIntake;
-  private final DriverControl driverCont;
-  private final OperatorControl operatorCont;
-
-  public boolean isIntakeOut = false;
-
+  private Intake intake;
+  private final DriverControl drive;
+  /** Creates a new RunIntake. */
   public RunIntake() {
-    driverCont = DriverControl.getInstance();
-    operatorCont = OperatorControl.getInstance();
-    myIntake = Intake.getInstance(); 
-    addRequirements(myIntake);
+    intake = Intake.getInstance();
+    drive = DriverControl.getInstance();
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    // myIntake.intakeIn();
-    // isIntakeOut = false;
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (driverCont.getLeftTrigger() || operatorCont.getLeftTrigger()){
-      if (operatorCont.getXButton() || driverCont.getXButton() ) {
-        myIntake.run(-1.0);
-      } else {
-        myIntake.run(1.0); 
+    if(drive.getLeftBumper()) {
+      intake.runIntake(1.0);
+      if(drive.getXButton()){
+        intake.runIntake(-1.0);
       }
-    } else {
-      myIntake.run(0.0); 
+    } else{
+      intake.stopIntake();
     }
-
-    // if(driverCont.getAButtonPressed() || operatorCont.getAButtonPressed()) {
-    //   if(isIntakeOut){
-    //     myIntake.intakeIn();
-    //     isIntakeOut = false;
-    //   } else {
-    //     myIntake.intakeOut();
-    //     isIntakeOut = true;
-    //   }
-
-    if(driverCont.getAButtonPressed() || operatorCont.getAButtonPressed()) {
-      myIntake.intakeOut();
-      isIntakeOut = true;
-    }
-
-    if(driverCont.getBButtonPressed() || operatorCont.getBButtonPressed()) {
-      myIntake.intakeIn();
-      isIntakeOut = false;
-    }
-    // }
-
-    SmartDashboard.putBoolean("intake out", isIntakeOut);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    myIntake.run(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
