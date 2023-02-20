@@ -5,40 +5,36 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.operatorInterface.DriverControl;
 import frc.robot.subsystems.Feeder;
 
-public class RunFeeder extends CommandBase {
-  private Feeder myFeeder;
-  public final DriverControl drive;
-  /** Creates a new Feeder. */
-  public RunFeeder() {
-    myFeeder = Feeder.getInstance();
-    drive = DriverControl.getInstance();
+public class RunFeederSpeed extends CommandBase {
+  private double speed;
+  private Feeder mFeeder = Feeder.getInstance();
+  
+  /** Creates a new RunFeederSpeed. */
+  public RunFeederSpeed(double speed) {
+    this.speed = speed;
+    addRequirements( mFeeder);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(myFeeder);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(drive.getLeftTrigger()) {
-      myFeeder.runFeeder(1.0);
-      if(drive.getAButton()){
-        myFeeder.runFeeder(-1.0);
-      }
-    }else{
-      myFeeder.stopFeeder();
-    }
+    mFeeder.runFeeder(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    mFeeder.stopFeeder();
+  }
 
   // Returns true when the command should end.
   @Override

@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.Constants.OIConstants;
@@ -49,26 +50,33 @@ import frc.robot.subsystems.*;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-
+  private final CommandXboxController cmdDriverCont = new CommandXboxController(OIConstants.driverContPort);
   private final DriverControl driverCont = DriverControl.getInstance();
   private final OperatorControl operatorCont = OperatorControl.getInstance();
   // The robot's subsystems and commands are defined here...
 
-  private final Turret turret = Turret.getInstance();
   private final Shooter shooter = Shooter.getInstance();
-  private final DriveTrain driveTrain = new DriveTrain();
   private final Feeder feeder = Feeder.getInstance();
   private final Intake intake = Intake.getInstance();
   private final Limelight limelight = Limelight.getInstance();
   private final Tower tower = Tower.getInstance();
   private final Pneumatics pneumatics = new Pneumatics();
-  private final Climber climber = new Climber();
 
   public final RunFeeder runFeeder = new RunFeeder();
   public final RunIntake runIntake = new RunIntake();
   public final RunShooter runShooter = new RunShooter();
   public final RunTower runTower = new RunTower();
-
+  
+  private void configureButtonBindings(){
+  cmdDriverCont.leftBumper().and(cmdDriverCont.a().negate()).whileTrue(new RunIntakeSpeed(1.0));
+  cmdDriverCont.leftBumper().and(cmdDriverCont.a().negate()).whileTrue(new RunFeederSpeed(1.0));
+  cmdDriverCont.leftBumper().and(cmdDriverCont.a().negate()).whileTrue(new RunTowerSpeed(1.0));
+  cmdDriverCont.leftBumper().and(cmdDriverCont.a().negate()).whileTrue(new RunShooterSpeed(1.0));
+  cmdDriverCont.leftBumper().and(cmdDriverCont.a()).whileTrue(new RunIntakeSpeed(-1.0));
+  cmdDriverCont.leftBumper().and(cmdDriverCont.a()).whileTrue(new RunFeederSpeed(-1.0));
+  cmdDriverCont.leftBumper().and(cmdDriverCont.a()).whileTrue(new RunTowerSpeed(-1.0));
+  cmdDriverCont.leftBumper().and(cmdDriverCont.a()).whileTrue(new RunShooterSpeed(-1.0));
+  }
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -82,7 +90,7 @@ public class RobotContainer {
   private void configureDefaultCommands() {
     tower.setDefaultCommand(runTower);
     feeder.setDefaultCommand(runFeeder);
-    intake.setDefaultCommand(runIntake);
+    //intake.setDefaultCommand(runIntake);//
     shooter.setDefaultCommand(runShooter);
 
   }
@@ -94,12 +102,6 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
 
-  private void configureButtonBindings() {
-  }
-
-  public DriveTrain getDriveTrain() {
-    return driveTrain;
-  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -11,12 +11,12 @@ import frc.robot.subsystems.Shooter;
 public class RunShooter extends CommandBase {
   private Shooter myShooter;
   public final DriverControl drive;
-
-  /** Creates a new RunShooter. */
+  /** Creates a new Tower. */
   public RunShooter() {
     myShooter = Shooter.getInstance();
     drive = DriverControl.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(myShooter);
   }
 
   // Called when the command is initially scheduled.
@@ -26,12 +26,12 @@ public class RunShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(drive.getRightTrigger()) {
+    if(drive.getLeftBumper()) {
       myShooter.runShooter(1.0);
-      if(drive.getXButton()) {
+      if(drive.getAButton()){
         myShooter.runShooter(-1.0);
       }
-    } else {
+    }else{
       myShooter.stopShooter();
     }
   }

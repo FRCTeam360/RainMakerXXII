@@ -10,13 +10,13 @@ import frc.robot.subsystems.Tower;
 
 public class RunTower extends CommandBase {
   private Tower myTower;
-  private final DriverControl drive;
-  /** Creates a new RunTower. */
+  public final DriverControl drive;
+  /** Creates a new Tower. */
   public RunTower() {
     myTower = Tower.getInstance();
     drive = DriverControl.getInstance();
-
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(myTower);
   }
 
   // Called when the command is initially scheduled.
@@ -25,15 +25,16 @@ public class RunTower extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    if(drive.getRightBumper()) {
-      myTower.runTower(1.0);
-      if(drive.getBButton()) {
-        myTower.runTower(-1.0);
+    public void execute() {
+      if(drive.getLeftBumper()) {
+        myTower.runTower(1.0);
+        if(drive.getAButton()){
+          myTower.runTower(-1.0);
+        }
+      }else{
+        myTower.stopTower();
       }
-    } else {
-      myTower.stopTower();
-    }
+  
   }
 
   // Called once the command ends or is interrupted.

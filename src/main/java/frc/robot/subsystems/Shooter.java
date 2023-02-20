@@ -26,6 +26,7 @@ public class Shooter extends SubsystemBase {
     myShooterLead.configFactoryDefault();
     myShooterFollow.configFactoryDefault();
     myShooterFollow.follow(myShooterLead);
+    myShooterFollow.setInverted(true);
   }
 
   public void runShooter(double speed) {

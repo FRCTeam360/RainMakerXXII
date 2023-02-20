@@ -10,13 +10,13 @@ import frc.robot.subsystems.Intake;
 
 public class RunIntake extends CommandBase {
   private Intake myIntake;
-  private final DriverControl drive;
-
-  /** Creates a new RunIntake. */
+  public final DriverControl drive;
+  /** Creates a new runIntake. */
   public RunIntake() {
     myIntake = Intake.getInstance();
     drive = DriverControl.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(myIntake);
   }
 
   // Called when the command is initially scheduled.
@@ -31,7 +31,7 @@ public class RunIntake extends CommandBase {
       if(drive.getAButton()){
         myIntake.runIntake(-1.0);
       }
-    } else {
+    }else{
       myIntake.stopIntake();
     }
 

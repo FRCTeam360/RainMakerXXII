@@ -25,6 +25,5 @@
       }
     },
   ],
-  "java.test.defaultConfig": "WPIlibUnitTests",
-  "wpilib.deployOffline": true
+  "java.test.defaultConfig": "WPIlibUnitTests"
 }

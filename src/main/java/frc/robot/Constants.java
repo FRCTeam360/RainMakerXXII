@@ -39,20 +39,20 @@ public final class Constants {
     }
 
     public static final class CANIds{
-        public static final int motorLLeadID = 1;
-        public static final int motorLFollow1ID = 2;
-        public static final int motorLFollow2ID = 3;
-        public static final int motorRLeadID = 4;
-        public static final int motorRFollow1ID = 5;
-        public static final int motorRFollow2ID = 6;
-        public static final int turretMotorID = 11;
+        //public static final int motorLLeadID = 1;
+        //public static final int motorLFollow1ID = 2;
+        //public static final int motorLFollow2ID = 3;
+        //public static final int motorRLeadID = 4;
+        //public static final int motorRFollow1ID = 5;
+        //public static final int motorRFollow2ID = 6;
+        //public static final int turretMotorID = 11;
         public static final int shooterLeadId = 7;
         public static final int shooterFollowId = 9;
         public static final int intakeId = 10;
         public static final int feederId = 12;
         public static final int towerId = 8;
-        public static final int climbLeftId = 13;
-        public static final int climbRightId = 14;
+        //public static final int climbLeftId = 13;
+        //public static final int climbRightId = 14;
     }
 
     public static final class OIConstants {
