@@ -4,13 +4,19 @@
 
 package frc.robot.commands;
 
+import frc.robot.operatorInterface.DriverControl;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.*;
 
-public class ReverseIntake extends CommandBase {
-  private final Intake intake = Intake.getInstance();
-  /** Creates a new ReverseIntake. */
-  public ReverseIntake() {
+public class RunShooter extends CommandBase {
+  private Shooter motor;
+  public final DriverControl drive;
+  /** Creates a new runintake. */
+  public RunShooter() {
+    motor = Shooter.getInstance();
+    drive = DriverControl.getInstance();
+    addRequirements(motor);
+
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -21,7 +27,14 @@ public class ReverseIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.run(-1);
+    if (drive.getLeftBumper()){
+      motor.runShooterLead(1.0);
+      if(drive.getBButton()){
+      motor.runShooterLead(-1.0);
+      }
+    } else {
+      motor.stopShooterLead();
+    }
   }
 
   // Called once the command ends or is interrupted.

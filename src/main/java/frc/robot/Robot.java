@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.TakeSnapshots;
 import frc.robot.subsystems.*;
 
 /**
@@ -21,7 +20,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  private AutoChooser m_autoChooser;
+  // private AutoChooser m_autoChooser;
 
   private DriveTrain m_driveTrain;
 
@@ -37,7 +36,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    m_autoChooser = new AutoChooser(m_robotContainer);
+    // m_autoChooser = new AutoChooser(m_robotContainer);
 
     m_driveTrain = DriveTrain.getInstance();
     
@@ -80,10 +79,9 @@ public class Robot extends TimedRobot {
 
     m_cargoCounter.resetAll();
 
-   m_autonomousCommand = m_autoChooser.getCommand();
+   m_autonomousCommand = null;
 
   //  m_robotContainer.getDriveTrain().brakeMode();
-   m_robotContainer.getDriveTrain().resetEncPos();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

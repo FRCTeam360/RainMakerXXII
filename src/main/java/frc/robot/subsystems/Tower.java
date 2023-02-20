@@ -5,151 +5,33 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import static frc.robot.Constants.CANIds.*;
-import static frc.robot.Constants.DigitalInputPorts.*;
-
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.MotorCommutation;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+import static frc.robot.Constants.CANIds.*;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 
+/** Add your docs here. */
 public class Tower extends SubsystemBase {
-
-  DigitalInput topSensor;
-  DigitalInput bottomSensor;
-  static Tower instance;
-
-  private CANSparkMax tower;
-  private Tower pastTowerState;
-  private boolean pastBallState = false;
-  private BallTrackingState ballTrackingState = BallTrackingState.BOTTOM;
-  private boolean pastBallInTop = false, pastBallInBottom = false;
-
-  private CargoCounter mCargoCounter = CargoCounter.getInstance();
-
-  private enum BallTrackingState {
-    NO_BALL, BOTTOM, SHOOTING_ZONE
+  private static Tower instance;
+  private CANSparkMax motor;
+  // Put methods for controlling this subsystem
+  // here. Call these from Commands.
+  public Tower(){
+    motor = new CANSparkMax(10,MotorType.kBrushless);
   }
-
-  private Tower() {
-
-    topSensor = new DigitalInput(topTowerSensor);
-    bottomSensor = new DigitalInput(bottomTowerSensor);
-
-    tower = new CANSparkMax(towerId, MotorType.kBrushless);
-
-    tower.setIdleMode(IdleMode.kBrake);
-
-    tower.setInverted(false);
-
-    tower.setSmartCurrentLimit(20);
-
-  }
-
-  public static Tower getInstance() {
-    if (instance == null) {
+  public static Tower getInstance(){
+    if(instance==null){
       instance = new Tower();
     }
     return instance;
   }
-
-  public void runTower(double speed) {
-    tower.set(speed);
+  public void runTower(double speed){
+    motor.set(speed);
   }
-
-  public boolean ballNotInBottom() {
-    return bottomSensor.get();
-  }
-
-  public boolean ballInBottom() {
-    return !bottomSensor.get();
-  }
-
-  public boolean ballInTop() {
-    return !topSensor.get();
-  }
-
-  public void trackShots() {
-    switch (this.ballTrackingState) {
-      case NO_BALL:
-        this.trackNoBall();
-        break;
-      case BOTTOM:
-        this.trackBallInBottom();
-        break;
-      case SHOOTING_ZONE:
-        this.trackBallInShootingZone();
-        break;
-      default:
-    }
-    this.setPastBallInBottom();
-    this.setPastBallInTop();
-  }
-
-  public double getMotorSpeed() {
-    return this.tower.getEncoder().getVelocity();
-  }
-
-  private boolean isRisingEdgeTop() {
-    return ballInTop() && !this.pastBallInTop;
-  }
-  
-  private boolean isFallingEdgeTop() {
-    return !ballInTop() && this.pastBallInTop;
-  }
-
-  private boolean isRisingEdgeBottom() {
-    return ballInBottom() && !this.pastBallInBottom;
-  }
-  
-  private boolean isFallingEdgeBottom() {
-    return !ballInBottom() && this.pastBallInBottom;
-  }
-
-  private void setPastBallInTop() {
-    this.pastBallInTop = this.ballInTop();
-  }
-
-  private void setPastBallInBottom() {
-    this.pastBallInBottom = this.ballInBottom();
-  }
-
-  private void trackNoBall(){
-    if(ballInBottom()){
-      this.ballTrackingState = BallTrackingState.BOTTOM;
-    }
-  }
-
-  private void trackBallInBottom(){
-    double motorSpeed = this.getMotorSpeed();
-    boolean isFallingEdgeBottom = this.isFallingEdgeBottom();
-    if(isFallingEdgeBottom && motorSpeed > 0){
-      this.ballTrackingState = BallTrackingState.SHOOTING_ZONE;
-    }else if(isFallingEdgeBottom && motorSpeed < 0){
-      this.ballTrackingState = BallTrackingState.NO_BALL;
-    }
-  }
-
-  private void trackBallInShootingZone(){
-    double motorSpeed = this.getMotorSpeed();
-    boolean isFallingEdgeTop = this.isFallingEdgeTop();
-    if(isFallingEdgeTop && motorSpeed >= 0){
-      this.ballTrackingState = BallTrackingState.NO_BALL;
-      this.mCargoCounter.incrementShootCount();
-    } 
-  }
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    // SmartDashboard.putNumber("Tower Temp", tower.getMotorTemperature());
-    SmartDashboard.putBoolean("Top Sensor", topSensor.get());
-    SmartDashboard.putBoolean("Bottom Sensor", bottomSensor.get());
-    SmartDashboard.putString("Tracking State", this.ballTrackingState.toString());
-    // SmartDashboard.putNumber("Motor Speed", this.getMotorSpeed());
-
-    this.trackShots();
+  public void stopTower(double speed){
+    motor.set(0);
   }
 }

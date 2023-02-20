@@ -4,15 +4,20 @@
 
 package frc.robot.commands;
 
+import frc.robot.operatorInterface.DriverControl;
+import frc.robot.subsystems.Tower;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Shooter;
 
-public class SpitBalls extends CommandBase {
-  private final Shooter shooter = Shooter.getInstance();
-  /** Creates a new SpitBalls. */
-  public SpitBalls() {
+public class RunTower extends CommandBase {
+  private Tower motor;
+  public final DriverControl drive;
+  /** Creates a new runintake. */
+  public RunTower() {
+    motor = Tower.getInstance();
+    drive = DriverControl.getInstance();
+    addRequirements(motor);
+
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -22,7 +27,14 @@ public class SpitBalls extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setVelocity(600);
+    if (drive.getLeftBumper()){
+      motor.runTower(1.0);
+      if(drive.getBButton()){
+      motor.runTower(-1.0);
+      }
+    } else {
+      motor.stopTower(0);
+    }
   }
 
   // Called once the command ends or is interrupted.
