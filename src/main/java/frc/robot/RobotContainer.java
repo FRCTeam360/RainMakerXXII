@@ -61,6 +61,7 @@ public class RobotContainer {
   private final Limelight limelight = Limelight.getInstance();
   private final Tower tower = Tower.getInstance();
   private final Pneumatics pneumatics = new Pneumatics();
+  private final Turret turret = Turret.getInstance();
 
   public final RunFeeder runFeeder = new RunFeeder();
   public final RunIntake runIntake = new RunIntake();
@@ -79,7 +80,9 @@ public class RobotContainer {
 
     cmdDriverCont.rightBumper().and(cmdDriverCont.b().negate()).whileTrue(new RunIntakePneumatics(false));
     cmdDriverCont.rightBumper().and(cmdDriverCont.b()).whileTrue(new RunIntakePneumatics(true));
-  }
+
+    
+  } 
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -92,10 +95,11 @@ public class RobotContainer {
 
   // scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
-    tower.setDefaultCommand(runTower);
-    feeder.setDefaultCommand(runFeeder);
+    // tower.setDefaultCommand(runTower);
+    // feeder.setDefaultCommand(runFeeder);
     // intake.setDefaultCommand(runIntake);//
-    shooter.setDefaultCommand(runShooter);
+    //shooter.setDefaultCommand(runShooter);
+    turret.setDefaultCommand(new RunTurretSpeed(() -> cmdDriverCont.getHID().getLeftX()));
 
   }
 
