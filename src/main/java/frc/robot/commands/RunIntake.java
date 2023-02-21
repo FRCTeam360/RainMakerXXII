@@ -29,7 +29,7 @@ public class RunIntake extends CommandBase {
   public void execute() {
     if (drive.getLeftBumper()){
       motor.runIntake(1.0);
-      if(drive.getYButton()){
+      if(drive.getXButton()){
       motor.runIntake(-1.0);
       }
     } else {

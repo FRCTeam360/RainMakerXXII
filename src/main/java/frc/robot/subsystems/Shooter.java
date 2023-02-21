@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
         motorLead.configFactoryDefault();
         motorFollow.configFactoryDefault();
         motorFollow.follow(motorLead);
+        motorFollow.setInverted(true);
       }
       public void runShooterLead(double speed){
         motorLead.set(speed);

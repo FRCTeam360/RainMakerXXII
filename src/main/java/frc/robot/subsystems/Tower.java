@@ -20,7 +20,7 @@ public class Tower extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public Tower(){
-    motor = new CANSparkMax(10,MotorType.kBrushless);
+    motor = new CANSparkMax(towerId,MotorType.kBrushless);
   }
   public static Tower getInstance(){
     if(instance==null){

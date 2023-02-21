@@ -29,7 +29,7 @@ public class RunTower extends CommandBase {
   public void execute() {
     if (drive.getLeftBumper()){
       motor.runTower(1.0);
-      if(drive.getBButton()){
+      if(drive.getXButton()){
       motor.runTower(-1.0);
       }
     } else {

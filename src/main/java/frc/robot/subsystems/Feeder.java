@@ -8,12 +8,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
+import frc.robot.Constants.*;
+
 public class Feeder extends SubsystemBase {
   private CANSparkMax motor;
   private static Feeder instance;
   /** Creates a new Feeder. */
   public Feeder() {
-    motor = new CANSparkMax(10,MotorType.kBrushless);
+    motor = new CANSparkMax(CANIds.feederId,MotorType.kBrushless);
   }
   public static Feeder getInstance(){
     if(instance==null){

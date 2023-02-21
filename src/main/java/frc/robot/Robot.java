@@ -22,8 +22,6 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
   // private AutoChooser m_autoChooser;
 
-  private DriveTrain m_driveTrain;
-
   private CargoCounter m_cargoCounter;
 
   /**
@@ -37,8 +35,6 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     // m_autoChooser = new AutoChooser(m_robotContainer);
-
-    m_driveTrain = DriveTrain.getInstance();
     
     m_cargoCounter = CargoCounter.getInstance();
 
@@ -64,7 +60,6 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    m_driveTrain.coastMode();
     m_cargoCounter.resetAll();
   }
 
@@ -101,12 +96,7 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
 
-    m_driveTrain.coastMode();
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
-
-    m_driveTrain.implementOffset();
+ 
 
   }
 

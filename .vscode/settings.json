@@ -25,11 +25,5 @@
       }
     },
   ],
-  "java.test.defaultConfig": "WPIlibUnitTests",
-  "wpilib.deployOffline": true,
-  "[java]": {
-    "editor.defaultFormatter": "redhat.java",
-    "editor.tabSize": 2,
-    "editor.detectIndentation": false
-  }
+  "java.test.defaultConfig": "WPIlibUnitTests"
 }

@@ -29,7 +29,7 @@ public class RunShooter extends CommandBase {
   public void execute() {
     if (drive.getLeftBumper()){
       motor.runShooterLead(1.0);
-      if(drive.getBButton()){
+      if(drive.getXButton()){
       motor.runShooterLead(-1.0);
       }
     } else {
