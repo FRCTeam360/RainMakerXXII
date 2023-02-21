@@ -7,6 +7,7 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.operatorInterface.DriverControl;
 import frc.robot.subsystems.Turret;
 
 public class RunTurretSpeed extends CommandBase {
@@ -29,7 +30,8 @@ public class RunTurretSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mTurret.runTurret(speed.getAsDouble());
+    double spd =DriverControl.getInstance().getLeftX();
+    mTurret.runTurret(spd);
   }
 
   // Called once the command ends or is interrupted.

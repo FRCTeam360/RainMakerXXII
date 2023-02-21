@@ -95,11 +95,13 @@ public class RobotContainer {
 
   // scheduler will run these commands when nothing else scheduled
   private void configureDefaultCommands() {
+    RunTurretSpeed myRunTurretSpeed = new RunTurretSpeed(() -> cmdDriverCont.getHID().getLeftX());
+
     // tower.setDefaultCommand(runTower);
-    // feeder.setDefaultCommand(runFeeder);
-    // intake.setDefaultCommand(runIntake);//
-    //shooter.setDefaultCommand(runShooter);
-    turret.setDefaultCommand(new RunTurretSpeed(() -> cmdDriverCont.getHID().getLeftX()));
+     //feeder.setDefaultCommand(runFeeder);
+     //intake.setDefaultCommand(runIntake);//
+    //shooter.setDefaultCommand(runShooter);//
+    turret.setDefaultCommand(myRunTurretSpeed);
 
   }
 

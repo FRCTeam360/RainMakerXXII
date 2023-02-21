@@ -25,10 +25,12 @@ public class Turret extends SubsystemBase {
   
   }
   public void runTurret(double speed) {
+    System.out.println("Speed: " + speed);
     myTurret.set(speed);
   }
 
   public void stopTurret() {
+    System.out.println("stop");
     myTurret.set(0);
   }
   @Override
