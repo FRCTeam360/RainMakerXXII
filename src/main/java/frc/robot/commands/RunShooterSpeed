@@ -1,0 +1,40 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot.commands;
+
+import frc.robot.subsystems.Shooter;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
+public class RunShooterSpeed extends CommandBase {
+  private double speed;
+  private Shooter MShooter = Shooter.GetInstance();
+
+  /** Creates a new runShooterSpeed. */
+  public RunShooterSpeed(double ) {  
+    this.speed = speed;
+    addrequiremnts(MShooter);
+
+    // Use addRequirements() here to declare subsystem dependencies.
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    MShooter.runShooter(speed);
+  }
+
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+    MShooter.stopShooter();
+  }
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
+}

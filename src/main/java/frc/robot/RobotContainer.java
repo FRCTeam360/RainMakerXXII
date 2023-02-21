@@ -60,6 +60,14 @@ public class RobotContainer {
   private RunTower runTower = new RunTower();
   private RunShooter runShooter = new RunShooter();
 
+  private void configureButtonBindings(){
+    cmdDriverCont.getLeftBumper().whileTrue(new RunFeederSpeed(1.0));
+    cmdDriverCont.getLeftBumper().whileTrue(new RunIntakeSpeed(1.0));
+    cmdDriverCont.getLeftBumper().whileTrue(new RunShooterSpeed(1.0));
+    cmdDriverCont.getLeftBumper().whileTrue(new RunTowerSpeed(1.0));
+
+  }
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -86,10 +94,6 @@ public class RobotContainer {
    * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-
-  private void configureButtonBindings() {
-
-  }
 
 
   /**
