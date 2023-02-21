@@ -27,9 +27,10 @@ public class RunShooter extends CommandBase {
   @Override
   public void execute() {
     if(drive.getRightTrigger()) {
-      shooter.runShooterLead(1.0);
       if(drive.getBButton()){
         shooter.runShooterLead(-1.0);
+      } else{
+        shooter.runShooterLead(1.0);
       }
     } else{
       shooter.stopShooterLead();

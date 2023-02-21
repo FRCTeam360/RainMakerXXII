@@ -27,9 +27,10 @@ public class RunTower extends CommandBase {
   @Override
   public void execute() {
     if(drive.getRightBumper()) {
-      tower.runTower(1.0);
       if(drive.getAButton()){
         tower.runTower(-1.0);
+      } else{
+        tower.runTower(1.0);
       }
     } else{
       tower.stopTower();

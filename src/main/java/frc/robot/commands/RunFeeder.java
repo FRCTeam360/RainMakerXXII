@@ -27,9 +27,10 @@ public class RunFeeder extends CommandBase {
   @Override
   public void execute() {
     if(drive.getLeftTrigger()) {
-      feeder.runFeeder(1.0);
       if(drive.getYButton()){
         feeder.runFeeder(-1.0);
+      } else{
+        feeder.runFeeder(1.0);
       }
     } else{
       feeder.stopFeeder();

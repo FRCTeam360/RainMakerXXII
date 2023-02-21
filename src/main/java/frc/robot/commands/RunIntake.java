@@ -27,9 +27,10 @@ public class RunIntake extends CommandBase {
   @Override
   public void execute() {
     if(drive.getLeftBumper()) {
-      intake.runIntake(1.0);
       if(drive.getXButton()){
         intake.runIntake(-1.0);
+      } else{
+        intake.runIntake(1.0);
       }
     } else{
       intake.stopIntake();
